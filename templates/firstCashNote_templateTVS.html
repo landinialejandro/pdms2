@@ -1,0 +1,18 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the firstCashNote_init() hook (in hooks/firstCashNote.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="firstCashNote-order-<%%VALUE(id)%%>" class="firstCashNote-order"><%%VALUE(order)%%></td>
+		<td id="firstCashNote-operationDate-<%%VALUE(id)%%>" class="firstCashNote-operationDate"><%%VALUE(operationDate)%%></td>
+		<td id="firstCashNote-documentNumber-<%%VALUE(id)%%>" class="firstCashNote-documentNumber text-right"><%%VALUE(documentNumber)%%></td>
+		<td id="firstCashNote-causal-<%%VALUE(id)%%>" class="firstCashNote-causal"><%%VALUE(causal)%%></td>
+		<td id="firstCashNote-revenue-<%%VALUE(id)%%>" class="firstCashNote-revenue text-right"><%%VALUE(revenue)%%></td>
+		<td id="firstCashNote-outputs-<%%VALUE(id)%%>" class="firstCashNote-outputs text-right"><%%VALUE(outputs)%%></td>
+		<td id="firstCashNote-balance-<%%VALUE(id)%%>" class="firstCashNote-balance text-right"><%%VALUE(balance)%%></td>
+		<td id="firstCashNote-bank-<%%VALUE(id)%%>" class="firstCashNote-bank"><%%VALUE(bank)%%></td>
+		<td id="firstCashNote-note-<%%VALUE(id)%%>" class="firstCashNote-note"><%%VALUE(note)%%></td>
+		<td id="firstCashNote-paymentDeadLine-<%%VALUE(id)%%>" class="firstCashNote-paymentDeadLine"><%%VALUE(paymentDeadLine)%%></td>
+		<td id="firstCashNote-payed-<%%VALUE(id)%%>" class="firstCashNote-payed text-right"><%%VALUE(payed)%%></td>

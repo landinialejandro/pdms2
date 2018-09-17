@@ -1,0 +1,13 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the companies_init() hook (in hooks/companies.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="companies-kind-<%%VALUE(id)%%>" class="companies-kind"><%%SELECT%%><%%VALUE(kind)%%><%%ENDSELECT%%></td>
+		<td id="companies-companyCode-<%%VALUE(id)%%>" class="companies-companyCode"><%%SELECT%%><%%VALUE(companyCode)%%><%%ENDSELECT%%></td>
+		<td id="companies-companyName-<%%VALUE(id)%%>" class="companies-companyName"><%%SELECT%%><%%VALUE(companyName)%%><%%ENDSELECT%%></td>
+		<td id="companies-fiscalCode-<%%VALUE(id)%%>" class="companies-fiscalCode"><%%SELECT%%><%%VALUE(fiscalCode)%%><%%ENDSELECT%%></td>
+		<td id="companies-vat-<%%VALUE(id)%%>" class="companies-vat"><%%SELECT%%><%%VALUE(vat)%%><%%ENDSELECT%%></td>
+		<td id="companies-notes-<%%VALUE(id)%%>" class="companies-notes"><%%SELECT%%><%%VALUE(notes)%%><%%ENDSELECT%%></td>

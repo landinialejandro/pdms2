@@ -1,0 +1,15 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the creditDocument_init() hook (in hooks/creditDocument.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="creditDocument-incomingTypeDoc-<%%VALUE(id)%%>" class="creditDocument-incomingTypeDoc"><%%SELECT%%><%%VALUE(incomingTypeDoc)%%><%%ENDSELECT%%></td>
+		<td id="creditDocument-customerID-<%%VALUE(id)%%>" class="creditDocument-customerID"><%%SELECT%%><%%VALUE(customerID)%%><%%ENDSELECT%%></td>
+		<td id="creditDocument-nrDoc-<%%VALUE(id)%%>" class="creditDocument-nrDoc"><%%SELECT%%><%%VALUE(nrDoc)%%><%%ENDSELECT%%></td>
+		<td id="creditDocument-dateIncomingNote-<%%VALUE(id)%%>" class="creditDocument-dateIncomingNote"><%%SELECT%%><%%VALUE(dateIncomingNote)%%><%%ENDSELECT%%></td>
+		<td id="creditDocument-customerFirm-<%%VALUE(id)%%>" class="creditDocument-customerFirm"><%%SELECT%%><%%VALUE(customerFirm)%%><%%ENDSELECT%%></td>
+		<td id="creditDocument-customerAddress-<%%VALUE(id)%%>" class="creditDocument-customerAddress"><%%SELECT%%><%%VALUE(customerAddress)%%><%%ENDSELECT%%></td>
+		<td id="creditDocument-customerPostCode-<%%VALUE(id)%%>" class="creditDocument-customerPostCode"><%%SELECT%%><%%VALUE(customerPostCode)%%><%%ENDSELECT%%></td>
+		<td id="creditDocument-customerTown-<%%VALUE(id)%%>" class="creditDocument-customerTown"><%%SELECT%%><%%VALUE(customerTown)%%><%%ENDSELECT%%></td>

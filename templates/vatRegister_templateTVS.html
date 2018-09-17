@@ -1,0 +1,13 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the vatRegister_init() hook (in hooks/vatRegister.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="vatRegister-idCompany-<%%VALUE(id)%%>" class="vatRegister-idCompany"><%%VALUE(idCompany)%%></td>
+		<td id="vatRegister-companyName-<%%VALUE(id)%%>" class="vatRegister-companyName"><%%VALUE(companyName)%%></td>
+		<td id="vatRegister-tax-<%%VALUE(id)%%>" class="vatRegister-tax"><%%VALUE(tax)%%></td>
+		<td id="vatRegister-month-<%%VALUE(id)%%>" class="vatRegister-month"><%%VALUE(month)%%></td>
+		<td id="vatRegister-year-<%%VALUE(id)%%>" class="vatRegister-year"><%%VALUE(year)%%></td>
+		<td id="vatRegister-amount-<%%VALUE(id)%%>" class="vatRegister-amount text-right"><%%VALUE(amount)%%></td>

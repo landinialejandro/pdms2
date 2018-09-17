@@ -1,0 +1,26 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the ordersDetails_init() hook (in hooks/ordersDetails.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="ordersDetails-manufactureDate-<%%VALUE(id)%%>" class="ordersDetails-manufactureDate"><%%SELECT%%><%%VALUE(manufactureDate)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-sellDate-<%%VALUE(id)%%>" class="ordersDetails-sellDate"><%%SELECT%%><%%VALUE(sellDate)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-UM-<%%VALUE(id)%%>" class="ordersDetails-UM"><%%SELECT%%><%%VALUE(UM)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-productCode-<%%VALUE(id)%%>" class="ordersDetails-productCode"><%%SELECT%%><%%VALUE(productCode)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-packages-<%%VALUE(id)%%>" class="ordersDetails-packages text-right"><%%SELECT%%><%%VALUE(packages)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-noSell-<%%VALUE(id)%%>" class="ordersDetails-noSell text-right"><%%SELECT%%><%%VALUE(noSell)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-Quantity-<%%VALUE(id)%%>" class="ordersDetails-Quantity text-right"><%%SELECT%%><%%VALUE(Quantity)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-QuantityReal-<%%VALUE(id)%%>" class="ordersDetails-QuantityReal text-right"><%%SELECT%%><%%VALUE(QuantityReal)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-UnitPrice-<%%VALUE(id)%%>" class="ordersDetails-UnitPrice text-right"><%%SELECT%%><%%VALUE(UnitPrice)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-Subtotal-<%%VALUE(id)%%>" class="ordersDetails-Subtotal text-right"><%%SELECT%%><%%VALUE(Subtotal)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-taxes-<%%VALUE(id)%%>" class="ordersDetails-taxes text-right"><%%SELECT%%><%%VALUE(taxes)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-Discount-<%%VALUE(id)%%>" class="ordersDetails-Discount text-right"><%%SELECT%%><%%VALUE(Discount)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-LineTotal-<%%VALUE(id)%%>" class="ordersDetails-LineTotal text-right"><%%SELECT%%><%%VALUE(LineTotal)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-transaction_type-<%%VALUE(id)%%>" class="ordersDetails-transaction_type"><%%SELECT%%><%%VALUE(transaction_type)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-averagePrice-<%%VALUE(id)%%>" class="ordersDetails-averagePrice text-right"><%%SELECT%%><%%VALUE(averagePrice)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-averageWeight-<%%VALUE(id)%%>" class="ordersDetails-averageWeight text-right"><%%SELECT%%><%%VALUE(averageWeight)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-commission-<%%VALUE(id)%%>" class="ordersDetails-commission text-right"><%%SELECT%%><%%VALUE(commission)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-return-<%%VALUE(id)%%>" class="ordersDetails-return text-center"><%%SELECT%%><%%VALUE(return)%%><%%ENDSELECT%%></td>
+		<td id="ordersDetails-supplierCode-<%%VALUE(id)%%>" class="ordersDetails-supplierCode"><%%SELECT%%><%%VALUE(supplierCode)%%><%%ENDSELECT%%></td>

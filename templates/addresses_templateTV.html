@@ -1,0 +1,14 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the addresses_init() hook (in hooks/addresses.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="addresses-kind-<%%VALUE(id)%%>" class="addresses-kind"><%%SELECT%%><%%VALUE(kind)%%><%%ENDSELECT%%></td>
+		<td id="addresses-address-<%%VALUE(id)%%>" class="addresses-address"><%%SELECT%%><%%VALUE(address)%%><%%ENDSELECT%%></td>
+		<td id="addresses-houseNumber-<%%VALUE(id)%%>" class="addresses-houseNumber"><%%SELECT%%><%%VALUE(houseNumber)%%><%%ENDSELECT%%></td>
+		<td id="addresses-country-<%%VALUE(id)%%>" class="addresses-country"><%%SELECT%%><%%VALUE(country)%%><%%ENDSELECT%%></td>
+		<td id="addresses-town-<%%VALUE(id)%%>" class="addresses-town"><%%SELECT%%><%%VALUE(town)%%><%%ENDSELECT%%></td>
+		<td id="addresses-postalCode-<%%VALUE(id)%%>" class="addresses-postalCode"><%%SELECT%%><%%VALUE(postalCode)%%><%%ENDSELECT%%></td>
+		<td id="addresses-district-<%%VALUE(id)%%>" class="addresses-district"><%%SELECT%%><%%VALUE(district)%%><%%ENDSELECT%%></td>

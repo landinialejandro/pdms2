@@ -1,0 +1,11 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the electronicInvoice_init() hook (in hooks/electronicInvoice.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="electronicInvoice-topic-<%%VALUE(id)%%>" class="electronicInvoice-topic"><%%VALUE(topic)%%></td>
+		<td id="electronicInvoice-currency-<%%VALUE(id)%%>" class="electronicInvoice-currency"><%%VALUE(currency)%%></td>
+		<td id="electronicInvoice-trasmissionFormat-<%%VALUE(id)%%>" class="electronicInvoice-trasmissionFormat"><%%VALUE(trasmissionFormat)%%></td>
+		<td id="electronicInvoice-country-<%%VALUE(id)%%>" class="electronicInvoice-country"><%%VALUE(country)%%></td>

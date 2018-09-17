@@ -1,0 +1,294 @@
+<!-- Edit this file to change the layout of the detail view form -->
+
+<a name="detail-view"></a>
+<div class="panel-heading"><h3 class="panel-title"><strong><%%DETAIL_VIEW_TITLE%%></strong></h3></div>
+
+<div class="panel-body" id="ordersDetails_dv_container">
+	<!-- child links -->
+	<div class="row vspacer-md">
+		<div class="col-xs-12">
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<hr class="hidden-xs hidden-sm">
+
+	<div class="row">
+		<!-- form inputs -->
+		<div class="col-md-8 col-lg-10" id="ordersDetails_dv_form">
+			<fieldset class="form-horizontal">
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="manufactureDate" class="control-label col-lg-3">Data produzione</label>
+					<div class="col-lg-9">
+						<%%COMBO(manufactureDate)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="sellDate" class="control-label col-lg-3">Data vendita</label>
+					<div class="col-lg-9">
+						<%%COMBO(sellDate)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="productCode" class="control-label col-lg-3" data-parent_link="view_parent_modal">Codice prodotto</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(productCode)%%><span id="productCodeLoading"></span></div>
+                                        <div id="productCard" class="ui-widget-content ui-corner-all" style="padding: 0.4em;" hidden=""></div>
+					</div>
+				</div>
+                                                                
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="packages" class="control-label col-lg-3">Colli</label>
+					<div class="col-lg-9">
+						<input maxlength="13" type="text" class="form-control" name="packages" id="packages" value="<%%VALUE(packages)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="noSell" class="control-label col-lg-3">Es. Colli</label>
+					<div class="col-lg-9">
+						<input maxlength="" type="text" class="form-control" name="noSell" id="noSell" value="<%%VALUE(noSell)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="Quantity" class="control-label col-lg-3">Peso partenza <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#Quantity-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="Quantity-description"><div class="alert alert-info">In questo campo si inserisce la quantita in kg. Nel caso non si conosca il peso, si indica un peso presunto.</div></span>
+
+						<input maxlength="13" type="text" class="form-control" name="Quantity" id="Quantity" value="<%%VALUE(Quantity)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="QuantityReal" class="control-label col-lg-3">Peso riscontrato</label>
+					<div class="col-lg-9">
+						<input maxlength="13" type="text" class="form-control" name="QuantityReal" id="QuantityReal" value="<%%VALUE(QuantityReal)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="UnitPrice" class="control-label col-lg-3">Prezzo unitario <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#UnitPrice-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="UnitPrice-description"><div class="alert alert-info">Questo campo prende i suoi dati dalla tabella prodotti.</div></span>
+
+						<input maxlength="13" type="text" class="form-control" name="UnitPrice" id="UnitPrice" value="<%%VALUE(UnitPrice)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="Subtotal" class="control-label col-lg-3">Imponibile</label>
+					<div class="col-lg-9">
+						<input maxlength="13" type="text" class="form-control" name="Subtotal" id="Subtotal" value="<%%VALUE(Subtotal)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="Discount" class="control-label col-lg-3">Sconto <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#Discount-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="Discount-description"><div class="alert alert-info">Enter a discount amount here rather than a percentage or ratio. This field will appear formatted as US currency in the table view.</div></span>
+
+						<input maxlength="13" type="text" class="form-control" name="Discount" id="Discount" value="<%%VALUE(Discount)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="LineTotal" class="control-label col-lg-3">SubTotale</label>
+					<div class="col-lg-9">
+						<input maxlength="13" type="text" class="form-control" name="LineTotal" id="LineTotal" value="<%%VALUE(LineTotal)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="averagePrice" class="control-label col-lg-3">Prezzo medio giorno</label>
+					<div class="col-lg-9">
+						<input maxlength="13" type="text" class="form-control" name="averagePrice" id="averagePrice" value="<%%VALUE(averagePrice)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="averageWeight" class="control-label col-lg-3">Peso medio giorno</label>
+					<div class="col-lg-9">
+						<input maxlength="13" type="text" class="form-control" name="averageWeight" id="averageWeight" value="<%%VALUE(averageWeight)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="commission" class="control-label col-lg-3">Provvigione</label>
+					<div class="col-lg-9">
+						<input maxlength="13" type="text" class="form-control" name="commission" id="commission" value="<%%VALUE(commission)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<div class="col-lg-offset-3 col-lg-9">
+						<div class="checkbox"><label for="return"><input type="checkbox" name="return" id="return" value="1" <%%CHECKED(return)%%>> Includi commissione</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="supplierCode" class="control-label col-lg-3">SupplierCode</label>
+					<div class="col-lg-9">
+						<input maxlength="100" type="text" class="form-control" name="supplierCode" id="supplierCode" value="<%%VALUE(supplierCode)%%>">
+					</div>
+				</div>
+
+			</fieldset>
+		</div>
+
+		<!-- DV action buttons -->
+		<hr class="hidden-md hidden-lg">
+		<div class="col-md-4 col-lg-2" id="ordersDetails_dv_action_buttons">
+			<div class="btn-toolbar">
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+					<%%UPDATE_BUTTON%%>
+				</div><p></p>
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+					<%%DESELECT_BUTTON%%>
+					<%%DVPRINT_BUTTON%%>
+					<%%DELETE_BUTTON%%>
+				</div><p></p>
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+					<%%INSERT_BUTTON%%>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" name="order" value="<%%VALUE(order)%%>">
+	<input type="hidden" name="codebar" value="<%%VALUE(codebar)%%>">
+	<input type="hidden" name="UM" value="<%%VALUE(UM)%%>">
+	<input type="hidden" name="batch" value="<%%VALUE(batch)%%>">
+	<input type="hidden" name="section" value="<%%VALUE(section)%%>">
+
+</div><!-- /div class="panel-body" -->
+	<script>
+		$j(function() {
+			var add_new_mode = (!$j('input[name=SelectedID]').val());
+			var embedded_mode = ($j('input[name=Embedded]').val() == 1);
+
+			/* auto-close embedded page? */
+			var autoclose_mode = ($j('input[name=AutoClose]').val() == 1);
+			var record_added_ok = (location.search.split('record-added-ok=').length == 2);
+			var record_updated_ok = (location.search.split('record-updated-ok=').length == 2);
+			if((record_added_ok || record_updated_ok) && embedded_mode && autoclose_mode){
+				setTimeout(AppGini.closeParentModal, 2000);
+			}
+
+			/* enable DV action buttons to float on scrolling down the form */
+			enable_dvab_floating();
+
+			if(!(embedded_mode && AppGini.mobileDevice())){
+				$j('select, input[type=text], textarea').not(':disabled').eq(0).focus();
+			}
+
+			$j('form').eq(0).change(function(){
+				if($j(this).data('already_changed')) return;
+				if($j('#deselect').length) $j('#deselect').removeClass('btn-default').addClass('btn-warning').get(0).lastChild.data = " <%%TRANSLATION(Cancel)%%>";
+				$j(this).data('already_changed', true);
+			});
+
+			$j('a[href="<%%TRANSLATION(ImageFolder)%%>"]').click(function(){ /* */ return false; });
+
+
+			if(!embedded_mode){
+				/* add a horizontal spacer to [add new parent] buttons that don't have a spacered element before them */
+				$j('.add_new_parent').prev(':not(.hspacer-md)').next().addClass('hspacer-md');
+
+				$j('.add_new_parent').click(function(){
+					var pt = $j(this).attr('id').replace(/_add_new$/, '');
+					modal_window({
+						url: pt + '_view.php?addNew_x=1&Embedded=1',
+						close: function(){
+							var field_id = $j('#' + pt + '_add_new').prevAll('input:hidden').eq(0).attr('id');
+							$j('#' + field_id + '-container').select2('focus').select2('focus');
+						},
+						size: 'full',
+						title: $j(this).attr('title')
+					});
+				});
+			}
+
+			AppGini.hideViewParentLinks();
+
+			$j('form').on('click', '.view_parent', function(){
+				var pt = $j(this).attr('id').replace(/_view_parent$/, '');
+				if($j(this).prevAll('input:hidden').length){
+					var parent_id = $j(this).prevAll('input:hidden').eq(0).val();
+				}else{
+					var parent_id = $j(this).prevAll().children('input:hidden').eq(0).val();
+				}
+
+				/* handle radio lookups */
+				if($j(this).prevAll('[type=radio]').length){
+					parent_id = $j(this).prevAll('[type=radio]').eq(0).val();
+				}
+
+				if(parent_id != '{empty_value}' && parent_id != undefined && parent_id != ''){
+					var parent_link = $j(this).parents('.form-group').children('label').data('parent_link');
+					switch(parent_link){
+						case 'view_parent_hidden':
+							break;
+						case 'view_parent_modal':
+							modal_window({
+								url: pt + '_view.php?Embedded=1&SelectedID=' + encodeURIComponent(parent_id),
+								close: function(){
+									var field_id = $j('#' + pt + '_view_parent').prevAll('input:hidden').eq(0).attr('id');
+									$j('#' + field_id + '-container').select2('focus').select2('focus');
+								},
+								size: 'full',
+								title: $j(this).attr('title')
+							});
+							break;
+						case 'view_parent_same_window':
+							window.location = pt + '_view.php?Embedded=' + (embedded_mode ? '1' : '') + '&SelectedID=' + encodeURIComponent(parent_id);
+							break;
+						case 'view_parent_new_window':
+							window.open(pt + '_view.php?SelectedID=' + encodeURIComponent(parent_id));
+							break;
+					}
+
+				}
+			});
+
+
+			/* load admin tools for admin user */
+			if(!add_new_mode){
+				$j('body').append('<div id="admin-tools-appendix"></div>');
+				$j('#admin-tools-appendix').load(
+					'ajax_admin_tools.php?table=ordersDetails&id=<%%URLVALUE(id)%%>',
+					function(resp){
+						if(!resp.length) return;
+						$j.ajax('ajax_admin_tools.php?action=get_admin_tools_js&table=ordersDetails&id=<%%URLVALUE(id)%%>');
+					}
+				);
+			}
+
+			/* warn user if 'add new' clicked while unsaved changes exist */
+			$j('#addNew').click(function(){
+				if($j('#deselect.btn-warning').length){
+					return confirm('<%%TRANSLATION(discard changes confirm)%%>');
+				}
+			});
+
+		});
+	</script>

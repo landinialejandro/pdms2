@@ -1,0 +1,12 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the kinds_init() hook (in hooks/kinds.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="kinds-entity-<%%VALUE(code)%%>" class="kinds-entity text-right"><%%SELECT%%><%%VALUE(entity)%%><%%ENDSELECT%%></td>
+		<td id="kinds-code-<%%VALUE(code)%%>" class="kinds-code"><%%SELECT%%><%%VALUE(code)%%><%%ENDSELECT%%></td>
+		<td id="kinds-name-<%%VALUE(code)%%>" class="kinds-name"><%%SELECT%%><%%VALUE(name)%%><%%ENDSELECT%%></td>
+		<td id="kinds-value-<%%VALUE(code)%%>" class="kinds-value"><%%SELECT%%><%%VALUE(value)%%><%%ENDSELECT%%></td>
+		<td id="kinds-descriptions-<%%VALUE(code)%%>" class="kinds-descriptions"><%%SELECT%%><%%VALUE(descriptions)%%><%%ENDSELECT%%></td>

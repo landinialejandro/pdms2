@@ -1,0 +1,13 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the attachments_init() hook (in hooks/attachments.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="attachments-name-<%%VALUE(id)%%>" class="attachments-name"><%%VALUE(name)%%></td>
+		<td id="attachments-file-<%%VALUE(id)%%>" class="attachments-file"><a href="link.php?t=attachments&f=file&i=<%%VALUE(id)%%>" target="_blank" title="<%%VALUE(file)%%>" class="btn btn-default"><i class="glyphicon glyphicon-picture text-info"></i></a></td>
+		<td id="attachments-thumbUse-<%%VALUE(id)%%>" class="attachments-thumbUse"><%%VALUE(thumbUse)%%></td>
+		<script>$j(function(){
+			var e_file = '<%%VALUE(file)%%>'; if(e_file == '' || e_file == '&nbsp;') $j(/*<*/ '#attachments-file-<%%VALUE(id)%%>' /*>*/).html('');
+		});</script>

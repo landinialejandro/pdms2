@@ -1,0 +1,25 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the orders_init() hook (in hooks/orders.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="orders-id-<%%VALUE(id)%%>" class="orders-id text-right"><%%SELECT%%><%%VALUE(id)%%><%%ENDSELECT%%></td>
+		<td id="orders-kind-<%%VALUE(id)%%>" class="orders-kind"><%%SELECT%%><%%VALUE(kind)%%><%%ENDSELECT%%></td>
+		<td id="orders-company-<%%VALUE(id)%%>" class="orders-company"><%%SELECT%%><%%VALUE(company)%%><%%ENDSELECT%%></td>
+		<td id="orders-typeDoc-<%%VALUE(id)%%>" class="orders-typeDoc"><%%SELECT%%><%%VALUE(typeDoc)%%><%%ENDSELECT%%></td>
+		<td id="orders-multiOrder-<%%VALUE(id)%%>" class="orders-multiOrder text-right"><%%SELECT%%><%%VALUE(multiOrder)%%><%%ENDSELECT%%></td>
+		<td id="orders-customer-<%%VALUE(id)%%>" class="orders-customer"><%%SELECT%%><%%VALUE(customer)%%><%%ENDSELECT%%></td>
+		<td id="orders-date-<%%VALUE(id)%%>" class="orders-date"><%%SELECT%%><%%VALUE(date)%%><%%ENDSELECT%%></td>
+		<td id="orders-shippedDate-<%%VALUE(id)%%>" class="orders-shippedDate"><%%SELECT%%><%%VALUE(shippedDate)%%><%%ENDSELECT%%></td>
+		<td id="orders-shipVia-<%%VALUE(id)%%>" class="orders-shipVia text-center"><%%SELECT%%><%%VALUE(shipVia)%%><%%ENDSELECT%%></td>
+		<td id="orders-pallets-<%%VALUE(id)%%>" class="orders-pallets text-right"><%%SELECT%%><%%VALUE(pallets)%%><%%ENDSELECT%%></td>
+		<td id="orders-licencePlate-<%%VALUE(id)%%>" class="orders-licencePlate"><%%SELECT%%><%%VALUE(licencePlate)%%><%%ENDSELECT%%></td>
+		<td id="orders-orderTotal-<%%VALUE(id)%%>" class="orders-orderTotal text-right"><%%SELECT%%><%%VALUE(orderTotal)%%><%%ENDSELECT%%></td>
+		<td id="orders-cashCredit-<%%VALUE(id)%%>" class="orders-cashCredit text-center"><%%SELECT%%><%%VALUE(cashCredit)%%><%%ENDSELECT%%></td>
+		<td id="orders-trust-<%%VALUE(id)%%>" class="orders-trust"><%%SELECT%%><%%VALUE(trust)%%><%%ENDSELECT%%></td>
+		<td id="orders-overdraft-<%%VALUE(id)%%>" class="orders-overdraft"><%%SELECT%%><%%VALUE(overdraft)%%><%%ENDSELECT%%></td>
+		<td id="orders-commisionFee-<%%VALUE(id)%%>" class="orders-commisionFee text-right"><%%SELECT%%><%%VALUE(commisionFee)%%><%%ENDSELECT%%></td>
+		<td id="orders-consigneeHour-<%%VALUE(id)%%>" class="orders-consigneeHour"><%%SELECT%%><%%VALUE(consigneeHour)%%><%%ENDSELECT%%></td>
+		<td id="orders-consigneePlace-<%%VALUE(id)%%>" class="orders-consigneePlace"><%%SELECT%%><%%VALUE(consigneePlace)%%><%%ENDSELECT%%></td>

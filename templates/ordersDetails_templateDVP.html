@@ -1,0 +1,114 @@
+<!-- Edit this file to change the layout of the detail view print preview page -->
+
+
+<div class="panel-heading"><h3 class="panel-title">
+	<strong><%%DETAIL_VIEW_TITLE%%></strong>
+	<div class="hidden-print pull-right">
+		<div class="btn-group">
+			<button type="button" id="print" onclick="window.print();" title="<%%TRANSLATION(Print)%%>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> <%%TRANSLATION(Print)%%></button>
+			<button type="submit" id="back" title="<%%TRANSLATION(Cancel Printing)%%>" class="btn btn-default"><i class="glyphicon glyphicon-remove-circle"></i> <%%TRANSLATION(Cancel Printing)%%></button>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</h3></div>
+
+<div class="panel-body">
+	<fieldset class="form-horizontal">
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Data produzione</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(manufactureDate)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Data vendita</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(sellDate)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Codice prodotto</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="productCode<%%RND1%%>"><%%COMBOTEXT(productCode)%%></span></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Colli</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(packages)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Es. Colli</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(noSell)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Peso partenza</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(Quantity)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Peso riscontrato</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(QuantityReal)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Prezzo unitario</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(UnitPrice)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Imponibile</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(Subtotal)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Sconto</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(Discount)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">SubTotale</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(LineTotal)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Prezzo medio giorno</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(averagePrice)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Peso medio giorno</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(averageWeight)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Provvigione</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(commission)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Includi commissione</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><input type="checkbox" name="return" id="return" value="1" <%%CHECKED(return)%%> readonly></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">SupplierCode</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(supplierCode)%%></div>
+			</div>
+		</div>
+	</fieldset>
+</div>

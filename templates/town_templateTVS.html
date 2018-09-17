@@ -1,0 +1,20 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the town_init() hook (in hooks/town.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="town-country-<%%VALUE(id)%%>" class="town-country"><%%VALUE(country)%%></td>
+		<td id="town-idIstat-<%%VALUE(id)%%>" class="town-idIstat"><%%VALUE(idIstat)%%></td>
+		<td id="town-town-<%%VALUE(id)%%>" class="town-town"><%%VALUE(town)%%></td>
+		<td id="town-district-<%%VALUE(id)%%>" class="town-district"><%%VALUE(district)%%></td>
+		<td id="town-region-<%%VALUE(id)%%>" class="town-region"><%%VALUE(region)%%></td>
+		<td id="town-prefix-<%%VALUE(id)%%>" class="town-prefix"><%%VALUE(prefix)%%></td>
+		<td id="town-shipCode-<%%VALUE(id)%%>" class="town-shipCode"><%%VALUE(shipCode)%%></td>
+		<td id="town-fiscCode-<%%VALUE(id)%%>" class="town-fiscCode"><%%VALUE(fiscCode)%%></td>
+		<td id="town-inhabitants-<%%VALUE(id)%%>" class="town-inhabitants"><%%VALUE(inhabitants)%%></td>
+		<td id="town-link-<%%VALUE(id)%%>" class="town-link"><a href="link.php?t=town&f=link&i=<%%VALUE(id)%%>" target="_blank" title="<%%VALUE(link)%%>" class="btn btn-default"><i class="glyphicon glyphicon-globe text-info"></i></a></td>
+		<script>$j(function(){
+			var e_link = '<%%VALUE(link)%%>'; if(e_link == '' || e_link == '&nbsp;') $j(/*<*/ '#town-link-<%%VALUE(id)%%>' /*>*/).html('');
+		});</script>

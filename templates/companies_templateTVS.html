@@ -1,0 +1,13 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the companies_init() hook (in hooks/companies.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="companies-kind-<%%VALUE(id)%%>" class="companies-kind"><%%VALUE(kind)%%></td>
+		<td id="companies-companyCode-<%%VALUE(id)%%>" class="companies-companyCode"><%%VALUE(companyCode)%%></td>
+		<td id="companies-companyName-<%%VALUE(id)%%>" class="companies-companyName"><%%VALUE(companyName)%%></td>
+		<td id="companies-fiscalCode-<%%VALUE(id)%%>" class="companies-fiscalCode"><%%VALUE(fiscalCode)%%></td>
+		<td id="companies-vat-<%%VALUE(id)%%>" class="companies-vat"><%%VALUE(vat)%%></td>
+		<td id="companies-notes-<%%VALUE(id)%%>" class="companies-notes"><%%VALUE(notes)%%></td>
