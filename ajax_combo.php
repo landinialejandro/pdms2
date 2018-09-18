@@ -167,18 +167,7 @@
 				'inherit_permissions' => false,
 				'list_type' => 0,
 				'not_null' => false
-			),
-                        'IDproduct_lookup' => array(
-                                'parent_table' => 'products',
-                                'parent_pk_field' => 'id',
-                                'parent_caption' => 'IF(CHAR_LENGTH(`products`.`codebar`) || CHAR_LENGTH(`products`.`productName`), CONCAT_WS(\'\', `products`.`codebar`, \' - \', `products`.`productName`), \'\')',
-                                'parent_from' => '`products`',
-                                'filterers' => array(),
-                                'custom_query' => '',
-                                'inherit_permissions' => true,
-                                'list_type' => 0,
-                                'not_null' => false
-                        )
+			)
 		),
 		'products' => array(   
 			'tax' => array(

@@ -39,7 +39,7 @@
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`UnitPrice`, 2))" => "UnitPrice",
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`Subtotal`, 2))" => "Subtotal",
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`taxes`, 2))" => "taxes",
-		"CONCAT('&euro;', FORMAT(`ordersDetails`.`Discount`, 2))" => "Discount",
+		"`ordersDetails`.`Discount`" => "Discount",
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`LineTotal`, 2))" => "LineTotal",
 		"IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') /* Reparto */" => "section",
 		"`ordersDetails`.`transaction_type`" => "transaction_type",
@@ -100,7 +100,7 @@
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`UnitPrice`, 2))" => "UnitPrice",
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`Subtotal`, 2))" => "Subtotal",
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`taxes`, 2))" => "taxes",
-		"CONCAT('&euro;', FORMAT(`ordersDetails`.`Discount`, 2))" => "Discount",
+		"`ordersDetails`.`Discount`" => "Discount",
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`LineTotal`, 2))" => "LineTotal",
 		"IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') /* Reparto */" => "section",
 		"`ordersDetails`.`transaction_type`" => "transaction_type",
@@ -161,7 +161,7 @@
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`UnitPrice`, 2))" => "UnitPrice",
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`Subtotal`, 2))" => "Subtotal",
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`taxes`, 2))" => "taxes",
-		"CONCAT('&euro;', FORMAT(`ordersDetails`.`Discount`, 2))" => "Discount",
+		"`ordersDetails`.`Discount`" => "Discount",
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`LineTotal`, 2))" => "LineTotal",
 		"IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') /* Reparto */" => "section",
 		"`ordersDetails`.`transaction_type`" => "transaction_type",
@@ -262,7 +262,7 @@
 			$QueryWhere = $x->QueryWhere;
 		}
 
-		$sumQuery = "select sum(`ordersDetails`.`noSell`), sum(`ordersDetails`.`Quantity`), sum(`ordersDetails`.`QuantityReal`), CONCAT('&euro;', FORMAT(sum(`ordersDetails`.`Subtotal`), 2)), CONCAT('&euro;', FORMAT(sum(`ordersDetails`.`taxes`), 2)), CONCAT('&euro;', FORMAT(sum(`ordersDetails`.`Discount`), 2)), CONCAT('&euro;', FORMAT(sum(`ordersDetails`.`LineTotal`), 2)) from {$x->QueryFrom} {$QueryWhere}";
+		$sumQuery = "select sum(`ordersDetails`.`noSell`), sum(`ordersDetails`.`Quantity`), sum(`ordersDetails`.`QuantityReal`), CONCAT('&euro;', FORMAT(sum(`ordersDetails`.`Subtotal`), 2)), CONCAT('&euro;', FORMAT(sum(`ordersDetails`.`taxes`), 2)), sum(`ordersDetails`.`Discount`), CONCAT('&euro;', FORMAT(sum(`ordersDetails`.`LineTotal`), 2)) from {$x->QueryFrom} {$QueryWhere}";
 		$res = sql($sumQuery, $eo);
 		if($row = db_fetch_row($res)){
 			$sumRow = '<tr class="success">';
