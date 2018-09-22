@@ -504,9 +504,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District'),
-					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district'),
-					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11),
+					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District', 11 => 'Default', 12 => 'Ship'),
+					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district', 11 => 'default', 12 => 'ship'),
+					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => 12, 12 => 13),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -515,7 +515,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-addresses',
 					'template-printable' => 'children-addresses-printable',
-					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
+					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
 				),
 				'country' => array(   
 					'parent-table' => 'countries',
@@ -528,9 +528,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District'),
-					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district'),
-					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11),
+					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District', 11 => 'Default', 12 => 'Ship'),
+					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district', 11 => 'default', 12 => 'ship'),
+					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => 12, 12 => 13),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -539,7 +539,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-addresses',
 					'template-printable' => 'children-addresses-printable',
-					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
+					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
 				),
 				'town' => array(   
 					'parent-table' => 'town',
@@ -552,9 +552,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District'),
-					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district'),
-					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11),
+					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District', 11 => 'Default', 12 => 'Ship'),
+					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district', 11 => 'default', 12 => 'ship'),
+					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => 12, 12 => 13),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -563,7 +563,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-addresses',
 					'template-printable' => 'children-addresses-printable',
-					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
+					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
 				),
 				'district' => array(   
 					'parent-table' => 'town',
@@ -576,9 +576,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District'),
-					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district'),
-					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11),
+					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District', 11 => 'Default', 12 => 'Ship'),
+					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district', 11 => 'default', 12 => 'ship'),
+					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => 12, 12 => 13),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -587,7 +587,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-addresses',
 					'template-printable' => 'children-addresses-printable',
-					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
+					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
 				),
 				'contact' => array(   
 					'parent-table' => 'contacts',
@@ -600,9 +600,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District'),
-					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district'),
-					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11),
+					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District', 11 => 'Default', 12 => 'Ship'),
+					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district', 11 => 'default', 12 => 'ship'),
+					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => 12, 12 => 13),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -611,7 +611,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-addresses',
 					'template-printable' => 'children-addresses-printable',
-					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
+					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
 				),
 				'company' => array(   
 					'parent-table' => 'companies',
@@ -624,9 +624,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District'),
-					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district'),
-					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11),
+					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District', 11 => 'Default', 12 => 'Ship'),
+					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district', 11 => 'default', 12 => 'ship'),
+					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => 12, 12 => 13),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -635,7 +635,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-addresses',
 					'template-printable' => 'children-addresses-printable',
-					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
+					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
 				)
 			),
 			'phones' => array(   

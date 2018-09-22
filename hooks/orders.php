@@ -27,6 +27,7 @@
 
 	function orders_init(&$options, $memberInfo, &$args){
                  $options->TemplateDV = 'hooks/orders_templateDV.html';
+                 
 		return TRUE;
 	}
 
@@ -154,7 +155,16 @@
 	*/
 
 	function orders_before_insert(&$data, $memberInfo, &$args){
-
+                //check if the oreder number is the last bofore insert
+                if(!function_exists('getNextValue')){
+                    include'orders_AJX.php';
+                }
+            
+                $numOrder = getNextValue($data['typeDoc'],$data['company']);
+                if (intval($numOrder) !== intval($data['numOrder'])){
+                    $data['numOrder']=$numOrder;
+                }
+		return TRUE;
 		return TRUE;
 	}
 
@@ -306,7 +316,40 @@
 	*/
 
 	function orders_dv($selectedID, $memberInfo, &$html, &$args){
-
+            //$("#e8").select2("data", {id: "CA", text: "California"});
+            if (isset($_REQUEST['addNew_x']) && isset($_REQUEST['mc']) && isset($_REQUEST['ok']) && isset($_REQUEST['dk'])){
+                   $mc_id = intval(makeSafe($_REQUEST['mc']));
+                   $mc_name = sqlValue("select companyName from companies where id = {$mc_id}");
+                   $mc_code = sqlValue("select companyCode from companies where id = {$mc_id}");
+                   $mc_text = $mc_code . " - " . $mc_name;
+                   $ok_id = makeSafe($_REQUEST['ok']);
+                   $ok_name = sqlValue("select name from kinds where code = '{$ok_id}'");
+                   $ok_text = $ok_name;
+                   $dk_id = makeSafe($_REQUEST['dk']);
+                   $dk_name = sqlValue("select name from kinds where code = '{$dk_id}'");
+                   $dk_text = $dk_id . " - " . $dk_name;
+                
+                ob_start();
+                ?>
+                    <!-- insert HTML code-->
+                    <script>
+                     function autoSet(){
+                         setTimeout(function(){
+                             $j('#s2id_company-container').select2("data", {id: "<?php echo $mc_id; ?>", text: "<?php echo $mc_text; ?>"});
+                             $j('#company').val("<?php echo $mc_id; ?>");
+                             $j('#s2id_kind-container').select2("data", {id: "<?php echo $ok_id; ?>", text: "<?php echo $ok_text; ?>"});
+                             $j('#kind').val("<?php echo $ok_id; ?>");
+                             $j('#s2id_typeDoc-container').select2("data", {id: "<?php echo $dk_id; ?>", text: "<?php echo $dk_text; ?>"});
+                             $j('#typeDoc').val("<?php echo $dk_id; ?>");
+                             orderNumber();
+                         },1000);
+                     }  
+                    </script>
+                <?php
+                $html_code = ob_get_contents();
+                ob_end_clean();
+                $html= $html . $html_code;
+            }
 	}
 
 	/**

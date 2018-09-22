@@ -203,7 +203,9 @@
 			'district' => array('appgini' => 'INT unsigned '),
 			'contact' => array('appgini' => 'INT unsigned '),
 			'company' => array('appgini' => 'INT unsigned '),
-			'map' => array('appgini' => 'VARCHAR(40) ')
+			'map' => array('appgini' => 'VARCHAR(40) '),
+			'default' => array('appgini' => 'VARCHAR(40) default \'0\' '),
+			'ship' => array('appgini' => 'VARCHAR(40) default \'0\' ')
 		),
 		'phones' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),

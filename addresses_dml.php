@@ -34,6 +34,10 @@ function addresses_insert(){
 		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
 	$data['map'] = makeSafe($_REQUEST['map']);
 		if($data['map'] == empty_lookup_value){ $data['map'] = ''; }
+	$data['default'] = makeSafe($_REQUEST['default']);
+		if($data['default'] == empty_lookup_value){ $data['default'] = ''; }
+	$data['ship'] = makeSafe($_REQUEST['ship']);
+		if($data['ship'] == empty_lookup_value){ $data['ship'] = ''; }
 	if($data['country'] == '') $data['country'] = "IT";
 
 	// hook: addresses_before_insert
@@ -43,7 +47,7 @@ function addresses_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `addresses` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `address`=' . (($data['address'] !== '' && $data['address'] !== NULL) ? "'{$data['address']}'" : 'NULL') . ', `houseNumber`=' . (($data['houseNumber'] !== '' && $data['houseNumber'] !== NULL) ? "'{$data['houseNumber']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `town`=' . (($data['town'] !== '' && $data['town'] !== NULL) ? "'{$data['town']}'" : 'NULL') . ', `postalCode`=' . (($data['postalCode'] !== '' && $data['postalCode'] !== NULL) ? "'{$data['postalCode']}'" : 'NULL') . ', `district`=' . (($data['district'] !== '' && $data['district'] !== NULL) ? "'{$data['district']}'" : 'NULL') . ', `map`=' . (($data['map'] !== '' && $data['map'] !== NULL) ? "'{$data['map']}'" : 'NULL'), $o);
+	sql('insert into `addresses` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `address`=' . (($data['address'] !== '' && $data['address'] !== NULL) ? "'{$data['address']}'" : 'NULL') . ', `houseNumber`=' . (($data['houseNumber'] !== '' && $data['houseNumber'] !== NULL) ? "'{$data['houseNumber']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `town`=' . (($data['town'] !== '' && $data['town'] !== NULL) ? "'{$data['town']}'" : 'NULL') . ', `postalCode`=' . (($data['postalCode'] !== '' && $data['postalCode'] !== NULL) ? "'{$data['postalCode']}'" : 'NULL') . ', `district`=' . (($data['district'] !== '' && $data['district'] !== NULL) ? "'{$data['district']}'" : 'NULL') . ', `map`=' . (($data['map'] !== '' && $data['map'] !== NULL) ? "'{$data['map']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL') . ', `ship`=' . (($data['ship'] !== '' && $data['ship'] !== NULL) ? "'{$data['ship']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"addresses_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -146,6 +150,10 @@ function addresses_update($selected_id){
 		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
 	$data['map'] = makeSafe($_REQUEST['map']);
 		if($data['map'] == empty_lookup_value){ $data['map'] = ''; }
+	$data['default'] = makeSafe($_REQUEST['default']);
+		if($data['default'] == empty_lookup_value){ $data['default'] = ''; }
+	$data['ship'] = makeSafe($_REQUEST['ship']);
+		if($data['ship'] == empty_lookup_value){ $data['ship'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: addresses_before_update
@@ -155,7 +163,7 @@ function addresses_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `addresses` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `address`=' . (($data['address'] !== '' && $data['address'] !== NULL) ? "'{$data['address']}'" : 'NULL') . ', `houseNumber`=' . (($data['houseNumber'] !== '' && $data['houseNumber'] !== NULL) ? "'{$data['houseNumber']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `town`=' . (($data['town'] !== '' && $data['town'] !== NULL) ? "'{$data['town']}'" : 'NULL') . ', `postalCode`=' . (($data['postalCode'] !== '' && $data['postalCode'] !== NULL) ? "'{$data['postalCode']}'" : 'NULL') . ', `district`=' . (($data['district'] !== '' && $data['district'] !== NULL) ? "'{$data['district']}'" : 'NULL') . ', `map`=' . (($data['map'] !== '' && $data['map'] !== NULL) ? "'{$data['map']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `addresses` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `address`=' . (($data['address'] !== '' && $data['address'] !== NULL) ? "'{$data['address']}'" : 'NULL') . ', `houseNumber`=' . (($data['houseNumber'] !== '' && $data['houseNumber'] !== NULL) ? "'{$data['houseNumber']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `town`=' . (($data['town'] !== '' && $data['town'] !== NULL) ? "'{$data['town']}'" : 'NULL') . ', `postalCode`=' . (($data['postalCode'] !== '' && $data['postalCode'] !== NULL) ? "'{$data['postalCode']}'" : 'NULL') . ', `district`=' . (($data['district'] !== '' && $data['district'] !== NULL) ? "'{$data['district']}'" : 'NULL') . ', `map`=' . (($data['map'] !== '' && $data['map'] !== NULL) ? "'{$data['map']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL') . ', `ship`=' . (($data['ship'] !== '' && $data['ship'] !== NULL) ? "'{$data['ship']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="addresses_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -839,6 +847,8 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$jsReadOnly .= "\tjQuery('#district_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#map').replaceWith('');\n";
 		$jsReadOnly .= "\tjQuery('#map, #map-edit-link').hide();\n";
+		$jsReadOnly .= "\tjQuery('#default').prop('disabled', true);\n";
+		$jsReadOnly .= "\tjQuery('#ship').prop('disabled', true);\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -894,6 +904,8 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%UPLOADFILE(contact)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(company)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(map)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(default)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(ship)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -928,6 +940,8 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$templateCode = str_replace('<%%URLVALUE(map)%%>', urlencode($urow['map']), $templateCode);
 		$templateCode = str_replace('<%%GOOGLEMAP(map)%%>', get_embed('googlemap', $urow['map'], '480', '360'), $templateCode);
 		$templateCode = str_replace('<%%GOOGLEMAPTHUMB(map)%%>', thisOr(get_embed('googlemap', $urow['map'], '480', '360', 'thumbnail_url'), 'blank.gif'), $templateCode);
+		$templateCode = str_replace('<%%CHECKED(default)%%>', ($row['default'] ? "checked" : ""), $templateCode);
+		$templateCode = str_replace('<%%CHECKED(ship)%%>', ($row['ship'] ? "checked" : ""), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -951,6 +965,8 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$templateCode = str_replace('<%%URLVALUE(map)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%GOOGLEMAP(map)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%GOOGLEMAPTHUMB(map)%%>', 'blank.gif', $templateCode);
+		$templateCode = str_replace('<%%CHECKED(default)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%CHECKED(ship)%%>', '', $templateCode);
 	}
 
 	// process translations

@@ -83,18 +83,20 @@ function showCard(field, dest, cmd){
     //cmd = comand for ajax and ajax file name
     var Data = $j('#' + field + '-container').select2("data");
     var id = parseInt(Data.id);
-    $j.ajax({
-        method: 'post', //post, get
-        dataType: 'html', //json,text,html
-        url: 'hooks/' + cmd + '.php',
-        cache: 'false',
-        data: {id: id, cmd: cmd}
-    })
-    .done(function (msg) {
-        //function at response
-        $j("#" + dest).html(msg);
-        $j("#" + dest).show();
-    });
+    if (id >0){
+        $j.ajax({
+            method: 'post', //post, get
+            dataType: 'html', //json,text,html
+            url: 'hooks/' + cmd + '.php',
+            cache: 'false',
+            data: {id: id, cmd: cmd}
+        })
+        .done(function (msg) {
+            //function at response
+            $j("#" + dest).html(msg);
+            $j("#" + dest).show();
+        });
+    }
 }
 
 function showParent(Data){

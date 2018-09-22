@@ -166,7 +166,7 @@
 			'kinds' => "`kinds`.`entity` as 'entity', `kinds`.`code` as 'code', `kinds`.`name` as 'name', `kinds`.`value` as 'value', `kinds`.`descriptions` as 'descriptions'",
 			'Logs' => "`Logs`.`id` as 'id', `Logs`.`ip` as 'ip', `Logs`.`ts` as 'ts', `Logs`.`details` as 'details'",
 			'attributes' => "`attributes`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'attribute', `attributes`.`value` as 'value', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'companies', IF(    CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`id`), '') as 'products'",
-			'addresses' => "`addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map'",
+			'addresses' => "`addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', `addresses`.`default` as 'default', `addresses`.`ship` as 'ship'",
 			'phones' => "`phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `phones`.`phoneNumber` as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company'",
 			'mails' => "`mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `mails`.`mail` as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company'",
 			'contacts_companies' => "`contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'company'",
@@ -467,7 +467,9 @@
 				'district' => '',
 				'contact' => '',
 				'company' => '',
-				'map' => ''
+				'map' => '',
+				'default' => '0',
+				'ship' => '0'
 			),
 			'phones' => array(
 				'id' => '',

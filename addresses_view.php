@@ -32,7 +32,9 @@
 		"IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') /* District */" => "district",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
-		"`addresses`.`map`" => "map"
+		"`addresses`.`map`" => "map",
+		"concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>')" => "default",
+		"concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>')" => "ship"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -46,7 +48,9 @@
 		8 => '`town2`.`district`',
 		9 => '`contacts1`.`id`',
 		10 => '`companies1`.`id`',
-		11 => 11
+		11 => 11,
+		12 => 12,
+		13 => 13
 	);
 
 	// Fields that can be displayed in the csv file
@@ -61,7 +65,9 @@
 		"IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') /* District */" => "district",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
-		"`addresses`.`map`" => "map"
+		"`addresses`.`map`" => "map",
+		"`addresses`.`default`" => "default",
+		"`addresses`.`ship`" => "ship"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -75,7 +81,9 @@
 		"IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') /* District */" => "District",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "Contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "Company",
-		"`addresses`.`map`" => "Map"
+		"`addresses`.`map`" => "Map",
+		"`addresses`.`default`" => "Default",
+		"`addresses`.`ship`" => "Ship"
 	);
 
 	// Fields that can be quick searched
@@ -90,7 +98,9 @@
 		"IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') /* District */" => "district",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
-		"`addresses`.`map`" => "map"
+		"`addresses`.`map`" => "map",
+		"concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>')" => "default",
+		"concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>')" => "ship"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -123,10 +133,10 @@
 	$x->TableIcon = "resources/table_icons/mail_box.png";
 	$x->PrimaryKey = "`addresses`.`id`";
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Kind", "Address", "HouseNumber", "Country", "Town", "PostalCode", "District");
-	$x->ColFieldName = array('kind', 'address', 'houseNumber', 'country', 'town', 'postalCode', 'district');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Kind", "Address", "HouseNumber", "Country", "Town", "PostalCode", "District", "Default", "Ship");
+	$x->ColFieldName = array('kind', 'address', 'houseNumber', 'country', 'town', 'postalCode', 'district', 'default', 'ship');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 12, 13);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/addresses_templateTV.html';
