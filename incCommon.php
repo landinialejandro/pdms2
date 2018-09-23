@@ -47,6 +47,7 @@
 			/* 'table_name' => ['table caption', 'homepage description', 'icon', 'table group name'] */   
 			'orders' => array('Ordini', 'Ordini fatti dai clienti, con i nuovi ordini elencati per primi.<br> La cronologia degli ordini puo essere specificata utilizzando <br>un filtro con numerose opzioni di scelta.', 'resources/table_icons/cart_remove.png', 'Documenti'),
 			'ordersDetails' => array('Dettaglio Ordini vendita', '', 'resources/table_icons/calendar_view_month.png', 'hiddens'),
+			'_resumeOrders' => array('Resume Orders', '', 'table.gif', 'Documenti'),
 			'products' => array('Articoli Magazzino', 'Oltre all\'accesso ai dettagli dei prodotti, &#232; anche possibile accedere alla cronologia degli ordini di ogni<br> singolo prodotto da qui.', 'resources/table_icons/installer_box.png', 'Catalogo'),
 			'firstCashNote' => array('Prima Nota', '', 'resources/table_icons/data_sort.png', 'Prima Nota'),
 			'vatRegister' => array('Registro Corrispettivi', '', 'resources/table_icons/book_spelling.png', 'Prima Nota'),
@@ -64,8 +65,7 @@
 			'phones' => array('Phones', '', 'resources/table_icons/phone.png', 'hiddens'),
 			'mails' => array('Mails', '', 'resources/table_icons/email.png', 'hiddens'),
 			'contacts_companies' => array('Contacts companies', 'relate contacts with companies', 'resources/table_icons/brick_link.png', 'hiddens'),
-			'attachments' => array('Attaches', '', 'resources/table_icons/attach.png', 'hiddens'),
-			'_resumeOrders' => array(' resumeOrders', '', 'table.gif', 'Azienda A')
+			'attachments' => array('Attaches', '', 'resources/table_icons/attach.png', 'hiddens')
 		);
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 
@@ -85,7 +85,7 @@
 
 	function get_table_groups($skip_authentication = false){
 		$tables = getTableList($skip_authentication);
-		$all_groups = array('Azienda A', 'Azienda B', 'Documenti', 'Catalogo', 'Prima Nota', 'Anagrafiche', 'Altro', 'hiddens');
+		$all_groups = array('Documenti', 'Catalogo', 'Prima Nota', 'Anagrafiche', 'Altro', 'hiddens');
 
 		$groups = array();
 		foreach($all_groups as $grp){
@@ -154,6 +154,7 @@
 		$sql_fields = array(   
 			'orders' => "`orders`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `orders`.`progressiveNr` as 'progressiveNr', `orders`.`trasmissionFor` as 'trasmissionFor', `orders`.`consigneeID` as 'consigneeID', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'typeDoc', `orders`.`multiOrder` as 'multiOrder', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'customer', IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') as 'employee', if(`orders`.`date`,date_format(`orders`.`date`,'%d/%m/%Y'),'') as 'date', if(`orders`.`requiredDate`,date_format(`orders`.`requiredDate`,'%d/%m/%Y'),'') as 'requiredDate', if(`orders`.`shippedDate`,date_format(`orders`.`shippedDate`,'%d/%m/%Y'),'') as 'shippedDate', IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') as 'shipVia', `orders`.`Freight` as 'Freight', `orders`.`pallets` as 'pallets', `orders`.`licencePlate` as 'licencePlate', `orders`.`orderTotal` as 'orderTotal', `orders`.`cashCredit` as 'cashCredit', `orders`.`trust` as 'trust', `orders`.`overdraft` as 'overdraft', `orders`.`commisionFee` as 'commisionFee', if(`orders`.`consigneeHour`,date_format(`orders`.`consigneeHour`,'%d/%m/%Y %h:%i %p'),'') as 'consigneeHour', `orders`.`consigneePlace` as 'consigneePlace', `orders`.`related` as 'related'",
 			'ordersDetails' => "`ordersDetails`.`id` as 'id', IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') as 'order', if(`ordersDetails`.`manufactureDate`,date_format(`ordersDetails`.`manufactureDate`,'%d/%m/%Y'),'') as 'manufactureDate', if(`ordersDetails`.`sellDate`,date_format(`ordersDetails`.`sellDate`,'%d/%m/%Y'),'') as 'sellDate', if(`ordersDetails`.`expiryDate`,date_format(`ordersDetails`.`expiryDate`,'%d/%m/%Y'),'') as 'expiryDate', `ordersDetails`.`daysToExpiry` as 'daysToExpiry', IF(    CHAR_LENGTH(`products1`.`codebar`), CONCAT_WS('',   `products1`.`codebar`), '') as 'codebar', IF(    CHAR_LENGTH(`products1`.`UM`), CONCAT_WS('',   `products1`.`UM`), '') as 'UM', IF(    CHAR_LENGTH(`products1`.`productCode`), CONCAT_WS('',   `products1`.`productCode`), '') as 'productCode', IF(    CHAR_LENGTH(`products1`.`productCode`) || CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`productCode`, '-', `products1`.`id`), '') as 'batch', `ordersDetails`.`packages` as 'packages', `ordersDetails`.`noSell` as 'noSell', `ordersDetails`.`Quantity` as 'Quantity', `ordersDetails`.`QuantityReal` as 'QuantityReal', CONCAT('&euro;', FORMAT(`ordersDetails`.`UnitPrice`, 2)) as 'UnitPrice', CONCAT('&euro;', FORMAT(`ordersDetails`.`Subtotal`, 2)) as 'Subtotal', CONCAT('&euro;', FORMAT(`ordersDetails`.`taxes`, 2)) as 'taxes', `ordersDetails`.`Discount` as 'Discount', CONCAT('&euro;', FORMAT(`ordersDetails`.`LineTotal`, 2)) as 'LineTotal', IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') as 'section', `ordersDetails`.`transaction_type` as 'transaction_type', `ordersDetails`.`skBatches` as 'skBatches', `ordersDetails`.`averagePrice` as 'averagePrice', `ordersDetails`.`averageWeight` as 'averageWeight', `ordersDetails`.`commission` as 'commission', `ordersDetails`.`return` as 'return', `ordersDetails`.`supplierCode` as 'supplierCode'",
+			'_resumeOrders' => "IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'typedoc', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'customer', `_resumeOrders`.`TOT` as 'TOT', `_resumeOrders`.`MONTH` as 'MONTH', `_resumeOrders`.`YEAR` as 'YEAR', `_resumeOrders`.`DOCs` as 'DOCs', IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') as 'related', `_resumeOrders`.`id` as 'id'",
 			'products' => "`products`.`id` as 'id', `products`.`codebar` as 'codebar', `products`.`productCode` as 'productCode', `products`.`productName` as 'productName', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'tax', `products`.`increment` as 'increment', IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') as 'CategoryID', `products`.`UM` as 'UM', `products`.`tare` as 'tare', `products`.`QuantityPerUnit` as 'QuantityPerUnit', CONCAT('&euro;', FORMAT(`products`.`UnitPrice`, 2)) as 'UnitPrice', CONCAT('&euro;', FORMAT(`products`.`sellPrice`, 2)) as 'sellPrice', `products`.`UnitsInStock` as 'UnitsInStock', `products`.`UnitsOnOrder` as 'UnitsOnOrder', `products`.`ReorderLevel` as 'ReorderLevel', `products`.`balance` as 'balance', `products`.`Discontinued` as 'Discontinued', if(`products`.`manufactured_date`,date_format(`products`.`manufactured_date`,'%d/%m/%Y'),'') as 'manufactured_date', if(`products`.`expiry_date`,date_format(`products`.`expiry_date`,'%d/%m/%Y'),'') as 'expiry_date', `products`.`note` as 'note', if(`products`.`update_date`,date_format(`products`.`update_date`,'%d/%m/%Y %h:%i %p'),'') as 'update_date'",
 			'firstCashNote' => "`firstCashNote`.`id` as 'id', IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') as 'order', if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'') as 'operationDate', `firstCashNote`.`documentNumber` as 'documentNumber', `firstCashNote`.`causal` as 'causal', `firstCashNote`.`revenue` as 'revenue', `firstCashNote`.`outputs` as 'outputs', `firstCashNote`.`balance` as 'balance', `firstCashNote`.`idBank` as 'idBank', `firstCashNote`.`bank` as 'bank', `firstCashNote`.`note` as 'note', if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'') as 'paymentDeadLine', `firstCashNote`.`payed` as 'payed'",
 			'vatRegister' => "`vatRegister`.`id` as 'id', IF(    CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyCode`), '') as 'idCompany', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'companyName', `vatRegister`.`tax` as 'tax', `vatRegister`.`month` as 'month', `vatRegister`.`year` as 'year', `vatRegister`.`amount` as 'amount'",
@@ -171,8 +172,7 @@
 			'phones' => "`phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `phones`.`phoneNumber` as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company'",
 			'mails' => "`mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `mails`.`mail` as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company'",
 			'contacts_companies' => "`contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'company'",
-			'attachments' => "`attachments`.`id` as 'id', `attachments`.`name` as 'name', `attachments`.`file` as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `attachments`.`thumbUse` as 'thumbUse'",
-			'_resumeOrders' => "IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'typedoc', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'customer', `_resumeOrders`.`TOT` as 'TOT', `_resumeOrders`.`MONTH` as 'MONTH', `_resumeOrders`.`YEAR` as 'YEAR', `_resumeOrders`.`DOCs` as 'DOCs', IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') as 'realted', `_resumeOrders`.`id` as 'id'"
+			'attachments' => "`attachments`.`id` as 'id', `attachments`.`name` as 'name', `attachments`.`file` as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `attachments`.`thumbUse` as 'thumbUse'"
 		);
 
 		if(isset($sql_fields[$table_name])){
@@ -188,6 +188,7 @@
 		$sql_from = array(   
 			'orders' => "`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`orders`.`employee` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`shipVia` ",
 			'ordersDetails' => "`ordersDetails` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`ordersDetails`.`order` LEFT JOIN `products` as products1 ON `products1`.`id`=`ordersDetails`.`productCode` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`ordersDetails`.`section` ",
+			'_resumeOrders' => "`_resumeOrders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`_resumeOrders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`_resumeOrders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`_resumeOrders`.`typedoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`_resumeOrders`.`customer` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`_resumeOrders`.`related` ",
 			'products' => "`products` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`products`.`tax` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`products`.`CategoryID` ",
 			'firstCashNote' => "`firstCashNote` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` ",
 			'vatRegister' => "`vatRegister` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`vatRegister`.`idCompany` ",
@@ -205,13 +206,13 @@
 			'phones' => "`phones` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`phones`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`phones`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`phones`.`company` ",
 			'mails' => "`mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` ",
 			'contacts_companies' => "`contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` ",
-			'attachments' => "`attachments` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attachments`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attachments`.`company` ",
-			'_resumeOrders' => "`_resumeOrders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`_resumeOrders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`_resumeOrders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`_resumeOrders`.`typedoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`_resumeOrders`.`customer` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`_resumeOrders`.`realted` "
+			'attachments' => "`attachments` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attachments`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attachments`.`company` "
 		);
 
 		$pkey = array(   
 			'orders' => 'id',
 			'ordersDetails' => 'id',
+			'_resumeOrders' => 'id',
 			'products' => 'id',
 			'firstCashNote' => 'id',
 			'vatRegister' => 'id',
@@ -229,8 +230,7 @@
 			'phones' => 'id',
 			'mails' => 'id',
 			'contacts_companies' => 'id',
-			'attachments' => 'id',
-			'_resumeOrders' => 'id'
+			'attachments' => 'id'
 		);
 
 		if(isset($sql_from[$table_name])){
@@ -333,6 +333,18 @@
 				'commission' => '15.00',
 				'return' => '1',
 				'supplierCode' => ''
+			),
+			'_resumeOrders' => array(
+				'kind' => '',
+				'company' => '',
+				'typedoc' => '',
+				'customer' => '',
+				'TOT' => '',
+				'MONTH' => '',
+				'YEAR' => '',
+				'DOCs' => '',
+				'related' => '',
+				'id' => ''
 			),
 			'products' => array(
 				'id' => '',
@@ -502,18 +514,6 @@
 				'contact' => '',
 				'company' => '',
 				'thumbUse' => ''
-			),
-			'_resumeOrders' => array(
-				'kind' => '',
-				'company' => '',
-				'typedoc' => '',
-				'customer' => '',
-				'TOT' => '',
-				'MONTH' => '',
-				'YEAR' => '',
-				'DOCs' => '',
-				'realted' => '',
-				'id' => ''
 			)
 		);
 
@@ -1237,7 +1237,7 @@
 		if(is_array($arrTables)){
 			foreach($arrTables as $tn => $tc){
 				/* ---- list of tables where hide link in nav menu is set ---- */
-				$tChkHL = array_search($tn, array('ordersDetails','creditDocument'));
+				$tChkHL = array_search($tn, array('creditDocument'));
 
 				/* ---- list of tables where filter first is set ---- */
 				$tChkFF = array_search($tn, array());

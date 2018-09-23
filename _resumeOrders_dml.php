@@ -30,8 +30,8 @@ function _resumeOrders_insert(){
 		if($data['YEAR'] == empty_lookup_value){ $data['YEAR'] = ''; }
 	$data['DOCs'] = makeSafe($_REQUEST['DOCs']);
 		if($data['DOCs'] == empty_lookup_value){ $data['DOCs'] = ''; }
-	$data['realted'] = makeSafe($_REQUEST['realted']);
-		if($data['realted'] == empty_lookup_value){ $data['realted'] = ''; }
+	$data['related'] = makeSafe($_REQUEST['related']);
+		if($data['related'] == empty_lookup_value){ $data['related'] = ''; }
 
 	// hook: _resumeOrders_before_insert
 	if(function_exists('_resumeOrders_before_insert')){
@@ -40,7 +40,7 @@ function _resumeOrders_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `_resumeOrders` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `typedoc`=' . (($data['typedoc'] !== '' && $data['typedoc'] !== NULL) ? "'{$data['typedoc']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `TOT`=' . (($data['TOT'] !== '' && $data['TOT'] !== NULL) ? "'{$data['TOT']}'" : 'NULL') . ', `MONTH`=' . (($data['MONTH'] !== '' && $data['MONTH'] !== NULL) ? "'{$data['MONTH']}'" : 'NULL') . ', `YEAR`=' . (($data['YEAR'] !== '' && $data['YEAR'] !== NULL) ? "'{$data['YEAR']}'" : 'NULL') . ', `DOCs`=' . (($data['DOCs'] !== '' && $data['DOCs'] !== NULL) ? "'{$data['DOCs']}'" : 'NULL') . ', `realted`=' . (($data['realted'] !== '' && $data['realted'] !== NULL) ? "'{$data['realted']}'" : 'NULL'), $o);
+	sql('insert into `_resumeOrders` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `typedoc`=' . (($data['typedoc'] !== '' && $data['typedoc'] !== NULL) ? "'{$data['typedoc']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `TOT`=' . (($data['TOT'] !== '' && $data['TOT'] !== NULL) ? "'{$data['TOT']}'" : 'NULL') . ', `MONTH`=' . (($data['MONTH'] !== '' && $data['MONTH'] !== NULL) ? "'{$data['MONTH']}'" : 'NULL') . ', `YEAR`=' . (($data['YEAR'] !== '' && $data['YEAR'] !== NULL) ? "'{$data['YEAR']}'" : 'NULL') . ', `DOCs`=' . (($data['DOCs'] !== '' && $data['DOCs'] !== NULL) ? "'{$data['DOCs']}'" : 'NULL') . ', `related`=' . (($data['related'] !== '' && $data['related'] !== NULL) ? "'{$data['related']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"_resumeOrders_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -129,8 +129,8 @@ function _resumeOrders_update($selected_id){
 		if($data['YEAR'] == empty_lookup_value){ $data['YEAR'] = ''; }
 	$data['DOCs'] = makeSafe($_REQUEST['DOCs']);
 		if($data['DOCs'] == empty_lookup_value){ $data['DOCs'] = ''; }
-	$data['realted'] = makeSafe($_REQUEST['realted']);
-		if($data['realted'] == empty_lookup_value){ $data['realted'] = ''; }
+	$data['related'] = makeSafe($_REQUEST['related']);
+		if($data['related'] == empty_lookup_value){ $data['related'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: _resumeOrders_before_update
@@ -140,7 +140,7 @@ function _resumeOrders_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `_resumeOrders` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `typedoc`=' . (($data['typedoc'] !== '' && $data['typedoc'] !== NULL) ? "'{$data['typedoc']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `TOT`=' . (($data['TOT'] !== '' && $data['TOT'] !== NULL) ? "'{$data['TOT']}'" : 'NULL') . ', `MONTH`=' . (($data['MONTH'] !== '' && $data['MONTH'] !== NULL) ? "'{$data['MONTH']}'" : 'NULL') . ', `YEAR`=' . (($data['YEAR'] !== '' && $data['YEAR'] !== NULL) ? "'{$data['YEAR']}'" : 'NULL') . ', `DOCs`=' . (($data['DOCs'] !== '' && $data['DOCs'] !== NULL) ? "'{$data['DOCs']}'" : 'NULL') . ', `realted`=' . (($data['realted'] !== '' && $data['realted'] !== NULL) ? "'{$data['realted']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `_resumeOrders` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `typedoc`=' . (($data['typedoc'] !== '' && $data['typedoc'] !== NULL) ? "'{$data['typedoc']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `TOT`=' . (($data['TOT'] !== '' && $data['TOT'] !== NULL) ? "'{$data['TOT']}'" : 'NULL') . ', `MONTH`=' . (($data['MONTH'] !== '' && $data['MONTH'] !== NULL) ? "'{$data['MONTH']}'" : 'NULL') . ', `YEAR`=' . (($data['YEAR'] !== '' && $data['YEAR'] !== NULL) ? "'{$data['YEAR']}'" : 'NULL') . ', `DOCs`=' . (($data['DOCs'] !== '' && $data['DOCs'] !== NULL) ? "'{$data['DOCs']}'" : 'NULL') . ', `related`=' . (($data['related'] !== '' && $data['related'] !== NULL) ? "'{$data['related']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="_resumeOrders_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -186,7 +186,7 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$filterer_company = thisOr(undo_magic_quotes($_REQUEST['filterer_company']), '');
 	$filterer_typedoc = thisOr(undo_magic_quotes($_REQUEST['filterer_typedoc']), '');
 	$filterer_customer = thisOr(undo_magic_quotes($_REQUEST['filterer_customer']), '');
-	$filterer_realted = thisOr(undo_magic_quotes($_REQUEST['filterer_realted']), '');
+	$filterer_related = thisOr(undo_magic_quotes($_REQUEST['filterer_related']), '');
 
 	// populate filterers, starting from children to grand-parents
 
@@ -200,8 +200,8 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$combo_typedoc = new DataCombo;
 	// combobox: customer
 	$combo_customer = new DataCombo;
-	// combobox: realted
-	$combo_realted = new DataCombo;
+	// combobox: related
+	$combo_related = new DataCombo;
 
 	if($selected_id){
 		// mm: check member permissions
@@ -236,13 +236,13 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$combo_company->SelectedData = $row['company'];
 		$combo_typedoc->SelectedData = $row['typedoc'];
 		$combo_customer->SelectedData = $row['customer'];
-		$combo_realted->SelectedData = $row['realted'];
+		$combo_related->SelectedData = $row['related'];
 	}else{
 		$combo_kind->SelectedData = $filterer_kind;
 		$combo_company->SelectedData = $filterer_company;
 		$combo_typedoc->SelectedData = $filterer_typedoc;
 		$combo_customer->SelectedData = $filterer_customer;
-		$combo_realted->SelectedData = $filterer_realted;
+		$combo_related->SelectedData = $filterer_related;
 	}
 	$combo_kind->HTML = '<span id="kind-container' . $rnd1 . '"></span><input type="hidden" name="kind" id="kind' . $rnd1 . '" value="' . html_attr($combo_kind->SelectedData) . '">';
 	$combo_kind->MatchText = '<span id="kind-container-readonly' . $rnd1 . '"></span><input type="hidden" name="kind" id="kind' . $rnd1 . '" value="' . html_attr($combo_kind->SelectedData) . '">';
@@ -252,8 +252,8 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$combo_typedoc->MatchText = '<span id="typedoc-container-readonly' . $rnd1 . '"></span><input type="hidden" name="typedoc" id="typedoc' . $rnd1 . '" value="' . html_attr($combo_typedoc->SelectedData) . '">';
 	$combo_customer->HTML = '<span id="customer-container' . $rnd1 . '"></span><input type="hidden" name="customer" id="customer' . $rnd1 . '" value="' . html_attr($combo_customer->SelectedData) . '">';
 	$combo_customer->MatchText = '<span id="customer-container-readonly' . $rnd1 . '"></span><input type="hidden" name="customer" id="customer' . $rnd1 . '" value="' . html_attr($combo_customer->SelectedData) . '">';
-	$combo_realted->HTML = '<span id="realted-container' . $rnd1 . '"></span><input type="hidden" name="realted" id="realted' . $rnd1 . '" value="' . html_attr($combo_realted->SelectedData) . '">';
-	$combo_realted->MatchText = '<span id="realted-container-readonly' . $rnd1 . '"></span><input type="hidden" name="realted" id="realted' . $rnd1 . '" value="' . html_attr($combo_realted->SelectedData) . '">';
+	$combo_related->HTML = '<span id="related-container' . $rnd1 . '"></span><input type="hidden" name="related" id="related' . $rnd1 . '" value="' . html_attr($combo_related->SelectedData) . '">';
+	$combo_related->MatchText = '<span id="related-container-readonly' . $rnd1 . '"></span><input type="hidden" name="related" id="related' . $rnd1 . '" value="' . html_attr($combo_related->SelectedData) . '">';
 
 	ob_start();
 	?>
@@ -264,7 +264,7 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		AppGini.current_company__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['company'] : $filterer_company); ?>"};
 		AppGini.current_typedoc__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['typedoc'] : $filterer_typedoc); ?>"};
 		AppGini.current_customer__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['customer'] : $filterer_customer); ?>"};
-		AppGini.current_realted__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['realted'] : $filterer_realted); ?>"};
+		AppGini.current_related__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['related'] : $filterer_related); ?>"};
 
 		jQuery(function() {
 			setTimeout(function(){
@@ -272,7 +272,7 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 				if(typeof(company_reload__RAND__) == 'function') company_reload__RAND__();
 				if(typeof(typedoc_reload__RAND__) == 'function') typedoc_reload__RAND__();
 				if(typeof(customer_reload__RAND__) == 'function') customer_reload__RAND__();
-				if(typeof(realted_reload__RAND__) == 'function') realted_reload__RAND__();
+				if(typeof(related_reload__RAND__) == 'function') related_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
 		});
 		function kind_reload__RAND__(){
@@ -583,27 +583,27 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		<?php } ?>
 
 		}
-		function realted_reload__RAND__(){
+		function related_reload__RAND__(){
 		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
 
-			$j("#realted-container__RAND__").select2({
+			$j("#related-container__RAND__").select2({
 				/* initial default value */
 				initSelection: function(e, c){
 					$j.ajax({
 						url: 'ajax_combo.php',
 						dataType: 'json',
-						data: { id: AppGini.current_realted__RAND__.value, t: '_resumeOrders', f: 'realted' },
+						data: { id: AppGini.current_related__RAND__.value, t: '_resumeOrders', f: 'related' },
 						success: function(resp){
 							c({
 								id: resp.results[0].id,
 								text: resp.results[0].text
 							});
-							$j('[name="realted"]').val(resp.results[0].id);
-							$j('[id=realted-container-readonly__RAND__]').html('<span id="realted-match-text">' + resp.results[0].text + '</span>');
+							$j('[name="related"]').val(resp.results[0].id);
+							$j('[id=related-container-readonly__RAND__]').html('<span id="related-match-text">' + resp.results[0].text + '</span>');
 							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=orders_view_parent]').hide(); }else{ $j('.btn[id=orders_view_parent]').show(); }
 
 
-							if(typeof(realted_update_autofills__RAND__) == 'function') realted_update_autofills__RAND__();
+							if(typeof(related_update_autofills__RAND__) == 'function') related_update_autofills__RAND__();
 						}
 					});
 				},
@@ -615,31 +615,31 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 					url: 'ajax_combo.php',
 					dataType: 'json',
 					cache: true,
-					data: function(term, page){ /* */ return { s: term, p: page, t: '_resumeOrders', f: 'realted' }; },
+					data: function(term, page){ /* */ return { s: term, p: page, t: '_resumeOrders', f: 'related' }; },
 					results: function(resp, page){ /* */ return resp; }
 				},
 				escapeMarkup: function(str){ /* */ return str; }
 			}).on('change', function(e){
-				AppGini.current_realted__RAND__.value = e.added.id;
-				AppGini.current_realted__RAND__.text = e.added.text;
-				$j('[name="realted"]').val(e.added.id);
+				AppGini.current_related__RAND__.value = e.added.id;
+				AppGini.current_related__RAND__.text = e.added.text;
+				$j('[name="related"]').val(e.added.id);
 				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=orders_view_parent]').hide(); }else{ $j('.btn[id=orders_view_parent]').show(); }
 
 
-				if(typeof(realted_update_autofills__RAND__) == 'function') realted_update_autofills__RAND__();
+				if(typeof(related_update_autofills__RAND__) == 'function') related_update_autofills__RAND__();
 			});
 
-			if(!$j("#realted-container__RAND__").length){
+			if(!$j("#related-container__RAND__").length){
 				$j.ajax({
 					url: 'ajax_combo.php',
 					dataType: 'json',
-					data: { id: AppGini.current_realted__RAND__.value, t: '_resumeOrders', f: 'realted' },
+					data: { id: AppGini.current_related__RAND__.value, t: '_resumeOrders', f: 'related' },
 					success: function(resp){
-						$j('[name="realted"]').val(resp.results[0].id);
-						$j('[id=realted-container-readonly__RAND__]').html('<span id="realted-match-text">' + resp.results[0].text + '</span>');
+						$j('[name="related"]').val(resp.results[0].id);
+						$j('[id=related-container-readonly__RAND__]').html('<span id="related-match-text">' + resp.results[0].text + '</span>');
 						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=orders_view_parent]').hide(); }else{ $j('.btn[id=orders_view_parent]').show(); }
 
-						if(typeof(realted_update_autofills__RAND__) == 'function') realted_update_autofills__RAND__();
+						if(typeof(related_update_autofills__RAND__) == 'function') related_update_autofills__RAND__();
 					}
 				});
 			}
@@ -649,12 +649,12 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 			$j.ajax({
 				url: 'ajax_combo.php',
 				dataType: 'json',
-				data: { id: AppGini.current_realted__RAND__.value, t: '_resumeOrders', f: 'realted' },
+				data: { id: AppGini.current_related__RAND__.value, t: '_resumeOrders', f: 'related' },
 				success: function(resp){
-					$j('[id=realted-container__RAND__], [id=realted-container-readonly__RAND__]').html('<span id="realted-match-text">' + resp.results[0].text + '</span>');
+					$j('[id=related-container__RAND__], [id=related-container-readonly__RAND__]').html('<span id="related-match-text">' + resp.results[0].text + '</span>');
 					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=orders_view_parent]').hide(); }else{ $j('.btn[id=orders_view_parent]').show(); }
 
-					if(typeof(realted_update_autofills__RAND__) == 'function') realted_update_autofills__RAND__();
+					if(typeof(related_update_autofills__RAND__) == 'function') related_update_autofills__RAND__();
 				}
 			});
 		<?php } ?>
@@ -730,8 +730,8 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$jsReadOnly .= "\tjQuery('#MONTH').replaceWith('<div class=\"form-control-static\" id=\"MONTH\">' + (jQuery('#MONTH').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#YEAR').replaceWith('<div class=\"form-control-static\" id=\"YEAR\">' + (jQuery('#YEAR').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#DOCs').replaceWith('<div class=\"form-control-static\" id=\"DOCs\">' + (jQuery('#DOCs').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('#realted').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#realted_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+		$jsReadOnly .= "\tjQuery('#related').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#related_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -753,12 +753,12 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$templateCode = str_replace('<%%COMBO(customer)%%>', $combo_customer->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(customer)%%>', $combo_customer->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(customer)%%>', urlencode($combo_customer->MatchText), $templateCode);
-	$templateCode = str_replace('<%%COMBO(realted)%%>', $combo_realted->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(realted)%%>', $combo_realted->MatchText, $templateCode);
-	$templateCode = str_replace('<%%URLCOMBOTEXT(realted)%%>', urlencode($combo_realted->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(related)%%>', $combo_related->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(related)%%>', $combo_related->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(related)%%>', urlencode($combo_related->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'kind' => array('kinds', 'Kind'), 'company' => array('companies', 'Company'), 'typedoc' => array('kinds', 'Typedoc'), 'customer' => array('companies', 'Customer'), 'realted' => array('orders', 'Realted'));
+	$lookup_fields = array(  'kind' => array('kinds', 'Kind'), 'company' => array('companies', 'Company'), 'typedoc' => array('kinds', 'Typedoc'), 'customer' => array('companies', 'Customer'), 'related' => array('orders', 'Related'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -782,7 +782,7 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$templateCode = str_replace('<%%UPLOADFILE(MONTH)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(YEAR)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(DOCs)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(realted)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(related)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(id)%%>', '', $templateCode);
 
 	// process values
@@ -811,9 +811,9 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(DOCs)%%>', safe_html($urow['DOCs']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(DOCs)%%>', html_attr($row['DOCs']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(DOCs)%%>', urlencode($urow['DOCs']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(realted)%%>', safe_html($urow['realted']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(realted)%%>', html_attr($row['realted']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(realted)%%>', urlencode($urow['realted']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(related)%%>', safe_html($urow['related']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(related)%%>', html_attr($row['related']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(related)%%>', urlencode($urow['related']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(id)%%>', safe_html($urow['id']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(id)%%>', html_attr($row['id']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode($urow['id']), $templateCode);
@@ -834,8 +834,8 @@ function _resumeOrders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$templateCode = str_replace('<%%URLVALUE(YEAR)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(DOCs)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(DOCs)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(realted)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(realted)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(related)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(related)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
 	}

@@ -82,6 +82,8 @@
 	$x->TableTitle = "Countries";
 	$x->TableIcon = "resources/table_icons/globe_model.png";
 	$x->PrimaryKey = "`countries`.`id`";
+	$x->DefaultSortField = '2';
+	$x->DefaultSortDirection = 'asc';
 
 	$x->ColWidth   = array(  150, 150);
 	$x->ColCaption = array("Country", "Code");

@@ -117,6 +117,8 @@
 	$x->TableTitle = "Resume Orders";
 	$x->TableIcon = "table.gif";
 	$x->PrimaryKey = "`SQL_resumeOrders`.`id`";
+	$x->DefaultSortField = '1';
+	$x->DefaultSortDirection = 'asc';
 
 	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150);
 	$x->ColCaption = array("Kind", "Company", "Typedoc", "Customer", "TOT", "MONTH", "YEAR", "DOCs", "Related");

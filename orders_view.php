@@ -192,7 +192,7 @@
 	$x->TableTitle = "Ordini";
 	$x->TableIcon = "resources/table_icons/cart_remove.png";
 	$x->PrimaryKey = "`orders`.`id`";
-	$x->DefaultSortField = '8';
+	$x->DefaultSortField = '1';
 	$x->DefaultSortDirection = 'desc';
 
 	$x->ColWidth   = array(  75, 150, 150, 150, 150, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);

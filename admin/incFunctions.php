@@ -69,8 +69,6 @@
 
 		/* table groups */
 		$tg = array(
-			'Azienda A',
-			'Azienda B',
 			'Documenti',
 			'Catalogo',
 			'Prima Nota',
@@ -85,147 +83,147 @@
 					'Caption' => 'Ordini',
 					'Description' => 'Ordini fatti dai clienti, con i nuovi ordini elencati per primi.<br> La cronologia degli ordini puo essere specificata utilizzando <br>un filtro con numerose opzioni di scelta.',
 					'tableIcon' => 'resources/table_icons/cart_remove.png',
-					'group' => $tg[2],
+					'group' => $tg[0],
 					'homepageShowCount' => 1
 				),
 				'ordersDetails' => array(
 					'Caption' => 'Dettaglio Ordini vendita',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/calendar_view_month.png',
-					'group' => $tg[7],
+					'group' => $tg[5],
 					'homepageShowCount' => 1
+				),
+				'_resumeOrders' => array(
+					'Caption' => 'Resume Orders',
+					'Description' => '',
+					'tableIcon' => 'table.gif',
+					'group' => $tg[0],
+					'homepageShowCount' => 0
 				),
 				'products' => array(
 					'Caption' => 'Articoli Magazzino',
 					'Description' => 'Oltre all\'accesso ai dettagli dei prodotti, &#232; anche possibile accedere alla cronologia degli ordini di ogni<br> singolo prodotto da qui.',
 					'tableIcon' => 'resources/table_icons/installer_box.png',
-					'group' => $tg[3],
+					'group' => $tg[1],
 					'homepageShowCount' => 1
 				),
 				'firstCashNote' => array(
 					'Caption' => 'Prima Nota',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/data_sort.png',
-					'group' => $tg[4],
+					'group' => $tg[2],
 					'homepageShowCount' => 1
 				),
 				'vatRegister' => array(
 					'Caption' => 'Registro Corrispettivi',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/book_spelling.png',
-					'group' => $tg[4],
+					'group' => $tg[2],
 					'homepageShowCount' => 1
 				),
 				'companies' => array(
 					'Caption' => 'Companies',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/factory.png',
-					'group' => $tg[5],
+					'group' => $tg[3],
 					'homepageShowCount' => 1
 				),
 				'contacts' => array(
 					'Caption' => 'Contacts',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/client_account_template.png',
-					'group' => $tg[5],
+					'group' => $tg[3],
 					'homepageShowCount' => 1
 				),
 				'creditDocument' => array(
 					'Caption' => 'Nota Credito',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/card_credit.png',
-					'group' => $tg[5],
+					'group' => $tg[3],
 					'homepageShowCount' => 0
 				),
 				'electronicInvoice' => array(
 					'Caption' => 'ElectronicInvoice',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/document_editing.png',
-					'group' => $tg[5],
+					'group' => $tg[3],
 					'homepageShowCount' => 0
 				),
 				'countries' => array(
 					'Caption' => 'Countries',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/globe_model.png',
-					'group' => $tg[5],
+					'group' => $tg[3],
 					'homepageShowCount' => 1
 				),
 				'town' => array(
 					'Caption' => 'Comuni italiani',
 					'Description' => 'Elenco dei comuni italiani con i relativi codici.',
 					'tableIcon' => 'resources/table_icons/italy.png',
-					'group' => $tg[5],
+					'group' => $tg[3],
 					'homepageShowCount' => 1
 				),
 				'GPSTrackingSystem' => array(
 					'Caption' => 'GPS Tracking System',
 					'Description' => 'Questa tabella, non disponibile al momento, serve per chi ha necessit&#224; di controllare i propri mezzi con un sistema di tracciamento GPS.<br>Si puo richiedere questa opzione a parte.',
 					'tableIcon' => 'resources/table_icons/compass.png',
-					'group' => $tg[6],
+					'group' => $tg[4],
 					'homepageShowCount' => 1
 				),
 				'kinds' => array(
 					'Caption' => 'Entities Kinds',
 					'Description' => 'Config kind\'s name for Addreses, Phones, Companies, Mails, Orders, Products, Contacts...etc.',
 					'tableIcon' => 'resources/table_icons/application_view_tile.png',
-					'group' => $tg[6],
+					'group' => $tg[4],
 					'homepageShowCount' => 1
 				),
 				'Logs' => array(
 					'Caption' => 'Logs',
 					'Description' => 'Questa tabella serve a tener traccia dei tentativi di accesso che possono risultare dannosi, tracciando l\'IP di provenienza.',
 					'tableIcon' => 'resources/table_icons/centroid.png',
-					'group' => $tg[6],
+					'group' => $tg[4],
 					'homepageShowCount' => 1
 				),
 				'attributes' => array(
 					'Caption' => 'Attributes',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/application_form_add.png',
-					'group' => $tg[7],
+					'group' => $tg[5],
 					'homepageShowCount' => 0
 				),
 				'addresses' => array(
 					'Caption' => 'Addresses',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/mail_box.png',
-					'group' => $tg[7],
+					'group' => $tg[5],
 					'homepageShowCount' => 0
 				),
 				'phones' => array(
 					'Caption' => 'Phones',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/phone.png',
-					'group' => $tg[7],
+					'group' => $tg[5],
 					'homepageShowCount' => 0
 				),
 				'mails' => array(
 					'Caption' => 'Mails',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/email.png',
-					'group' => $tg[7],
+					'group' => $tg[5],
 					'homepageShowCount' => 0
 				),
 				'contacts_companies' => array(
 					'Caption' => 'Contacts companies',
 					'Description' => 'relate contacts with companies',
 					'tableIcon' => 'resources/table_icons/brick_link.png',
-					'group' => $tg[7],
+					'group' => $tg[5],
 					'homepageShowCount' => 0
 				),
 				'attachments' => array(
 					'Caption' => 'Attaches',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/attach.png',
-					'group' => $tg[7],
-					'homepageShowCount' => 0
-				),
-				'_resumeOrders' => array(
-					'Caption' => ' resumeOrders',
-					'Description' => '',
-					'tableIcon' => 'table.gif',
-					'group' => $tg[0],
+					'group' => $tg[5],
 					'homepageShowCount' => 0
 				)
 		);
@@ -245,6 +243,7 @@
 			$arrTables = array(   
 				'orders' => 'Ordini',
 				'ordersDetails' => 'Dettaglio Ordini vendita',
+				'_resumeOrders' => 'Resume Orders',
 				'products' => 'Articoli Magazzino',
 				'firstCashNote' => 'Prima Nota',
 				'vatRegister' => 'Registro Corrispettivi',
@@ -262,8 +261,7 @@
 				'phones' => 'Phones',
 				'mails' => 'Mails',
 				'contacts_companies' => 'Contacts companies',
-				'attachments' => 'Attaches',
-				'_resumeOrders' => ' resumeOrders'
+				'attachments' => 'Attaches'
 			);
 
 			return $arrTables;

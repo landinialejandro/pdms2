@@ -122,6 +122,8 @@
 	$x->TableTitle = "Comuni italiani";
 	$x->TableIcon = "resources/table_icons/italy.png";
 	$x->PrimaryKey = "`town`.`id`";
+	$x->DefaultSortField = '4';
+	$x->DefaultSortDirection = 'asc';
 
 	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
 	$x->ColCaption = array("Country", "IdIstat", "Comune", "Provincia", "Regione", "Prefisso", "CAP", "Codice Fisc.", "Abitanti", "Link");

@@ -102,6 +102,8 @@
 	$x->TableTitle = "Companies";
 	$x->TableIcon = "resources/table_icons/factory.png";
 	$x->PrimaryKey = "`companies`.`id`";
+	$x->DefaultSortField = '4';
+	$x->DefaultSortDirection = 'asc';
 
 	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150);
 	$x->ColCaption = array("Kind", "CompanyCode", "CompanyName", "FiscalCode", "Vat", "Notes");

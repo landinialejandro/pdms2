@@ -202,6 +202,8 @@
 	$x->TableTitle = "Dettaglio Ordini vendita";
 	$x->TableIcon = "resources/table_icons/calendar_view_month.png";
 	$x->PrimaryKey = "`ordersDetails`.`id`";
+	$x->DefaultSortField = '1';
+	$x->DefaultSortDirection = 'asc';
 
 	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 75, 150, 75, 150, 150, 75, 150, 150, 150, 150, 150, 150, 150);
 	$x->ColCaption = array("Data produzione", "Data vendita", "UM", "Codice prodotto", "Colli", "Es. Colli", "Peso partenza", "Peso riscontrato", "Prezzo unitario", "Imponibile", "Imposta", "Sconto", "SubTotale", "Tipo transazione", "Prezzo medio giorno", "Peso medio giorno", "Provvigione", "Includi commissione", "SupplierCode");

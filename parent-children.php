@@ -22,7 +22,7 @@
 					'display-field-names' => array(0 => 'id', 1 => 'kind', 5 => 'company', 6 => 'typeDoc', 7 => 'multiOrder', 8 => 'customer', 10 => 'date', 12 => 'shippedDate', 13 => 'shipVia', 15 => 'pallets', 16 => 'licencePlate', 17 => 'orderTotal', 18 => 'cashCredit', 19 => 'trust', 20 => 'overdraft', 21 => 'commisionFee', 22 => 'consigneeHour', 23 => 'consigneePlace'),
 					'sortable-fields' => array(0 => '`orders`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => '`orders`.`multiOrder`', 8 => '`companies2`.`companyName`', 9 => '`contacts1`.`name`', 10 => '`orders`.`date`', 11 => '`orders`.`requiredDate`', 12 => '`orders`.`shippedDate`', 13 => '`companies3`.`companyName`', 14 => '`orders`.`Freight`', 15 => '`orders`.`pallets`', 16 => 17, 17 => '`orders`.`orderTotal`', 18 => 19, 19 => '`orders`.`trust`', 20 => '`orders`.`overdraft`', 21 => '`orders`.`commisionFee`', 22 => '`orders`.`consigneeHour`', 23 => 24, 24 => '`orders`.`related`'),
 					'records-per-page' => 10,
-					'default-sort-by' => 7,
+					'default-sort-by' => 0,
 					'default-sort-direction' => 'desc',
 					'open-detail-view-on-click' => true,
 					'display-page-selector' => true,
@@ -46,7 +46,7 @@
 					'display-field-names' => array(0 => 'id', 1 => 'kind', 5 => 'company', 6 => 'typeDoc', 7 => 'multiOrder', 8 => 'customer', 10 => 'date', 12 => 'shippedDate', 13 => 'shipVia', 15 => 'pallets', 16 => 'licencePlate', 17 => 'orderTotal', 18 => 'cashCredit', 19 => 'trust', 20 => 'overdraft', 21 => 'commisionFee', 22 => 'consigneeHour', 23 => 'consigneePlace'),
 					'sortable-fields' => array(0 => '`orders`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => '`orders`.`multiOrder`', 8 => '`companies2`.`companyName`', 9 => '`contacts1`.`name`', 10 => '`orders`.`date`', 11 => '`orders`.`requiredDate`', 12 => '`orders`.`shippedDate`', 13 => '`companies3`.`companyName`', 14 => '`orders`.`Freight`', 15 => '`orders`.`pallets`', 16 => 17, 17 => '`orders`.`orderTotal`', 18 => 19, 19 => '`orders`.`trust`', 20 => '`orders`.`overdraft`', 21 => '`orders`.`commisionFee`', 22 => '`orders`.`consigneeHour`', 23 => 24, 24 => '`orders`.`related`'),
 					'records-per-page' => 10,
-					'default-sort-by' => 7,
+					'default-sort-by' => 0,
 					'default-sort-direction' => 'desc',
 					'open-detail-view-on-click' => true,
 					'display-page-selector' => true,
@@ -70,7 +70,7 @@
 					'display-field-names' => array(0 => 'id', 1 => 'kind', 5 => 'company', 6 => 'typeDoc', 7 => 'multiOrder', 8 => 'customer', 10 => 'date', 12 => 'shippedDate', 13 => 'shipVia', 15 => 'pallets', 16 => 'licencePlate', 17 => 'orderTotal', 18 => 'cashCredit', 19 => 'trust', 20 => 'overdraft', 21 => 'commisionFee', 22 => 'consigneeHour', 23 => 'consigneePlace'),
 					'sortable-fields' => array(0 => '`orders`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => '`orders`.`multiOrder`', 8 => '`companies2`.`companyName`', 9 => '`contacts1`.`name`', 10 => '`orders`.`date`', 11 => '`orders`.`requiredDate`', 12 => '`orders`.`shippedDate`', 13 => '`companies3`.`companyName`', 14 => '`orders`.`Freight`', 15 => '`orders`.`pallets`', 16 => 17, 17 => '`orders`.`orderTotal`', 18 => 19, 19 => '`orders`.`trust`', 20 => '`orders`.`overdraft`', 21 => '`orders`.`commisionFee`', 22 => '`orders`.`consigneeHour`', 23 => 24, 24 => '`orders`.`related`'),
 					'records-per-page' => 10,
-					'default-sort-by' => 7,
+					'default-sort-by' => 0,
 					'default-sort-direction' => 'desc',
 					'open-detail-view-on-click' => true,
 					'display-page-selector' => true,
@@ -94,7 +94,7 @@
 					'display-field-names' => array(0 => 'id', 1 => 'kind', 5 => 'company', 6 => 'typeDoc', 7 => 'multiOrder', 8 => 'customer', 10 => 'date', 12 => 'shippedDate', 13 => 'shipVia', 15 => 'pallets', 16 => 'licencePlate', 17 => 'orderTotal', 18 => 'cashCredit', 19 => 'trust', 20 => 'overdraft', 21 => 'commisionFee', 22 => 'consigneeHour', 23 => 'consigneePlace'),
 					'sortable-fields' => array(0 => '`orders`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => '`orders`.`multiOrder`', 8 => '`companies2`.`companyName`', 9 => '`contacts1`.`name`', 10 => '`orders`.`date`', 11 => '`orders`.`requiredDate`', 12 => '`orders`.`shippedDate`', 13 => '`companies3`.`companyName`', 14 => '`orders`.`Freight`', 15 => '`orders`.`pallets`', 16 => 17, 17 => '`orders`.`orderTotal`', 18 => 19, 19 => '`orders`.`trust`', 20 => '`orders`.`overdraft`', 21 => '`orders`.`commisionFee`', 22 => '`orders`.`consigneeHour`', 23 => 24, 24 => '`orders`.`related`'),
 					'records-per-page' => 10,
-					'default-sort-by' => 7,
+					'default-sort-by' => 0,
 					'default-sort-direction' => 'desc',
 					'open-detail-view-on-click' => true,
 					'display-page-selector' => true,
@@ -118,7 +118,7 @@
 					'display-field-names' => array(0 => 'id', 1 => 'kind', 5 => 'company', 6 => 'typeDoc', 7 => 'multiOrder', 8 => 'customer', 10 => 'date', 12 => 'shippedDate', 13 => 'shipVia', 15 => 'pallets', 16 => 'licencePlate', 17 => 'orderTotal', 18 => 'cashCredit', 19 => 'trust', 20 => 'overdraft', 21 => 'commisionFee', 22 => 'consigneeHour', 23 => 'consigneePlace'),
 					'sortable-fields' => array(0 => '`orders`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => '`orders`.`multiOrder`', 8 => '`companies2`.`companyName`', 9 => '`contacts1`.`name`', 10 => '`orders`.`date`', 11 => '`orders`.`requiredDate`', 12 => '`orders`.`shippedDate`', 13 => '`companies3`.`companyName`', 14 => '`orders`.`Freight`', 15 => '`orders`.`pallets`', 16 => 17, 17 => '`orders`.`orderTotal`', 18 => 19, 19 => '`orders`.`trust`', 20 => '`orders`.`overdraft`', 21 => '`orders`.`commisionFee`', 22 => '`orders`.`consigneeHour`', 23 => 24, 24 => '`orders`.`related`'),
 					'records-per-page' => 10,
-					'default-sort-by' => 7,
+					'default-sort-by' => 0,
 					'default-sort-direction' => 'desc',
 					'open-detail-view-on-click' => true,
 					'display-page-selector' => true,
@@ -142,7 +142,7 @@
 					'display-field-names' => array(0 => 'id', 1 => 'kind', 5 => 'company', 6 => 'typeDoc', 7 => 'multiOrder', 8 => 'customer', 10 => 'date', 12 => 'shippedDate', 13 => 'shipVia', 15 => 'pallets', 16 => 'licencePlate', 17 => 'orderTotal', 18 => 'cashCredit', 19 => 'trust', 20 => 'overdraft', 21 => 'commisionFee', 22 => 'consigneeHour', 23 => 'consigneePlace'),
 					'sortable-fields' => array(0 => '`orders`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => '`orders`.`multiOrder`', 8 => '`companies2`.`companyName`', 9 => '`contacts1`.`name`', 10 => '`orders`.`date`', 11 => '`orders`.`requiredDate`', 12 => '`orders`.`shippedDate`', 13 => '`companies3`.`companyName`', 14 => '`orders`.`Freight`', 15 => '`orders`.`pallets`', 16 => 17, 17 => '`orders`.`orderTotal`', 18 => 19, 19 => '`orders`.`trust`', 20 => '`orders`.`overdraft`', 21 => '`orders`.`commisionFee`', 22 => '`orders`.`consigneeHour`', 23 => 24, 24 => '`orders`.`related`'),
 					'records-per-page' => 10,
-					'default-sort-by' => 7,
+					'default-sort-by' => 0,
 					'default-sort-direction' => 'desc',
 					'open-detail-view-on-click' => true,
 					'display-page-selector' => true,
@@ -168,7 +168,7 @@
 					'display-field-names' => array(2 => 'manufactureDate', 3 => 'sellDate', 7 => 'UM', 8 => 'productCode', 10 => 'packages', 11 => 'noSell', 12 => 'Quantity', 13 => 'QuantityReal', 14 => 'UnitPrice', 15 => 'Subtotal', 16 => 'taxes', 17 => 'Discount', 18 => 'LineTotal', 20 => 'transaction_type', 22 => 'averagePrice', 23 => 'averageWeight', 24 => 'commission', 25 => 'return', 26 => 'supplierCode'),
 					'sortable-fields' => array(0 => '`ordersDetails`.`id`', 1 => '`orders1`.`id`', 2 => '`ordersDetails`.`manufactureDate`', 3 => '`ordersDetails`.`sellDate`', 4 => '`ordersDetails`.`expiryDate`', 5 => '`ordersDetails`.`daysToExpiry`', 6 => '`products1`.`codebar`', 7 => '`products1`.`UM`', 8 => '`products1`.`productCode`', 9 => 10, 10 => '`ordersDetails`.`packages`', 11 => '`ordersDetails`.`noSell`', 12 => '`ordersDetails`.`Quantity`', 13 => '`ordersDetails`.`QuantityReal`', 14 => '`ordersDetails`.`UnitPrice`', 15 => '`ordersDetails`.`Subtotal`', 16 => '`ordersDetails`.`taxes`', 17 => '`ordersDetails`.`Discount`', 18 => '`ordersDetails`.`LineTotal`', 19 => '`kinds1`.`code`', 20 => 21, 21 => '`ordersDetails`.`skBatches`', 22 => '`ordersDetails`.`averagePrice`', 23 => '`ordersDetails`.`averageWeight`', 24 => '`ordersDetails`.`commission`', 25 => 26, 26 => 27),
 					'records-per-page' => 10,
-					'default-sort-by' => false,
+					'default-sort-by' => 0,
 					'default-sort-direction' => 'asc',
 					'open-detail-view-on-click' => true,
 					'display-page-selector' => true,
@@ -192,7 +192,7 @@
 					'display-field-names' => array(2 => 'manufactureDate', 3 => 'sellDate', 7 => 'UM', 8 => 'productCode', 10 => 'packages', 11 => 'noSell', 12 => 'Quantity', 13 => 'QuantityReal', 14 => 'UnitPrice', 15 => 'Subtotal', 16 => 'taxes', 17 => 'Discount', 18 => 'LineTotal', 20 => 'transaction_type', 22 => 'averagePrice', 23 => 'averageWeight', 24 => 'commission', 25 => 'return', 26 => 'supplierCode'),
 					'sortable-fields' => array(0 => '`ordersDetails`.`id`', 1 => '`orders1`.`id`', 2 => '`ordersDetails`.`manufactureDate`', 3 => '`ordersDetails`.`sellDate`', 4 => '`ordersDetails`.`expiryDate`', 5 => '`ordersDetails`.`daysToExpiry`', 6 => '`products1`.`codebar`', 7 => '`products1`.`UM`', 8 => '`products1`.`productCode`', 9 => 10, 10 => '`ordersDetails`.`packages`', 11 => '`ordersDetails`.`noSell`', 12 => '`ordersDetails`.`Quantity`', 13 => '`ordersDetails`.`QuantityReal`', 14 => '`ordersDetails`.`UnitPrice`', 15 => '`ordersDetails`.`Subtotal`', 16 => '`ordersDetails`.`taxes`', 17 => '`ordersDetails`.`Discount`', 18 => '`ordersDetails`.`LineTotal`', 19 => '`kinds1`.`code`', 20 => 21, 21 => '`ordersDetails`.`skBatches`', 22 => '`ordersDetails`.`averagePrice`', 23 => '`ordersDetails`.`averageWeight`', 24 => '`ordersDetails`.`commission`', 25 => 26, 26 => 27),
 					'records-per-page' => 10,
-					'default-sort-by' => false,
+					'default-sort-by' => 0,
 					'default-sort-direction' => 'asc',
 					'open-detail-view-on-click' => true,
 					'display-page-selector' => true,
@@ -201,6 +201,8 @@
 					'template-printable' => 'children-ordersDetails-printable',
 					'query' => "SELECT `ordersDetails`.`id` as 'id', IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') as 'order', if(`ordersDetails`.`manufactureDate`,date_format(`ordersDetails`.`manufactureDate`,'%d/%m/%Y'),'') as 'manufactureDate', if(`ordersDetails`.`sellDate`,date_format(`ordersDetails`.`sellDate`,'%d/%m/%Y'),'') as 'sellDate', if(`ordersDetails`.`expiryDate`,date_format(`ordersDetails`.`expiryDate`,'%d/%m/%Y'),'') as 'expiryDate', `ordersDetails`.`daysToExpiry` as 'daysToExpiry', IF(    CHAR_LENGTH(`products1`.`codebar`), CONCAT_WS('',   `products1`.`codebar`), '') as 'codebar', IF(    CHAR_LENGTH(`products1`.`UM`), CONCAT_WS('',   `products1`.`UM`), '') as 'UM', IF(    CHAR_LENGTH(`products1`.`productCode`), CONCAT_WS('',   `products1`.`productCode`), '') as 'productCode', IF(    CHAR_LENGTH(`products1`.`productCode`) || CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`productCode`, '-', `products1`.`id`), '') as 'batch', `ordersDetails`.`packages` as 'packages', `ordersDetails`.`noSell` as 'noSell', `ordersDetails`.`Quantity` as 'Quantity', `ordersDetails`.`QuantityReal` as 'QuantityReal', CONCAT('&euro;', FORMAT(`ordersDetails`.`UnitPrice`, 2)) as 'UnitPrice', CONCAT('&euro;', FORMAT(`ordersDetails`.`Subtotal`, 2)) as 'Subtotal', CONCAT('&euro;', FORMAT(`ordersDetails`.`taxes`, 2)) as 'taxes', `ordersDetails`.`Discount` as 'Discount', CONCAT('&euro;', FORMAT(`ordersDetails`.`LineTotal`, 2)) as 'LineTotal', IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') as 'section', `ordersDetails`.`transaction_type` as 'transaction_type', `ordersDetails`.`skBatches` as 'skBatches', `ordersDetails`.`averagePrice` as 'averagePrice', `ordersDetails`.`averageWeight` as 'averageWeight', `ordersDetails`.`commission` as 'commission', concat('<i class=\"glyphicon glyphicon-', if(`ordersDetails`.`return`, 'check', 'unchecked'), '\"></i>') as 'return', `ordersDetails`.`supplierCode` as 'supplierCode' FROM `ordersDetails` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`ordersDetails`.`order` LEFT JOIN `products` as products1 ON `products1`.`id`=`ordersDetails`.`productCode` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`ordersDetails`.`section` "
 				)
+			),
+			'_resumeOrders' => array(   
 			),
 			'products' => array(   
 				'tax' => array(   
@@ -320,7 +322,7 @@
 					'display-field-names' => array(1 => 'kind', 2 => 'companyCode', 3 => 'companyName', 4 => 'fiscalCode', 5 => 'vat', 6 => 'notes'),
 					'sortable-fields' => array(0 => '`companies`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7),
 					'records-per-page' => 10,
-					'default-sort-by' => false,
+					'default-sort-by' => 3,
 					'default-sort-direction' => 'asc',
 					'open-detail-view-on-click' => true,
 					'display-page-selector' => true,
@@ -346,8 +348,8 @@
 					'display-field-names' => array(1 => 'kind', 2 => 'titleCourtesy', 3 => 'name', 4 => 'lastName', 5 => 'notes', 6 => 'title', 7 => 'birthDate'),
 					'sortable-fields' => array(0 => '`contacts`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => '`contacts`.`birthDate`'),
 					'records-per-page' => 10,
-					'default-sort-by' => false,
-					'default-sort-direction' => 'asc',
+					'default-sort-by' => 4,
+					'default-sort-direction' => 'desc',
 					'open-detail-view-on-click' => true,
 					'display-page-selector' => true,
 					'show-page-progress' => true,
@@ -378,7 +380,7 @@
 					'display-field-names' => array(1 => 'country', 2 => 'idIstat', 3 => 'town', 4 => 'district', 5 => 'region', 6 => 'prefix', 7 => 'shipCode', 8 => 'fiscCode', 9 => 'inhabitants', 10 => 'link'),
 					'sortable-fields' => array(0 => '`town`.`id`', 1 => '`countries1`.`country`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => 8, 8 => 9, 9 => 10, 10 => 11),
 					'records-per-page' => 10,
-					'default-sort-by' => false,
+					'default-sort-by' => 3,
 					'default-sort-direction' => 'asc',
 					'open-detail-view-on-click' => true,
 					'display-page-selector' => true,
@@ -885,8 +887,6 @@
 					'template-printable' => 'children-attachments-printable',
 					'query' => "SELECT `attachments`.`id` as 'id', `attachments`.`name` as 'name', `attachments`.`file` as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `attachments`.`thumbUse` as 'thumbUse' FROM `attachments` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attachments`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attachments`.`company` "
 				)
-			),
-			'_resumeOrders' => array(   
 			)
 		);
 

@@ -107,6 +107,8 @@
 	$x->TableTitle = "Contacts";
 	$x->TableIcon = "resources/table_icons/client_account_template.png";
 	$x->PrimaryKey = "`contacts`.`id`";
+	$x->DefaultSortField = '5';
+	$x->DefaultSortDirection = 'desc';
 
 	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150);
 	$x->ColCaption = array("Kind", "Title Of Courtesy", "Name", "LastName", "Notes", "Title", "Birth Date");

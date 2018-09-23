@@ -275,6 +275,10 @@ function ordersDetails_validateData(){
 	$j('.has-error').removeClass('has-error');
 	return true;
 }
+function _resumeOrders_validateData(){
+	$j('.has-error').removeClass('has-error');
+	return true;
+}
 function products_validateData(){
 	$j('.has-error').removeClass('has-error');
 	return true;
@@ -352,10 +356,6 @@ function contacts_companies_validateData(){
 	return true;
 }
 function attachments_validateData(){
-	$j('.has-error').removeClass('has-error');
-	return true;
-}
-function _resumeOrders_validateData(){
 	$j('.has-error').removeClass('has-error');
 	return true;
 }
