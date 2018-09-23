@@ -220,6 +220,13 @@
 					'tableIcon' => 'resources/table_icons/attach.png',
 					'group' => $tg[7],
 					'homepageShowCount' => 0
+				),
+				'_resumeOrders' => array(
+					'Caption' => ' resumeOrders',
+					'Description' => '',
+					'tableIcon' => 'table.gif',
+					'group' => $tg[0],
+					'homepageShowCount' => 0
 				)
 		);
 
@@ -255,7 +262,8 @@
 				'phones' => 'Phones',
 				'mails' => 'Mails',
 				'contacts_companies' => 'Contacts companies',
-				'attachments' => 'Attaches'
+				'attachments' => 'Attaches',
+				'_resumeOrders' => ' resumeOrders'
 			);
 
 			return $arrTables;

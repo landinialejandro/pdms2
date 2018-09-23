@@ -27,8 +27,8 @@
                 $qr = sql($sql,$eo);
                 $sql = file_get_contents('hooks/SQL_companiesAddresses.sql');
                 $qr = sql($sql,$eo);
-//                $sql = file_get_contents('hooks/SQL_resumeDDT.sql');
-//                $qr = sql($sql,$eo);
+                $sql = file_get_contents('hooks/SQL_resumeOrders.sql');
+                $qr = sql($sql,$eo);
 
 		return '';
 	}

@@ -523,6 +523,63 @@
 				'list_type' => 0,
 				'not_null' => false
 			)
+		),
+		'_resumeOrders' => array(   
+			'kind' => array(
+				'parent_table' => 'kinds',
+				'parent_pk_field' => 'code',
+				'parent_caption' => '`kinds`.`name`',
+				'parent_from' => '`kinds` ',
+				'filterers' => array(),
+				'custom_query' => 'SELECT `kinds`.`code`, `kinds`.`name` FROM `kinds` WHERE `kinds`.`entity` LIKE \'%Orders%\' ORDER BY 2 ',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
+			'company' => array(
+				'parent_table' => 'companies',
+				'parent_pk_field' => 'id',
+				'parent_caption' => 'IF(CHAR_LENGTH(`companies`.`companyCode`) || CHAR_LENGTH(`companies`.`companyName`), CONCAT_WS(\'\', `companies`.`companyCode`, \' - \', `companies`.`companyName`), \'\')',
+				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` ',
+				'filterers' => array(),
+				'custom_query' => 'SELECT `companies`.`id`, IF(CHAR_LENGTH(`companies`.`companyCode`) || CHAR_LENGTH(`companies`.`companyName`), CONCAT_WS(\'\', `companies`.`companyCode`, \' - \', `companies`.`companyName`), \'\') FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`name`=`companies`.`kind` WHERE `companies`.`kind` like \'%MC%\' ORDER BY 2',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
+			'typedoc' => array(
+				'parent_table' => 'kinds',
+				'parent_pk_field' => 'code',
+				'parent_caption' => 'IF(CHAR_LENGTH(`kinds`.`code`) || CHAR_LENGTH(`kinds`.`name`), CONCAT_WS(\'\', `kinds`.`code`, \' - \', `kinds`.`name`), \'\')',
+				'parent_from' => '`kinds` ',
+				'filterers' => array(),
+				'custom_query' => 'SELECT `kinds`.`code`, IF(CHAR_LENGTH(`kinds`.`code`) || CHAR_LENGTH(`kinds`.`name`), CONCAT_WS(\'\', `kinds`.`code`, \' - \', `kinds`.`name`), \'\') FROM `kinds` WHERE `kinds`.`entity` LIKE \'%Documents%\' ORDER BY 2',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
+			'customer' => array(
+				'parent_table' => 'companies',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`companies`.`companyName`',
+				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` ',
+				'filterers' => array(),
+				'custom_query' => 'SELECT `companies`.`id`, `companies`.`companyName` FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`name`=`companies`.`kind` WHERE `companies`.`kind` like \'%CUST%\' ORDER BY 2',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
+			'realted' => array(
+				'parent_table' => 'orders',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`orders`.`id`',
+				'parent_from' => '`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`orders`.`employee` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`shipVia` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			)
 		)
 	);
 

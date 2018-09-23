@@ -64,7 +64,8 @@
 			'phones' => array('Phones', '', 'resources/table_icons/phone.png', 'hiddens'),
 			'mails' => array('Mails', '', 'resources/table_icons/email.png', 'hiddens'),
 			'contacts_companies' => array('Contacts companies', 'relate contacts with companies', 'resources/table_icons/brick_link.png', 'hiddens'),
-			'attachments' => array('Attaches', '', 'resources/table_icons/attach.png', 'hiddens')
+			'attachments' => array('Attaches', '', 'resources/table_icons/attach.png', 'hiddens'),
+			'_resumeOrders' => array(' resumeOrders', '', 'table.gif', 'Azienda A')
 		);
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 
@@ -170,7 +171,8 @@
 			'phones' => "`phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `phones`.`phoneNumber` as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company'",
 			'mails' => "`mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `mails`.`mail` as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company'",
 			'contacts_companies' => "`contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'company'",
-			'attachments' => "`attachments`.`id` as 'id', `attachments`.`name` as 'name', `attachments`.`file` as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `attachments`.`thumbUse` as 'thumbUse'"
+			'attachments' => "`attachments`.`id` as 'id', `attachments`.`name` as 'name', `attachments`.`file` as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `attachments`.`thumbUse` as 'thumbUse'",
+			'_resumeOrders' => "IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'typedoc', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'customer', `_resumeOrders`.`TOT` as 'TOT', `_resumeOrders`.`MONTH` as 'MONTH', `_resumeOrders`.`YEAR` as 'YEAR', `_resumeOrders`.`DOCs` as 'DOCs', IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') as 'realted', `_resumeOrders`.`id` as 'id'"
 		);
 
 		if(isset($sql_fields[$table_name])){
@@ -203,7 +205,8 @@
 			'phones' => "`phones` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`phones`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`phones`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`phones`.`company` ",
 			'mails' => "`mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` ",
 			'contacts_companies' => "`contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` ",
-			'attachments' => "`attachments` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attachments`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attachments`.`company` "
+			'attachments' => "`attachments` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attachments`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attachments`.`company` ",
+			'_resumeOrders' => "`_resumeOrders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`_resumeOrders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`_resumeOrders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`_resumeOrders`.`typedoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`_resumeOrders`.`customer` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`_resumeOrders`.`realted` "
 		);
 
 		$pkey = array(   
@@ -226,7 +229,8 @@
 			'phones' => 'id',
 			'mails' => 'id',
 			'contacts_companies' => 'id',
-			'attachments' => 'id'
+			'attachments' => 'id',
+			'_resumeOrders' => 'id'
 		);
 
 		if(isset($sql_from[$table_name])){
@@ -498,6 +502,18 @@
 				'contact' => '',
 				'company' => '',
 				'thumbUse' => ''
+			),
+			'_resumeOrders' => array(
+				'kind' => '',
+				'company' => '',
+				'typedoc' => '',
+				'customer' => '',
+				'TOT' => '',
+				'MONTH' => '',
+				'YEAR' => '',
+				'DOCs' => '',
+				'realted' => '',
+				'id' => ''
 			)
 		);
 

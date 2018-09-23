@@ -234,6 +234,18 @@
 			'contact' => array('appgini' => 'INT unsigned '),
 			'company' => array('appgini' => 'INT unsigned '),
 			'thumbUse' => array('appgini' => 'VARCHAR(40) ')
+		),
+		'_resumeOrders' => array(   
+			'kind' => array('appgini' => 'VARCHAR(40) '),
+			'company' => array('appgini' => 'INT unsigned '),
+			'typedoc' => array('appgini' => 'VARCHAR(40) '),
+			'customer' => array('appgini' => 'INT unsigned '),
+			'TOT' => array('appgini' => 'VARCHAR(40) '),
+			'MONTH' => array('appgini' => 'VARCHAR(40) '),
+			'YEAR' => array('appgini' => 'VARCHAR(40) '),
+			'DOCs' => array('appgini' => 'VARCHAR(40) '),
+			'realted' => array('appgini' => 'INT unsigned '),
+			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment ')
 		)
 	);
 

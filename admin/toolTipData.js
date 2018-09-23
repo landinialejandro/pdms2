@@ -371,6 +371,24 @@ attachments_delete1Tip=["",spacer+"This option allows each member of the group t
 attachments_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Attaches' table."];
 attachments_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Attaches' table."];
 
+// _resumeOrders table
+_resumeOrders_addTip=["",spacer+"This option allows all members of the group to add records to the ' resumeOrders' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+_resumeOrders_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the ' resumeOrders' table."];
+_resumeOrders_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the ' resumeOrders' table."];
+_resumeOrders_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the ' resumeOrders' table."];
+_resumeOrders_view3Tip=["",spacer+"This option allows each member of the group to view all records in the ' resumeOrders' table."];
+
+_resumeOrders_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the ' resumeOrders' table."];
+_resumeOrders_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the ' resumeOrders' table."];
+_resumeOrders_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the ' resumeOrders' table."];
+_resumeOrders_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the ' resumeOrders' table, regardless of their owner."];
+
+_resumeOrders_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the ' resumeOrders' table."];
+_resumeOrders_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the ' resumeOrders' table."];
+_resumeOrders_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the ' resumeOrders' table."];
+_resumeOrders_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the ' resumeOrders' table."];
+
 /*
 	Style syntax:
 	-------------

@@ -3,21 +3,10 @@
 <a name="detail-view"></a>
 <div class="panel-heading"><h3 class="panel-title"><strong><%%DETAIL_VIEW_TITLE%%></strong></h3></div>
 
-<div class="panel-body" id="companies_dv_container">
+<div class="panel-body" id="_resumeOrders_dv_container">
 	<!-- child links -->
 	<div class="row vspacer-md">
 		<div class="col-xs-12">
-			<input type="hidden" id="orders_hclink" value="orders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="vatRegister_hclink" value="vatRegister_view.php?filterer_idCompany=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="attributes_hclink" value="attributes_view.php?filterer_companies=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="addresses_hclink" value="addresses_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="phones_hclink" value="phones_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="mails_hclink" value="mails_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="contacts_companies_hclink" value="contacts_companies_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="attachments_hclink" value="attachments_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="_resumeOrders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="_resumeOrders_link"><i class="glyphicon glyphicon-list-alt"></i>  resumeOrders</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="_resumeOrders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs__resumeOrders_link"><i class="glyphicon glyphicon-list-alt"></i>  resumeOrders</a>
-			<input type="hidden" id="_resumeOrders_hclink" value="_resumeOrders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -25,8 +14,80 @@
 
 	<div class="row">
 		<!-- form inputs -->
-		<div class="col-md-8 col-lg-10" id="companies_dv_form">
+		<div class="col-md-8 col-lg-10" id="_resumeOrders_dv_form">
 			<fieldset class="form-horizontal">
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Kind</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(kind)%%><%%PLINK(kind)%%><%%ADDNEW(kinds)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="company" class="control-label col-lg-3" data-parent_link="view_parent_modal">Company</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(company)%%><%%PLINK(company)%%><%%ADDNEW(companies)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="typedoc" class="control-label col-lg-3" data-parent_link="view_parent_modal">Typedoc</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(typedoc)%%><%%PLINK(typedoc)%%><%%ADDNEW(kinds)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="customer" class="control-label col-lg-3" data-parent_link="view_parent_modal">Customer</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(customer)%%><%%PLINK(customer)%%><%%ADDNEW(companies)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="TOT" class="control-label col-lg-3">TOT</label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="TOT" id="TOT" value="<%%VALUE(TOT)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="MONTH" class="control-label col-lg-3">MONTH</label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="MONTH" id="MONTH" value="<%%VALUE(MONTH)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="YEAR" class="control-label col-lg-3">YEAR</label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="YEAR" id="YEAR" value="<%%VALUE(YEAR)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="DOCs" class="control-label col-lg-3">DOCs</label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="DOCs" id="DOCs" value="<%%VALUE(DOCs)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="realted" class="control-label col-lg-3" data-parent_link="view_parent_modal">Realted</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(realted)%%><%%PLINK(realted)%%><%%ADDNEW(orders)%%></div>
+					</div>
+				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
@@ -36,60 +97,12 @@
 					</div>
 				</div>
 
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Kind<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
-					<div class="col-lg-9">
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(kind)%%><%%PLINK(kind)%%><%%ADDNEW(kinds)%%></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="companyCode" class="control-label col-lg-3">CompanyCode</label>
-					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="companyCode" id="companyCode" value="<%%VALUE(companyCode)%%>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="companyName" class="control-label col-lg-3">CompanyName</label>
-					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="companyName" id="companyName" value="<%%VALUE(companyName)%%>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="fiscalCode" class="control-label col-lg-3">FiscalCode</label>
-					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="fiscalCode" id="fiscalCode" value="<%%VALUE(fiscalCode)%%>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="vat" class="control-label col-lg-3">Vat</label>
-					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="vat" id="vat" value="<%%VALUE(vat)%%>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="notes" class="control-label col-lg-3">Notes</label>
-					<div class="col-lg-9">
-						<%%HTMLAREA(notes)%%>
-					</div>
-				</div>
-
 			</fieldset>
 		</div>
 
 		<!-- DV action buttons -->
 		<hr class="hidden-md hidden-lg">
-		<div class="col-md-4 col-lg-2" id="companies_dv_action_buttons">
+		<div class="col-md-4 col-lg-2" id="_resumeOrders_dv_action_buttons">
 			<div class="btn-toolbar">
 				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
 					<%%UPDATE_BUTTON%%>
@@ -107,16 +120,7 @@
 	</div>
 
 
-	<!-- child records -->
-	<hr>
-	<div class="row">
-		<div class="col-lg-10 col-lg-offset-1">
-			<div id="companies-children" class="children-tabs"></div>
-		</div>
-	</div>
-
 </div><!-- /div class="panel-body" -->
-	<script src="nicEdit.js"></script>
 	<script>
 		$j(function() {
 			var add_new_mode = (!$j('input[name=SelectedID]').val());
@@ -130,13 +134,6 @@
 				setTimeout(AppGini.closeParentModal, 2000);
 			}
 
-			bkLib.onDomLoaded(function(){
-				if($j('textarea#notes').length) new nicEditor({ fullPanel : true }).panelInstance('notes');
-
-				$j('.nicEdit-panelContain').parent().width('100%');
-				$j('.nicEdit-panelContain').parent().next().width('98%');
-				$j('.nicEdit-main').width('99%');
-			});
 			/* enable DV action buttons to float on scrolling down the form */
 			enable_dvab_floating();
 
@@ -152,38 +149,6 @@
 
 			$j('a[href="<%%TRANSLATION(ImageFolder)%%>"]').click(function(){ /* */ return false; });
 
-			if(embedded_mode){
-				/* hide links to children tables in embedded mode */
-				$j('.detail_view a[id$=_link]').remove();
-
-				/* append embedded mode to all links */
-				var append_embedded = function(){
-					$j('a[href]:not([href^="#"]):not([href^="javascript"]):not([href$="Embedded=1"]):not([href*="link.php?t="]):not([href^="mailto:"])').each(
-						function(){
-							$j(this).attr('href', $j(this).attr('href') + '&Embedded=1');
-						}
-					);
-				}
-				setTimeout(append_embedded, 500);
-				setTimeout(append_embedded, 1500);
-				setTimeout(append_embedded, 2500);
-				setTimeout(append_embedded, 3500);
-			}
-
-			/* when no record is selected ('add new' mode) */
-			if(add_new_mode){
-				/* hide links to children tables */
-				$j('.detail_view a[id$=_link]').remove();
-			}else{
-				post(
-					'parent-children.php', {
-						ParentTable: 'companies',
-						SelectedID: '<%%VALUE(id)%%>',
-						Operation: 'show-children'
-					},
-					'companies-children'
-				);
-			}
 
 			if(!embedded_mode){
 				/* add a horizontal spacer to [add new parent] buttons that don't have a spacered element before them */
@@ -250,10 +215,10 @@
 			if(!add_new_mode){
 				$j('body').append('<div id="admin-tools-appendix"></div>');
 				$j('#admin-tools-appendix').load(
-					'ajax_admin_tools.php?table=companies&id=<%%URLVALUE(id)%%>',
+					'ajax_admin_tools.php?table=_resumeOrders&id=<%%URLVALUE(id)%%>',
 					function(resp){
 						if(!resp.length) return;
-						$j.ajax('ajax_admin_tools.php?action=get_admin_tools_js&table=companies&id=<%%URLVALUE(id)%%>');
+						$j.ajax('ajax_admin_tools.php?action=get_admin_tools_js&table=_resumeOrders&id=<%%URLVALUE(id)%%>');
 					}
 				);
 			}
