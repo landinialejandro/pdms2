@@ -34,7 +34,8 @@
 			'overdraft' => array('appgini' => 'INT '),
 			'commisionFee' => array('appgini' => 'INT '),
 			'consigneeHour' => array('appgini' => 'DATETIME '),
-			'consigneePlace' => array('appgini' => 'VARCHAR(255) ')
+			'consigneePlace' => array('appgini' => 'VARCHAR(255) '),
+			'related' => array('appgini' => 'INT ')
 		),
 		'ordersDetails' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),

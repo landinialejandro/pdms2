@@ -27,6 +27,7 @@
 
 	function orders_init(&$options, $memberInfo, &$args){
                  $options->TemplateDV = 'hooks/orders_templateDV.html';
+//                 $options->TemplateDVP = 'hooks/orders_templateDVP.html';
                  
 		return TRUE;
 	}
@@ -161,10 +162,9 @@
                 }
             
                 $numOrder = getNextValue($data['typeDoc'],$data['company']);
-                if (intval($numOrder) !== intval($data['numOrder'])){
+                if (intval($numOrder) !== intval($data['multiOrder'])){
                     $data['numOrder']=$numOrder;
                 }
-		return TRUE;
 		return TRUE;
 	}
 

@@ -34,7 +34,6 @@ if (!($result = db_fetch_assoc($res))) {
     exit(error_message('company not found', false));
 }
 
-
 ob_start();
 ?>
 <!-- insert HTML code-->

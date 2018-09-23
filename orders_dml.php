@@ -58,6 +58,8 @@ function orders_insert(){
 		if($data['consigneeHour'] == empty_lookup_value){ $data['consigneeHour'] = ''; }
 	$data['consigneePlace'] = makeSafe($_REQUEST['consigneePlace']);
 		if($data['consigneePlace'] == empty_lookup_value){ $data['consigneePlace'] = ''; }
+	$data['related'] = makeSafe($_REQUEST['related']);
+		if($data['related'] == empty_lookup_value){ $data['related'] = ''; }
 	if($data['trasmissionFor'] == '') $data['trasmissionFor'] = "SDI10";
 
 	// hook: orders_before_insert
@@ -67,7 +69,7 @@ function orders_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `orders` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `typeDoc`=' . (($data['typeDoc'] !== '' && $data['typeDoc'] !== NULL) ? "'{$data['typeDoc']}'" : 'NULL') . ', `multiOrder`=' . (($data['multiOrder'] !== '' && $data['multiOrder'] !== NULL) ? "'{$data['multiOrder']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `date`=' . (($data['date'] !== '' && $data['date'] !== NULL) ? "'{$data['date']}'" : 'NULL') . ', `shippedDate`=' . (($data['shippedDate'] !== '' && $data['shippedDate'] !== NULL) ? "'{$data['shippedDate']}'" : 'NULL') . ', `shipVia`=' . (($data['shipVia'] !== '' && $data['shipVia'] !== NULL) ? "'{$data['shipVia']}'" : 'NULL') . ', `Freight`=' . (($data['Freight'] !== '' && $data['Freight'] !== NULL) ? "'{$data['Freight']}'" : 'NULL') . ', `pallets`=' . (($data['pallets'] !== '' && $data['pallets'] !== NULL) ? "'{$data['pallets']}'" : 'NULL') . ', `licencePlate`=' . (($data['licencePlate'] !== '' && $data['licencePlate'] !== NULL) ? "'{$data['licencePlate']}'" : 'NULL') . ', `orderTotal`=' . (($data['orderTotal'] !== '' && $data['orderTotal'] !== NULL) ? "'{$data['orderTotal']}'" : 'NULL') . ', `cashCredit`=' . (($data['cashCredit'] !== '' && $data['cashCredit'] !== NULL) ? "'{$data['cashCredit']}'" : 'NULL') . ', `trust`=' . (($data['trust'] !== '' && $data['trust'] !== NULL) ? "'{$data['trust']}'" : 'NULL') . ', `overdraft`=' . (($data['overdraft'] !== '' && $data['overdraft'] !== NULL) ? "'{$data['overdraft']}'" : 'NULL') . ', `commisionFee`=' . (($data['commisionFee'] !== '' && $data['commisionFee'] !== NULL) ? "'{$data['commisionFee']}'" : 'NULL') . ', `consigneeHour`=' . (($data['consigneeHour'] !== '' && $data['consigneeHour'] !== NULL) ? "'{$data['consigneeHour']}'" : 'NULL') . ', `consigneePlace`=' . (($data['consigneePlace'] !== '' && $data['consigneePlace'] !== NULL) ? "'{$data['consigneePlace']}'" : 'NULL'), $o);
+	sql('insert into `orders` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `typeDoc`=' . (($data['typeDoc'] !== '' && $data['typeDoc'] !== NULL) ? "'{$data['typeDoc']}'" : 'NULL') . ', `multiOrder`=' . (($data['multiOrder'] !== '' && $data['multiOrder'] !== NULL) ? "'{$data['multiOrder']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `date`=' . (($data['date'] !== '' && $data['date'] !== NULL) ? "'{$data['date']}'" : 'NULL') . ', `shippedDate`=' . (($data['shippedDate'] !== '' && $data['shippedDate'] !== NULL) ? "'{$data['shippedDate']}'" : 'NULL') . ', `shipVia`=' . (($data['shipVia'] !== '' && $data['shipVia'] !== NULL) ? "'{$data['shipVia']}'" : 'NULL') . ', `Freight`=' . (($data['Freight'] !== '' && $data['Freight'] !== NULL) ? "'{$data['Freight']}'" : 'NULL') . ', `pallets`=' . (($data['pallets'] !== '' && $data['pallets'] !== NULL) ? "'{$data['pallets']}'" : 'NULL') . ', `licencePlate`=' . (($data['licencePlate'] !== '' && $data['licencePlate'] !== NULL) ? "'{$data['licencePlate']}'" : 'NULL') . ', `orderTotal`=' . (($data['orderTotal'] !== '' && $data['orderTotal'] !== NULL) ? "'{$data['orderTotal']}'" : 'NULL') . ', `cashCredit`=' . (($data['cashCredit'] !== '' && $data['cashCredit'] !== NULL) ? "'{$data['cashCredit']}'" : 'NULL') . ', `trust`=' . (($data['trust'] !== '' && $data['trust'] !== NULL) ? "'{$data['trust']}'" : 'NULL') . ', `overdraft`=' . (($data['overdraft'] !== '' && $data['overdraft'] !== NULL) ? "'{$data['overdraft']}'" : 'NULL') . ', `commisionFee`=' . (($data['commisionFee'] !== '' && $data['commisionFee'] !== NULL) ? "'{$data['commisionFee']}'" : 'NULL') . ', `consigneeHour`=' . (($data['consigneeHour'] !== '' && $data['consigneeHour'] !== NULL) ? "'{$data['consigneeHour']}'" : 'NULL') . ', `consigneePlace`=' . (($data['consigneePlace'] !== '' && $data['consigneePlace'] !== NULL) ? "'{$data['consigneePlace']}'" : 'NULL') . ', `related`=' . (($data['related'] !== '' && $data['related'] !== NULL) ? "'{$data['related']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"orders_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -227,6 +229,8 @@ function orders_update($selected_id){
 		if($data['consigneeHour'] == empty_lookup_value){ $data['consigneeHour'] = ''; }
 	$data['consigneePlace'] = makeSafe($_REQUEST['consigneePlace']);
 		if($data['consigneePlace'] == empty_lookup_value){ $data['consigneePlace'] = ''; }
+	$data['related'] = makeSafe($_REQUEST['related']);
+		if($data['related'] == empty_lookup_value){ $data['related'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: orders_before_update
@@ -236,7 +240,7 @@ function orders_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `orders` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `typeDoc`=' . (($data['typeDoc'] !== '' && $data['typeDoc'] !== NULL) ? "'{$data['typeDoc']}'" : 'NULL') . ', `multiOrder`=' . (($data['multiOrder'] !== '' && $data['multiOrder'] !== NULL) ? "'{$data['multiOrder']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `date`=' . (($data['date'] !== '' && $data['date'] !== NULL) ? "'{$data['date']}'" : 'NULL') . ', `shippedDate`=' . (($data['shippedDate'] !== '' && $data['shippedDate'] !== NULL) ? "'{$data['shippedDate']}'" : 'NULL') . ', `shipVia`=' . (($data['shipVia'] !== '' && $data['shipVia'] !== NULL) ? "'{$data['shipVia']}'" : 'NULL') . ', `Freight`=' . (($data['Freight'] !== '' && $data['Freight'] !== NULL) ? "'{$data['Freight']}'" : 'NULL') . ', `pallets`=' . (($data['pallets'] !== '' && $data['pallets'] !== NULL) ? "'{$data['pallets']}'" : 'NULL') . ', `licencePlate`=' . (($data['licencePlate'] !== '' && $data['licencePlate'] !== NULL) ? "'{$data['licencePlate']}'" : 'NULL') . ', `orderTotal`=' . (($data['orderTotal'] !== '' && $data['orderTotal'] !== NULL) ? "'{$data['orderTotal']}'" : 'NULL') . ', `cashCredit`=' . (($data['cashCredit'] !== '' && $data['cashCredit'] !== NULL) ? "'{$data['cashCredit']}'" : 'NULL') . ', `trust`=' . (($data['trust'] !== '' && $data['trust'] !== NULL) ? "'{$data['trust']}'" : 'NULL') . ', `overdraft`=' . (($data['overdraft'] !== '' && $data['overdraft'] !== NULL) ? "'{$data['overdraft']}'" : 'NULL') . ', `commisionFee`=' . (($data['commisionFee'] !== '' && $data['commisionFee'] !== NULL) ? "'{$data['commisionFee']}'" : 'NULL') . ', `consigneeHour`=' . (($data['consigneeHour'] !== '' && $data['consigneeHour'] !== NULL) ? "'{$data['consigneeHour']}'" : 'NULL') . ', `consigneePlace`=' . (($data['consigneePlace'] !== '' && $data['consigneePlace'] !== NULL) ? "'{$data['consigneePlace']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `orders` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `typeDoc`=' . (($data['typeDoc'] !== '' && $data['typeDoc'] !== NULL) ? "'{$data['typeDoc']}'" : 'NULL') . ', `multiOrder`=' . (($data['multiOrder'] !== '' && $data['multiOrder'] !== NULL) ? "'{$data['multiOrder']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `date`=' . (($data['date'] !== '' && $data['date'] !== NULL) ? "'{$data['date']}'" : 'NULL') . ', `shippedDate`=' . (($data['shippedDate'] !== '' && $data['shippedDate'] !== NULL) ? "'{$data['shippedDate']}'" : 'NULL') . ', `shipVia`=' . (($data['shipVia'] !== '' && $data['shipVia'] !== NULL) ? "'{$data['shipVia']}'" : 'NULL') . ', `Freight`=' . (($data['Freight'] !== '' && $data['Freight'] !== NULL) ? "'{$data['Freight']}'" : 'NULL') . ', `pallets`=' . (($data['pallets'] !== '' && $data['pallets'] !== NULL) ? "'{$data['pallets']}'" : 'NULL') . ', `licencePlate`=' . (($data['licencePlate'] !== '' && $data['licencePlate'] !== NULL) ? "'{$data['licencePlate']}'" : 'NULL') . ', `orderTotal`=' . (($data['orderTotal'] !== '' && $data['orderTotal'] !== NULL) ? "'{$data['orderTotal']}'" : 'NULL') . ', `cashCredit`=' . (($data['cashCredit'] !== '' && $data['cashCredit'] !== NULL) ? "'{$data['cashCredit']}'" : 'NULL') . ', `trust`=' . (($data['trust'] !== '' && $data['trust'] !== NULL) ? "'{$data['trust']}'" : 'NULL') . ', `overdraft`=' . (($data['overdraft'] !== '' && $data['overdraft'] !== NULL) ? "'{$data['overdraft']}'" : 'NULL') . ', `commisionFee`=' . (($data['commisionFee'] !== '' && $data['commisionFee'] !== NULL) ? "'{$data['commisionFee']}'" : 'NULL') . ', `consigneeHour`=' . (($data['consigneeHour'] !== '' && $data['consigneeHour'] !== NULL) ? "'{$data['consigneeHour']}'" : 'NULL') . ', `consigneePlace`=' . (($data['consigneePlace'] !== '' && $data['consigneePlace'] !== NULL) ? "'{$data['consigneePlace']}'" : 'NULL') . ', `related`=' . (($data['related'] !== '' && $data['related'] !== NULL) ? "'{$data['related']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="orders_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -970,6 +974,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		$jsReadOnly .= "\tjQuery('#commisionFee').replaceWith('<div class=\"form-control-static\" id=\"commisionFee\">' + (jQuery('#commisionFee').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#consigneeHour').parents('.input-group').replaceWith('<div class=\"form-control-static\" id=\"consigneeHour\">' + (jQuery('#consigneeHour').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#consigneePlace').replaceWith('<div class=\"form-control-static\" id=\"consigneePlace\">' + (jQuery('#consigneePlace').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#related').replaceWith('<div class=\"form-control-static\" id=\"related\">' + (jQuery('#related').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -1048,6 +1053,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$templateCode = str_replace('<%%UPLOADFILE(commisionFee)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(consigneeHour)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(consigneePlace)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(related)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -1116,6 +1122,9 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(consigneePlace)%%>', safe_html($urow['consigneePlace']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(consigneePlace)%%>', html_attr($row['consigneePlace']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(consigneePlace)%%>', urlencode($urow['consigneePlace']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(related)%%>', safe_html($urow['related']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(related)%%>', html_attr($row['related']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(related)%%>', urlencode($urow['related']), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -1164,6 +1173,8 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		$templateCode = str_replace('<%%URLVALUE(consigneeHour)%%>', urlencode('<%%creationTime%%>'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(consigneePlace)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(consigneePlace)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(related)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(related)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

@@ -6,7 +6,9 @@
 // GET parameteres for print documents
 // 
 // toDo: 
-// revision: *25/08/18 add cusotmer data
+// revision:
+//          *22/09/18 adapted to new data 
+//          *25/08/18 add cusotmer data
 // 
 //
 $currDir = dirname(__FILE__);
@@ -15,57 +17,46 @@ include("$currDir/language.php");
 include("$currDir/lib.php");
 require "$currDir/vendor/autoload.php";
 
-
-/* grant access to all users who have access to the orders table */
-$order_from = get_sql_from('orders');
-if(!$order_from) exit(error_message('Access denied!', false));
-
 /* get order ID */
 $order_id = intval($_REQUEST['OrderID']);
 if(!$order_id) exit(error_message('Invalid order ID!', false));
 
 /* retrieve order info */
-$order_fields = get_sql_fields('orders');
-$res = sql("select {$order_fields} from {$order_from} and orders.id={$order_id}", $eo);
-if(!($order = db_fetch_assoc($res))) exit(error_message('Order not found!', false));
-
-//var_dump($order);
-
+///////////////////////////
+$where_id =" AND orders.id = {$order_id}";//change this to set select where
+$order = getDataTable('orders',$where_id);
 $docCategorie_id= makeSafe(sqlValue("select typeDoc from orders where id={$order_id}"));
-//$docCategorie_idDocument=sqlvalue("select idDocument from docCategories where id={$docCategorie_id}");
+///////////////////////////
 
 /* retrieve multycompany info */
+///////////////////////////
 $multyCompany_id=intval(sqlValue("select company from orders where id={$order_id}"));
-$multyCompany_from= get_sql_from('companies');
-$multyCompany_fields = get_sql_fields('companies');
-
-$res = sql("select {$multyCompany_fields} from {$multyCompany_from} and companies.id={$multyCompany_id}", $eo);
-if(!($company = db_fetch_assoc($res))) exit(error_message('Company Data not found!', false));
-
-//var_dump($company);
+$where_id =" AND companies.id={$multyCompany_id}";//change this to set select where
+$company = getDataTable('companies',$where_id);
+///////////////////////////
+$where_id =" AND addresses.company = {$company['id']} AND addresses.default = 1";//change this to set select where
+$address = getDataTable('addresses',$where_id);
+///////////////////////////
 
 /* retrieve customer info */
+///////////////////////////
 $customer_id = intval(sqlValue("select customer from orders where orders.id={$order_id}"));
-$customers_from = get_sql_from('companies');
-$customers_fields = get_sql_fields('companies');
-$res = sql("select {$customers_fields} from {$customers_from} and companies.id={$customer_id}", $eo);
-    if(!($customer = db_fetch_assoc($res))) exit(error_message('Customer not found!', false));
-
-//var_dump($customer);
-
+$where_id=" AND companies.id = {$customer_id}";
+$customer = getDataTable('companies',$where_id);
+///////////////////////////Client address
+$where_id =" AND addresses.company = {$customer['id']} AND addresses.default = 1";//change this to set select where
+$addressCustomer = getDataTable('addresses',$where_id);
+///////////////////////////shiping client address
+$where_id =" AND addresses.company = {$customer['id']} AND addresses.ship = 1";//change this to set select where
+$addressCustomerShip = getDataTable('addresses',$where_id);
+///////////////////////////
+    
 /* retrieve order items */
-$items = array();
-$order_total = 0;
+///////////////////////////
 $item_fields = get_sql_fields('ordersDetails');
 $item_from = get_sql_from('ordersDetails');
-$res = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
-while($row = db_fetch_assoc($res)){
-        $row['LineTotal'] = str_replace('$', '', $row['UnitPrice']) * $row['Quantity'];
-        $items[] = $row;
-        $order_total += $row['LineTotal'];
-}
-
-//var_dump($items);
+$items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
+///////////////////////////
 
 ob_start();
 include_once("$currDir/header.php");
@@ -76,52 +67,40 @@ include_once("$currDir/header.php");
 <table border="0" width="100%">
     <thead>
         <tr>
-            <td></td>
-            <td></td>
+            <td>Azienda</td>
+            <td align="right">Documento</td>
         </tr>
     </thead>
     <tbody>
         <tr>
             <th>
-                <h1><?php echo $company['company']; ?></h1>
+                <h1><?php echo $company['companyName']; ?></h1>
             </th>
             <th align="right">
-                <h1><?php echo $order['typeDoc']; ?></h1>
+                <h1><?php echo $docCategorie_id; ?> Nr. <?php echo $order['multiOrder']; ?></h1>
             </th>
         </tr>
         <tr>
             <td>
-                <h4>Address: <?php echo $company['address']; ?></h4>
+                <h4>Address: <?php echo $address['address']. " " . $address['houseNumber']; ?></h4>
+                Town: <?php echo $address['town'] . " (". $address['country'] . ")"; ?> <br>
             </td>
             <td align="right">
-                <h5>Date: <?php echo $order['OrderDate']; ?></h5>
+                <h5>Date: <?php echo $order['date']; ?></h5>
             </td>
         </tr>
         <tr>
             <td>
-                <h4><?php echo $company['address2']; ?></h4>
+                PostalCode: <?php echo $address['postalCode']; ?><br>
+                District: <?php echo $address['district']; ?><br>
             </td>
             <td align="right">
-                <h5><?php echo $docCategorie_idDocument; ?> Nr. <?php echo $order['multiOrder']; ?></h5>
+                <h5><?php echo $order['typeDoc']; ?></h5>
             </td>
         </tr>
         <tr>
             <td>
-                <h4>PC: <?php echo $company['postalCode']; ?></h4>
-            </td>
-            <td align="right">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h4>Town: <?php echo $company['town']; ?></h4>
-            </td>
-            <td align="right">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h4>VAT: <?php echo $company['vatNumber']; ?></h4>
+                <h4>VAT: <?php echo $company['vat']; ?></h4>
             </td>
             <td align="right">
             </td>
@@ -129,23 +108,38 @@ include_once("$currDir/header.php");
     </tbody>
 </table>
 <hr>
-<!-- MultyCompy data-->
+<!-- /MultyCompy data-->
 
-<table border="0">
+<!-- Customer data-->
+<table border="0" width="100%">
     <thead>
         <tr>
-            <th><H3>Cliente</H3></th>
+            <th>Cliente</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>Company Name: <?php echo $customer['companyName']; ?></td>
+            <td style="border-radius:5px 5px 5px 5px"><h3><?php echo $customer['companyName']; ?></h3></td>
+            <td><h4><strong>Shiping Address</strong></h4></td>
         </tr>
         <tr>
-            <td>Address: <?php echo $customer['address']; ?></td>
+            <td>
+                <h4>Address: <?php echo $addressCustomer['address']. " " . $addressCustomer['houseNumber']; ?></h4>
+                Town: <?php echo $addressCustomer['town'] . " (". $addressCustomer['country'] . ")"; ?> <br>
+                PostalCode: <?php echo $addressCustomer['postalCode']; ?><br>
+                District: <?php echo $addressCustomer['district']; ?><br>
+            </td>
+            <td>
+                <h4>Address: <?php echo $addressCustomerShip['address']. " " . $addressCustomerShip['houseNumber']; ?></h4>
+                Town: <?php echo $addressCustomerShip['town'] . " (". $addressCustomerShip['country'] . ")"; ?> <br>
+                PostalCode: <?php echo $addressCustomerShip['postalCode']; ?><br>
+                District: <?php echo $addressCustomerShip['district']; ?><br>
+            </td>
+            
         </tr>
         <tr>
-            <td>VAT: <?php echo $customer['vatNumber']; ?></td>
+            <td>VAT: <?php echo $customer['vat']; ?></td>
         </tr>
     </tbody>
 </table>
@@ -168,7 +162,7 @@ include_once("$currDir/header.php");
 					<td><?php echo $item['productCode']; ?></td>
 					<td class="text-right"><?php echo $item['UnitPrice']; ?></td>
 					<td class="text-right"><?php echo $item['Quantity']; ?></td>
-					<td class="text-right">€<?php echo number_format($item['LineTotal'], 2); ?></td>
+					<td class="text-right"><?php echo $item['LineTotal']; ?></td>
 				</tr>
 			<?php } ?>
 		</tbody>
@@ -176,11 +170,11 @@ include_once("$currDir/header.php");
 		<tfoot>
 			<tr>
 				<th colspan="4" class="text-right">Subtotale</th>
-				<th class="text-right">€<?php echo number_format($order_total, 2); ?></th>
+				<th class="text-right">€<?php echo $order['orderTotal']; ?></th>
 			</tr>
 			<tr>
 				<th colspan="4" class="text-right">Trasporto</th>
-				<th class="text-right">€<?php echo number_format($order['Freight'], 2); ?></th>
+				<th class="text-right">€<?php echo $order['Freight']; ?></th>
 			</tr>
 			<tr>
 				<th colspan="4" class="text-right">Totale</th>
@@ -213,5 +207,10 @@ $mpdf->SetDisplayMode('fullpage');
 $mpdf->WriteHTML($html_code);
 $mpdf->Output();
 
-//include_once("$currDir/footer.php");
 
+function getDataTable($table_name,$where_id){
+    $table_from = get_sql_from($table_name);
+    $table_fields = get_sql_fields($table_name);
+    $res = sql("SELECT {$table_fields} FROM {$table_from}" . $where_id, $eo);
+    return db_fetch_assoc($res);
+}

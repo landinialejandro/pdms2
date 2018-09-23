@@ -45,7 +45,8 @@
 		"`orders`.`overdraft`" => "overdraft",
 		"`orders`.`commisionFee`" => "commisionFee",
 		"if(`orders`.`consigneeHour`,date_format(`orders`.`consigneeHour`,'%d/%m/%Y %h:%i %p'),'')" => "consigneeHour",
-		"`orders`.`consigneePlace`" => "consigneePlace"
+		"`orders`.`consigneePlace`" => "consigneePlace",
+		"`orders`.`related`" => "related"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -72,7 +73,8 @@
 		21 => '`orders`.`overdraft`',
 		22 => '`orders`.`commisionFee`',
 		23 => '`orders`.`consigneeHour`',
-		24 => 24
+		24 => 24,
+		25 => '`orders`.`related`'
 	);
 
 	// Fields that can be displayed in the csv file
@@ -100,7 +102,8 @@
 		"`orders`.`overdraft`" => "overdraft",
 		"`orders`.`commisionFee`" => "commisionFee",
 		"if(`orders`.`consigneeHour`,date_format(`orders`.`consigneeHour`,'%d/%m/%Y %h:%i %p'),'')" => "consigneeHour",
-		"`orders`.`consigneePlace`" => "consigneePlace"
+		"`orders`.`consigneePlace`" => "consigneePlace",
+		"`orders`.`related`" => "related"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -127,7 +130,8 @@
 		"`orders`.`overdraft`" => "Scoperto Cliente",
 		"`orders`.`commisionFee`" => "Provvigione su ordine",
 		"`orders`.`consigneeHour`" => "Ora di consegna",
-		"`orders`.`consigneePlace`" => "Luogo consegna"
+		"`orders`.`consigneePlace`" => "Luogo consegna",
+		"`orders`.`related`" => "Related"
 	);
 
 	// Fields that can be quick searched
@@ -155,7 +159,8 @@
 		"`orders`.`overdraft`" => "overdraft",
 		"`orders`.`commisionFee`" => "commisionFee",
 		"if(`orders`.`consigneeHour`,date_format(`orders`.`consigneeHour`,'%d/%m/%Y %h:%i %p'),'')" => "consigneeHour",
-		"`orders`.`consigneePlace`" => "consigneePlace"
+		"`orders`.`consigneePlace`" => "consigneePlace",
+		"`orders`.`related`" => "related"
 	);
 
 	// Lookup fields that can be used as filterers

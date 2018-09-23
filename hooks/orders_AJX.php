@@ -1,6 +1,8 @@
 <?php
 $currDir = dirname(__FILE__);
-include("$currDir/../lib.php");
+if(!function_exists('sqlValue')){
+    include("$currDir/../lib.php");
+}
 
 if (isset($_POST['cmd'])){
     $cmd = makeSafe($_POST['cmd']);
