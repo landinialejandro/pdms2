@@ -92,7 +92,7 @@ function print_order(){
         var selectedID = parseInt($j('#id').text());
         if (selectedID > 0){
             var windowName = "popUp";//$(this).attr("name");
-            window.open('_printReports.php?OrderID=' + selectedID, windowName);
-    //				window.location = '_printReports.php?OrderID=' + selectedID;
+            window.open('REP_printDocument.php?OrderID=' + selectedID, windowName);
+    //				window.location = 'REP_printDocument.php?OrderID=' + selectedID;
         }
 }

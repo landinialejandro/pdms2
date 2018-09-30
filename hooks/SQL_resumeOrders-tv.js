@@ -21,7 +21,13 @@ $j(document).ready(function(){
         $j('th').each(function(){
             $j(this).css('background','#b1cbbb');
         });
+        $j("a[href='SQL_resumeOrders_view.php']").attr('href', '_resumeOrders_view.php');
 });
 
-
+$j(function(){
+    $j('.btn-print-and-close').click(function(){
+        var id = this.attributes.myid.value;
+        window.open('REP_printResumeDocument.php?OrderID=' + id);
+    });
+});
 

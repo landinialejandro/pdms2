@@ -12,13 +12,13 @@
 	$schema = array(   
 		'orders' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
-			'kind' => array('appgini' => 'VARCHAR(40) '),
+			'kind' => array('appgini' => 'VARCHAR(40) not null '),
 			'progressiveNr' => array('appgini' => 'CHAR(40) '),
 			'trasmissionFor' => array('appgini' => 'CHAR(10) default \'SDI10\' '),
 			'consigneeID' => array('appgini' => 'CHAR(10) '),
-			'company' => array('appgini' => 'INT unsigned '),
-			'typeDoc' => array('appgini' => 'VARCHAR(40) '),
-			'multiOrder' => array('appgini' => 'INT '),
+			'company' => array('appgini' => 'INT unsigned not null '),
+			'typeDoc' => array('appgini' => 'VARCHAR(40) not null '),
+			'multiOrder' => array('appgini' => 'INT not null '),
 			'customer' => array('appgini' => 'INT unsigned '),
 			'employee' => array('appgini' => 'INT unsigned '),
 			'date' => array('appgini' => 'DATE '),

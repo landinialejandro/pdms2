@@ -41,6 +41,9 @@ $j(function(){
     $j('#UnitPriceUsed, #Quantity, #Discount').change(function(){
         getSellPrice();
     });
+    $j('#update, #insert').click(function(){
+        calc();
+    });
 });
 
 function getSellPrice(){

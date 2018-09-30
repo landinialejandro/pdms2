@@ -30,7 +30,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Kind Order <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#kind-description"></i></label>
+					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Kind Order<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#kind-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="kind-description"><div class="alert alert-info">like input or outpu order</div></span>
 
@@ -40,7 +40,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="company" class="control-label col-lg-3" data-parent_link="view_parent_modal">ID Azienda</label>
+					<label for="company" class="control-label col-lg-3" data-parent_link="view_parent_modal">ID Azienda<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(company)%%><%%PLINK(company)%%><%%ADDNEW(companies)%%></div>
 					</div>
@@ -48,7 +48,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="typeDoc" class="control-label col-lg-3" data-parent_link="view_parent_modal">Tipo documento <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#typeDoc-description"></i></label>
+					<label for="typeDoc" class="control-label col-lg-3" data-parent_link="view_parent_modal">Tipo documento<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#typeDoc-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="typeDoc-description"><div class="alert alert-info">Scrivere il tipo di documento, il numero si autodefinisce in base all'Azienda e al tipo di documento.</div></span>
 
@@ -58,9 +58,9 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="multiOrder" class="control-label col-lg-3">Numero documento</label>
+					<label for="multiOrder" class="control-label col-lg-3">Numero documento<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
-						<input maxlength="" type="text" class="form-control" name="multiOrder" id="multiOrder" value="<%%VALUE(multiOrder)%%>">
+						<input maxlength="" type="text" class="form-control" name="multiOrder" id="multiOrder" value="<%%VALUE(multiOrder)%%>" required>
 					</div>
 				</div>
 

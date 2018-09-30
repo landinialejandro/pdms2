@@ -10,9 +10,11 @@ SELECT
     YEAR(`date`) AS 'YEAR',
     COUNT(`multiOrder`) AS 'DOCs',
     `related`,
-    MIN(`id`) as 'id'
+    MIN(`id`) AS 'id'
 FROM
     `orders`
+WHERE `typeDoc` = 'DDT'
+    AND `related` IS NULL
 GROUP BY
     `kind`,
     `company`,

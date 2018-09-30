@@ -43,7 +43,7 @@
 				'custom_query' => 'SELECT `kinds`.`code`, `kinds`.`name` FROM `kinds` WHERE `kinds`.`entity` LIKE \'%Orders%\' ORDER BY 2 ',
 				'inherit_permissions' => false,
 				'list_type' => 0,
-				'not_null' => false
+				'not_null' => true
 			),
 			'company' => array(
 				'parent_table' => 'companies',
@@ -54,7 +54,7 @@
 				'custom_query' => 'SELECT `companies`.`id`, IF(CHAR_LENGTH(`companies`.`companyCode`) || CHAR_LENGTH(`companies`.`companyName`), CONCAT_WS(\'\', `companies`.`companyCode`, \' - \', `companies`.`companyName`), \'\') FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`name`=`companies`.`kind` WHERE `companies`.`kind` like \'%MC%\' ORDER BY 2',
 				'inherit_permissions' => false,
 				'list_type' => 0,
-				'not_null' => false
+				'not_null' => true
 			),
 			'typeDoc' => array(
 				'parent_table' => 'kinds',
@@ -65,7 +65,7 @@
 				'custom_query' => 'SELECT `kinds`.`code`, IF(CHAR_LENGTH(`kinds`.`code`) || CHAR_LENGTH(`kinds`.`name`), CONCAT_WS(\'\', `kinds`.`code`, \' - \', `kinds`.`name`), \'\') FROM `kinds` WHERE `kinds`.`entity` LIKE \'%Documents%\' ORDER BY 2',
 				'inherit_permissions' => false,
 				'list_type' => 0,
-				'not_null' => false
+				'not_null' => true
 			),
 			'customer' => array(
 				'parent_table' => 'companies',

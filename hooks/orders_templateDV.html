@@ -8,6 +8,7 @@
 	<div class="row vspacer-md">
 		<div class="col-xs-12">
 			<input type="hidden" id="ordersDetails_hclink" value="ordersDetails_view.php?filterer_order=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+			<input type="hidden" id="_resumeOrders_hclink" value="_resumeOrders_view.php?filterer_related=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="firstCashNote_hclink" value="firstCashNote_view.php?filterer_order=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<div class="clearfix"></div>
 		</div>
@@ -32,7 +33,7 @@
                                     <div class="ui-widget-content ui-corner-all col-lg-6" style="padding: 0.4em;">
                                         <h5 class="ui-widget-header ui-corner-all" style="text-align: center; margin-top: 6px">Order</h5>
                                         <div class="form-group">
-                                                <label for="kind" class="control-label col-lg-2" data-parent_link="view_parent_modal">Kind<i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#kind-description"></i></label>
+                                                <label for="kind" class="control-label col-lg-2" data-parent_link="view_parent_modal">Kind<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#kind-description"></i></label>
                                                 <div class="col-lg-10">
                                                         <span class="help-block collapse" id="kind-description"><div class="alert alert-info">like input or outpu order</div></span>
 
@@ -41,7 +42,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                                <label for="typeDoc" class="control-label col-lg-2" data-parent_link="view_parent_modal">Documento<i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#typeDoc-description"></i></label>
+                                                <label for="typeDoc" class="control-label col-lg-2" data-parent_link="view_parent_modal">Documento<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#typeDoc-description"></i></label>
                                                 <div class="col-lg-10">
                                                         <span class="help-block collapse" id="typeDoc-description"><div class="alert alert-info">Scrivere il tipo di documento, il numero si autodefinisce in base all'Azienda e al tipo di documento.</div></span>
 
@@ -50,9 +51,9 @@
                                         </div>
 
                                         <div class="form-group">
-                                                <label for="multiOrder" class="control-label col-lg-2">Numero</label>
+                                                <label for="multiOrder" class="control-label col-lg-2">Numero<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
                                                 <div class="col-lg-10">
-                                                        <input maxlength="" type="text" class="form-control" name="multiOrder" id="multiOrder" value="<%%VALUE(multiOrder)%%>">
+                                                        <input maxlength="" type="text" class="form-control" name="multiOrder" id="multiOrder" value="<%%VALUE(multiOrder)%%>" required>
                                                 </div>
                                         </div>
 

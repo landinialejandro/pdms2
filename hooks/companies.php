@@ -26,6 +26,10 @@
 	*/
 
 	function companies_init(&$options, $memberInfo, &$args){
+		/* Inserted by Search Page Maker for AppGini on 2018-09-26 02:07:33 */
+		$options->FilterPage = 'hooks/companies_filter.php';
+		/* End of Search Page Maker for AppGini code */
+
 
 		return TRUE;
 	}

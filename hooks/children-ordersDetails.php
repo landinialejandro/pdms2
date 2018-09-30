@@ -4,7 +4,7 @@
 	$cleaner = new CI_Input();
 	$cleaner->charset = datalist_db_encoding;
         $currDir = dirname(__FILE__);
-        include_once 'order_details_AJX.php';
+        include_once 'ordersDetails_AJX.php';
 ?>
 <script>
 	<?php echo $current_table; ?>GetChildrenRecordsList = function(command){
@@ -121,7 +121,7 @@
                 $j.ajax({
                         method: 'post', //post, get
                         dataType: 'html', //json,text,html
-                        url:'./hooks/order_details_AJX.php',
+                        url:'./hooks/ordersDetails_AJX.php',
                         cache: 'false',
                         data: {  action: 'fastAdd',
                                      id: idArt, //id del articulo seleccionado
@@ -134,7 +134,7 @@
                         ActualizaValorTotal();
                     });
             }else{
-                alert('el valor de cantidad es incorrecto');
+                alert('the quantity is wrong');
             }
         }
         function deleteRegistro(IdChaild){
@@ -146,7 +146,7 @@
                 });
                 ActualizaValorTotal();
             }else{
-                alert('Ups!, algo salió mal...');
+                alert('Ups!, something is wrong...');
             }
             return;
         }
