@@ -48,7 +48,7 @@ $j(function(){
 function validateKind(){
     var k = $j('#kind-container').select2("data");
     if (k.id === 'IN'){
-        $j('#multiOrder').removeAttr('readonly').val('');
+        $j('#multiOrder').removeAttr('readonly');
         $j('#kind-container').select2("readonly",true);
     $j('#kind-container').select2("readonly",true);
     }else if (k.id === 'OUT') {
@@ -107,5 +107,5 @@ function print_order(){
         }
         setTimeout(function(){
             location.reload();
-        },1000)
+        },1000);
 }
