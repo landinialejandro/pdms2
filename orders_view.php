@@ -23,12 +23,12 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
 		"`orders`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind Order */" => "kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
 		"`orders`.`progressiveNr`" => "progressiveNr",
 		"`orders`.`trasmissionFor`" => "trasmissionFor",
 		"`orders`.`consigneeID`" => "consigneeID",
 		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* ID Azienda */" => "company",
-		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Tipo documento */" => "typeDoc",
+		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Documento */" => "typeDoc",
 		"`orders`.`multiOrder`" => "multiOrder",
 		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Cliente */" => "customer",
 		"IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') /* Impiegato */" => "employee",
@@ -46,7 +46,8 @@
 		"`orders`.`commisionFee`" => "commisionFee",
 		"if(`orders`.`consigneeHour`,date_format(`orders`.`consigneeHour`,'%d/%m/%Y %h:%i %p'),'')" => "consigneeHour",
 		"`orders`.`consigneePlace`" => "consigneePlace",
-		"`orders`.`related`" => "related"
+		"`orders`.`related`" => "related",
+		"`orders`.`document`" => "document"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -74,18 +75,19 @@
 		22 => '`orders`.`commisionFee`',
 		23 => '`orders`.`consigneeHour`',
 		24 => 24,
-		25 => '`orders`.`related`'
+		25 => '`orders`.`related`',
+		26 => 26
 	);
 
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
 		"`orders`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind Order */" => "kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
 		"`orders`.`progressiveNr`" => "progressiveNr",
 		"`orders`.`trasmissionFor`" => "trasmissionFor",
 		"`orders`.`consigneeID`" => "consigneeID",
 		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* ID Azienda */" => "company",
-		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Tipo documento */" => "typeDoc",
+		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Documento */" => "typeDoc",
 		"`orders`.`multiOrder`" => "multiOrder",
 		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Cliente */" => "customer",
 		"IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') /* Impiegato */" => "employee",
@@ -103,18 +105,19 @@
 		"`orders`.`commisionFee`" => "commisionFee",
 		"if(`orders`.`consigneeHour`,date_format(`orders`.`consigneeHour`,'%d/%m/%Y %h:%i %p'),'')" => "consigneeHour",
 		"`orders`.`consigneePlace`" => "consigneePlace",
-		"`orders`.`related`" => "related"
+		"`orders`.`related`" => "related",
+		"`orders`.`document`" => "document"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
 		"`orders`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind Order */" => "Kind Order",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "Kind",
 		"`orders`.`progressiveNr`" => "Numero progressivo",
 		"`orders`.`trasmissionFor`" => "Formato Trasmissione",
 		"`orders`.`consigneeID`" => "Codice Destinatario",
 		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* ID Azienda */" => "ID Azienda",
-		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Tipo documento */" => "Tipo documento",
-		"`orders`.`multiOrder`" => "Numero documento",
+		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Documento */" => "Documento",
+		"`orders`.`multiOrder`" => "Numero",
 		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Cliente */" => "Cliente",
 		"IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') /* Impiegato */" => "Impiegato",
 		"`orders`.`date`" => "Data Ordine",
@@ -131,18 +134,19 @@
 		"`orders`.`commisionFee`" => "Provvigione su ordine",
 		"`orders`.`consigneeHour`" => "Ora di consegna",
 		"`orders`.`consigneePlace`" => "Luogo consegna",
-		"`orders`.`related`" => "Related"
+		"`orders`.`related`" => "Related",
+		"`orders`.`document`" => "Document"
 	);
 
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
 		"`orders`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind Order */" => "kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
 		"`orders`.`progressiveNr`" => "Numero progressivo",
 		"`orders`.`trasmissionFor`" => "Formato Trasmissione",
 		"`orders`.`consigneeID`" => "Codice Destinatario",
 		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* ID Azienda */" => "company",
-		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Tipo documento */" => "typeDoc",
+		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Documento */" => "typeDoc",
 		"`orders`.`multiOrder`" => "multiOrder",
 		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Cliente */" => "customer",
 		"IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') /* Impiegato */" => "employee",
@@ -160,11 +164,12 @@
 		"`orders`.`commisionFee`" => "commisionFee",
 		"if(`orders`.`consigneeHour`,date_format(`orders`.`consigneeHour`,'%d/%m/%Y %h:%i %p'),'')" => "consigneeHour",
 		"`orders`.`consigneePlace`" => "consigneePlace",
-		"`orders`.`related`" => "related"
+		"`orders`.`related`" => "related",
+		"`orders`.`document`" => "document"
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'kind' => 'Kind Order', 'company' => 'ID Azienda', 'typeDoc' => 'Tipo documento', 'customer' => 'Cliente', 'employee' => 'Impiegato', 'shipVia' => 'Spedizione a mezzo');
+	$x->filterers = array(  'kind' => 'Kind', 'company' => 'ID Azienda', 'typeDoc' => 'Documento', 'customer' => 'Cliente', 'employee' => 'Impiegato', 'shipVia' => 'Spedizione a mezzo');
 
 	$x->QueryFrom = "`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`orders`.`employee` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`shipVia` ";
 	$x->QueryWhere = '';
@@ -196,7 +201,7 @@
 	$x->DefaultSortDirection = 'desc';
 
 	$x->ColWidth   = array(  75, 150, 150, 150, 150, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("id", "Kind Order", "ID Azienda", "Tipo documento", "Numero documento", "Cliente", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Fido Cliente", "Scoperto Cliente", "Provvigione su ordine", "Ora di consegna", "Luogo consegna");
+	$x->ColCaption = array("id", "Kind", "ID Azienda", "Documento", "Numero", "Cliente", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Fido Cliente", "Scoperto Cliente", "Provvigione su ordine", "Ora di consegna", "Luogo consegna");
 	$x->ColFieldName = array('id', 'kind', 'company', 'typeDoc', 'multiOrder', 'customer', 'date', 'shippedDate', 'shipVia', 'pallets', 'licencePlate', 'orderTotal', 'cashCredit', 'trust', 'overdraft', 'commisionFee', 'consigneeHour', 'consigneePlace');
 	$x->ColNumber  = array(1, 2, 6, 7, 8, 9, 11, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24);
 

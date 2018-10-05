@@ -60,8 +60,10 @@ function orders_insert(){
 		if($data['consigneePlace'] == empty_lookup_value){ $data['consigneePlace'] = ''; }
 	$data['related'] = makeSafe($_REQUEST['related']);
 		if($data['related'] == empty_lookup_value){ $data['related'] = ''; }
+	$data['document'] = makeSafe($_REQUEST['document']);
+		if($data['document'] == empty_lookup_value){ $data['document'] = ''; }
 	if($data['kind']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Kind Order': " . $Translation['field not null'] . '<br><br>';
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Kind': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -72,12 +74,12 @@ function orders_insert(){
 		exit;
 	}
 	if($data['typeDoc']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Tipo documento': " . $Translation['field not null'] . '<br><br>';
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Documento': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
 	if($data['multiOrder']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Numero documento': " . $Translation['field not null'] . '<br><br>';
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Numero': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -227,7 +229,7 @@ function orders_update($selected_id){
 	$data['kind'] = makeSafe($_REQUEST['kind']);
 		if($data['kind'] == empty_lookup_value){ $data['kind'] = ''; }
 	if($data['kind']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Kind Order': {$Translation['field not null']}<br><br>";
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Kind': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -245,14 +247,14 @@ function orders_update($selected_id){
 	$data['typeDoc'] = makeSafe($_REQUEST['typeDoc']);
 		if($data['typeDoc'] == empty_lookup_value){ $data['typeDoc'] = ''; }
 	if($data['typeDoc']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Tipo documento': {$Translation['field not null']}<br><br>";
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Documento': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
 	$data['multiOrder'] = makeSafe($_REQUEST['multiOrder']);
 		if($data['multiOrder'] == empty_lookup_value){ $data['multiOrder'] = ''; }
 	if($data['multiOrder']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Numero documento': {$Translation['field not null']}<br><br>";
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Numero': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -290,6 +292,8 @@ function orders_update($selected_id){
 		if($data['consigneePlace'] == empty_lookup_value){ $data['consigneePlace'] = ''; }
 	$data['related'] = makeSafe($_REQUEST['related']);
 		if($data['related'] == empty_lookup_value){ $data['related'] = ''; }
+	$data['document'] = makeSafe($_REQUEST['document']);
+		if($data['document'] == empty_lookup_value){ $data['document'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: orders_before_update
@@ -960,13 +964,8 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	// code for template based detail view forms
 
 	// open the detail view template
-	if($dvprint){
-		$template_file = is_file("./{$TemplateDVP}") ? "./{$TemplateDVP}" : './templates/orders_templateDVP.html';
-		$templateCode = @file_get_contents($template_file);
-	}else{
-		$template_file = is_file("./{$TemplateDV}") ? "./{$TemplateDV}" : './templates/orders_templateDV.html';
-		$templateCode = @file_get_contents($template_file);
-	}
+	$template_file = is_file("./{$TemplateDV}") ? "./{$TemplateDV}" : './templates/orders_templateDV.html';
+	$templateCode = @file_get_contents($template_file);
 
 	// process form title
 	$templateCode = str_replace('<%%DETAIL_VIEW_TITLE%%>', 'Dettaglio ordini', $templateCode);
@@ -988,7 +987,6 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	}
 
 	if($selected_id){
-		if(!$_REQUEST['Embedded']) $templateCode = str_replace('<%%DVPRINT_BUTTON%%>', '<button type="submit" class="btn btn-default" id="dvprint" name="dvprint_x" value="1" onclick="$$(\'form\')[0].writeAttribute(\'novalidate\', \'novalidate\'); document.myform.reset(); return true;" title="' . html_attr($Translation['Print Preview']) . '"><i class="glyphicon glyphicon-print"></i> ' . $Translation['Print Preview'] . '</button>', $templateCode);
 		if($AllowUpdate){
 			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '<button type="submit" class="btn btn-success btn-lg" id="update" name="update_x" value="1" onclick="return orders_validateData();" title="' . html_attr($Translation['Save Changes']) . '"><i class="glyphicon glyphicon-ok"></i> ' . $Translation['Save Changes'] . '</button>', $templateCode);
 		}else{
@@ -1072,7 +1070,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$templateCode = str_replace('<%%URLCOMBOTEXT(shipVia)%%>', urlencode($combo_shipVia->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'kind' => array('kinds', 'Kind Order'), 'company' => array('companies', 'ID Azienda'), 'typeDoc' => array('kinds', 'Tipo documento'), 'customer' => array('companies', 'Cliente'), 'employee' => array('contacts', 'Impiegato'), 'shipVia' => array('companies', 'Spedizione a mezzo'));
+	$lookup_fields = array(  'kind' => array('kinds', 'Kind'), 'company' => array('companies', 'ID Azienda'), 'typeDoc' => array('kinds', 'Documento'), 'customer' => array('companies', 'Cliente'), 'employee' => array('contacts', 'Impiegato'), 'shipVia' => array('companies', 'Spedizione a mezzo'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -1113,6 +1111,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$templateCode = str_replace('<%%UPLOADFILE(consigneeHour)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(consigneePlace)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(related)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(document)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -1184,6 +1183,9 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(related)%%>', safe_html($urow['related']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(related)%%>', html_attr($row['related']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(related)%%>', urlencode($urow['related']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(document)%%>', safe_html($urow['document']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(document)%%>', html_attr($row['document']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(document)%%>', urlencode($urow['document']), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -1234,6 +1236,8 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		$templateCode = str_replace('<%%URLVALUE(consigneePlace)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(related)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(related)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(document)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(document)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

@@ -2,8 +2,8 @@
 
 $currDir = dirname(__FILE__);
 $base_dir = realpath("{$currDir}/..");  
-if(!function_exists('getCurrentCompany')){
-    include("$base_dir/mylib.php");
+if(!function_exists('makeSafe')){
+    include("$base_dir/lib.php");
 }  
 
 if (isset($_POST['action']) && isset($_POST['id'])){
@@ -29,10 +29,10 @@ function processRequest($cmd, $id, $cant, $order){
 }
 
 function fastAdd($id, $cant, $order){
-    $statment="select sellPrice from products where ProductID = '$id'";
+    $statment="select sellPrice from products where id = '$id'";
     $val = sqlValue($statment);
     $val = $cant * $val;
-    $statment = "insert into order_details SET OrderID = '$order', productCode = '$id', Quantity = '$cant', UnitPrice = '$id', LineTotal = '$val', transaction_type = 'Outgoing' ";
+    $statment = "insert into ordersDetails SET ordersDetails.order = '$order', productCode = '$id', Quantity = '$cant', UnitPrice = '$id', LineTotal = '$val', transaction_type = 'Outgoing' ";
     $ret = sql($statment,$eo);
     return $ret;
 }

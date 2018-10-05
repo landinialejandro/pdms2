@@ -113,6 +113,17 @@
 				'list_type' => 0,
 				'not_null' => false
 			),
+			'IDproduct_lookup' => array(
+				'parent_table' => 'products',
+				'parent_pk_field' => 'id',
+				'parent_caption' => 'IF(CHAR_LENGTH(`products`.`productCode`) || CHAR_LENGTH(`products`.`id`), CONCAT_WS(\'\', `products`.`productCode`, \'-\', `products`.`productName`), \'\')',
+				'parent_from' => '`products` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`products`.`tax` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`products`.`CategoryID` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
 			'codebar' => array(
 				'parent_table' => 'products',
 				'parent_pk_field' => 'id',

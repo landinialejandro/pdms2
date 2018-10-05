@@ -28,6 +28,9 @@ $j(function(){
     $j('.btn-print-and-close').click(function(){
         var id = this.attributes.myid.value;
         window.open('REP_printResumeDocument.php?OrderID=' + id);
+        setTimeout(function(){
+            location.reload();
+        },500)
     });
 });
 

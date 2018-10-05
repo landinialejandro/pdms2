@@ -9,6 +9,16 @@
                  $options->TemplateDV = 'hooks/orders_templateDV.html';
 //                 $options->TemplateDVP = 'hooks/orders_templateDVP.html';
                  
+                if (isset($_REQUEST['SelectedID']) && $_REQUEST['SelectedID']){
+                    $selectedID = intval(makeSafe($_REQUEST['SelectedID']));
+                    $doc = sqlValue("select document from orders where id = {$selectedID}");
+            
+                    if ($doc){
+                        //read only form
+                        $options->TemplateDV = 'hooks/orders_templateDVR.html';
+                    }
+                }
+                 
 		return TRUE;
 	}
 
@@ -94,19 +104,8 @@
 
 
 	function orders_after_insert($data, $memberInfo, &$args){
-                //chack if save in prima nota
-//                if(!function_exists('addPrimaNota')){
-//                    include'orders_AJX.php';
-//                }
-////                sql('UPDATE orders SET OrderTotal = "' . floatval(getTotdetails($data)) . '"',$eo);
-//                if (isset($_POST['save'])){
-//                    $save = $_POST['save'];
-//                    if ($save === 'true'){
-//                        //save in prima nota
-//                        addPrimaNota($data,'open');
-//                    }
-//                }
-		return TRUE;
+
+            return TRUE;
 	}
 
 
@@ -117,15 +116,7 @@
 
 
 	function orders_after_update($data, $memberInfo, &$args){
-//                if(!function_exists('updatePrimaNota')){
-//                    include'orders_AJX.php';
-//                }
-////                sql('UPDATE orders SET OrderTotal = "'.floatval(getTotdetails($data)).'" where OrderID = "'. $data['OrderID'] .'"',$eo);
-//                // check if exist prima nota and update it.
-//                $pn = sqlValue("select id from firstCashNote where OrderId = '{$data['OrderID']}'");
-//                if($pn){
-//                    updatePrimaNota($data, $pn);
-//                }
+            
 		return TRUE;
 	}
 
@@ -142,19 +133,28 @@
 
 
 	function orders_dv($selectedID, $memberInfo, &$html, &$args){
-            //$("#e8").select2("data", {id: "CA", text: "California"});
-            if (isset($_REQUEST['addNew_x']) && isset($_REQUEST['mc']) && isset($_REQUEST['ok']) && isset($_REQUEST['dk'])){
-                   $mc_id = intval(makeSafe($_REQUEST['mc']));
-                   $mc_name = sqlValue("select companyName from companies where id = {$mc_id}");
-                   $mc_code = sqlValue("select companyCode from companies where id = {$mc_id}");
-                   $mc_text = $mc_code . " - " . $mc_name;
-                   $ok_id = makeSafe($_REQUEST['ok']);
-                   $ok_name = sqlValue("select name from kinds where code = '{$ok_id}'");
-                   $ok_text = $ok_name;
-                   $dk_id = makeSafe($_REQUEST['dk']);
-                   $dk_name = sqlValue("select name from kinds where code = '{$dk_id}'");
-                   $dk_text = $dk_id . " - " . $dk_name;
-                
+            if (isset($_REQUEST['addNew_x'])){
+
+                if (isset($_REQUEST['ok']) || (isset($_REQUEST['FilterValue']) && isset($_REQUEST['FilterField']))){
+                    if (isset($_REQUEST['ok'])){
+                       $ok_id = makeSafe($_REQUEST['ok']);
+                       $ok_text = sqlValue("select name from kinds where code = '{$ok_id}'");
+                    }
+                    if (isset($_REQUEST['FilterValue'])){
+                        $ok_text = makeSafe($_REQUEST['FilterValue'][2]);
+                        $ok_id = sqlValue("select code from kinds where name = '{$ok_text}'");
+                    }
+                }
+
+                if (    isset($_REQUEST['mc']) && isset($_REQUEST['dk'])){
+                    $mc_id = intval(makeSafe($_REQUEST['mc']));
+                    $mc_name = sqlValue("select companyName from companies where id = {$mc_id}");
+                    $mc_code = sqlValue("select companyCode from companies where id = {$mc_id}");
+                    $mc_text = $mc_code . " - " . $mc_name;
+                    $dk_id = makeSafe($_REQUEST['dk']);
+                    $dk_name = sqlValue("select name from kinds where code = '{$dk_id}'");
+                    $dk_text = $dk_id . " - " . $dk_name;
+                }
                 ob_start();
                 ?>
                     <!-- insert HTML code-->
@@ -163,10 +163,10 @@
                          setTimeout(function(){
                              $j('#s2id_company-container').select2("data", {id: "<?php echo $mc_id; ?>", text: "<?php echo $mc_text; ?>"});
                              $j('#company').val("<?php echo $mc_id; ?>");
-                             $j('#s2id_kind-container').select2("data", {id: "<?php echo $ok_id; ?>", text: "<?php echo $ok_text; ?>"});
-                             $j('#kind').val("<?php echo $ok_id; ?>");
                              $j('#s2id_typeDoc-container').select2("data", {id: "<?php echo $dk_id; ?>", text: "<?php echo $dk_text; ?>"});
                              $j('#typeDoc').val("<?php echo $dk_id; ?>");
+                             $j('#s2id_kind-container').select2("data", {id: "<?php echo $ok_id; ?>", text: "<?php echo $ok_text; ?>"});
+                             $j('#kind').val("<?php echo $ok_id; ?>");
                              orderNumber();
                          },1000);
                      }  

@@ -82,7 +82,10 @@ function showCard(field, dest, cmd){
     //dest = where to put the html result
     //cmd = comand for ajax and ajax file name
     var Data = $j('#' + field + '-container').select2("data");
-    var id = parseInt(Data.id);
+    var id = parseInt(Data.id) || 0;
+    if (id < 1){
+        id = parseInt($j('#' + field).val());
+    }
     if (id >0){
         $j.ajax({
             method: 'post', //post, get

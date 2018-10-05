@@ -35,7 +35,8 @@
 			'commisionFee' => array('appgini' => 'INT '),
 			'consigneeHour' => array('appgini' => 'DATETIME '),
 			'consigneePlace' => array('appgini' => 'VARCHAR(255) '),
-			'related' => array('appgini' => 'INT ')
+			'related' => array('appgini' => 'INT '),
+			'document' => array('appgini' => 'VARCHAR(255) ')
 		),
 		'ordersDetails' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),

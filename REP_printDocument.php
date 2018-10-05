@@ -7,8 +7,11 @@
 // 
 // toDo: 
 // revision:
-//          *22/09/18 adapted to new data 
-//          *25/08/18 add cusotmer data
+//          *30/09/18   adding file to data base to close order.
+//                      adding save file to PDFfolder
+//                      check if exist save document and get it
+//          *22/09/18   adapted to new data 
+//          *25/08/18   add cusotmer data
 // 
 //
 $currDir = dirname(__FILE__);
@@ -28,6 +31,13 @@ $where_id =" AND orders.id = {$order_id}";//change this to set select where
 $order = getDataTable('orders',$where_id);
 $docCategorie_id= makeSafe(sqlValue("select typeDoc from orders where id={$order_id}"));
 ///////////////////////////
+
+if (!is_null($order['document'])){
+    if (is_file($order['document'])){
+        openpdf($order['document'], $order['document']);
+    }
+    return;
+}
 
 /* retrieve multycompany info */
 ///////////////////////////
@@ -215,9 +225,19 @@ $f=$currDir.'/PDFfolder/';
 $mpdf->Output($f.$filename, 'F');
 
 $file = $f . $filename;
-header('Content-type: application/pdf');
-header('Content-Disposition: inline; filename="' . $filename . '"');
-header('Content-Transfer-Encoding: binary');
-header('Content-Length: ' . filesize($file));
-header('Accept-Ranges: bytes');
-@readfile($file);
+
+sql("UPDATE `orders` SET `document` = '{$file}' WHERE id = {$order_id}",$eo);
+
+
+openpdf($file, $filename);
+
+function openpdf($file,$filename){
+    
+    header('Content-type: application/pdf');
+    header('Content-Disposition: inline; filename="' . $filename . '"');
+    header('Content-Transfer-Encoding: binary');
+    header('Content-Length: ' . filesize($file));
+    header('Accept-Ranges: bytes');
+    @readfile($file);
+    return;
+}

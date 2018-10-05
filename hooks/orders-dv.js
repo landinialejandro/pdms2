@@ -21,6 +21,9 @@ $j(document).ready(function(){
     if (typeof autoSet !== 'undefined'){
         autoSet();//is a function from server-side
     }
+    setTimeout(function(){
+        validateKind();
+    },1100);
 });
 
 $j(function(){
@@ -38,15 +41,22 @@ $j(function(){
         orderNumber();
     });
     $j('#kind-container').change(function(){
-        var k = $j('#kind-container').select2("data");
-        if (k.id === 'IN'){
-            $j('#multiOrder').removeAttr('readonly').val('');
-        }else{
-            $j('#multiOrder').attr('readonly','true');
-            orderNumber();
-        }
+        validateKind();
     });
 });
+
+function validateKind(){
+    var k = $j('#kind-container').select2("data");
+    if (k.id === 'IN'){
+        $j('#multiOrder').removeAttr('readonly').val('');
+        $j('#kind-container').select2("readonly",true);
+    $j('#kind-container').select2("readonly",true);
+    }else if (k.id === 'OUT') {
+        $j('#multiOrder').attr('readonly','true');
+        $j('#kind-container').select2("readonly",true);
+        orderNumber();
+    }
+}
 
 function refreshCards(){
     $j('#company-container').select2("readonly",true);
@@ -95,4 +105,7 @@ function print_order(){
             window.open('REP_printDocument.php?OrderID=' + selectedID, windowName);
     //				window.location = 'REP_printDocument.php?OrderID=' + selectedID;
         }
+        setTimeout(function(){
+            location.reload();
+        },1000)
 }
