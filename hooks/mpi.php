@@ -137,4 +137,13 @@ class Mpi {
             return;   
         }
 }
-
+//test
+//$a = new Mpi('alea',$hooks_dir.'/../images/');
+//echo $a->user;
+//echo '<br>';
+//echo $a->image;
+//echo '<br>';
+//echo $a->menssage;
+//echo '<br>';
+//$a->setImage('mijpg.jpg');
+//echo $a->image;
