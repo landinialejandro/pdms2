@@ -1,4 +1,4 @@
-<?php if(!isset($Translation)) die('No direct access allowed.'); ?>
+<?php // if(!isset($Translation)) die('No direct access allowed.'); ?>
 <?php $current_table = 'ordersDetails'; ?>
 <?php
 	$cleaner = new CI_Input();
@@ -25,7 +25,7 @@
 
 		switch(command.Verb){
 			case 'sort': /* order by given field index in 'SortBy' */
-				post("myParent-children.php", {
+				post("./hooks/myParent-children.php", {
 					ChildTable: param.ChildTable,
 					ChildLookupField: param.ChildLookupField,
 					SelectedID: param.SelectedID,
@@ -40,7 +40,7 @@
 				else if(command.Page.toLowerCase() == 'previous'){ command.Page = param.Page - 1; }
 
 				if(command.Page < 1 || command.Page > <?php echo ceil($totalMatches / $config['records-per-page']); ?>){ return; }
-				post("myParent-children.php", {
+				post("./hooks/myParent-children.php", {
 					ChildTable: param.ChildTable,
 					ChildLookupField: param.ChildLookupField,
 					SelectedID: param.SelectedID,
@@ -150,11 +150,27 @@
             return;
         }
         function ActualizaValorTotal(){
-                setTimeout(function(){ 
-                    var sumRows = getNumbers($j('#sumRows').text());
-                    sumRows = parseFloat(sumRows[0]).toFixed(2);
-                    $j('#orderTotal').val(sumRows);
-                }, 1000);
+                    $j.ajax({
+                        method: 'post', //post, get
+                        dataType: 'html', //json,text,html
+                        url:'./hooks/ordersDetails_AJX.php',
+                        cache: 'false',
+                        data: {  action: 'totOrder',
+                            parameters: <?php echo json_encode($parameters); ?>, //parametros de la tabla
+                                  id: 'LineTotal'
+                              }
+                    })
+                    .done(function(msg){
+                        setTimeout(function(){ 
+                            //function at response
+    //                        ActualizaValorTotal();
+                            var sumRows = msg;
+                            sumRows = parseFloat(sumRows).toFixed(2);
+                            $j('#orderTotal').val(sumRows);
+                        }, 1000);
+                    });
+                    
+                    
             return;
         }
 </script>
@@ -256,7 +272,7 @@
                                         
                                             //calcula el total
                                             $fieldToSUM = 'LineTotal';
-                                            $tot = getTotOrder($parameters,$fieldToSUM);
+                                            $tot = number_format(getTotOrder($parameters,$fieldToSUM),2);
                                             $sumRow ="<tr class=\"success\">";
                                             if(!isset($_REQUEST['Print_x'])) $sumRow.="<td class=\"text-center\"><H3><strong>&sum;</strong></H3></td>";
                                             if($config['open-detail-view-on-click']){
@@ -273,7 +289,7 @@
                                             $sumRow.="<td></td>";
                                             $sumRow.="<td></td>";
                                             $sumRow.="<td></td>";
-                                            $sumRow.="<td id=\"sumRows\" class=\"text-right\"><H4><span>€</span>{$tot}</H4></td>";
+                                            $sumRow.="<td id=\"sumRows\" class=\"text-right\"><H4><span>&euro;</span>{$tot}</H4></td>";
                                             $sumRow.="<td></td>";
                                             $sumRow.="<td></td>";
                                             $sumRow.="<td></td>";

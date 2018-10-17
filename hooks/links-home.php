@@ -14,7 +14,29 @@
 			'table_group' => '' // optional name of the table group you wish to add the link to. If the table group name contains non-Latin characters, you should convert them to html entities.
 		);
 	 */
-
+//                $homeLinks[] = array(
+//			'url' => '#', 
+//			'title' => 'Testing', 
+//			'description' => 'Link text',
+//			'groups' => array('*'), // groups allowed to see this link, use '*' if you want to show the link to all groups
+//			'grid_column_classes' => '', // optional CSS classes to apply to link block. See: http://getbootstrap.com/css/#grid
+//			'panel_classes' => '', // optional CSS classes to apply to panel. See: http://getbootstrap.com/components/#panels
+//			'link_classes' => '', // optional CSS classes to apply to link. See: http://getbootstrap.com/css/#buttons
+//			'icon' => '', // optional icon to use with the link
+//			'table_group' => '*' // optional name of the table group you wish to add the link to. If the table group name contains non-Latin characters, you should convert them to html entities.
+//		);
+//                $homeLinks[] = array(
+//			'url' => '#', 
+//			'title' => 'Testing2', 
+//			'description' => 'Link text',
+//			'groups' => array('*'), // groups allowed to see this link, use '*' if you want to show the link to all groups
+//			'grid_column_classes' => '', // optional CSS classes to apply to link block. See: http://getbootstrap.com/css/#grid
+//			'panel_classes' => '', // optional CSS classes to apply to panel. See: http://getbootstrap.com/components/#panels
+//			'link_classes' => '', // optional CSS classes to apply to link. See: http://getbootstrap.com/css/#buttons
+//			'icon' => '', // optional icon to use with the link
+//			'table_group' => '' // optional name of the table group you wish to add the link to. If the table group name contains non-Latin characters, you should convert them to html entities.
+//		);
+                
 		$homeLinks[] = array(
 			'url' => 'orders_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterAnd%5B2%5D=and&FilterField%5B2%5D=2&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Output&FilterAnd%5B5%5D=and',//Add a new order to mc(multicompany)1,ok order kind output, dk= document kind DDT in this case 
 			'title' => 'Ordini Output', 

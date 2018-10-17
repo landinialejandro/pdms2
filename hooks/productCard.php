@@ -9,18 +9,18 @@
 // revision:
 // 
 //
-$currDir = dirname(__FILE__);
-include("$currDir/../defaultLang.php");
-include("$currDir/../language.php");
-include("$currDir/../lib.php");
+$productDir = dirname(__FILE__);
+include("$productDir/../defaultLang.php");
+include("$productDir/../language.php");
+include("$productDir/../lib.php");
 
 if (!isset($_REQUEST['cmd'])){
-    exit(error_message('Process command not found',false));
+    exit(error_message('Process command not found','',false));
 }
 
 $where_id = intval($_REQUEST['id']);
 
-if ($_REQUEST['cmd'] != 'productCard'){
+if ($_REQUEST['cmd'] !== 'productCard'){
     $b = $_REQUEST['cmd'];
     $a = sqlvalue("select `{$b}` from products where id = {$where_id}");
     if ($b === 'tax'){
@@ -35,13 +35,13 @@ if ($_REQUEST['cmd'] != 'productCard'){
 $table_name = 'products';
 $table_from = get_sql_from($table_name);
 if(!$table_from){
-    exit(error_message('Access denied!', false));
+    exit(error_message('Access denied!','', false));
 }
 
 
 
 if(!$where_id){
-    exit(error_message('The monkey are eating the product Code. (the product code are lost)', false));
+    exit(error_message('The monkey are eating the product Code. (the product code are lost)','', false));
 }
 
 /* retrive de product info*/
@@ -49,7 +49,7 @@ $table_fields = get_sql_fields($table_name);
 $res = sql("SELECT {$table_fields} FROM {$table_from} AND id = {$where_id}", $eo);
 
 if(!($result = db_fetch_assoc($res))){
-    exit(error_message('Product not found',false));
+    exit(error_message('Product not found','',false));
 }
 
 $product = $result;
@@ -67,26 +67,42 @@ $attributes = db_fetch_row($res);
 ob_start();
 ?>
 <!-- insert HTML code-->
-        <h5 class="ui-widget-header ui-corner-all" style="text-align: center; margin-top: 6px"><?php echo $product['productName']; ?> <?php echo $product['sellPrice']; ?></h5>
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?php echo $product['productName']; ?> <?php echo $product['sellPrice']; ?></h3>
+            </div>
         <div class="row">
             <div class="col-lg-4">
-                <h7 class="ui-widget-header ui-corner-all" style="text-align: center;">Data</h7><br>
-                Aliquota: <?php echo $product['tax']; ?><br>
-                Categoria: <?php echo $product['CategoryID']; ?><br>
-                UM: <?php echo $product['UM']; ?><br>
-                Tara: <?php echo $product['tare']; ?><br>
-                Prezzo Vendita: <?php echo $product['sellPrice']; ?><br>
+                <div class="box box-info">
+                    <div class="">
+                        <strong><h7 class="box-title">Data</h7></strong>
+                    </div>
+                    Aliquota: <?php echo $product['tax']; ?><br>
+                    Categoria: <?php echo $product['CategoryID']; ?><br>
+                    UM: <?php echo $product['UM']; ?><br>
+                    Tara: <?php echo $product['tare']; ?><br>
+                    Prezzo Vendita: <?php echo $product['sellPrice']; ?><br>
+                </div>
             </div>
             <div class="col-lg-8">
-                <h7 class="ui-widget-header ui-corner-all" style="text-align: center;">Notes</h7>
-                <textarea class="form-control" rows="2"><?php echo $product['note']; ?></textarea>
+                <div class="box box-info">
+                    <div class="">
+                        <strong><h7 class="box-title">Notes</h7></strong>
+                    </div>
+                    <textarea class="form-control" rows="2"><?php echo $result['notes']; ?></textarea>
+                </div>
             </div>
         </div>
-        <h6 class="ui-widget-header ui-corner-all" style="text-align: center;">
-            <small><?php echo 'Last update ' . time_elapsed_string($product_update); ?>  </small>
-            <button id="products_view_parent" pt="products" myid="<?php echo $where_id; ?>" class="btn btn-sm view_parent" type="button" title="Prodotto Details" onclick="showParent(this);" >show</button>
-            <button class="btn btn-sm pull-right" type="button" title="Refresh data" onclick="refreshCards()" >refresh</button>
-        </h6>
+            <div class="small-box bg-aqua">
+                <small><?php echo 'Last update ' . time_elapsed_string($product_update); ?>  </small>
+                <a id="companies_view_parent" pt="companies" myid="<?php echo $where_id; ?>" class="btn btn-sm view_parent" type="button" title="Azienda Details" onclick="showParent(this);" >more info
+                    <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                <a class="btn btn-sm pull-right" type="button" title="Refresh data" onclick="refreshCards()" >refresh
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+        </div>
 <?php
 $html_code = ob_get_contents();
 ob_end_clean();

@@ -201,7 +201,7 @@
 	$x->DefaultSortDirection = 'desc';
 
 	$x->ColWidth   = array(  75, 150, 150, 150, 150, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("id", "Kind", "ID Azienda", "Documento", "Numero", "Cliente", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Fido Cliente", "Scoperto Cliente", "Provvigione su ordine", "Ora di consegna", "Luogo consegna");
+	$x->ColCaption = array("id", "Kind", "Azienda", "Documento", "Numero", "Cliente", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Fido Cliente", "Scoperto Cliente", "Provvigione su ordine", "Ora di consegna", "Luogo consegna");
 	$x->ColFieldName = array('id', 'kind', 'company', 'typeDoc', 'multiOrder', 'customer', 'date', 'shippedDate', 'shipVia', 'pallets', 'licencePlate', 'orderTotal', 'cashCredit', 'trust', 'overdraft', 'commisionFee', 'consigneeHour', 'consigneePlace');
 	$x->ColNumber  = array(1, 2, 6, 7, 8, 9, 11, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24);
 

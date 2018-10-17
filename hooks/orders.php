@@ -6,7 +6,7 @@
 		$options->FilterPage = 'hooks/orders_filter.php';
 		/* End of Search Page Maker for AppGini code */
 
-                 $options->TemplateDV = 'hooks/orders_templateDV.html';
+                 $options->TemplateDV = 'hooks/orders_templateDV_lte.html';
 //                 $options->TemplateDVP = 'hooks/orders_templateDVP.html';
                  
                 if (isset($_REQUEST['SelectedID']) && $_REQUEST['SelectedID']){

@@ -18,11 +18,15 @@ if (isset($_POST['action']) && isset($_POST['id'])){
 }
 
 function processRequest($cmd, $id, $cant, $order){
-    $ret="ok- $cmd, $id, $cant, $order";
+    $ret="ret - $cmd, $id, $cant, $order";
     
     
-    if ($cmd = 'fastAdd'){
+    if ($cmd === 'fastAdd'){
         fastAdd($id, $cant, $order);
+    }
+    if ($cmd === 'totOrder'){
+        $parameters = $_POST['parameters'];
+        $ret = getTotOrder($parameters, $id);
     }
     
     return $ret;
@@ -30,9 +34,10 @@ function processRequest($cmd, $id, $cant, $order){
 
 function fastAdd($id, $cant, $order){
     $statment="select sellPrice from products where id = '$id'";
-    $val = sqlValue($statment);
-    $val = $cant * $val;
-    $statment = "insert into ordersDetails SET ordersDetails.order = '$order', productCode = '$id', Quantity = '$cant', UnitPrice = '$id', LineTotal = '$val', transaction_type = 'Outgoing' ";
+    $unitPrice = sqlValue($statment);
+    $val = $cant * $unitPrice;
+    $today = date("Y-m-d");
+    $statment = "insert into ordersDetails SET ordersDetails.manufactureDate = '$today', ordersDetails.sellDate = '$today', ordersDetails.order = '$order', productCode = '$id', Quantity = '$cant', UnitPrice = '$unitPrice', LineTotal = '$val', transaction_type = 'Outgoing' ";
     $ret = sql($statment,$eo);
     return $ret;
 }
