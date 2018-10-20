@@ -146,7 +146,7 @@
                     }
                 }
 
-                if (    isset($_REQUEST['mc']) && isset($_REQUEST['dk'])){
+                if (isset($_REQUEST['mc']) && isset($_REQUEST['dk'])){
                     $mc_id = intval(makeSafe($_REQUEST['mc']));
                     $mc_name = sqlValue("select companyName from companies where id = {$mc_id}");
                     $mc_code = sqlValue("select companyCode from companies where id = {$mc_id}");
@@ -177,7 +177,6 @@
                 $html= $html . $html_code;
             }
 	}
-
 
 	function orders_csv($query, $memberInfo, &$args){
 
