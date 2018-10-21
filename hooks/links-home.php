@@ -100,9 +100,22 @@
                     );
                 }
 
+                //get entities company kinds
+                $kCompanies = sql("select name from kinds where `kinds`.`entity` LIKE '%Companies%'",$eo);
+                
+                foreach($kCompanies as $i => $kCompany){
+                    $homeLinks[] = array(
+                            'url' => "companies_view.php?ck=". $kCompany['name'],//Add a new order to mc(multicompany)1,ok order kind output, dk= document kind DDT in this case 
+                            'title' => ''. $kCompany['name'], 
+                            'description' => "Add a {$kCompany['name']} ",
+                            'groups' => array('*'), // groups allowed to see this link, use '*' if you want to show the link to all groups
+                            'grid_column_classes' => 'col-lg-6', // optional CSS classes to apply to link block. See: http://getbootstrap.com/css/#grid
+                            'panel_classes' => 'panel panel-warning', // optional CSS classes to apply to panel. See: http://getbootstrap.com/components/#panels
+                            'link_classes' => 'btn btn-block btn-lg btn-warning', // optional CSS classes to apply to link. See: http://getbootstrap.com/css/#buttons
+                            'icon' => 'resources/table_icons/lightning.png', // optional icon to use with the link
+                            'table_group' => 'Anagrafiche' // optional name of the table group you wish to add the link to. If the table group name contains non-Latin characters, you should convert them to html entities.
+                    );
+                 }
+                
+                        
                 ?>
-<script>
-  $j(document).ready(function(){
-      $j('#orders-tile').hide();    
-  });
-</script>

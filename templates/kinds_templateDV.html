@@ -53,8 +53,17 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="value" class="control-label col-lg-3">Value</label>
+					<label for="value" class="control-label col-lg-3">
+                                            Value 
+                                            <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#value-description"></i>
+                                        </label>
 					<div class="col-lg-9">
+                                                <span class="help-block collapse" id="value-description">
+                                                    <div class="alert alert-info">
+                                                        Value field, you can use JSON object to define multi value.<br>
+                                                        predefined value: rowcolor: use bootstrap css color (success, warning, etc.), ico: use for icon image in sidebar menu.
+                                                    </div>
+                                                </span>
 						<input maxlength="40" type="text" class="form-control" name="value" id="value" value="<%%VALUE(value)%%>">
 					</div>
 				</div>
