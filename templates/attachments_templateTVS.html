@@ -7,7 +7,7 @@
 
 		<td id="attachments-name-<%%VALUE(id)%%>" class="attachments-name"><%%VALUE(name)%%></td>
 		<td id="attachments-file-<%%VALUE(id)%%>" class="attachments-file"><a href="link.php?t=attachments&f=file&i=<%%VALUE(id)%%>" target="_blank" title="<%%VALUE(file)%%>" class="btn btn-default"><i class="glyphicon glyphicon-picture text-info"></i></a></td>
-		<td id="attachments-thumbUse-<%%VALUE(id)%%>" class="attachments-thumbUse"><%%VALUE(thumbUse)%%></td>
+		<td id="attachments-thumbUse-<%%VALUE(id)%%>" class="attachments-thumbUse text-right"><%%VALUE(thumbUse)%%></td>
 		<script>$j(function(){
 			var e_file = '<%%VALUE(file)%%>'; if(e_file == '' || e_file == '&nbsp;') $j(/*<*/ '#attachments-file-<%%VALUE(id)%%>' /*>*/).html('');
 		});</script>

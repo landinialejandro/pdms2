@@ -24,7 +24,7 @@
 	$x->QueryFieldsTV = array(   
 		"`phones`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
-		"`phones`.`phoneNumber`" => "phoneNumber",
+		"if(CHAR_LENGTH(`phones`.`phoneNumber`)>100, concat(left(`phones`.`phoneNumber`,100),' ...'), `phones`.`phoneNumber`)" => "phoneNumber",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company"
 	);
@@ -58,7 +58,7 @@
 	$x->QueryFieldsQS = array(   
 		"`phones`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
-		"`phones`.`phoneNumber`" => "phoneNumber",
+		"`phones`.`phoneNumber`" => "PhoneNumber",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company"
 	);

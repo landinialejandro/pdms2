@@ -24,7 +24,7 @@
 	<h1><img src="vcard.png" style="height: 1em;"> Membership Profile Image for AppGini</h1>
 	<h1>
 		<a href="./index.php">Projects</a> > <?php echo substr( $projectFile , 0 , strrpos( $projectFile , ".")); ?>
-		<a href="output-folder.php?axp=<?php echo $axp_md5; ?>" class="pull-right btn btn-success btn-lg col-md-3 col-xs-12"><span class="glyphicon glyphicon-play"></span>  Enable MPI</a>
+		<a href="output-folder.php?axp=<?php echo $axp_md5; ?>" class="pull-right btn btn-success  col-md-3 col-xs-12"><span class="glyphicon glyphicon-play"></span>  Enable MPI</a>
 	</h1>
 
 </div>

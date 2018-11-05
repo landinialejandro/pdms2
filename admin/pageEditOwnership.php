@@ -203,11 +203,11 @@
 
 	<div class="row">
 		<div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 col-lg-6 col-lg-offset-4">
-			<button type="submit" name="saveChanges" value="1" class="hidden-xs hidden-sm btn btn-primary btn-lg">
+			<button type="submit" name="saveChanges" value="1" class="hidden-xs hidden-sm btn btn-primary ">
 				<i class="glyphicon glyphicon-ok"></i>
 				<?php echo $Translation["save changes"]; ?>
 			</button>
-			<button type="submit" name="saveChanges" value="1" class="hidden-md hidden-lg btn btn-primary btn-lg btn-block">
+			<button type="submit" name="saveChanges" value="1" class="hidden-md hidden-lg btn btn-primary  btn-block">
 				<i class="glyphicon glyphicon-ok"></i>
 				<?php echo $Translation["save changes"]; ?>
 			</button>

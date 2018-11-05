@@ -53,6 +53,12 @@
 		switch($contentType){
 			case 'tableview':
 				$footer='';
+                            
+                            if (isset($_REQUEST['ck'])){
+                                $title=makeSafe($_REQUEST['ck']);
+                                echo title_tv($title,"?ck=".$title);
+                            }
+                            
 				break;
 
 			case 'detailview':
@@ -116,6 +122,35 @@
 
 
 	function companies_dv($selectedID, $memberInfo, &$html, &$args){
+            if (isset($_REQUEST['addNew_x'])){
+                if (isset($_REQUEST['ck']) || (isset($_REQUEST['FilterValue']) && isset($_REQUEST['FilterField']))){
+                    if (isset($_REQUEST['ok'])){
+                       $ck_id = makeSafe($_REQUEST['ck']);
+                       $ck_text = sqlValue("select name from kinds where code = '{$ck_id}'");
+                    }
+                    if (isset($_REQUEST['FilterValue'])){
+                        $ck_text = makeSafe($_REQUEST['FilterValue'][1]);
+                        $ck_id = sqlValue("select code from kinds where name = '{$ck_text}'");
+                    }
+                }
+                ob_start();
+                ?>
+                    <!-- insert HTML code-->
+                    <?php echo title_tv($ck_text,"?ck=$ck_text");?>
+                    <script>
+                     $j(function(){
+                         setTimeout(function(){
+                             $j('#s2id_kind-container').select2("data", {id: "<?php echo $ck_id; ?>", text: "<?php echo $ck_text; ?>"});
+                             $j('#kind').val("<?php echo $ck_id; ?>");
+                             orderNumber();
+                         },1000);
+                     })  
+                    </script>
+                <?php
+                $html_code = ob_get_contents();
+                ob_end_clean();
+                $html= $html . $html_code;
+            }
 
 	}
 

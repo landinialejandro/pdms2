@@ -27,7 +27,7 @@
 			'shipVia' => array('appgini' => 'INT unsigned '),
 			'Freight' => array('appgini' => 'DECIMAL(10,2) '),
 			'pallets' => array('appgini' => 'INT '),
-			'licencePlate' => array('appgini' => 'VARCHAR(40) '),
+			'licencePlate' => array('appgini' => 'VARCHAR(255) '),
 			'orderTotal' => array('appgini' => 'DECIMAL(10,2) '),
 			'cashCredit' => array('appgini' => 'VARCHAR(255) default \'1\' '),
 			'trust' => array('appgini' => 'INT unsigned '),
@@ -82,8 +82,8 @@
 		'products' => array(   
 			'id' => array('appgini' => 'INT not null primary key auto_increment '),
 			'codebar' => array('appgini' => 'VARCHAR(16) '),
-			'productCode' => array('appgini' => 'VARCHAR(40) '),
-			'productName' => array('appgini' => 'VARCHAR(50) '),
+			'productCode' => array('appgini' => 'VARCHAR(255) '),
+			'productName' => array('appgini' => 'VARCHAR(255) '),
 			'tax' => array('appgini' => 'VARCHAR(40) '),
 			'increment' => array('appgini' => 'DECIMAL(10,2) '),
 			'CategoryID' => array('appgini' => 'VARCHAR(40) '),
@@ -115,7 +115,7 @@
 			'bank' => array('appgini' => 'INT unsigned '),
 			'note' => array('appgini' => 'VARCHAR(255) '),
 			'paymentDeadLine' => array('appgini' => 'DATE '),
-			'payed' => array('appgini' => 'VARCHAR(40) default \'0\' ')
+			'payed' => array('appgini' => 'VARCHAR(255) default \'0\' ')
 		),
 		'vatRegister' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -129,32 +129,32 @@
 		'companies' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'kind' => array('appgini' => 'VARCHAR(40) not null '),
-			'companyCode' => array('appgini' => 'VARCHAR(40) '),
-			'companyName' => array('appgini' => 'VARCHAR(40) '),
-			'fiscalCode' => array('appgini' => 'VARCHAR(40) '),
-			'vat' => array('appgini' => 'VARCHAR(40) '),
+			'companyCode' => array('appgini' => 'VARCHAR(255) '),
+			'companyName' => array('appgini' => 'VARCHAR(255) '),
+			'fiscalCode' => array('appgini' => 'VARCHAR(255) '),
+			'vat' => array('appgini' => 'VARCHAR(255) '),
 			'notes' => array('appgini' => 'TEXT ')
 		),
 		'contacts' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'kind' => array('appgini' => 'VARCHAR(40) '),
 			'titleCourtesy' => array('appgini' => 'VARCHAR(40) '),
-			'name' => array('appgini' => 'VARCHAR(40) '),
-			'lastName' => array('appgini' => 'VARCHAR(40) '),
+			'name' => array('appgini' => 'VARCHAR(255) '),
+			'lastName' => array('appgini' => 'VARCHAR(255) '),
 			'notes' => array('appgini' => 'TEXT '),
-			'title' => array('appgini' => 'VARCHAR(40) '),
-			'birthDate' => array('appgini' => 'DATETIME ')
+			'title' => array('appgini' => 'VARCHAR(255) '),
+			'birthDate' => array('appgini' => 'DATE ')
 		),
 		'creditDocument' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
-			'incomingTypeDoc' => array('appgini' => 'VARCHAR(40) '),
-			'customerID' => array('appgini' => 'VARCHAR(40) '),
-			'nrDoc' => array('appgini' => 'VARCHAR(40) '),
+			'incomingTypeDoc' => array('appgini' => 'VARCHAR(255) '),
+			'customerID' => array('appgini' => 'VARCHAR(255) '),
+			'nrDoc' => array('appgini' => 'VARCHAR(255) '),
 			'dateIncomingNote' => array('appgini' => 'DATE '),
-			'customerFirm' => array('appgini' => 'VARCHAR(40) '),
-			'customerAddress' => array('appgini' => 'VARCHAR(40) '),
-			'customerPostCode' => array('appgini' => 'VARCHAR(40) '),
-			'customerTown' => array('appgini' => 'VARCHAR(40) ')
+			'customerFirm' => array('appgini' => 'VARCHAR(255) '),
+			'customerAddress' => array('appgini' => 'VARCHAR(255) '),
+			'customerPostCode' => array('appgini' => 'VARCHAR(255) '),
+			'customerTown' => array('appgini' => 'VARCHAR(255) ')
 		),
 		'electronicInvoice' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -165,21 +165,21 @@
 		),
 		'countries' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
-			'country' => array('appgini' => 'VARCHAR(40) '),
-			'code' => array('appgini' => 'VARCHAR(40) ')
+			'country' => array('appgini' => 'VARCHAR(255) '),
+			'code' => array('appgini' => 'VARCHAR(100) ')
 		),
 		'town' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'country' => array('appgini' => 'INT unsigned '),
-			'idIstat' => array('appgini' => 'VARCHAR(40) '),
-			'town' => array('appgini' => 'VARCHAR(40) '),
-			'district' => array('appgini' => 'VARCHAR(40) '),
-			'region' => array('appgini' => 'VARCHAR(40) '),
-			'prefix' => array('appgini' => 'VARCHAR(40) '),
-			'shipCode' => array('appgini' => 'VARCHAR(40) '),
-			'fiscCode' => array('appgini' => 'VARCHAR(40) '),
-			'inhabitants' => array('appgini' => 'VARCHAR(40) '),
-			'link' => array('appgini' => 'VARCHAR(40) ')
+			'idIstat' => array('appgini' => 'VARCHAR(255) '),
+			'town' => array('appgini' => 'VARCHAR(255) '),
+			'district' => array('appgini' => 'VARCHAR(255) '),
+			'region' => array('appgini' => 'VARCHAR(255) '),
+			'prefix' => array('appgini' => 'VARCHAR(255) '),
+			'shipCode' => array('appgini' => 'VARCHAR(255) '),
+			'fiscCode' => array('appgini' => 'VARCHAR(255) '),
+			'inhabitants' => array('appgini' => 'VARCHAR(255) '),
+			'link' => array('appgini' => 'VARCHAR(255) ')
 		),
 		'GPSTrackingSystem' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -188,8 +188,8 @@
 		'kinds' => array(   
 			'entity' => array('appgini' => 'BLOB not null '),
 			'code' => array('appgini' => 'VARCHAR(40) not null primary key '),
-			'name' => array('appgini' => 'VARCHAR(40) not null '),
-			'value' => array('appgini' => 'VARCHAR(40) '),
+			'name' => array('appgini' => 'VARCHAR(255) not null '),
+			'value' => array('appgini' => 'TEXT '),
 			'descriptions' => array('appgini' => 'TEXT ')
 		),
 		'Logs' => array(   
@@ -209,8 +209,8 @@
 		'addresses' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'kind' => array('appgini' => 'VARCHAR(40) '),
-			'address' => array('appgini' => 'VARCHAR(40) '),
-			'houseNumber' => array('appgini' => 'VARCHAR(40) '),
+			'address' => array('appgini' => 'VARCHAR(255) '),
+			'houseNumber' => array('appgini' => 'VARCHAR(255) '),
 			'country' => array('appgini' => 'INT unsigned '),
 			'town' => array('appgini' => 'INT unsigned '),
 			'postalCode' => array('appgini' => 'INT unsigned '),
@@ -218,20 +218,20 @@
 			'contact' => array('appgini' => 'INT unsigned '),
 			'company' => array('appgini' => 'INT unsigned '),
 			'map' => array('appgini' => 'VARCHAR(40) '),
-			'default' => array('appgini' => 'VARCHAR(40) default \'0\' '),
-			'ship' => array('appgini' => 'VARCHAR(40) default \'0\' ')
+			'default' => array('appgini' => 'INT default \'0\' '),
+			'ship' => array('appgini' => 'INT default \'0\' ')
 		),
 		'phones' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'kind' => array('appgini' => 'VARCHAR(40) '),
-			'phoneNumber' => array('appgini' => 'VARCHAR(40) '),
+			'phoneNumber' => array('appgini' => 'VARCHAR(255) '),
 			'contact' => array('appgini' => 'INT unsigned '),
 			'company' => array('appgini' => 'INT unsigned ')
 		),
 		'mails' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'kind' => array('appgini' => 'VARCHAR(40) '),
-			'mail' => array('appgini' => 'VARCHAR(40) '),
+			'mail' => array('appgini' => 'VARCHAR(255) '),
 			'contact' => array('appgini' => 'INT unsigned '),
 			'company' => array('appgini' => 'INT unsigned ')
 		),
@@ -242,11 +242,11 @@
 		),
 		'attachments' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
-			'name' => array('appgini' => 'VARCHAR(40) '),
-			'file' => array('appgini' => 'VARCHAR(40) '),
+			'name' => array('appgini' => 'VARCHAR(255) '),
+			'file' => array('appgini' => 'VARCHAR(255) '),
 			'contact' => array('appgini' => 'INT unsigned '),
 			'company' => array('appgini' => 'INT unsigned '),
-			'thumbUse' => array('appgini' => 'VARCHAR(40) ')
+			'thumbUse' => array('appgini' => 'INT default \'0\' ')
 		)
 	);
 

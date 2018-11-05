@@ -29,7 +29,7 @@
 <?php } ?>
 
 <div class="text-center">
-	<input type="button" value="Close" onClick="window.close();" autofocus class="btn btn-default btn-lg">
+	<input type="button" value="Close" onClick="window.close();" autofocus class="btn btn-default ">
 </div>
 
 <?php include_once("{$currDir}/footer.php"); ?>

@@ -36,9 +36,9 @@ $j(function(){
         };
         $j('#'+field).val(newValue);
         ToggleFix(field);
-        getSellPrice();
+        getSellPrice(); 
     });
-    $j('#UnitPriceUsed, #Quantity, #Discount').change(function(){
+    $j('#UnitPrice, #Quantity, #Discount').change(function(){
         getSellPrice();
     });
     $j('#update, #insert').click(function(){

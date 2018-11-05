@@ -13,6 +13,7 @@ $cardDir = dirname(__FILE__);
 include("$cardDir/../defaultLang.php");
 include("$cardDir/../language.php");
 include("$cardDir/../lib.php");
+include("$cardDir/../myLib.php");
 
 /* grant access to all users who have access to the companies table */
 $table_name = 'companies';
@@ -33,6 +34,13 @@ $res = sql("SELECT {$table_fields} FROM {$table_from} AND id = {$where_id}", $eo
 if (!($result = db_fetch_assoc($res))) {
     exit(error_message('company not found','', false));
 }
+$CompanyKind = sqlValue("select kind from companies where id = {$where_id} LIMIT 1;");
+
+/* retrieve company attributes*/
+$table_fields = get_sql_fields("attributes");
+$table_from = get_sql_from("attributes");
+$attributes = sql("SELECT {$table_fields} FROM {$table_from} AND `attributes`.`companies` = {$where_id}",$eo);
+
 
 $table_fields = get_sql_fields('addresses');
 $table_from=get_sql_from('addresses');
@@ -68,6 +76,40 @@ ob_start();
             </div>
         </div>
     </div>
+<?php if($attributes->num_rows){ ?>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box box-info">
+            <div class="">
+                <h7 class="box-title">Attributes</h7>
+            </div>
+            <div class="box-body">
+                <?php 
+                foreach ($attributes as $i => $attribute){
+                    echo $attribute['attribute'] . ": ". $attribute['value']."<br>";
+                }
+                //show progress bar
+                $databar = dataBar($where_id);
+                if ($databar['ratio']){
+                ?>
+                    <div class="progress">
+                        <div id="barFido-<?php echo $CompanyKind; ?>" class="progress-bar progress-bar-<?php echo $databar['color']; ?>" role="progressbar" aria-valuenow="<?php echo $databar['ratio'] ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $databar['ratio'] ?>%">
+                            <span class="">Fido <?php echo $result['kind'];?> <?php echo number_format($databar['ratio'],2,'.',''); ?>% Complete</span>
+                        </div>
+                    </div>
+                <?php 
+                } 
+                if ($databar['overdraft'] > 0){
+                ?>
+                overdraft: <?php echo $databar['overdraft']; ?>
+                <?php
+                }
+          ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
     <div class="small-box bg-aqua">
             <small><?php echo 'Last update ?'; ?>  </small>
             <a id="companies_view_parent" pt="companies" myid="<?php echo $where_id; ?>" class="btn btn-sm view_parent" type="button" title="Azienda Details" onclick="showParent(this);" >more info

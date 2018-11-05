@@ -40,24 +40,23 @@ function ToggleFix (field, a = 'default'){
     
     if (!$j('#' + field).next().children('.btn-fix').hasClass('btn-' + a)){
 
-        $j('#' + field).next().children('.btn-fix').toggleClass('btn-' + a);
-
         if (a === 'default'){
+            $j('#' + field).next().children('.btn-fix').removeClass('btn-warning btn-danger');
+            $j('#' + field).next().children('.btn-fix').children().removeClass('glyphicon-warning-sign glyphicon-remove ');
             $j('#' + field).next().children('.btn-fix').children().toggleClass('glyphicon-ok');
-             $j('#' + field).next().children('.btn-fix').removeClass('btn-warning, btn-danger');
-             $j('#' + field).next().children('.btn-fix').children().removeClass('glyphicon-warning-sign, glyphicon-remove ');
-             $j('#' + field).parents('.form-group').removeClass('has-error');
+            $j('#' + field).parents('.form-group').removeClass('has-error');
         };
         if (a === 'warning'){
             $j('#' + field).next().children('.btn-fix').children().toggleClass('glyphicon-warning-sign');
-             $j('#' + field).next().children('.btn-fix').removeClass('btn-default');
-             $j('#' + field).next().children('.btn-fix').children().removeClass('glyphicon-ok');
+            $j('#' + field).next().children('.btn-fix').removeClass('btn-default');
+            $j('#' + field).next().children('.btn-fix').children().removeClass('glyphicon-ok');
         };
         if (a === 'danger'){
             $j('#' + field).next().children('.btn-fix').children().toggleClass('glyphicon-remove');
-             $j('#' + field).next().children('.btn-fix').removeClass('btn-default');
-             $j('#' + field).next().children('.btn-fix').children().removeClass('glyphicon-ok');
+            $j('#' + field).next().children('.btn-fix').removeClass('btn-default');
+            $j('#' + field).next().children('.btn-fix').children().removeClass('glyphicon-ok');
         };
+        $j('#' + field).next().children('.btn-fix').toggleClass('btn-' + a);
     }
 }
 

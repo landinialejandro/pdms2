@@ -15,7 +15,7 @@ $j(document).ready(function(){
     if(!is_add_new()){
         setTimeout(function(){
             refreshCards();
-            appedPrintOrder();
+            appendPrintOrder();
         },1000);
     }
     if (typeof autoSet !== 'undefined'){
@@ -89,10 +89,10 @@ function orderNumber(){
 //    return on;
 }
 
-function appedPrintOrder(){
+function appendPrintOrder(){
     $j('#orders_dv_action_buttons .btn-toolbar').append(
-            '<p></p><div class="btn-group-vertical btn-group-lg" style="width: 100%;">' +
-                    '<button type="button" class="btn btn-default btn-lg" onclick="print_order()">' +
+            '<p></p><div class="btn-group-vertical" style="width: 100%;">' +
+                    '<button type="button" class="btn btn-default" onclick="print_order()">' +
                             '<i class="glyphicon glyphicon-print"></i> Print Order</button>' +
             '</div>'
     );

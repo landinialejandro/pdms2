@@ -23,11 +23,11 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
 		"`attachments`.`id`" => "id",
-		"`attachments`.`name`" => "name",
-		"`attachments`.`file`" => "file",
+		"if(CHAR_LENGTH(`attachments`.`name`)>100, concat(left(`attachments`.`name`,100),' ...'), `attachments`.`name`)" => "name",
+		"if(CHAR_LENGTH(`attachments`.`file`)>100, concat(left(`attachments`.`file`,100),' ...'), `attachments`.`file`)" => "file",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
-		"`attachments`.`thumbUse`" => "thumbUse"
+		"concat('<i class=\"glyphicon glyphicon-', if(`attachments`.`thumbUse`, 'check', 'unchecked'), '\"></i>')" => "thumbUse"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -36,7 +36,7 @@
 		3 => 3,
 		4 => '`contacts1`.`id`',
 		5 => '`companies1`.`id`',
-		6 => 6
+		6 => '`attachments`.`thumbUse`'
 	);
 
 	// Fields that can be displayed in the csv file
@@ -61,11 +61,11 @@
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
 		"`attachments`.`id`" => "id",
-		"`attachments`.`name`" => "name",
-		"`attachments`.`file`" => "file",
+		"`attachments`.`name`" => "Name",
+		"`attachments`.`file`" => "File",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
-		"`attachments`.`thumbUse`" => "thumbUse"
+		"concat('<i class=\"glyphicon glyphicon-', if(`attachments`.`thumbUse`, 'check', 'unchecked'), '\"></i>')" => "thumbUse"
 	);
 
 	// Lookup fields that can be used as filterers

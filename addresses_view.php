@@ -24,8 +24,8 @@
 	$x->QueryFieldsTV = array(   
 		"`addresses`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
-		"`addresses`.`address`" => "address",
-		"`addresses`.`houseNumber`" => "houseNumber",
+		"if(CHAR_LENGTH(`addresses`.`address`)>100, concat(left(`addresses`.`address`,100),' ...'), `addresses`.`address`)" => "address",
+		"if(CHAR_LENGTH(`addresses`.`houseNumber`)>100, concat(left(`addresses`.`houseNumber`,100),' ...'), `addresses`.`houseNumber`)" => "houseNumber",
 		"IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') /* Country */" => "country",
 		"IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') /* Town */" => "town",
 		"IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') /* PostalCode */" => "postalCode",
@@ -49,8 +49,8 @@
 		9 => '`contacts1`.`id`',
 		10 => '`companies1`.`id`',
 		11 => 11,
-		12 => 12,
-		13 => 13
+		12 => '`addresses`.`default`',
+		13 => '`addresses`.`ship`'
 	);
 
 	// Fields that can be displayed in the csv file
@@ -90,8 +90,8 @@
 	$x->QueryFieldsQS = array(   
 		"`addresses`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
-		"`addresses`.`address`" => "address",
-		"`addresses`.`houseNumber`" => "houseNumber",
+		"`addresses`.`address`" => "Address",
+		"`addresses`.`houseNumber`" => "HouseNumber",
 		"IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') /* Country */" => "country",
 		"IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') /* Town */" => "town",
 		"IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') /* PostalCode */" => "postalCode",

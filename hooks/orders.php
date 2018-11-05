@@ -12,16 +12,17 @@
                 if (isset($_REQUEST['SelectedID']) && $_REQUEST['SelectedID']){
                     $selectedID = intval(makeSafe($_REQUEST['SelectedID']));
                     $doc = sqlValue("select document from orders where id = {$selectedID}");
-            
                     if ($doc){
                         //read only form
                         $options->TemplateDV = 'hooks/orders_templateDVR.html';
                     }
                 }
-                 
+                if (isset($_REQUEST['ok'])){
+                            $ok = makeSafe($_REQUEST['ok']);
+                            addFilter(1, 'and', 2, 'Equal to', $ok);
+                }
 		return TRUE;
 	}
-
 
 	function orders_header($contentType, $memberInfo, &$args){
 		$header='';
@@ -62,6 +63,9 @@
 		switch($contentType){
 			case 'tableview':
 				$footer='';
+                                if (isset($_REQUEST['ok'])){
+                                    echo title_tv(makeSafe($_REQUEST['ok']),"?ok=".makeSafe($_REQUEST['ok']));
+                                }
 				break;
 
 			case 'detailview':
@@ -141,7 +145,7 @@
                        $ok_text = sqlValue("select name from kinds where code = '{$ok_id}'");
                     }
                     if (isset($_REQUEST['FilterValue'])){
-                        $ok_text = makeSafe($_REQUEST['FilterValue'][2]);
+                        $ok_text = makeSafe($_REQUEST['FilterValue'][1]);
                         $ok_id = sqlValue("select code from kinds where name = '{$ok_text}'");
                     }
                 }
@@ -158,6 +162,7 @@
                 ob_start();
                 ?>
                     <!-- insert HTML code-->
+                    <?php echo title_tv($ok_text,"?ok=$ok_text");?>
                     <script>
                      function autoSet(){
                          setTimeout(function(){

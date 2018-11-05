@@ -87,7 +87,7 @@
 	<h1>
 		<?php echo $Translation['members'] ; ?>
 		<div class="pull-right">
-			<a href="pageEditMember.php" class="btn btn-success btn-lg"><i class="glyphicon glyphicon-plus"></i> <?php echo $Translation['add new member']; ?></a>
+			<a href="pageEditMember.php" class="btn btn-success "><i class="glyphicon glyphicon-plus"></i> <?php echo $Translation['add new member']; ?></a>
 		</div>
 	</h1>
 </div>

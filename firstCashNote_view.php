@@ -34,7 +34,7 @@
 		"`firstCashNote`.`bank`" => "bank",
 		"`firstCashNote`.`note`" => "note",
 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
-		"concat('<i class=\"glyphicon glyphicon-', if(`firstCashNote`.`payed`, 'check', 'unchecked'), '\"></i>')" => "payed"
+		"if(CHAR_LENGTH(`firstCashNote`.`payed`)>100, concat(left(`firstCashNote`.`payed`,100),' ...'), `firstCashNote`.`payed`)" => "payed"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -100,7 +100,7 @@
 		"`firstCashNote`.`bank`" => "bank",
 		"`firstCashNote`.`note`" => "note",
 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
-		"concat('<i class=\"glyphicon glyphicon-', if(`firstCashNote`.`payed`, 'check', 'unchecked'), '\"></i>')" => "payed"
+		"`firstCashNote`.`payed`" => "Pagato SI/NO"
 	);
 
 	// Lookup fields that can be used as filterers

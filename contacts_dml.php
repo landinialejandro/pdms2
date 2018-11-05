@@ -26,8 +26,8 @@ function contacts_insert(){
 		if($data['notes'] == empty_lookup_value){ $data['notes'] = ''; }
 	$data['title'] = makeSafe($_REQUEST['title']);
 		if($data['title'] == empty_lookup_value){ $data['title'] = ''; }
-	$data['birthDate'] = mysql_datetime($_REQUEST['birthDate']);
-		if($data['birthDate'] == empty_lookup_value){ $data['birthDate'] = ''; }
+	$data['birthDate'] = intval($_REQUEST['birthDateYear']) . '-' . intval($_REQUEST['birthDateMonth']) . '-' . intval($_REQUEST['birthDateDay']);
+	$data['birthDate'] = parseMySQLDate($data['birthDate'], '');
 
 	// hook: contacts_before_insert
 	if(function_exists('contacts_before_insert')){
@@ -254,8 +254,8 @@ function contacts_update($selected_id){
 		if($data['notes'] == empty_lookup_value){ $data['notes'] = ''; }
 	$data['title'] = makeSafe($_REQUEST['title']);
 		if($data['title'] == empty_lookup_value){ $data['title'] = ''; }
-	$data['birthDate'] = mysql_datetime($_REQUEST['birthDate']);
-		if($data['birthDate'] == empty_lookup_value){ $data['birthDate'] = ''; }
+	$data['birthDate'] = intval($_REQUEST['birthDateYear']) . '-' . intval($_REQUEST['birthDateMonth']) . '-' . intval($_REQUEST['birthDateDay']);
+	$data['birthDate'] = parseMySQLDate($data['birthDate'], '');
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: contacts_before_update
@@ -315,6 +315,14 @@ function contacts_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
 	// combobox: kind
 	$combo_kind = new DataCombo;
+	// combobox: birthDate
+	$combo_birthDate = new DateCombo;
+	$combo_birthDate->DateFormat = "dmy";
+	$combo_birthDate->MinYear = 1900;
+	$combo_birthDate->MaxYear = 2100;
+	$combo_birthDate->DefaultDate = parseMySQLDate('', '');
+	$combo_birthDate->MonthNames = $Translation['month names'];
+	$combo_birthDate->NamePrefix = 'birthDate';
 
 	if($selected_id){
 		// mm: check member permissions
@@ -346,6 +354,7 @@ function contacts_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 		$hc = new CI_Input();
 		$row = $hc->xss_clean($row); /* sanitize data */
 		$combo_kind->SelectedData = $row['kind'];
+		$combo_birthDate->DefaultDate = $row['birthDate'];
 	}else{
 		$combo_kind->SelectedData = $filterer_kind;
 	}
@@ -481,7 +490,7 @@ function contacts_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 	if($selected_id){
 		if(!$_REQUEST['Embedded']) $templateCode = str_replace('<%%DVPRINT_BUTTON%%>', '<button type="submit" class="btn btn-default" id="dvprint" name="dvprint_x" value="1" onclick="$$(\'form\')[0].writeAttribute(\'novalidate\', \'novalidate\'); document.myform.reset(); return true;" title="' . html_attr($Translation['Print Preview']) . '"><i class="glyphicon glyphicon-print"></i> ' . $Translation['Print Preview'] . '</button>', $templateCode);
 		if($AllowUpdate){
-			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '<button type="submit" class="btn btn-success btn-lg" id="update" name="update_x" value="1" onclick="return contacts_validateData();" title="' . html_attr($Translation['Save Changes']) . '"><i class="glyphicon glyphicon-ok"></i> ' . $Translation['Save Changes'] . '</button>', $templateCode);
+			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '<button type="submit" class="btn btn-success " id="update" name="update_x" value="1" onclick="return contacts_validateData();" title="' . html_attr($Translation['Save Changes']) . '"><i class="glyphicon glyphicon-ok"></i> ' . $Translation['Save Changes'] . '</button>', $templateCode);
 		}else{
 			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '', $templateCode);
 		}
@@ -505,13 +514,13 @@ function contacts_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 		$jsReadOnly .= "\tjQuery('#name').replaceWith('<div class=\"form-control-static\" id=\"name\">' + (jQuery('#name').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#lastName').replaceWith('<div class=\"form-control-static\" id=\"lastName\">' + (jQuery('#lastName').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#title').replaceWith('<div class=\"form-control-static\" id=\"title\">' + (jQuery('#title').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('#birthDate').parents('.input-group').replaceWith('<div class=\"form-control-static\" id=\"birthDate\">' + (jQuery('#birthDate').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#birthDate').prop('readonly', true);\n";
+		$jsReadOnly .= "\tjQuery('#birthDateDay, #birthDateMonth, #birthDateYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
 	}elseif($AllowInsert){
 		$jsEditable .= "\tjQuery('form').eq(0).data('already_changed', true);"; // temporarily disable form change handler
-		$jsEditable .= "\tjQuery('#birthDate').addClass('always_shown').parents('.input-group').datetimepicker({ toolbarPlacement: 'top', sideBySide: true, showClear: true, showTodayButton: true, showClose: true, icons: { close: 'glyphicon glyphicon-ok' }, format: AppGini.datetimeFormat('dt') });";
 			$jsEditable .= "\tjQuery('form').eq(0).data('already_changed', false);"; // re-enable form change handler
 	}
 
@@ -519,6 +528,8 @@ function contacts_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 	$templateCode = str_replace('<%%COMBO(kind)%%>', $combo_kind->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(kind)%%>', $combo_kind->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(kind)%%>', urlencode($combo_kind->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(birthDate)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_birthDate->GetHTML(true) . '</div>' : $combo_birthDate->GetHTML()), $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(birthDate)%%>', $combo_birthDate->GetHTML(true), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
 	$lookup_fields = array(  'kind' => array('kinds', 'Kind'));
@@ -573,8 +584,8 @@ function contacts_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(title)%%>', safe_html($urow['title']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(title)%%>', html_attr($row['title']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(title)%%>', urlencode($urow['title']), $templateCode);
-		$templateCode = str_replace('<%%VALUE(birthDate)%%>', app_datetime($row['birthDate'], 'dt'), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(birthDate)%%>', urlencode(app_datetime($urow['birthDate'], 'dt')), $templateCode);
+		$templateCode = str_replace('<%%VALUE(birthDate)%%>', @date('d/m/Y', @strtotime(html_attr($row['birthDate']))), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(birthDate)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['birthDate'])))), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);

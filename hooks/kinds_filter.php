@@ -14,12 +14,12 @@
 	</script>
 
 <?php if($advanced_search_mode){ ?>
-	<button class="btn btn-lg btn-success pull-right search_mode" type="submit" name="Filter_x" value="1">Switch to simple search mode</button>
+	<button class="btn  btn-success pull-right search_mode" type="submit" name="Filter_x" value="1">Switch to simple search mode</button>
 	<?php include(dirname(__FILE__) . '/../defaultFilters.php'); ?>
 	
 <?php }else{ ?>
 
-	<button class="btn btn-lg btn-default pull-right search_mode" type="submit" name="Filter_x" value="1">Switch to advanced search mode</button>
+	<button class="btn  btn-default pull-right search_mode" type="submit" name="Filter_x" value="1">Switch to advanced search mode</button>
 			<!-- %datetimePicker% -->
 			
 			<div class="page-header"><h1>
@@ -142,10 +142,10 @@
 			<div class="row">
 				<div class="col-md-3 col-md-offset-3 col-lg-offset-4 col-lg-2 vspacer-lg">
 					<input type="hidden" name="apply_sorting" value="1">
-					<button type="submit" id="applyFilters" onclick="beforeApplyFilters(event);return true;" class="btn btn-success btn-block btn-lg"><i class="glyphicon glyphicon-ok"></i> Apply filters</button>
+					<button type="submit" id="applyFilters" onclick="beforeApplyFilters(event);return true;" class="btn btn-success btn-block "><i class="glyphicon glyphicon-ok"></i> Apply filters</button>
 				</div>
 								<div class="col-md-3 col-lg-2 vspacer-lg">
-					<button onclick="beforeCancelFilters();" type="submit" id="cancelFilters" class="btn btn-warning btn-block btn-lg"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
+					<button onclick="beforeCancelFilters();" type="submit" id="cancelFilters" class="btn btn-warning btn-block "><i class="glyphicon glyphicon-remove"></i> Cancel</button>
 				</div>
 			</div>
 

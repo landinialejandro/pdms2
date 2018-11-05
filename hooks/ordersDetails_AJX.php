@@ -28,6 +28,9 @@ function processRequest($cmd, $id, $cant, $order){
         $parameters = $_POST['parameters'];
         $ret = getTotOrder($parameters, $id);
     }
+    if ($cmd === 'fastDel'){
+        $ret = fastDel($id);
+    }
     
     return $ret;
 }
@@ -55,4 +58,8 @@ function getTotOrder($parameters,$fieldToSUM){
     $res= sqlValue($sumQuery);
     return $res;
 }
-        
+function fastDel($id){
+    $statment="delete from ordersDetails where id = '$id'";
+    $res=sql($statment,$eo);
+    return $res;
+}       

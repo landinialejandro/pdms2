@@ -134,7 +134,7 @@
 				));
 			}else{
 				?>
-					<button type="submit" name="resetPermissions" value="1" class="btn btn-warning btn-lg reset-permissions">
+					<button type="submit" name="resetPermissions" value="1" class="btn btn-warning  reset-permissions">
 						<i class="glyphicon glyphicon-refresh"></i> 
 						<?php echo html_attr($Translation['reset member permissions']); ?>
 					</button>
@@ -145,7 +145,7 @@
 			$arrPermVal = array(0, 1, 2, 3);
 			$arrPermText = array($Translation["no"], $Translation["owner"], $Translation["group"], $Translation["all"]);
 		?>
-		<button type="submit" name="saveChanges" value="1" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation["save changes"]; ?></button>
+		<button type="submit" name="saveChanges" value="1" class="btn btn-primary "><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation["save changes"]; ?></button>
 	</div>
 
 	<div class="table-responsive">
@@ -192,8 +192,8 @@
 	</div>
 
 	<div class="text-right">
-		<button type="submit" name="saveChanges" value="1" class="hidden-xs hidden-sm btn btn-primary btn-lg"><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation["save changes"]; ?></button>
-		<button type="submit" name="saveChanges" value="1" class="hidden-md hidden-lg btn btn-primary btn-lg btn-block"><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation["save changes"]; ?></button>
+		<button type="submit" name="saveChanges" value="1" class="hidden-xs hidden-sm btn btn-primary "><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation["save changes"]; ?></button>
+		<button type="submit" name="saveChanges" value="1" class="hidden-md hidden-lg btn btn-primary  btn-block"><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation["save changes"]; ?></button>
 	</div>
 </form>
 

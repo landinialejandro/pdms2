@@ -14,7 +14,7 @@
 		<title>Pdms | <?php echo (isset($x->TableTitle) ? $x->TableTitle : ''); ?></title>
 		<link id="browser_favicon" rel="shortcut icon" href="<?php echo PREPEND_PATH; ?>resources/images/appgini-icon.png">
 
-		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>resources/initializr/css/bootstrap.css">
+		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>LTE/dist/bootstrap/dist/css/bootstrap.css">
 		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>resources/lightbox/css/lightbox.css" media="screen">
 		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>resources/select2/select2.css" media="screen">
 		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>resources/timepicker/bootstrap-timepicker.min.css" media="screen">
@@ -27,9 +27,10 @@
 		<![endif]-->
 		<script src="<?php echo PREPEND_PATH; ?>resources/jquery/js/jquery-1.12.4.min.js"></script>
 		<script>var $j = jQuery.noConflict();</script>
+                <script src="LTE/dist/js/adminlte.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>resources/moment/moment-with-locales.min.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>resources/jquery/js/jquery.mark.min.js"></script>
-		<script src="<?php echo PREPEND_PATH; ?>resources/initializr/js/vendor/bootstrap.min.js"></script>
+		<script src="<?php echo PREPEND_PATH; ?>LTE/dist/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>resources/lightbox/js/prototype.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>resources/lightbox/js/scriptaculous.js?load=effects"></script>
 		<script src="<?php echo PREPEND_PATH; ?>resources/select2/select2.min.js"></script>
@@ -38,6 +39,7 @@
 		<script src="<?php echo PREPEND_PATH; ?>resources/datepicker/js/datepicker.packed.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>resources/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>common.js.php"></script>
+
 		<?php if(isset($x->TableName) && is_file(dirname(__FILE__) . "/hooks/{$x->TableName}-tv.js")){ ?>
 			<script src="<?php echo PREPEND_PATH; ?>hooks/<?php echo $x->TableName; ?>-tv.js"></script>
 		<?php } ?>
@@ -47,9 +49,7 @@
 		<div  class="wrapper">
 			<?php if(function_exists('handle_maintenance')) echo handle_maintenance(true); ?>
 
-			<?php if($_REQUEST['Embedded']){ ?>
-				<?php return; ?>
-			<?php } 
+                        <?php
                         $memberInfo = getMemberInfo();
                         ?>
 
@@ -62,6 +62,9 @@
 			</div>
 
 			<?php if(!defined('APPGINI_SETUP') && is_file(dirname(__FILE__) . '/hooks/header-extras.php')){ include(dirname(__FILE__).'/hooks/header-extras.php'); } ?>
+			<?php if($_REQUEST['Embedded']){ ?>
+				<?php return; ?>
+			<?php } ?>
 			<!-- Add header template below here .. -->
                     
                         
@@ -99,7 +102,7 @@
                                   <ul class="dropdown-menu">
                                     <!-- The user image in the menu -->
                                     <li class="user-header">
-                                      <img src="images/248167a0f974c903e_mpi.jpg?m=1539632256714" class="img-circle" alt="User Image">
+                                      <img src="images/248167a0f974c903e_mpi.jpg?m=1539632256714" class="img-circle user-image" alt="User Image">
 
                                       <p>
                                         <?php echo getLoggedMemberID(); ?> - <?php echo $memberInfo['group']; ?>
@@ -237,16 +240,16 @@
                                                           if(!isset($link['url']) || !isset($link['title'])) continue;
                                                           if($lte_group != $link['table_group'] && $lte_group != '*') continue;
                                                           if($memberInfo['admin'] || @in_array($memberInfo['group'], $link['groups']) || @in_array('*', $link['groups'])){
+                                                            $title = $link['subGroup'] ? $link['subGroup']." - ".$link['title'] : $link['title'];
+                                                            $dot = (strlen($title) > $len+3) ? "..." : "";
                                                               ?>
                                                               <li>
-                                                                  <a href="<?php echo $link['url']; ?>">
+                                                                  <a href="<?php echo $link['url']; ?>" title="<?php echo $title; ?>">
                                                                       <?php echo ($link['icon'] ? '<img src="' . $link['icon'] . '">' : ''); ?>
-                                                                      <strong>
                                                                           <?php 
-                                                                              $dot = (strlen($link['title']) > $len) ? "..." : "";
-                                                                              echo substr($link['title'],0,$len).$dot; 
+                                                                          
+                                                                              echo substr($title,0,$len + 3).$dot; 
                                                                           ?>
-                                                                      </strong>
                                                                   </a>
                                                               </li>
                                                               <?php
@@ -272,7 +275,7 @@
                                       <li>
                                           <a href="<?php echo $link['url']; ?>">
                                               <?php echo ($link['icon'] ? '<img src="' . $link['icon'] . '">' : ''); ?>
-                                              <strong><?php echo $link['title']; ?></strong>
+                                              <?php echo $link['subGroup'] ? $link['subGroup']." - ".$link['title'] : $link['title']; ?>
                                           </a>
                                       </li>
                                       <?php

@@ -23,8 +23,8 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
 		"`countries`.`id`" => "id",
-		"`countries`.`country`" => "country",
-		"`countries`.`code`" => "code"
+		"if(CHAR_LENGTH(`countries`.`country`)>100, concat(left(`countries`.`country`,100),' ...'), `countries`.`country`)" => "country",
+		"if(CHAR_LENGTH(`countries`.`code`)>50, concat(left(`countries`.`code`,50),' ...'), `countries`.`code`)" => "code"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -49,8 +49,8 @@
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
 		"`countries`.`id`" => "id",
-		"`countries`.`country`" => "country",
-		"`countries`.`code`" => "code"
+		"`countries`.`country`" => "Country",
+		"`countries`.`code`" => "Code"
 	);
 
 	// Lookup fields that can be used as filterers

@@ -49,7 +49,9 @@
 				}, panelID, undefined, 'pc-loading');
 				break;
 			case 'new': /* new record */
-				var url = $j('#' + param.ChildTable + '_hclink').val() + '&addNew_x=1&Embedded=1' + (param.AutoClose ? '&AutoClose=1' : '');
+                                var parts = command.select ? '&addNew_x=1&Embedded=1&ak=CUST_CREDIT' : '&addNew_x=1&Embedded=1';
+//                                console.log(parts);
+				var url = $j('#' + param.ChildTable + '_hclink').val() + parts + (param.AutoClose ? '&AutoClose=1' : '');
 				modal_window({
 					url: url,
 					close: function(){ /* */ <?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'reload' }); },

@@ -244,15 +244,15 @@
 <div class="row">
 	<div class="col-md-2 col-md-offset-2 vspacer-lg">
 		<input type="hidden" name="apply_sorting" value="1">
-		<button type="submit" id="applyFilters" class="btn btn-success btn-block btn-lg"><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation['apply filters']; ?></button>
+		<button type="submit" id="applyFilters" class="btn btn-success btn-block "><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation['apply filters']; ?></button>
 	</div>
 	<?php if($this->AllowSavingFilters){ ?>
 		<div class="col-md-3 vspacer-lg">
-			<button type="submit" class="btn btn-default btn-block btn-lg" id="SaveFilter" name="SaveFilter_x" value="1"><i class="glyphicon glyphicon-align-left"></i> <?php echo $Translation['save filters']; ?></button>
+			<button type="submit" class="btn btn-default btn-block " id="SaveFilter" name="SaveFilter_x" value="1"><i class="glyphicon glyphicon-align-left"></i> <?php echo $Translation['save filters']; ?></button>
 		</div>
 	<?php } ?>
 	<div class="col-md-2 vspacer-lg">
-		<button onclick="jQuery('form')[0].reset();" type="submit" id="cancelFilters" class="btn btn-warning btn-block btn-lg"><i class="glyphicon glyphicon-remove"></i> <?php echo $Translation['Cancel']; ?></button>
+		<button onclick="jQuery('form')[0].reset();" type="submit" id="cancelFilters" class="btn btn-warning btn-block "><i class="glyphicon glyphicon-remove"></i> <?php echo $Translation['Cancel']; ?></button>
 	</div>
 </div>
 

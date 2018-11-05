@@ -221,21 +221,6 @@ function attachments_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 	$combo_contact = new DataCombo;
 	// combobox: company
 	$combo_company = new DataCombo;
-	// combobox: thumbUse
-	$combo_thumbUse = new Combo;
-	$combo_thumbUse->ListType = 2;
-	$combo_thumbUse->MultipleSeparator = ', ';
-	$combo_thumbUse->ListBoxHeight = 10;
-	$combo_thumbUse->RadiosPerLine = 1;
-	if(is_file(dirname(__FILE__).'/hooks/attachments.thumbUse.csv')){
-		$thumbUse_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/attachments.thumbUse.csv')));
-		$combo_thumbUse->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($thumbUse_data)));
-		$combo_thumbUse->ListData = $combo_thumbUse->ListItem;
-	}else{
-		$combo_thumbUse->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("yes")));
-		$combo_thumbUse->ListData = $combo_thumbUse->ListItem;
-	}
-	$combo_thumbUse->SelectName = 'thumbUse';
 
 	if($selected_id){
 		// mm: check member permissions
@@ -268,17 +253,14 @@ function attachments_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		$row = $hc->xss_clean($row); /* sanitize data */
 		$combo_contact->SelectedData = $row['contact'];
 		$combo_company->SelectedData = $row['company'];
-		$combo_thumbUse->SelectedData = $row['thumbUse'];
 	}else{
 		$combo_contact->SelectedData = $filterer_contact;
 		$combo_company->SelectedData = $filterer_company;
-		$combo_thumbUse->SelectedText = ( $_REQUEST['FilterField'][1]=='6' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
 	}
 	$combo_contact->HTML = '<span id="contact-container' . $rnd1 . '"></span><input type="hidden" name="contact" id="contact' . $rnd1 . '" value="' . html_attr($combo_contact->SelectedData) . '">';
 	$combo_contact->MatchText = '<span id="contact-container-readonly' . $rnd1 . '"></span><input type="hidden" name="contact" id="contact' . $rnd1 . '" value="' . html_attr($combo_contact->SelectedData) . '">';
 	$combo_company->HTML = '<span id="company-container' . $rnd1 . '"></span><input type="hidden" name="company" id="company' . $rnd1 . '" value="' . html_attr($combo_company->SelectedData) . '">';
 	$combo_company->MatchText = '<span id="company-container-readonly' . $rnd1 . '"></span><input type="hidden" name="company" id="company' . $rnd1 . '" value="' . html_attr($combo_company->SelectedData) . '">';
-	$combo_thumbUse->Render();
 
 	ob_start();
 	?>
@@ -488,7 +470,7 @@ function attachments_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 	if($selected_id){
 		if(!$_REQUEST['Embedded']) $templateCode = str_replace('<%%DVPRINT_BUTTON%%>', '<button type="submit" class="btn btn-default" id="dvprint" name="dvprint_x" value="1" onclick="$$(\'form\')[0].writeAttribute(\'novalidate\', \'novalidate\'); document.myform.reset(); return true;" title="' . html_attr($Translation['Print Preview']) . '"><i class="glyphicon glyphicon-print"></i> ' . $Translation['Print Preview'] . '</button>', $templateCode);
 		if($AllowUpdate){
-			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '<button type="submit" class="btn btn-success btn-lg" id="update" name="update_x" value="1" onclick="return attachments_validateData();" title="' . html_attr($Translation['Save Changes']) . '"><i class="glyphicon glyphicon-ok"></i> ' . $Translation['Save Changes'] . '</button>', $templateCode);
+			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '<button type="submit" class="btn btn-success " id="update" name="update_x" value="1" onclick="return attachments_validateData();" title="' . html_attr($Translation['Save Changes']) . '"><i class="glyphicon glyphicon-ok"></i> ' . $Translation['Save Changes'] . '</button>', $templateCode);
 		}else{
 			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '', $templateCode);
 		}
@@ -509,7 +491,7 @@ function attachments_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		$jsReadOnly .= "\tjQuery('#name').replaceWith('<div class=\"form-control-static\" id=\"name\">' + (jQuery('#name').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#file').replaceWith('<div class=\"form-control-static\" id=\"file\">' + (jQuery('#file').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#file, #file-edit-link').hide();\n";
-		$jsReadOnly .= "\tjQuery('input[name=thumbUse]').parent().html('<div class=\"form-control-static\">' + jQuery('input[name=thumbUse]:checked').next().text() + '</div>')\n";
+		$jsReadOnly .= "\tjQuery('#thumbUse').prop('disabled', true);\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -525,8 +507,6 @@ function attachments_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 	$templateCode = str_replace('<%%COMBO(company)%%>', $combo_company->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(company)%%>', $combo_company->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(company)%%>', urlencode($combo_company->MatchText), $templateCode);
-	$templateCode = str_replace('<%%COMBO(thumbUse)%%>', $combo_thumbUse->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(thumbUse)%%>', $combo_thumbUse->SelectedData, $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
 	$lookup_fields = array(  'contact' => array('contacts', 'Contact'), 'company' => array('companies', 'Company'));
@@ -548,6 +528,11 @@ function attachments_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 	$templateCode = str_replace('<%%UPLOADFILE(id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(name)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(file)%%>', ($noUploads ? '' : '<input type=hidden name=MAX_FILE_SIZE value=102398976>'.$Translation['upload image'].' <input type="file" name="file" id="file">'), $templateCode);
+	if($AllowUpdate && $row['file'] != ''){
+		$templateCode = str_replace('<%%REMOVEFILE(file)%%>', '<br><input type="checkbox" name="file_remove" id="file_remove" value="1"> <label for="file_remove" style="color: red; font-weight: bold;">'.$Translation['remove image'].'</label>', $templateCode);
+	}else{
+		$templateCode = str_replace('<%%REMOVEFILE(file)%%>', '', $templateCode);
+	}
 	$templateCode = str_replace('<%%UPLOADFILE(contact)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(company)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(thumbUse)%%>', '', $templateCode);
@@ -569,9 +554,7 @@ function attachments_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', safe_html($urow['company']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', html_attr($row['company']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode($urow['company']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(thumbUse)%%>', safe_html($urow['thumbUse']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(thumbUse)%%>', html_attr($row['thumbUse']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(thumbUse)%%>', urlencode($urow['thumbUse']), $templateCode);
+		$templateCode = str_replace('<%%CHECKED(thumbUse)%%>', ($row['thumbUse'] ? "checked" : ""), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -583,8 +566,7 @@ function attachments_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		$templateCode = str_replace('<%%URLVALUE(contact)%%>', urlencode( $_REQUEST['FilterField'][1]=='4' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_contact->SelectedData : ''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(company)%%>', ( $_REQUEST['FilterField'][1]=='5' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_company->SelectedData : ''), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode( $_REQUEST['FilterField'][1]=='5' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_company->SelectedData : ''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(thumbUse)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(thumbUse)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%CHECKED(thumbUse)%%>', '', $templateCode);
 	}
 
 	// process translations

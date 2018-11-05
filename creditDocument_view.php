@@ -23,14 +23,14 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
 		"`creditDocument`.`id`" => "id",
-		"`creditDocument`.`incomingTypeDoc`" => "incomingTypeDoc",
-		"`creditDocument`.`customerID`" => "customerID",
-		"`creditDocument`.`nrDoc`" => "nrDoc",
+		"if(CHAR_LENGTH(`creditDocument`.`incomingTypeDoc`)>100, concat(left(`creditDocument`.`incomingTypeDoc`,100),' ...'), `creditDocument`.`incomingTypeDoc`)" => "incomingTypeDoc",
+		"if(CHAR_LENGTH(`creditDocument`.`customerID`)>100, concat(left(`creditDocument`.`customerID`,100),' ...'), `creditDocument`.`customerID`)" => "customerID",
+		"if(CHAR_LENGTH(`creditDocument`.`nrDoc`)>100, concat(left(`creditDocument`.`nrDoc`,100),' ...'), `creditDocument`.`nrDoc`)" => "nrDoc",
 		"if(`creditDocument`.`dateIncomingNote`,date_format(`creditDocument`.`dateIncomingNote`,'%d/%m/%Y'),'')" => "dateIncomingNote",
-		"`creditDocument`.`customerFirm`" => "customerFirm",
-		"`creditDocument`.`customerAddress`" => "customerAddress",
-		"`creditDocument`.`customerPostCode`" => "customerPostCode",
-		"`creditDocument`.`customerTown`" => "customerTown"
+		"if(CHAR_LENGTH(`creditDocument`.`customerFirm`)>100, concat(left(`creditDocument`.`customerFirm`,100),' ...'), `creditDocument`.`customerFirm`)" => "customerFirm",
+		"if(CHAR_LENGTH(`creditDocument`.`customerAddress`)>100, concat(left(`creditDocument`.`customerAddress`,100),' ...'), `creditDocument`.`customerAddress`)" => "customerAddress",
+		"if(CHAR_LENGTH(`creditDocument`.`customerPostCode`)>100, concat(left(`creditDocument`.`customerPostCode`,100),' ...'), `creditDocument`.`customerPostCode`)" => "customerPostCode",
+		"if(CHAR_LENGTH(`creditDocument`.`customerTown`)>100, concat(left(`creditDocument`.`customerTown`,100),' ...'), `creditDocument`.`customerTown`)" => "customerTown"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -73,14 +73,14 @@
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
 		"`creditDocument`.`id`" => "id",
-		"`creditDocument`.`incomingTypeDoc`" => "incomingTypeDoc",
-		"`creditDocument`.`customerID`" => "customerID",
-		"`creditDocument`.`nrDoc`" => "nrDoc",
+		"`creditDocument`.`incomingTypeDoc`" => "Tipo Documento",
+		"`creditDocument`.`customerID`" => "ID Cliente",
+		"`creditDocument`.`nrDoc`" => "Nr Doc",
 		"if(`creditDocument`.`dateIncomingNote`,date_format(`creditDocument`.`dateIncomingNote`,'%d/%m/%Y'),'')" => "dateIncomingNote",
-		"`creditDocument`.`customerFirm`" => "customerFirm",
-		"`creditDocument`.`customerAddress`" => "customerAddress",
-		"`creditDocument`.`customerPostCode`" => "customerPostCode",
-		"`creditDocument`.`customerTown`" => "customerTown"
+		"`creditDocument`.`customerFirm`" => "Ragione Sociale",
+		"`creditDocument`.`customerAddress`" => "Indirizzo Cliente",
+		"`creditDocument`.`customerPostCode`" => "CAP Cliente",
+		"`creditDocument`.`customerTown`" => "Citta cliente"
 	);
 
 	// Lookup fields that can be used as filterers

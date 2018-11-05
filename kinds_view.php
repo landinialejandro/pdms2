@@ -24,7 +24,7 @@
 	$x->QueryFieldsTV = array(   
 		"`kinds`.`entity`" => "entity",
 		"`kinds`.`code`" => "code",
-		"`kinds`.`name`" => "name",
+		"if(CHAR_LENGTH(`kinds`.`name`)>100, concat(left(`kinds`.`name`,100),' ...'), `kinds`.`name`)" => "name",
 		"`kinds`.`value`" => "value",
 		"`kinds`.`descriptions`" => "descriptions"
 	);
@@ -58,7 +58,7 @@
 	$x->QueryFieldsQS = array(   
 		"`kinds`.`entity`" => "entity",
 		"`kinds`.`code`" => "code",
-		"`kinds`.`name`" => "name",
+		"`kinds`.`name`" => "Name",
 		"`kinds`.`value`" => "value",
 		"`kinds`.`descriptions`" => "descriptions"
 	);

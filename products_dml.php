@@ -44,8 +44,11 @@ function products_insert(){
 		if($data['Discontinued'] == empty_lookup_value){ $data['Discontinued'] = ''; }
 	$data['manufactured_date'] = intval($_REQUEST['manufactured_dateYear']) . '-' . intval($_REQUEST['manufactured_dateMonth']) . '-' . intval($_REQUEST['manufactured_dateDay']);
 	$data['manufactured_date'] = parseMySQLDate($data['manufactured_date'], '<%%creationDate%%>');
-	$data['expiry_date'] = parseCode('<%%creationDate%%>', true, true);
+	$data['expiry_date'] = intval($_REQUEST['expiry_dateYear']) . '-' . intval($_REQUEST['expiry_dateMonth']) . '-' . intval($_REQUEST['expiry_dateDay']);
+	$data['expiry_date'] = parseMySQLDate($data['expiry_date'], '');
 	$data['note'] = br2nl(makeSafe($_REQUEST['note']));
+	$data['update_date'] = mysql_datetime($_REQUEST['update_date']);
+		if($data['update_date'] == empty_lookup_value){ $data['update_date'] = ''; }
 	if($data['UnitsOnOrder'] == '') $data['UnitsOnOrder'] = "0";
 	if($data['ReorderLevel'] == '') $data['ReorderLevel'] = "0";
 
@@ -56,7 +59,7 @@ function products_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `products` set       `codebar`=' . (($data['codebar'] !== '' && $data['codebar'] !== NULL) ? "'{$data['codebar']}'" : 'NULL') . ', `productCode`=' . (($data['productCode'] !== '' && $data['productCode'] !== NULL) ? "'{$data['productCode']}'" : 'NULL') . ', `productName`=' . (($data['productName'] !== '' && $data['productName'] !== NULL) ? "'{$data['productName']}'" : 'NULL') . ', `tax`=' . (($data['tax'] !== '' && $data['tax'] !== NULL) ? "'{$data['tax']}'" : 'NULL') . ', `increment`=' . (($data['increment'] !== '' && $data['increment'] !== NULL) ? "'{$data['increment']}'" : 'NULL') . ', `CategoryID`=' . (($data['CategoryID'] !== '' && $data['CategoryID'] !== NULL) ? "'{$data['CategoryID']}'" : 'NULL') . ', `UM`=' . (($data['UM'] !== '' && $data['UM'] !== NULL) ? "'{$data['UM']}'" : 'NULL') . ', `tare`=' . (($data['tare'] !== '' && $data['tare'] !== NULL) ? "'{$data['tare']}'" : 'NULL') . ', `UnitPrice`=' . (($data['UnitPrice'] !== '' && $data['UnitPrice'] !== NULL) ? "'{$data['UnitPrice']}'" : 'NULL') . ', `sellPrice`=' . (($data['sellPrice'] !== '' && $data['sellPrice'] !== NULL) ? "'{$data['sellPrice']}'" : 'NULL') . ', `Discontinued`=' . (($data['Discontinued'] !== '' && $data['Discontinued'] !== NULL) ? "'{$data['Discontinued']}'" : 'NULL') . ', `manufactured_date`=' . (($data['manufactured_date'] !== '' && $data['manufactured_date'] !== NULL) ? "'{$data['manufactured_date']}'" : 'NULL') . ', `expiry_date`=' . "'{$data['expiry_date']}'" . ', `note`=' . (($data['note'] !== '' && $data['note'] !== NULL) ? "'{$data['note']}'" : 'NULL'), $o);
+	sql('insert into `products` set       `codebar`=' . (($data['codebar'] !== '' && $data['codebar'] !== NULL) ? "'{$data['codebar']}'" : 'NULL') . ', `productCode`=' . (($data['productCode'] !== '' && $data['productCode'] !== NULL) ? "'{$data['productCode']}'" : 'NULL') . ', `productName`=' . (($data['productName'] !== '' && $data['productName'] !== NULL) ? "'{$data['productName']}'" : 'NULL') . ', `tax`=' . (($data['tax'] !== '' && $data['tax'] !== NULL) ? "'{$data['tax']}'" : 'NULL') . ', `increment`=' . (($data['increment'] !== '' && $data['increment'] !== NULL) ? "'{$data['increment']}'" : 'NULL') . ', `CategoryID`=' . (($data['CategoryID'] !== '' && $data['CategoryID'] !== NULL) ? "'{$data['CategoryID']}'" : 'NULL') . ', `UM`=' . (($data['UM'] !== '' && $data['UM'] !== NULL) ? "'{$data['UM']}'" : 'NULL') . ', `tare`=' . (($data['tare'] !== '' && $data['tare'] !== NULL) ? "'{$data['tare']}'" : 'NULL') . ', `UnitPrice`=' . (($data['UnitPrice'] !== '' && $data['UnitPrice'] !== NULL) ? "'{$data['UnitPrice']}'" : 'NULL') . ', `sellPrice`=' . (($data['sellPrice'] !== '' && $data['sellPrice'] !== NULL) ? "'{$data['sellPrice']}'" : 'NULL') . ', `Discontinued`=' . (($data['Discontinued'] !== '' && $data['Discontinued'] !== NULL) ? "'{$data['Discontinued']}'" : 'NULL') . ', `manufactured_date`=' . (($data['manufactured_date'] !== '' && $data['manufactured_date'] !== NULL) ? "'{$data['manufactured_date']}'" : 'NULL') . ', `expiry_date`=' . (($data['expiry_date'] !== '' && $data['expiry_date'] !== NULL) ? "'{$data['expiry_date']}'" : 'NULL') . ', `note`=' . (($data['note'] !== '' && $data['note'] !== NULL) ? "'{$data['note']}'" : 'NULL') . ', `update_date`=' . (($data['update_date'] !== '' && $data['update_date'] !== NULL) ? "'{$data['update_date']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"products_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -197,9 +200,11 @@ function products_update($selected_id){
 		if($data['Discontinued'] == empty_lookup_value){ $data['Discontinued'] = ''; }
 	$data['manufactured_date'] = intval($_REQUEST['manufactured_dateYear']) . '-' . intval($_REQUEST['manufactured_dateMonth']) . '-' . intval($_REQUEST['manufactured_dateDay']);
 	$data['manufactured_date'] = parseMySQLDate($data['manufactured_date'], '<%%creationDate%%>');
-	$data['expiry_date'] = parseMySQLDate('', '<%%creationDate%%>');
+	$data['expiry_date'] = intval($_REQUEST['expiry_dateYear']) . '-' . intval($_REQUEST['expiry_dateMonth']) . '-' . intval($_REQUEST['expiry_dateDay']);
+	$data['expiry_date'] = parseMySQLDate($data['expiry_date'], '');
 	$data['note'] = br2nl(makeSafe($_REQUEST['note']));
-	$data['update_date'] = parseCode('<%%editingDateTime%%>', false, true);
+	$data['update_date'] = mysql_datetime($_REQUEST['update_date']);
+		if($data['update_date'] == empty_lookup_value){ $data['update_date'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: products_before_update
@@ -209,7 +214,7 @@ function products_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `products` set       `codebar`=' . (($data['codebar'] !== '' && $data['codebar'] !== NULL) ? "'{$data['codebar']}'" : 'NULL') . ', `productCode`=' . (($data['productCode'] !== '' && $data['productCode'] !== NULL) ? "'{$data['productCode']}'" : 'NULL') . ', `productName`=' . (($data['productName'] !== '' && $data['productName'] !== NULL) ? "'{$data['productName']}'" : 'NULL') . ', `tax`=' . (($data['tax'] !== '' && $data['tax'] !== NULL) ? "'{$data['tax']}'" : 'NULL') . ', `increment`=' . (($data['increment'] !== '' && $data['increment'] !== NULL) ? "'{$data['increment']}'" : 'NULL') . ', `CategoryID`=' . (($data['CategoryID'] !== '' && $data['CategoryID'] !== NULL) ? "'{$data['CategoryID']}'" : 'NULL') . ', `UM`=' . (($data['UM'] !== '' && $data['UM'] !== NULL) ? "'{$data['UM']}'" : 'NULL') . ', `tare`=' . (($data['tare'] !== '' && $data['tare'] !== NULL) ? "'{$data['tare']}'" : 'NULL') . ', `UnitPrice`=' . (($data['UnitPrice'] !== '' && $data['UnitPrice'] !== NULL) ? "'{$data['UnitPrice']}'" : 'NULL') . ', `sellPrice`=' . (($data['sellPrice'] !== '' && $data['sellPrice'] !== NULL) ? "'{$data['sellPrice']}'" : 'NULL') . ', `Discontinued`=' . (($data['Discontinued'] !== '' && $data['Discontinued'] !== NULL) ? "'{$data['Discontinued']}'" : 'NULL') . ', `manufactured_date`=' . (($data['manufactured_date'] !== '' && $data['manufactured_date'] !== NULL) ? "'{$data['manufactured_date']}'" : 'NULL') . ', `expiry_date`=`expiry_date`' . ', `note`=' . (($data['note'] !== '' && $data['note'] !== NULL) ? "'{$data['note']}'" : 'NULL') . ', `update_date`=' . "'{$data['update_date']}'" . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `products` set       `codebar`=' . (($data['codebar'] !== '' && $data['codebar'] !== NULL) ? "'{$data['codebar']}'" : 'NULL') . ', `productCode`=' . (($data['productCode'] !== '' && $data['productCode'] !== NULL) ? "'{$data['productCode']}'" : 'NULL') . ', `productName`=' . (($data['productName'] !== '' && $data['productName'] !== NULL) ? "'{$data['productName']}'" : 'NULL') . ', `tax`=' . (($data['tax'] !== '' && $data['tax'] !== NULL) ? "'{$data['tax']}'" : 'NULL') . ', `increment`=' . (($data['increment'] !== '' && $data['increment'] !== NULL) ? "'{$data['increment']}'" : 'NULL') . ', `CategoryID`=' . (($data['CategoryID'] !== '' && $data['CategoryID'] !== NULL) ? "'{$data['CategoryID']}'" : 'NULL') . ', `UM`=' . (($data['UM'] !== '' && $data['UM'] !== NULL) ? "'{$data['UM']}'" : 'NULL') . ', `tare`=' . (($data['tare'] !== '' && $data['tare'] !== NULL) ? "'{$data['tare']}'" : 'NULL') . ', `UnitPrice`=' . (($data['UnitPrice'] !== '' && $data['UnitPrice'] !== NULL) ? "'{$data['UnitPrice']}'" : 'NULL') . ', `sellPrice`=' . (($data['sellPrice'] !== '' && $data['sellPrice'] !== NULL) ? "'{$data['sellPrice']}'" : 'NULL') . ', `Discontinued`=' . (($data['Discontinued'] !== '' && $data['Discontinued'] !== NULL) ? "'{$data['Discontinued']}'" : 'NULL') . ', `manufactured_date`=' . (($data['manufactured_date'] !== '' && $data['manufactured_date'] !== NULL) ? "'{$data['manufactured_date']}'" : 'NULL') . ', `expiry_date`=' . (($data['expiry_date'] !== '' && $data['expiry_date'] !== NULL) ? "'{$data['expiry_date']}'" : 'NULL') . ', `note`=' . (($data['note'] !== '' && $data['note'] !== NULL) ? "'{$data['note']}'" : 'NULL') . ', `update_date`=' . (($data['update_date'] !== '' && $data['update_date'] !== NULL) ? "'{$data['update_date']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="products_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -290,7 +295,7 @@ function products_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 	$combo_expiry_date->DateFormat = "dmy";
 	$combo_expiry_date->MinYear = 1900;
 	$combo_expiry_date->MaxYear = 2100;
-	$combo_expiry_date->DefaultDate = parseMySQLDate('<%%creationDate%%>', '<%%creationDate%%>');
+	$combo_expiry_date->DefaultDate = parseMySQLDate('', '');
 	$combo_expiry_date->MonthNames = $Translation['month names'];
 	$combo_expiry_date->NamePrefix = 'expiry_date';
 
@@ -547,7 +552,7 @@ function products_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 	if($selected_id){
 		if(!$_REQUEST['Embedded']) $templateCode = str_replace('<%%DVPRINT_BUTTON%%>', '<button type="submit" class="btn btn-default" id="dvprint" name="dvprint_x" value="1" onclick="$$(\'form\')[0].writeAttribute(\'novalidate\', \'novalidate\'); document.myform.reset(); return true;" title="' . html_attr($Translation['Print Preview']) . '"><i class="glyphicon glyphicon-print"></i> ' . $Translation['Print Preview'] . '</button>', $templateCode);
 		if($AllowUpdate){
-			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '<button type="submit" class="btn btn-success btn-lg" id="update" name="update_x" value="1" onclick="return products_validateData();" title="' . html_attr($Translation['Save Changes']) . '"><i class="glyphicon glyphicon-ok"></i> ' . $Translation['Save Changes'] . '</button>', $templateCode);
+			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '<button type="submit" class="btn btn-success " id="update" name="update_x" value="1" onclick="return products_validateData();" title="' . html_attr($Translation['Save Changes']) . '"><i class="glyphicon glyphicon-ok"></i> ' . $Translation['Save Changes'] . '</button>', $templateCode);
 		}else{
 			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '', $templateCode);
 		}
@@ -580,12 +585,16 @@ function products_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 		$jsReadOnly .= "\tjQuery('#Discontinued').prop('disabled', true);\n";
 		$jsReadOnly .= "\tjQuery('#manufactured_date').prop('readonly', true);\n";
 		$jsReadOnly .= "\tjQuery('#manufactured_dateDay, #manufactured_dateMonth, #manufactured_dateYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#expiry_date').prop('readonly', true);\n";
+		$jsReadOnly .= "\tjQuery('#expiry_dateDay, #expiry_dateMonth, #expiry_dateYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#note').replaceWith('<div class=\"form-control-static\" id=\"note\">' + (jQuery('#note').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#update_date').parents('.input-group').replaceWith('<div class=\"form-control-static\" id=\"update_date\">' + (jQuery('#update_date').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
 	}elseif($AllowInsert){
 		$jsEditable .= "\tjQuery('form').eq(0).data('already_changed', true);"; // temporarily disable form change handler
+		$jsEditable .= "\tjQuery('#update_date').addClass('always_shown').parents('.input-group').datetimepicker({ toolbarPlacement: 'top', sideBySide: true, showClear: true, showTodayButton: true, showClose: true, icons: { close: 'glyphicon glyphicon-ok' }, format: AppGini.datetimeFormat('dt') });";
 			$jsEditable .= "\tjQuery('form').eq(0).data('already_changed', false);"; // re-enable form change handler
 	}
 
@@ -739,8 +748,8 @@ function products_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 		$templateCode = str_replace('<%%CHECKED(Discontinued)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%VALUE(manufactured_date)%%>', '<%%creationDate%%>', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(manufactured_date)%%>', urlencode('<%%creationDate%%>'), $templateCode);
-		$templateCode = str_replace('<%%VALUE(expiry_date)%%>', '<%%creationDate%%>', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(expiry_date)%%>', urlencode('<%%creationDate%%>'), $templateCode);
+		$templateCode = str_replace('<%%VALUE(expiry_date)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(expiry_date)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(note)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(note)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(update_date)%%>', '<%%editingDateTime%%>', $templateCode);

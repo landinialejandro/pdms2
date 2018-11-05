@@ -29,7 +29,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="incomingTypeDoc" class="control-label col-lg-3">Tipo Documento</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="incomingTypeDoc" id="incomingTypeDoc" value="<%%VALUE(incomingTypeDoc)%%>">
+						<input maxlength="255" type="text" class="form-control" name="incomingTypeDoc" id="incomingTypeDoc" value="<%%VALUE(incomingTypeDoc)%%>">
 					</div>
 				</div>
 
@@ -37,7 +37,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="customerID" class="control-label col-lg-3">ID Cliente</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="customerID" id="customerID" value="<%%VALUE(customerID)%%>">
+						<input maxlength="255" type="text" class="form-control" name="customerID" id="customerID" value="<%%VALUE(customerID)%%>">
 					</div>
 				</div>
 
@@ -45,7 +45,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="nrDoc" class="control-label col-lg-3">Nr Doc</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="nrDoc" id="nrDoc" value="<%%VALUE(nrDoc)%%>">
+						<input maxlength="255" type="text" class="form-control" name="nrDoc" id="nrDoc" value="<%%VALUE(nrDoc)%%>">
 					</div>
 				</div>
 
@@ -61,7 +61,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="customerFirm" class="control-label col-lg-3">Ragione Sociale</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="customerFirm" id="customerFirm" value="<%%VALUE(customerFirm)%%>">
+						<input maxlength="255" type="text" class="form-control" name="customerFirm" id="customerFirm" value="<%%VALUE(customerFirm)%%>">
 					</div>
 				</div>
 
@@ -69,7 +69,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="customerAddress" class="control-label col-lg-3">Indirizzo Cliente</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="customerAddress" id="customerAddress" value="<%%VALUE(customerAddress)%%>">
+						<input maxlength="255" type="text" class="form-control" name="customerAddress" id="customerAddress" value="<%%VALUE(customerAddress)%%>">
 					</div>
 				</div>
 
@@ -77,7 +77,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="customerPostCode" class="control-label col-lg-3">CAP Cliente</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="customerPostCode" id="customerPostCode" value="<%%VALUE(customerPostCode)%%>">
+						<input maxlength="255" type="text" class="form-control" name="customerPostCode" id="customerPostCode" value="<%%VALUE(customerPostCode)%%>">
 					</div>
 				</div>
 
@@ -85,7 +85,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="customerTown" class="control-label col-lg-3">Citta cliente</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="customerTown" id="customerTown" value="<%%VALUE(customerTown)%%>">
+						<input maxlength="255" type="text" class="form-control" name="customerTown" id="customerTown" value="<%%VALUE(customerTown)%%>">
 					</div>
 				</div>
 
@@ -96,15 +96,15 @@
 		<hr class="hidden-md hidden-lg">
 		<div class="col-md-4 col-lg-2" id="creditDocument_dv_action_buttons">
 			<div class="btn-toolbar">
-				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+				<div class="btn-group-vertical" style="width: 100%;">
 					<%%UPDATE_BUTTON%%>
 				</div><p></p>
-				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+				<div class="btn-group-vertical" style="width: 100%;">
 					<%%DESELECT_BUTTON%%>
 					<%%DVPRINT_BUTTON%%>
 					<%%DELETE_BUTTON%%>
 				</div><p></p>
-				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+				<div class="btn-group-vertical" style="width: 100%;">
 					<%%INSERT_BUTTON%%>
 				</div>
 			</div>

@@ -25,11 +25,11 @@
 		"`contacts`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
 		"`contacts`.`titleCourtesy`" => "titleCourtesy",
-		"`contacts`.`name`" => "name",
-		"`contacts`.`lastName`" => "lastName",
+		"if(CHAR_LENGTH(`contacts`.`name`)>100, concat(left(`contacts`.`name`,100),' ...'), `contacts`.`name`)" => "name",
+		"if(CHAR_LENGTH(`contacts`.`lastName`)>100, concat(left(`contacts`.`lastName`,100),' ...'), `contacts`.`lastName`)" => "lastName",
 		"`contacts`.`notes`" => "notes",
-		"`contacts`.`title`" => "title",
-		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y %h:%i %p'),'')" => "birthDate"
+		"if(CHAR_LENGTH(`contacts`.`title`)>100, concat(left(`contacts`.`title`,100),' ...'), `contacts`.`title`)" => "title",
+		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'')" => "birthDate"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -52,7 +52,7 @@
 		"`contacts`.`lastName`" => "lastName",
 		"`contacts`.`notes`" => "notes",
 		"`contacts`.`title`" => "title",
-		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y %h:%i %p'),'')" => "birthDate"
+		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'')" => "birthDate"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -71,11 +71,11 @@
 		"`contacts`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
 		"`contacts`.`titleCourtesy`" => "titleCourtesy",
-		"`contacts`.`name`" => "name",
-		"`contacts`.`lastName`" => "lastName",
+		"`contacts`.`name`" => "Name",
+		"`contacts`.`lastName`" => "LastName",
 		"`contacts`.`notes`" => "notes",
-		"`contacts`.`title`" => "title",
-		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y %h:%i %p'),'')" => "birthDate"
+		"`contacts`.`title`" => "Title",
+		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'')" => "birthDate"
 	);
 
 	// Lookup fields that can be used as filterers

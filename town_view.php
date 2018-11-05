@@ -24,15 +24,15 @@
 	$x->QueryFieldsTV = array(   
 		"`town`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') /* Country */" => "country",
-		"`town`.`idIstat`" => "idIstat",
-		"`town`.`town`" => "town",
-		"`town`.`district`" => "district",
-		"`town`.`region`" => "region",
-		"`town`.`prefix`" => "prefix",
-		"`town`.`shipCode`" => "shipCode",
-		"`town`.`fiscCode`" => "fiscCode",
-		"`town`.`inhabitants`" => "inhabitants",
-		"`town`.`link`" => "link"
+		"if(CHAR_LENGTH(`town`.`idIstat`)>100, concat(left(`town`.`idIstat`,100),' ...'), `town`.`idIstat`)" => "idIstat",
+		"if(CHAR_LENGTH(`town`.`town`)>100, concat(left(`town`.`town`,100),' ...'), `town`.`town`)" => "town",
+		"if(CHAR_LENGTH(`town`.`district`)>100, concat(left(`town`.`district`,100),' ...'), `town`.`district`)" => "district",
+		"if(CHAR_LENGTH(`town`.`region`)>100, concat(left(`town`.`region`,100),' ...'), `town`.`region`)" => "region",
+		"if(CHAR_LENGTH(`town`.`prefix`)>100, concat(left(`town`.`prefix`,100),' ...'), `town`.`prefix`)" => "prefix",
+		"if(CHAR_LENGTH(`town`.`shipCode`)>100, concat(left(`town`.`shipCode`,100),' ...'), `town`.`shipCode`)" => "shipCode",
+		"if(CHAR_LENGTH(`town`.`fiscCode`)>100, concat(left(`town`.`fiscCode`,100),' ...'), `town`.`fiscCode`)" => "fiscCode",
+		"if(CHAR_LENGTH(`town`.`inhabitants`)>100, concat(left(`town`.`inhabitants`,100),' ...'), `town`.`inhabitants`)" => "inhabitants",
+		"if(CHAR_LENGTH(`town`.`link`)>100, concat(left(`town`.`link`,100),' ...'), `town`.`link`)" => "link"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -82,15 +82,15 @@
 	$x->QueryFieldsQS = array(   
 		"`town`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') /* Country */" => "country",
-		"`town`.`idIstat`" => "idIstat",
-		"`town`.`town`" => "town",
-		"`town`.`district`" => "district",
-		"`town`.`region`" => "region",
-		"`town`.`prefix`" => "prefix",
-		"`town`.`shipCode`" => "shipCode",
-		"`town`.`fiscCode`" => "fiscCode",
-		"`town`.`inhabitants`" => "inhabitants",
-		"`town`.`link`" => "link"
+		"`town`.`idIstat`" => "IdIstat",
+		"`town`.`town`" => "Comune",
+		"`town`.`district`" => "Provincia",
+		"`town`.`region`" => "Regione",
+		"`town`.`prefix`" => "Prefisso",
+		"`town`.`shipCode`" => "CAP",
+		"`town`.`fiscCode`" => "Codice Fisc.",
+		"`town`.`inhabitants`" => "Abitanti",
+		"`town`.`link`" => "Link"
 	);
 
 	// Lookup fields that can be used as filterers

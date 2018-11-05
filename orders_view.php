@@ -38,7 +38,7 @@
 		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Spedizione a mezzo */" => "shipVia",
 		"`orders`.`Freight`" => "Freight",
 		"`orders`.`pallets`" => "pallets",
-		"`orders`.`licencePlate`" => "licencePlate",
+		"if(CHAR_LENGTH(`orders`.`licencePlate`)>100, concat(left(`orders`.`licencePlate`,100),' ...'), `orders`.`licencePlate`)" => "licencePlate",
 		"`orders`.`orderTotal`" => "orderTotal",
 		"concat('<i class=\"glyphicon glyphicon-', if(`orders`.`cashCredit`, 'check', 'unchecked'), '\"></i>')" => "cashCredit",
 		"`orders`.`trust`" => "trust",
@@ -156,7 +156,7 @@
 		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Spedizione a mezzo */" => "shipVia",
 		"`orders`.`Freight`" => "Freight",
 		"`orders`.`pallets`" => "pallets",
-		"`orders`.`licencePlate`" => "licencePlate",
+		"`orders`.`licencePlate`" => "Targa Automezzo",
 		"`orders`.`orderTotal`" => "orderTotal",
 		"concat('<i class=\"glyphicon glyphicon-', if(`orders`.`cashCredit`, 'check', 'unchecked'), '\"></i>')" => "cashCredit",
 		"`orders`.`trust`" => "trust",
@@ -200,10 +200,10 @@
 	$x->DefaultSortField = '1';
 	$x->DefaultSortDirection = 'desc';
 
-	$x->ColWidth   = array(  75, 150, 150, 150, 150, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("id", "Kind", "Azienda", "Documento", "Numero", "Cliente", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Fido Cliente", "Scoperto Cliente", "Provvigione su ordine", "Ora di consegna", "Luogo consegna");
-	$x->ColFieldName = array('id', 'kind', 'company', 'typeDoc', 'multiOrder', 'customer', 'date', 'shippedDate', 'shipVia', 'pallets', 'licencePlate', 'orderTotal', 'cashCredit', 'trust', 'overdraft', 'commisionFee', 'consigneeHour', 'consigneePlace');
-	$x->ColNumber  = array(1, 2, 6, 7, 8, 9, 11, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24);
+	$x->ColWidth   = array(  150, 150, 150, 150, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Kind", "ID Azienda", "Documento", "Numero", "Cliente", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Fido Cliente", "Scoperto Cliente", "Provvigione su ordine", "Ora di consegna", "Luogo consegna");
+	$x->ColFieldName = array('kind', 'company', 'typeDoc', 'multiOrder', 'customer', 'date', 'shippedDate', 'shipVia', 'pallets', 'licencePlate', 'orderTotal', 'cashCredit', 'trust', 'overdraft', 'commisionFee', 'consigneeHour', 'consigneePlace');
+	$x->ColNumber  = array(2, 6, 7, 8, 9, 11, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/orders_templateTV.html';
@@ -264,7 +264,6 @@
 		if($row = db_fetch_row($res)){
 			$sumRow = '<tr class="success">';
 			if(!isset($_REQUEST['Print_x'])) $sumRow .= '<td class="text-center"><strong>&sum;</strong></td>';
-			$sumRow .= '<td class="orders-id"></td>';
 			$sumRow .= '<td class="orders-kind"></td>';
 			$sumRow .= '<td class="orders-company"></td>';
 			$sumRow .= '<td class="orders-typeDoc"></td>';

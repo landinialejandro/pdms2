@@ -38,7 +38,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="idIstat" class="control-label col-lg-3">IdIstat</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="idIstat" id="idIstat" value="<%%VALUE(idIstat)%%>">
+						<input maxlength="255" type="text" class="form-control" name="idIstat" id="idIstat" value="<%%VALUE(idIstat)%%>">
 					</div>
 				</div>
 
@@ -46,7 +46,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="town" class="control-label col-lg-3">Comune</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="town" id="town" value="<%%VALUE(town)%%>">
+						<input maxlength="255" type="text" class="form-control" name="town" id="town" value="<%%VALUE(town)%%>">
 					</div>
 				</div>
 
@@ -54,7 +54,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="district" class="control-label col-lg-3">Provincia</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="district" id="district" value="<%%VALUE(district)%%>">
+						<input maxlength="255" type="text" class="form-control" name="district" id="district" value="<%%VALUE(district)%%>">
 					</div>
 				</div>
 
@@ -62,7 +62,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="region" class="control-label col-lg-3">Regione</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="region" id="region" value="<%%VALUE(region)%%>">
+						<input maxlength="255" type="text" class="form-control" name="region" id="region" value="<%%VALUE(region)%%>">
 					</div>
 				</div>
 
@@ -70,7 +70,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="prefix" class="control-label col-lg-3">Prefisso</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="prefix" id="prefix" value="<%%VALUE(prefix)%%>">
+						<input maxlength="255" type="text" class="form-control" name="prefix" id="prefix" value="<%%VALUE(prefix)%%>">
 					</div>
 				</div>
 
@@ -78,7 +78,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="shipCode" class="control-label col-lg-3">CAP</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="shipCode" id="shipCode" value="<%%VALUE(shipCode)%%>">
+						<input maxlength="255" type="text" class="form-control" name="shipCode" id="shipCode" value="<%%VALUE(shipCode)%%>">
 					</div>
 				</div>
 
@@ -86,7 +86,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="fiscCode" class="control-label col-lg-3">Codice Fisc.</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="fiscCode" id="fiscCode" value="<%%VALUE(fiscCode)%%>">
+						<input maxlength="255" type="text" class="form-control" name="fiscCode" id="fiscCode" value="<%%VALUE(fiscCode)%%>">
 					</div>
 				</div>
 
@@ -94,7 +94,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="inhabitants" class="control-label col-lg-3">Abitanti</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="inhabitants" id="inhabitants" value="<%%VALUE(inhabitants)%%>">
+						<input maxlength="255" type="text" class="form-control" name="inhabitants" id="inhabitants" value="<%%VALUE(inhabitants)%%>">
 					</div>
 				</div>
 
@@ -108,7 +108,7 @@
 								<a id="link-link" href="link.php?t=town&f=link&i=<%%VALUE(id)%%>" target="_blank"><i class="glyphicon glyphicon-globe" title="<%%VALUE(link)%%>" style="font-size: x-large; top: .35em;"></i></a>
 								<label for="link"><button type="button" id="link-edit-link" class="btn btn-default hspacer-lg vspacer-sm" data-toggle="collapse" data-target="#link" title="<%%TRANSLATION(Edit)%%>"><i class="glyphicon glyphicon-pencil"></i></button></label>
 							</div>
-							<script>jQuery(function(){ /* */ var e_link = '<%%VALUE(link)%%>'; if(e_link == '' || e_link == '&nbsp;' || e_link == 'blank.gif') jQuery('#link-link').hide(); });</script><input maxlength="40" type="text" class="form-control collapse" name="link" id="link" value="<%%VALUE(link)%%>">					</div>
+							<script>jQuery(function(){ /* */ var e_link = '<%%VALUE(link)%%>'; if(e_link == '' || e_link == '&nbsp;' || e_link == 'blank.gif') jQuery('#link-link').hide(); });</script><input maxlength="255" type="text" class="form-control collapse" name="link" id="link" value="<%%VALUE(link)%%>">					</div>
 
 					</div>
 				</div>
@@ -120,15 +120,15 @@
 		<hr class="hidden-md hidden-lg">
 		<div class="col-md-4 col-lg-2" id="town_dv_action_buttons">
 			<div class="btn-toolbar">
-				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+				<div class="btn-group-vertical" style="width: 100%;">
 					<%%UPDATE_BUTTON%%>
 				</div><p></p>
-				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+				<div class="btn-group-vertical" style="width: 100%;">
 					<%%DESELECT_BUTTON%%>
 					<%%DVPRINT_BUTTON%%>
 					<%%DELETE_BUTTON%%>
 				</div><p></p>
-				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+				<div class="btn-group-vertical" style="width: 100%;">
 					<%%INSERT_BUTTON%%>
 				</div>
 			</div>

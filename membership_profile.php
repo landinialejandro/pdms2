@@ -195,12 +195,6 @@
 		</div>
 
 		<div class="col-md-6">
-		<?php /* Inserted by Membership Profile Image on 2018-10-07 10:21:49 */ ?>
-		<?php echo file_get_contents('hooks/mpi_template.html');?>
-		<?php /* End of Membership Profile Image code */ ?>
-
-
-			
 
 			<!-- group and IP address -->
 			<div class="panel panel-info">

@@ -5,9 +5,12 @@
 		<script>getMpi({cmd:'u'},true,false);</script>
 
 		<?php /* End of Membership Profile Image code */ ?>
-<link href="<?php echo PREPEND_PATH; ?>resources/jquery-ui/jquery-ui.theme.css" rel="stylesheet">
+<!--<link href="<?php // echo PREPEND_PATH; ?>resources/jquery-ui/jquery-ui.theme.css" rel="stylesheet">-->
 <script src="<?php echo PREPEND_PATH; ?>hooks/myCommonJs.js"></script>
-<script src="<?php echo PREPEND_PATH; ?>resources/jquery-ui/jquery-ui.js"></script>
+<!--<script src="<?php // echo PREPEND_PATH; ?>resources/jquery-ui/jquery-ui.js"></script>-->
+<!-- 
+http://timeago.yarp.com/
+-->
 <script src="<?php echo PREPEND_PATH; ?>hooks/js/timeAgo.js"></script>
 
 <!-- LTE adding -->
@@ -22,6 +25,6 @@
         apply the skin class to the body tag so the changes take effect. -->
     <link rel="stylesheet" href="LTE/dist/css/skins/skin-blue.min.css">
     <!-- AdminLTE App -->
-    <script src="LTE/dist/js/adminlte.min.js"></script>
+    <!--<script src="/LTE/dist/js/adminlte.js"></script>-->
 
 <!-- \LTE adding -->

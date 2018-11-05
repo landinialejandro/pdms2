@@ -106,12 +106,12 @@ $write_to_hooks = ($_REQUEST['dont_write_to_hooks'] == 1 ? false : true);
 	</script>
 
 [?php if($advanced_search_mode){ ?]
-	<button class="btn btn-lg btn-success pull-right search_mode" type="submit" name="Filter_x" value="1">Switch to simple search mode</button>
+	<button class="btn  btn-success pull-right search_mode" type="submit" name="Filter_x" value="1">Switch to simple search mode</button>
 	[?php include(dirname(__FILE__) . '/../defaultFilters.php'); ?]
 	
 [?php }else{ ?]
 
-	<button class="btn btn-lg btn-default pull-right search_mode" type="submit" name="Filter_x" value="1">Switch to advanced search mode</button>
+	<button class="btn  btn-default pull-right search_mode" type="submit" name="Filter_x" value="1">Switch to advanced search mode</button>
 			<!-- %datetimePicker% -->
 			
 			<div class="page-header"><h1>
@@ -219,7 +219,7 @@ $write_to_hooks = ($_REQUEST['dont_write_to_hooks'] == 1 ? false : true);
 ?>
 
 <center>
-	<a style="margin:20px;" href="index.php" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-home" ></span>   Start page</a>
+	<a style="margin:20px;" href="index.php" class="btn btn-success "><span class="glyphicon glyphicon-home" ></span>   Start page</a>
 </center>
 
 <script>	

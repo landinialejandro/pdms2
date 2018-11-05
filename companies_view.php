@@ -24,10 +24,10 @@
 	$x->QueryFieldsTV = array(   
 		"`companies`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
-		"`companies`.`companyCode`" => "companyCode",
-		"`companies`.`companyName`" => "companyName",
-		"`companies`.`fiscalCode`" => "fiscalCode",
-		"`companies`.`vat`" => "vat",
+		"if(CHAR_LENGTH(`companies`.`companyCode`)>100, concat(left(`companies`.`companyCode`,100),' ...'), `companies`.`companyCode`)" => "companyCode",
+		"if(CHAR_LENGTH(`companies`.`companyName`)>100, concat(left(`companies`.`companyName`,100),' ...'), `companies`.`companyName`)" => "companyName",
+		"if(CHAR_LENGTH(`companies`.`fiscalCode`)>100, concat(left(`companies`.`fiscalCode`,100),' ...'), `companies`.`fiscalCode`)" => "fiscalCode",
+		"if(CHAR_LENGTH(`companies`.`vat`)>100, concat(left(`companies`.`vat`,100),' ...'), `companies`.`vat`)" => "vat",
 		"`companies`.`notes`" => "notes"
 	);
 	// mapping incoming sort by requests to actual query fields
@@ -66,10 +66,10 @@
 	$x->QueryFieldsQS = array(   
 		"`companies`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
-		"`companies`.`companyCode`" => "companyCode",
-		"`companies`.`companyName`" => "companyName",
-		"`companies`.`fiscalCode`" => "fiscalCode",
-		"`companies`.`vat`" => "vat",
+		"`companies`.`companyCode`" => "CompanyCode",
+		"`companies`.`companyName`" => "CompanyName",
+		"`companies`.`fiscalCode`" => "FiscalCode",
+		"`companies`.`vat`" => "Vat",
 		"`companies`.`notes`" => "notes"
 	);
 

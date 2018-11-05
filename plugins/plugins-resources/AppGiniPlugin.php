@@ -147,9 +147,9 @@
 			if ($back_url !== false) { // explicitly passing false suppresses the back link completely
 				echo '<div class="text-center">';
 				if ($back_url) {
-					echo '<a href="' . $back_url . '" class="btn btn-danger btn-lg vspacer-lg"><i class="glyphicon glyphicon-chevron-left"></i> Back </a>';
+					echo '<a href="' . $back_url . '" class="btn btn-danger  vspacer-lg"><i class="glyphicon glyphicon-chevron-left"></i> Back </a>';
 				} else {
-					echo '<a href="#" class="btn btn-danger btn-lg vspacer-lg" onclick="history.go(-1); return false;"><i class="glyphicon glyphicon-chevron-left"></i> Back </a>';
+					echo '<a href="#" class="btn btn-danger  vspacer-lg" onclick="history.go(-1); return false;"><i class="glyphicon glyphicon-chevron-left"></i> Back </a>';
 				}
 				echo '</div>';
 			}
@@ -1068,7 +1068,7 @@
 					</div>
 				<?php } ?>
 				
-				<div class="text-center"><button type="submit" class="btn btn-success btn-lg" id="submit">Continue <i class="glyphicon glyphicon-chevron-right"></i></button></div>
+				<div class="text-center"><button type="submit" class="btn btn-success " id="submit">Continue <i class="glyphicon glyphicon-chevron-right"></i></button></div>
 				
 				<script>
 					$j(function(){

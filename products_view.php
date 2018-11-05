@@ -24,8 +24,8 @@
 	$x->QueryFieldsTV = array(   
 		"`products`.`id`" => "id",
 		"`products`.`codebar`" => "codebar",
-		"`products`.`productCode`" => "productCode",
-		"`products`.`productName`" => "productName",
+		"if(CHAR_LENGTH(`products`.`productCode`)>100, concat(left(`products`.`productCode`,100),' ...'), `products`.`productCode`)" => "productCode",
+		"if(CHAR_LENGTH(`products`.`productName`)>100, concat(left(`products`.`productName`,100),' ...'), `products`.`productName`)" => "productName",
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Aliquota */" => "tax",
 		"`products`.`increment`" => "increment",
 		"IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') /* Categoria */" => "CategoryID",
@@ -122,8 +122,8 @@
 	$x->QueryFieldsQS = array(   
 		"`products`.`id`" => "id",
 		"`products`.`codebar`" => "codebar",
-		"`products`.`productCode`" => "productCode",
-		"`products`.`productName`" => "productName",
+		"`products`.`productCode`" => "Codice prodotto",
+		"`products`.`productName`" => "Descrizione Prodotto",
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Aliquota */" => "tax",
 		"`products`.`increment`" => "increment",
 		"IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') /* Categoria */" => "CategoryID",

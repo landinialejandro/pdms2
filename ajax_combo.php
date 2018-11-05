@@ -113,17 +113,6 @@
 				'list_type' => 0,
 				'not_null' => false
 			),
-			'IDproduct_lookup' => array(
-				'parent_table' => 'products',
-				'parent_pk_field' => 'id',
-				'parent_caption' => 'IF(CHAR_LENGTH(`products`.`productCode`) || CHAR_LENGTH(`products`.`id`), CONCAT_WS(\'\', `products`.`productCode`, \'-\', `products`.`productName`), \'\')',
-				'parent_from' => '`products` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`products`.`tax` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`products`.`CategoryID` ',
-				'filterers' => array(),
-				'custom_query' => '',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
-			),
 			'codebar' => array(
 				'parent_table' => 'products',
 				'parent_pk_field' => 'id',
@@ -178,7 +167,18 @@
 				'inherit_permissions' => false,
 				'list_type' => 0,
 				'not_null' => false
-			)
+			),
+                        'IDproduct_lookup' => array(
+                                'parent_table' => 'products',
+                                'parent_pk_field' => 'id',
+                                'parent_caption' => 'IF(CHAR_LENGTH(`products`.`codebar`) || CHAR_LENGTH(`products`.`productName`), CONCAT_WS(\'\', `products`.`codebar`, \' - \', `products`.`productName`), \'\')',
+                                'parent_from' => '`products`',
+                                'filterers' => array(),
+                                'custom_query' => '',
+                                'inherit_permissions' => true,
+                                'list_type' => 0,
+                                'not_null' => false
+                        )
 		),
 		'_resumeOrders' => array(   
 			'kind' => array(
@@ -352,7 +352,7 @@
 		'attributes' => array(   
 			'attribute' => array(
 				'parent_table' => 'kinds',
-				'parent_pk_field' => 'name',
+				'parent_pk_field' => 'code',
 				'parent_caption' => '`kinds`.`name`',
 				'parent_from' => '`kinds` ',
 				'filterers' => array(),

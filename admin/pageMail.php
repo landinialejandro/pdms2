@@ -201,7 +201,7 @@
 
 	<div class="form-group">
 		<div class="col-sm-4 col-sm-offset-4 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-			<button name="saveChanges" type="submit" class="btn btn-primary btn-lg btn-block"><i class="glyphicon glyphicon-envelope"></i> <?php echo $Translation["send message"]; ?></button>
+			<button name="saveChanges" type="submit" class="btn btn-primary  btn-block"><i class="glyphicon glyphicon-envelope"></i> <?php echo $Translation["send message"]; ?></button>
 		</div>
 	</div>
 </form>

@@ -156,7 +156,7 @@ $write_to_hooks = ($_REQUEST['dont_write_to_hooks'] == 1 ? false : true);
 ?>
 
 <center>
-	<a style="margin:20px;" href="index.php" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-home" ></span>   Start page</a>
+	<a style="margin:20px;" href="index.php" class="btn btn-success "><span class="glyphicon glyphicon-home" ></span>   Start page</a>
 </center>
 
 <script>	

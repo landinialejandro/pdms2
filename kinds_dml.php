@@ -24,10 +24,8 @@ function kinds_insert(){
 	}
 	$data['code'] = makeSafe($_REQUEST['code']);
 		if($data['code'] == empty_lookup_value){ $data['code'] = ''; }
-	$data['name'] = makeSafe($_REQUEST['name']);
-		if($data['name'] == empty_lookup_value){ $data['name'] = ''; }
-	$data['value'] = makeSafe($_REQUEST['value']);
-		if($data['value'] == empty_lookup_value){ $data['value'] = ''; }
+	$data['name'] = br2nl(makeSafe($_REQUEST['name']));
+	$data['value'] = br2nl(makeSafe($_REQUEST['value']));
 	$data['descriptions'] = br2nl(makeSafe($_REQUEST['descriptions']));
 	if($data['code'] == '') {echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Code/prefix': " . $Translation['pkfield empty'] . '</div>'; exit;}
 
@@ -269,9 +267,9 @@ function kinds_delete($selected_id, $AllowDeleteOfParents=false, $skipChecks=fal
 	}
 
 	// child table: attributes
-	$res = sql("select `name` from `kinds` where `code`='$selected_id'", $eo);
-	$name = db_fetch_row($res);
-	$rires = sql("select count(1) from `attributes` where `attribute`='".addslashes($name[0])."'", $eo);
+	$res = sql("select `code` from `kinds` where `code`='$selected_id'", $eo);
+	$code = db_fetch_row($res);
+	$rires = sql("select count(1) from `attributes` where `attribute`='".addslashes($code[0])."'", $eo);
 	$rirow = db_fetch_row($rires);
 	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
 		$RetMsg = $Translation["couldn't delete"];
@@ -384,15 +382,13 @@ function kinds_update($selected_id){
 	}
 	$data['code'] = makeSafe($_REQUEST['code']);
 		if($data['code'] == empty_lookup_value){ $data['code'] = ''; }
-	$data['name'] = makeSafe($_REQUEST['name']);
-		if($data['name'] == empty_lookup_value){ $data['name'] = ''; }
+	$data['name'] = br2nl(makeSafe($_REQUEST['name']));
 	if($data['name']==''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Name': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	$data['value'] = makeSafe($_REQUEST['value']);
-		if($data['value'] == empty_lookup_value){ $data['value'] = ''; }
+	$data['value'] = br2nl(makeSafe($_REQUEST['value']));
 	$data['descriptions'] = br2nl(makeSafe($_REQUEST['descriptions']));
 	$data['selectedID']=makeSafe($selected_id);
 
@@ -552,7 +548,7 @@ function kinds_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 	if($selected_id){
 		if(!$_REQUEST['Embedded']) $templateCode = str_replace('<%%DVPRINT_BUTTON%%>', '<button type="submit" class="btn btn-default" id="dvprint" name="dvprint_x" value="1" onclick="$$(\'form\')[0].writeAttribute(\'novalidate\', \'novalidate\'); document.myform.reset(); return true;" title="' . html_attr($Translation['Print Preview']) . '"><i class="glyphicon glyphicon-print"></i> ' . $Translation['Print Preview'] . '</button>', $templateCode);
 		if($AllowUpdate){
-			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '<button type="submit" class="btn btn-success btn-lg" id="update" name="update_x" value="1" onclick="return kinds_validateData();" title="' . html_attr($Translation['Save Changes']) . '"><i class="glyphicon glyphicon-ok"></i> ' . $Translation['Save Changes'] . '</button>', $templateCode);
+			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '<button type="submit" class="btn btn-success " id="update" name="update_x" value="1" onclick="return kinds_validateData();" title="' . html_attr($Translation['Save Changes']) . '"><i class="glyphicon glyphicon-ok"></i> ' . $Translation['Save Changes'] . '</button>', $templateCode);
 		}else{
 			$templateCode = str_replace('<%%UPDATE_BUTTON%%>', '', $templateCode);
 		}
@@ -619,11 +615,17 @@ function kinds_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(code)%%>', safe_html($urow['code']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(code)%%>', html_attr($row['code']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(code)%%>', urlencode($urow['code']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(name)%%>', safe_html($urow['name']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(name)%%>', html_attr($row['name']), $templateCode);
+		if($dvprint || (!$AllowUpdate && !$AllowInsert)){
+			$templateCode = str_replace('<%%VALUE(name)%%>', safe_html($urow['name']), $templateCode);
+		}else{
+			$templateCode = str_replace('<%%VALUE(name)%%>', html_attr($row['name']), $templateCode);
+		}
 		$templateCode = str_replace('<%%URLVALUE(name)%%>', urlencode($urow['name']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(value)%%>', safe_html($urow['value']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(value)%%>', html_attr($row['value']), $templateCode);
+		if($dvprint || (!$AllowUpdate && !$AllowInsert)){
+			$templateCode = str_replace('<%%VALUE(value)%%>', safe_html($urow['value']), $templateCode);
+		}else{
+			$templateCode = str_replace('<%%VALUE(value)%%>', html_attr($row['value']), $templateCode);
+		}
 		$templateCode = str_replace('<%%URLVALUE(value)%%>', urlencode($urow['value']), $templateCode);
 		if($dvprint || (!$AllowUpdate && !$AllowInsert)){
 			$templateCode = str_replace('<%%VALUE(descriptions)%%>', safe_html($urow['descriptions']), $templateCode);

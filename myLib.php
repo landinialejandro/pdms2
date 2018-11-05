@@ -20,3 +20,51 @@ function getDataTable($table_name,$where_id){
     $res = sql("SELECT {$table_fields} FROM {$table_from}" . $where_id, $eo);
     return db_fetch_assoc($res);
 }
+
+function getCreditCompany($id){
+    /* return json llimit credit*/
+    $res = sql("select * from SQL_customersCredit where cust_id = '$id' LIMIT 1;",$eo);
+    if(!($row = db_fetch_array($res))){
+        $row[]="";
+    }
+    return $row;
+}
+
+function getPurchasesCompany($id){ //customers
+    /*return purchasses amount */
+    $res = sql("select sum(ordersDetails.LineTotal) as 'total_purchases' from orders left outer join ordersDetails on ordersDetails.`order` = orders.id where orders.customer = '{$id}' LIMIT 1;",$eo);
+    if(!($row = db_fetch_array($res))){
+        $row[]="";
+    }
+    return $row;
+}
+
+function dataBar($id){
+    $data = array_merge(getCreditCompany($id),getPurchasesCompany($id));
+//    var_dump($data);
+    //si el limite de credito es mayor que lo comprado? total comprado / credito : exede el credito.
+    if ($data['val_limit']){
+        $ratio=100;
+        $color='red';
+        $overdraft = $data['total_purchases'] - $data['val_limit'];//descubierto
+        if ($overdraft < 0 ){
+            $ratio = ($data['total_purchases']/$data['val_limit'])*100;
+            $color='green';
+            if ($ratio > 75){
+                $color = 'red';
+            }elseif($ratio > 50){
+                $color= 'yellow';
+            }
+        }else{
+            //alcanzo el limite de credito
+        }
+        $ret = array(
+            "ratio"     => $ratio,
+            "color"     => $color,
+            "overdraft" => $overdraft
+        );
+    }else{
+        $ret[]="";
+    }
+    return $ret;
+}

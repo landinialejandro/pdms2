@@ -668,15 +668,15 @@
 			<div class="row">
 				<div class="col-md-3 col-md-offset-3 col-lg-offset-4 col-lg-2 vspacer-lg">
 					<input type="hidden" name="apply_sorting" value="1">
-					<button type="submit" id="applyFilters" onclick="beforeApplyFilters(event);return true;" class="btn btn-success btn-block btn-lg"><i class="glyphicon glyphicon-ok"></i> Apply filters</button>
+					<button type="submit" id="applyFilters" onclick="beforeApplyFilters(event);return true;" class="btn btn-success btn-block "><i class="glyphicon glyphicon-ok"></i> Apply filters</button>
 				</div>
 				<?php if($saveFiltersFlag == "True"){ ?>
 					<div class="col-md-3 col-lg-2 vspacer-lg">
-						<button type="submit" onclick="beforeApplyFilters(event);return true;" class="btn btn-default btn-block btn-lg" id="SaveFilter" name="SaveFilter_x" value="1"><i class="glyphicon glyphicon-align-left"></i> Save &amp; apply filters</button>
+						<button type="submit" onclick="beforeApplyFilters(event);return true;" class="btn btn-default btn-block " id="SaveFilter" name="SaveFilter_x" value="1"><i class="glyphicon glyphicon-align-left"></i> Save &amp; apply filters</button>
 					</div>
 				<?php } ?>
 				<div class="col-md-3 col-lg-2 vspacer-lg">
-					<button onclick="beforeCancelFilters();" type="submit" id="cancelFilters" class="btn btn-warning btn-block btn-lg"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
+					<button onclick="beforeCancelFilters();" type="submit" id="cancelFilters" class="btn btn-warning btn-block "><i class="glyphicon glyphicon-remove"></i> Cancel</button>
 				</div>
 			</div>
 
