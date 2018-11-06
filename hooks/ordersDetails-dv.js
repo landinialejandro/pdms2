@@ -38,7 +38,7 @@ $j(function(){
         ToggleFix(field);
         getSellPrice(); 
     });
-    $j('#UnitPrice, #Quantity, #Discount').change(function(){
+    $j('#UnitPrice, #QuantityReal, #Discount').change(function(){
         getSellPrice();
     });
     $j('#update, #insert').click(function(){
@@ -119,7 +119,7 @@ function changeSubtotal(){
     var actualPrice = parseFloat($j('#UnitPrice').val()) || 0;
     actualPrice = actualPrice.toFixed(2);
     
-    var quantity = parseFloat($j('#Quantity').val()) || 0;
+    var quantity = parseFloat($j('#QuantityReal').val()) || 0;
     quantity = quantity.toFixed(2);
 
     subTotal = actualPrice * quantity;
@@ -134,7 +134,7 @@ function taxValue(){
 
 function changeImposta(){
     var imposta = parseFloat(changeSubtotal() * taxValue()/100) || 0;
-    $j('#Subtotal').val(imposta.toFixed(2));
+    $j('#taxes').val(imposta.toFixed(2));
     return imposta;
 }
 

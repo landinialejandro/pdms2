@@ -38,9 +38,14 @@ function processRequest($cmd, $id, $cant, $order){
 function fastAdd($id, $cant, $order){
     $statment="select sellPrice from products where id = '$id'";
     $unitPrice = sqlValue($statment);
-    $val = $cant * $unitPrice;
+    $statment="select kinds.`value` from products left join kinds on kinds.code = products.`tax` where products.id = '$id'";
+    $tax = sqlValue($statment);
+    
+    $imponibile = $cant * $unitPrice;
+    $imposta= ($imponibile*$tax)/100;
     $today = date("Y-m-d");
-    $statment = "insert into ordersDetails SET ordersDetails.manufactureDate = '$today', ordersDetails.sellDate = '$today', ordersDetails.order = '$order', productCode = '$id', Quantity = '$cant', UnitPrice = '$unitPrice', LineTotal = '$val', transaction_type = 'Outgoing' ";
+    $val = $imponibile+$imposta;
+    $statment = "insert into ordersDetails SET ordersDetails.manufactureDate = '$today', ordersDetails.sellDate = '$today', ordersDetails.order = '$order', productCode = '$id', QuantityReal = '$cant', taxes = '$imposta', UnitPrice = '$unitPrice', Subtotal = '$imponibile', LineTotal = '$val', transaction_type = 'Outgoing' ";
     $ret = sql($statment,$eo);
     return $ret;
 }

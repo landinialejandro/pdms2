@@ -28,7 +28,7 @@
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
 					<label for="sellDate" class="control-label col-lg-3">Data vendita</label>
-					<div class="col-lg-9">
+					<div class="col-lg-9 text-right">
 						<%%COMBO(sellDate)%%>
 					</div>
 				</div>
@@ -50,7 +50,7 @@
 					</div>
 				</div>
 
-				<div class="form-group">
+                                <div class="form-group" hidden="">
 					<hr class="hidden-md hidden-lg">
 					<label for="noSell" class="control-label col-lg-3">Es. Colli</label>
 					<div class="col-lg-9">
@@ -58,7 +58,7 @@
 					</div>
 				</div>
 
-				<div class="form-group">
+                                <div class="form-group" hidden="">
 					<hr class="hidden-md hidden-lg">
 					<label for="Quantity" class="control-label col-lg-3">Peso partenza <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#Quantity-description"></i></label>
 					<div class="col-lg-9">
@@ -91,6 +91,14 @@
 					<label for="Subtotal" class="control-label col-lg-3">Imponibile</label>
 					<div class="col-lg-9">
 						<input maxlength="13" type="text" class="form-control" name="Subtotal" id="Subtotal" value="<%%VALUE(Subtotal)%%>">
+					</div>
+				</div>
+                            
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="taxes" class="control-label col-lg-3">Imposta</label>
+					<div class="col-lg-9">
+						<input maxlength="13" type="text" class="form-control" name="taxes" id="taxes" value="<%%VALUE(taxes)%%>">
 					</div>
 				</div>
 

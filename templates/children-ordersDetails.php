@@ -101,7 +101,8 @@
 						<?php if($config['open-detail-view-on-click']){ ?>
 							<th>&nbsp;</th>
 						<?php } ?>
-						<?php if(is_array($config['display-fields'])) foreach($config['display-fields'] as $fieldIndex => $fieldLabel){ ?>
+						<?php if(is_array($config['display-fields'])) {
+                                                    foreach($config['display-fields'] as $fieldIndex => $fieldLabel){ ?>
 							<th 
 								<?php if($config['sortable-fields'][$fieldIndex]){ ?>
 									onclick="<?php echo $current_table; ?>GetChildrenRecordsList({
@@ -119,11 +120,13 @@
 									<i class="glyphicon glyphicon-sort-by-attributes text-warning"></i>
 								<?php } ?>
 							</th>
-						<?php } ?>
+                                                <?php }} ?>
 					</tr>
 				</thead>
 				<tbody>
-					<?php if(is_array($records)) foreach($records as $pkValue => $record){ ?>
+					<?php if(is_array($records)){
+                                            
+                                        } foreach($records as $pkValue => $record){ ?>
 					<tr>
 						<?php if($config['open-detail-view-on-click']){ ?>
 							<?php if(stripos($_SERVER['HTTP_USER_AGENT'], 'msie ')){ ?>
@@ -153,7 +156,7 @@
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][25]}"; ?> text-center" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][25]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[25]); ?></td>
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][26]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][26]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[26]); ?></td>
 					</tr>
-					<?php } ?>
+					<?php } } ?>
 				</tbody>
 				<tfoot>
 					<tr>

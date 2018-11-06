@@ -465,11 +465,11 @@
                                             8 => 'Prodotto tax', 
                                             10 => 'Colli', 
                                             11 => 'Es. Colli', 
-                                            12 => 'Peso partenza', 
                                             13 => 'UM',
                                             14 => 'Peso riscontrato', 
                                             15 => 'Prezzo unitario', 
                                             16 => 'Imponibile', 
+                                            17 => 'Imposta', 
                                             18 => 'Sconto', 
                                             19 => 'SubTotale', 
                                             21 => 'Tipo transazione', 
@@ -485,11 +485,11 @@
                                             8 => 'TAX',
                                             10 => 'packages', 
                                             11 => 'noSell', 
-                                            12 => 'Quantity', 
                                             13 => 'UM', 
                                             14 => 'QuantityReal', 
                                             15 => 'UnitPrice', 
                                             16 => 'Subtotal', 
+                                            17 => 'taxes', 
                                             18 => 'Discount', 
                                             19 => 'LineTotal', 
                                             21 => 'transaction_type', 
@@ -507,7 +507,9 @@
 					'show-page-progress' => true,
 					'template' => '../hooks/children-ordersDetails',
 					'template-printable' => 'children-ordersDetails-printable',
-					'query' => file_get_contents('../hooks/SQLc_orderDetailsChildren.sql')
+                                        'query1' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` ",
+					'query' => ''.file_get_contents('../hooks/SQLc_orderDetailsChildren.sql').' ',
+                                        'queryCount' =>''
 				),
 				'productCode' => array(   
 					'parent-table' => 'products',
@@ -1119,12 +1121,14 @@
 
 			// build the count query
 			$forcedWhere = $userPCConfig[$ChildTable][$ChildLookupField]['forced-where'];
+                        $a = preg_replace('/^select .* from /i', 'SELECT count(1) FROM ', $userPCConfig[$ChildTable][$ChildLookupField]['query']);
 			$query = 
-				preg_replace('/^select .* from /i', 'SELECT count(1) FROM ', $userPCConfig[$ChildTable][$ChildLookupField]['query']) .
+				$a.
 				$permissionsJoin . " WHERE " .
 				($permissionsWhere ? "( $permissionsWhere )" : "( 1=1 )") . " AND " .
 				($forcedWhere ? "( $forcedWhere )" : "( 2=2 )") . " AND " .
 				"`$ChildTable`.`$ChildLookupField`='" . makeSafe($SelectedID) . "'";
+//                        echo var_dump($query);
 			$totalMatches = sqlValue($query);
 
 			// make sure $Page is <= max pages

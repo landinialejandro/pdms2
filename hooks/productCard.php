@@ -54,7 +54,16 @@ if(!($result = db_fetch_assoc($res))){
 
 $product = $result;
 
-$product_update = sqlvalue("select `update_date` from products where id = {$where_id}");
+$product_update = sqlvalue("select `update_date` from products where id = $where_id");
+
+$stock = sqlvalue("SELECT stock FROM SQL_productsStock where prodId=$where_id LIMIT 1;");
+$classes='danger';
+if($stock>0){
+    $classes='success';
+}
+elseif($stock==0){
+    $classes='warning';
+}
 
 /* retrive attributes info*/
 $table_name = 'attributes';
@@ -82,6 +91,9 @@ ob_start();
                     UM: <?php echo $product['UM']; ?><br>
                     Tara: <?php echo $product['tare']; ?><br>
                     Prezzo Vendita: <?php echo $product['sellPrice']; ?><br>
+                    <div class="callout callout-<?php echo $classes; ?>">
+                        <P>Stock: <?php echo $stock; ?></P>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-8">
