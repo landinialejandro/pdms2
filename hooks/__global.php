@@ -11,7 +11,8 @@
                 $qr = sql($sql,$eo);
                 $sql = file_get_contents('hooks/SQL_customersCredit.sql');
                 $qr = sql($sql,$eo);
-
+                $sql = file_get_contents('hooks/SQL_productsStock.sql');
+                $qr = sql($sql,$eo);
 		return '';
 	}
 
