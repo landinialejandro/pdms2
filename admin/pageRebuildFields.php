@@ -20,6 +20,7 @@
 			'typeDoc' => array('appgini' => 'VARCHAR(40) not null '),
 			'multiOrder' => array('appgini' => 'INT not null '),
 			'customer' => array('appgini' => 'INT unsigned '),
+			'supplier' => array('appgini' => 'INT unsigned '),
 			'employee' => array('appgini' => 'INT unsigned '),
 			'date' => array('appgini' => 'DATE '),
 			'requiredDate' => array('appgini' => 'DATE '),

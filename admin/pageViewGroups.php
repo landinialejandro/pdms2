@@ -36,7 +36,7 @@
 <div class="page-header">
 	<h1>
 		<?php echo $Translation['groups']; ?>
-		<span class="pull-right"><a href="pageEditGroup.php" class="btn btn-success "><i class="glyphicon glyphicon-plus"></i> <?php echo $Translation['add group']; ?></a></span>
+		<span class="pull-right"><a href="pageEditGroup.php" class="btn btn-success btn-lg"><i class="glyphicon glyphicon-plus"></i> <?php echo $Translation['add group']; ?></a></span>
 		<div class="clearfix"></div>
 	</h1>
 </div>

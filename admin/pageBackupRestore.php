@@ -24,7 +24,7 @@
 
 			/* back link to use in errors */
 			$this->error_back_link = '' .
-				'<div class="text-center vspacer-lg"><a href="' . $this->curr_page . '" class="btn btn-danger ">' .
+				'<div class="text-center vspacer-lg"><a href="' . $this->curr_page . '" class="btn btn-danger btn-lg">' .
 					'<i class="glyphicon glyphicon-chevron-left"></i> ' .
 					$this->lang['back and retry'] .
 				'</a></div>';
@@ -176,7 +176,7 @@
 			?>
 
 			<?php if($can_backup){ ?>
-				<button type="button" class="vspacer-lg btn btn-primary " id="create-backup"><i class="glyphicon glyphicon-plus"></i> <?php echo $this->lang['create backup file']; ?></button>
+				<button type="button" class="vspacer-lg btn btn-primary btn-lg" id="create-backup"><i class="glyphicon glyphicon-plus"></i> <?php echo $this->lang['create backup file']; ?></button>
 				<pre id="backup-log" class="hidden"></pre>
 
 				<h2><?php echo $this->lang['available backups']; ?></h2>

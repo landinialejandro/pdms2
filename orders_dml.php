@@ -28,6 +28,8 @@ function orders_insert(){
 		if($data['multiOrder'] == empty_lookup_value){ $data['multiOrder'] = ''; }
 	$data['customer'] = makeSafe($_REQUEST['customer']);
 		if($data['customer'] == empty_lookup_value){ $data['customer'] = ''; }
+	$data['supplier'] = makeSafe($_REQUEST['supplier']);
+		if($data['supplier'] == empty_lookup_value){ $data['supplier'] = ''; }
 	$data['employee'] = makeSafe($_REQUEST['employee']);
 		if($data['employee'] == empty_lookup_value){ $data['employee'] = ''; }
 	$data['date'] = intval($_REQUEST['dateYear']) . '-' . intval($_REQUEST['dateMonth']) . '-' . intval($_REQUEST['dateDay']);
@@ -91,7 +93,7 @@ function orders_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `orders` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `typeDoc`=' . (($data['typeDoc'] !== '' && $data['typeDoc'] !== NULL) ? "'{$data['typeDoc']}'" : 'NULL') . ', `multiOrder`=' . (($data['multiOrder'] !== '' && $data['multiOrder'] !== NULL) ? "'{$data['multiOrder']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `date`=' . (($data['date'] !== '' && $data['date'] !== NULL) ? "'{$data['date']}'" : 'NULL') . ', `shippedDate`=' . (($data['shippedDate'] !== '' && $data['shippedDate'] !== NULL) ? "'{$data['shippedDate']}'" : 'NULL') . ', `shipVia`=' . (($data['shipVia'] !== '' && $data['shipVia'] !== NULL) ? "'{$data['shipVia']}'" : 'NULL') . ', `Freight`=' . (($data['Freight'] !== '' && $data['Freight'] !== NULL) ? "'{$data['Freight']}'" : 'NULL') . ', `pallets`=' . (($data['pallets'] !== '' && $data['pallets'] !== NULL) ? "'{$data['pallets']}'" : 'NULL') . ', `licencePlate`=' . (($data['licencePlate'] !== '' && $data['licencePlate'] !== NULL) ? "'{$data['licencePlate']}'" : 'NULL') . ', `orderTotal`=' . (($data['orderTotal'] !== '' && $data['orderTotal'] !== NULL) ? "'{$data['orderTotal']}'" : 'NULL') . ', `cashCredit`=' . (($data['cashCredit'] !== '' && $data['cashCredit'] !== NULL) ? "'{$data['cashCredit']}'" : 'NULL') . ', `trust`=' . (($data['trust'] !== '' && $data['trust'] !== NULL) ? "'{$data['trust']}'" : 'NULL') . ', `overdraft`=' . (($data['overdraft'] !== '' && $data['overdraft'] !== NULL) ? "'{$data['overdraft']}'" : 'NULL') . ', `commisionFee`=' . (($data['commisionFee'] !== '' && $data['commisionFee'] !== NULL) ? "'{$data['commisionFee']}'" : 'NULL') . ', `consigneeHour`=' . (($data['consigneeHour'] !== '' && $data['consigneeHour'] !== NULL) ? "'{$data['consigneeHour']}'" : 'NULL') . ', `consigneePlace`=' . (($data['consigneePlace'] !== '' && $data['consigneePlace'] !== NULL) ? "'{$data['consigneePlace']}'" : 'NULL') . ', `related`=' . (($data['related'] !== '' && $data['related'] !== NULL) ? "'{$data['related']}'" : 'NULL'), $o);
+	sql('insert into `orders` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `typeDoc`=' . (($data['typeDoc'] !== '' && $data['typeDoc'] !== NULL) ? "'{$data['typeDoc']}'" : 'NULL') . ', `multiOrder`=' . (($data['multiOrder'] !== '' && $data['multiOrder'] !== NULL) ? "'{$data['multiOrder']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `supplier`=' . (($data['supplier'] !== '' && $data['supplier'] !== NULL) ? "'{$data['supplier']}'" : 'NULL') . ', `date`=' . (($data['date'] !== '' && $data['date'] !== NULL) ? "'{$data['date']}'" : 'NULL') . ', `shippedDate`=' . (($data['shippedDate'] !== '' && $data['shippedDate'] !== NULL) ? "'{$data['shippedDate']}'" : 'NULL') . ', `shipVia`=' . (($data['shipVia'] !== '' && $data['shipVia'] !== NULL) ? "'{$data['shipVia']}'" : 'NULL') . ', `Freight`=' . (($data['Freight'] !== '' && $data['Freight'] !== NULL) ? "'{$data['Freight']}'" : 'NULL') . ', `pallets`=' . (($data['pallets'] !== '' && $data['pallets'] !== NULL) ? "'{$data['pallets']}'" : 'NULL') . ', `licencePlate`=' . (($data['licencePlate'] !== '' && $data['licencePlate'] !== NULL) ? "'{$data['licencePlate']}'" : 'NULL') . ', `orderTotal`=' . (($data['orderTotal'] !== '' && $data['orderTotal'] !== NULL) ? "'{$data['orderTotal']}'" : 'NULL') . ', `cashCredit`=' . (($data['cashCredit'] !== '' && $data['cashCredit'] !== NULL) ? "'{$data['cashCredit']}'" : 'NULL') . ', `trust`=' . (($data['trust'] !== '' && $data['trust'] !== NULL) ? "'{$data['trust']}'" : 'NULL') . ', `overdraft`=' . (($data['overdraft'] !== '' && $data['overdraft'] !== NULL) ? "'{$data['overdraft']}'" : 'NULL') . ', `commisionFee`=' . (($data['commisionFee'] !== '' && $data['commisionFee'] !== NULL) ? "'{$data['commisionFee']}'" : 'NULL') . ', `consigneeHour`=' . (($data['consigneeHour'] !== '' && $data['consigneeHour'] !== NULL) ? "'{$data['consigneeHour']}'" : 'NULL') . ', `consigneePlace`=' . (($data['consigneePlace'] !== '' && $data['consigneePlace'] !== NULL) ? "'{$data['consigneePlace']}'" : 'NULL') . ', `related`=' . (($data['related'] !== '' && $data['related'] !== NULL) ? "'{$data['related']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"orders_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -260,6 +262,8 @@ function orders_update($selected_id){
 	}
 	$data['customer'] = makeSafe($_REQUEST['customer']);
 		if($data['customer'] == empty_lookup_value){ $data['customer'] = ''; }
+	$data['supplier'] = makeSafe($_REQUEST['supplier']);
+		if($data['supplier'] == empty_lookup_value){ $data['supplier'] = ''; }
 	$data['employee'] = makeSafe($_REQUEST['employee']);
 		if($data['employee'] == empty_lookup_value){ $data['employee'] = ''; }
 	$data['date'] = intval($_REQUEST['dateYear']) . '-' . intval($_REQUEST['dateMonth']) . '-' . intval($_REQUEST['dateDay']);
@@ -303,7 +307,7 @@ function orders_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `orders` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `typeDoc`=' . (($data['typeDoc'] !== '' && $data['typeDoc'] !== NULL) ? "'{$data['typeDoc']}'" : 'NULL') . ', `multiOrder`=' . (($data['multiOrder'] !== '' && $data['multiOrder'] !== NULL) ? "'{$data['multiOrder']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `date`=' . (($data['date'] !== '' && $data['date'] !== NULL) ? "'{$data['date']}'" : 'NULL') . ', `shippedDate`=' . (($data['shippedDate'] !== '' && $data['shippedDate'] !== NULL) ? "'{$data['shippedDate']}'" : 'NULL') . ', `shipVia`=' . (($data['shipVia'] !== '' && $data['shipVia'] !== NULL) ? "'{$data['shipVia']}'" : 'NULL') . ', `Freight`=' . (($data['Freight'] !== '' && $data['Freight'] !== NULL) ? "'{$data['Freight']}'" : 'NULL') . ', `pallets`=' . (($data['pallets'] !== '' && $data['pallets'] !== NULL) ? "'{$data['pallets']}'" : 'NULL') . ', `licencePlate`=' . (($data['licencePlate'] !== '' && $data['licencePlate'] !== NULL) ? "'{$data['licencePlate']}'" : 'NULL') . ', `orderTotal`=' . (($data['orderTotal'] !== '' && $data['orderTotal'] !== NULL) ? "'{$data['orderTotal']}'" : 'NULL') . ', `cashCredit`=' . (($data['cashCredit'] !== '' && $data['cashCredit'] !== NULL) ? "'{$data['cashCredit']}'" : 'NULL') . ', `trust`=' . (($data['trust'] !== '' && $data['trust'] !== NULL) ? "'{$data['trust']}'" : 'NULL') . ', `overdraft`=' . (($data['overdraft'] !== '' && $data['overdraft'] !== NULL) ? "'{$data['overdraft']}'" : 'NULL') . ', `commisionFee`=' . (($data['commisionFee'] !== '' && $data['commisionFee'] !== NULL) ? "'{$data['commisionFee']}'" : 'NULL') . ', `consigneeHour`=' . (($data['consigneeHour'] !== '' && $data['consigneeHour'] !== NULL) ? "'{$data['consigneeHour']}'" : 'NULL') . ', `consigneePlace`=' . (($data['consigneePlace'] !== '' && $data['consigneePlace'] !== NULL) ? "'{$data['consigneePlace']}'" : 'NULL') . ', `related`=' . (($data['related'] !== '' && $data['related'] !== NULL) ? "'{$data['related']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `orders` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `typeDoc`=' . (($data['typeDoc'] !== '' && $data['typeDoc'] !== NULL) ? "'{$data['typeDoc']}'" : 'NULL') . ', `multiOrder`=' . (($data['multiOrder'] !== '' && $data['multiOrder'] !== NULL) ? "'{$data['multiOrder']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `supplier`=' . (($data['supplier'] !== '' && $data['supplier'] !== NULL) ? "'{$data['supplier']}'" : 'NULL') . ', `date`=' . (($data['date'] !== '' && $data['date'] !== NULL) ? "'{$data['date']}'" : 'NULL') . ', `shippedDate`=' . (($data['shippedDate'] !== '' && $data['shippedDate'] !== NULL) ? "'{$data['shippedDate']}'" : 'NULL') . ', `shipVia`=' . (($data['shipVia'] !== '' && $data['shipVia'] !== NULL) ? "'{$data['shipVia']}'" : 'NULL') . ', `Freight`=' . (($data['Freight'] !== '' && $data['Freight'] !== NULL) ? "'{$data['Freight']}'" : 'NULL') . ', `pallets`=' . (($data['pallets'] !== '' && $data['pallets'] !== NULL) ? "'{$data['pallets']}'" : 'NULL') . ', `licencePlate`=' . (($data['licencePlate'] !== '' && $data['licencePlate'] !== NULL) ? "'{$data['licencePlate']}'" : 'NULL') . ', `orderTotal`=' . (($data['orderTotal'] !== '' && $data['orderTotal'] !== NULL) ? "'{$data['orderTotal']}'" : 'NULL') . ', `cashCredit`=' . (($data['cashCredit'] !== '' && $data['cashCredit'] !== NULL) ? "'{$data['cashCredit']}'" : 'NULL') . ', `trust`=' . (($data['trust'] !== '' && $data['trust'] !== NULL) ? "'{$data['trust']}'" : 'NULL') . ', `overdraft`=' . (($data['overdraft'] !== '' && $data['overdraft'] !== NULL) ? "'{$data['overdraft']}'" : 'NULL') . ', `commisionFee`=' . (($data['commisionFee'] !== '' && $data['commisionFee'] !== NULL) ? "'{$data['commisionFee']}'" : 'NULL') . ', `consigneeHour`=' . (($data['consigneeHour'] !== '' && $data['consigneeHour'] !== NULL) ? "'{$data['consigneeHour']}'" : 'NULL') . ', `consigneePlace`=' . (($data['consigneePlace'] !== '' && $data['consigneePlace'] !== NULL) ? "'{$data['consigneePlace']}'" : 'NULL') . ', `related`=' . (($data['related'] !== '' && $data['related'] !== NULL) ? "'{$data['related']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="orders_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -349,6 +353,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$filterer_company = thisOr(undo_magic_quotes($_REQUEST['filterer_company']), '');
 	$filterer_typeDoc = thisOr(undo_magic_quotes($_REQUEST['filterer_typeDoc']), '');
 	$filterer_customer = thisOr(undo_magic_quotes($_REQUEST['filterer_customer']), '');
+	$filterer_supplier = thisOr(undo_magic_quotes($_REQUEST['filterer_supplier']), '');
 	$filterer_employee = thisOr(undo_magic_quotes($_REQUEST['filterer_employee']), '');
 	$filterer_shipVia = thisOr(undo_magic_quotes($_REQUEST['filterer_shipVia']), '');
 
@@ -379,6 +384,8 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$combo_typeDoc = new DataCombo;
 	// combobox: customer
 	$combo_customer = new DataCombo;
+	// combobox: supplier
+	$combo_supplier = new DataCombo;
 	// combobox: employee
 	$combo_employee = new DataCombo;
 	// combobox: date
@@ -442,6 +449,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		$combo_company->SelectedData = $row['company'];
 		$combo_typeDoc->SelectedData = $row['typeDoc'];
 		$combo_customer->SelectedData = $row['customer'];
+		$combo_supplier->SelectedData = $row['supplier'];
 		$combo_employee->SelectedData = $row['employee'];
 		$combo_date->DefaultDate = $row['date'];
 		$combo_requiredDate->DefaultDate = $row['requiredDate'];
@@ -453,6 +461,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		$combo_company->SelectedData = $filterer_company;
 		$combo_typeDoc->SelectedData = $filterer_typeDoc;
 		$combo_customer->SelectedData = $filterer_customer;
+		$combo_supplier->SelectedData = $filterer_supplier;
 		$combo_employee->SelectedData = $filterer_employee;
 		$combo_shipVia->SelectedData = $filterer_shipVia;
 	}
@@ -465,6 +474,8 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$combo_typeDoc->MatchText = '<span id="typeDoc-container-readonly' . $rnd1 . '"></span><input type="hidden" name="typeDoc" id="typeDoc' . $rnd1 . '" value="' . html_attr($combo_typeDoc->SelectedData) . '">';
 	$combo_customer->HTML = '<span id="customer-container' . $rnd1 . '"></span><input type="hidden" name="customer" id="customer' . $rnd1 . '" value="' . html_attr($combo_customer->SelectedData) . '">';
 	$combo_customer->MatchText = '<span id="customer-container-readonly' . $rnd1 . '"></span><input type="hidden" name="customer" id="customer' . $rnd1 . '" value="' . html_attr($combo_customer->SelectedData) . '">';
+	$combo_supplier->HTML = '<span id="supplier-container' . $rnd1 . '"></span><input type="hidden" name="supplier" id="supplier' . $rnd1 . '" value="' . html_attr($combo_supplier->SelectedData) . '">';
+	$combo_supplier->MatchText = '<span id="supplier-container-readonly' . $rnd1 . '"></span><input type="hidden" name="supplier" id="supplier' . $rnd1 . '" value="' . html_attr($combo_supplier->SelectedData) . '">';
 	$combo_employee->HTML = '<span id="employee-container' . $rnd1 . '"></span><input type="hidden" name="employee" id="employee' . $rnd1 . '" value="' . html_attr($combo_employee->SelectedData) . '">';
 	$combo_employee->MatchText = '<span id="employee-container-readonly' . $rnd1 . '"></span><input type="hidden" name="employee" id="employee' . $rnd1 . '" value="' . html_attr($combo_employee->SelectedData) . '">';
 	$combo_shipVia->HTML = '<span id="shipVia-container' . $rnd1 . '"></span><input type="hidden" name="shipVia" id="shipVia' . $rnd1 . '" value="' . html_attr($combo_shipVia->SelectedData) . '">';
@@ -479,6 +490,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		AppGini.current_company__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['company'] : $filterer_company); ?>"};
 		AppGini.current_typeDoc__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['typeDoc'] : $filterer_typeDoc); ?>"};
 		AppGini.current_customer__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['customer'] : $filterer_customer); ?>"};
+		AppGini.current_supplier__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['supplier'] : $filterer_supplier); ?>"};
 		AppGini.current_employee__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['employee'] : $filterer_employee); ?>"};
 		AppGini.current_shipVia__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['shipVia'] : $filterer_shipVia); ?>"};
 
@@ -488,6 +500,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 				if(typeof(company_reload__RAND__) == 'function') company_reload__RAND__();
 				if(typeof(typeDoc_reload__RAND__) == 'function') typeDoc_reload__RAND__();
 				if(typeof(customer_reload__RAND__) == 'function') customer_reload__RAND__();
+				if(typeof(supplier_reload__RAND__) == 'function') supplier_reload__RAND__();
 				if(typeof(employee_reload__RAND__) == 'function') employee_reload__RAND__();
 				if(typeof(shipVia_reload__RAND__) == 'function') shipVia_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
@@ -800,6 +813,83 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		<?php } ?>
 
 		}
+		function supplier_reload__RAND__(){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			$j("#supplier-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					$j.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: AppGini.current_supplier__RAND__.value, t: 'orders', f: 'supplier' },
+						success: function(resp){
+							c({
+								id: resp.results[0].id,
+								text: resp.results[0].text
+							});
+							$j('[name="supplier"]').val(resp.results[0].id);
+							$j('[id=supplier-container-readonly__RAND__]').html('<span id="supplier-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
+
+
+							if(typeof(supplier_update_autofills__RAND__) == 'function') supplier_update_autofills__RAND__();
+						}
+					});
+				},
+				width: '100%',
+				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 10,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ /* */ return { s: term, p: page, t: 'orders', f: 'supplier' }; },
+					results: function(resp, page){ /* */ return resp; }
+				},
+				escapeMarkup: function(str){ /* */ return str; }
+			}).on('change', function(e){
+				AppGini.current_supplier__RAND__.value = e.added.id;
+				AppGini.current_supplier__RAND__.text = e.added.text;
+				$j('[name="supplier"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
+
+
+				if(typeof(supplier_update_autofills__RAND__) == 'function') supplier_update_autofills__RAND__();
+			});
+
+			if(!$j("#supplier-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: AppGini.current_supplier__RAND__.value, t: 'orders', f: 'supplier' },
+					success: function(resp){
+						$j('[name="supplier"]').val(resp.results[0].id);
+						$j('[id=supplier-container-readonly__RAND__]').html('<span id="supplier-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
+
+						if(typeof(supplier_update_autofills__RAND__) == 'function') supplier_update_autofills__RAND__();
+					}
+				});
+			}
+
+		<?php }else{ ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: AppGini.current_supplier__RAND__.value, t: 'orders', f: 'supplier' },
+				success: function(resp){
+					$j('[id=supplier-container__RAND__], [id=supplier-container-readonly__RAND__]').html('<span id="supplier-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
+
+					if(typeof(supplier_update_autofills__RAND__) == 'function') supplier_update_autofills__RAND__();
+				}
+			});
+		<?php } ?>
+
+		}
 		function employee_reload__RAND__(){
 		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
 
@@ -1015,6 +1105,8 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		$jsReadOnly .= "\tjQuery('#multiOrder').replaceWith('<div class=\"form-control-static\" id=\"multiOrder\">' + (jQuery('#multiOrder').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#customer').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#customer_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+		$jsReadOnly .= "\tjQuery('#supplier').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#supplier_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#date').prop('readonly', true);\n";
 		$jsReadOnly .= "\tjQuery('#dateDay, #dateMonth, #dateYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#shippedDate').prop('readonly', true);\n";
@@ -1056,6 +1148,9 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$templateCode = str_replace('<%%COMBO(customer)%%>', $combo_customer->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(customer)%%>', $combo_customer->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(customer)%%>', urlencode($combo_customer->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(supplier)%%>', $combo_supplier->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(supplier)%%>', $combo_supplier->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(supplier)%%>', urlencode($combo_supplier->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(employee)%%>', $combo_employee->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(employee)%%>', $combo_employee->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(employee)%%>', urlencode($combo_employee->MatchText), $templateCode);
@@ -1070,7 +1165,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$templateCode = str_replace('<%%URLCOMBOTEXT(shipVia)%%>', urlencode($combo_shipVia->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'kind' => array('kinds', 'Kind'), 'company' => array('companies', 'ID Azienda'), 'typeDoc' => array('kinds', 'Documento'), 'customer' => array('companies', 'Cliente'), 'employee' => array('contacts', 'Impiegato'), 'shipVia' => array('companies', 'Spedizione a mezzo'));
+	$lookup_fields = array(  'kind' => array('kinds', 'Kind'), 'company' => array('companies', 'ID Azienda'), 'typeDoc' => array('kinds', 'Documento'), 'customer' => array('companies', 'Cliente'), 'supplier' => array('companies', 'Supplier'), 'employee' => array('contacts', 'Impiegato'), 'shipVia' => array('companies', 'Spedizione a mezzo'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -1095,6 +1190,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$templateCode = str_replace('<%%UPLOADFILE(typeDoc)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(multiOrder)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(customer)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(supplier)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(employee)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(date)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(requiredDate)%%>', '', $templateCode);
@@ -1141,6 +1237,9 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(customer)%%>', safe_html($urow['customer']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(customer)%%>', html_attr($row['customer']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(customer)%%>', urlencode($urow['customer']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(supplier)%%>', safe_html($urow['supplier']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(supplier)%%>', html_attr($row['supplier']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(supplier)%%>', urlencode($urow['supplier']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(employee)%%>', safe_html($urow['employee']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(employee)%%>', html_attr($row['employee']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(employee)%%>', urlencode($urow['employee']), $templateCode);
@@ -1205,8 +1304,10 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		$templateCode = str_replace('<%%URLVALUE(multiOrder)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(customer)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(customer)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(employee)%%>', ( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_employee->SelectedData : ''), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(employee)%%>', urlencode( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_employee->SelectedData : ''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(supplier)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(supplier)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(employee)%%>', ( $_REQUEST['FilterField'][1]=='11' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_employee->SelectedData : ''), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(employee)%%>', urlencode( $_REQUEST['FilterField'][1]=='11' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_employee->SelectedData : ''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(date)%%>', '1', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(date)%%>', urlencode('1'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(requiredDate)%%>', '<%%creationDate%%>', $templateCode);

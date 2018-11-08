@@ -98,10 +98,11 @@
                 if(!function_exists('getNextValue')){
                     include'orders_AJX.php';
                 }
-            
-                $numOrder = getNextValue($data['typeDoc'],$data['company']);
-                if (intval($numOrder) !== intval($data['multiOrder'])){
-                    $data['multiOrder']=$numOrder;
+                if($data['kind'] === 'OUT'){
+                    $numOrder = getNextValue($data['typeDoc'],$data['company']);
+                    if (intval($numOrder) !== intval($data['multiOrder'])){
+                        $data['multiOrder']=$numOrder;
+                    }
                 }
 		return TRUE;
 	}

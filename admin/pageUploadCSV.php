@@ -27,7 +27,7 @@
 
 			/* back link to use in errors */
 			$this->error_back_link = '' .
-				'<div class="text-center vspacer-lg"><a href="' . $this->curr_page . '" class="btn btn-danger ">' .
+				'<div class="text-center vspacer-lg"><a href="' . $this->curr_page . '" class="btn btn-danger btn-lg">' .
 					'<i class="glyphicon glyphicon-chevron-left"></i> ' .
 					$this->lang['back and retry'] .
 				'</a></div>';
@@ -111,14 +111,14 @@
 							<h3 class="panel-title"><i class="glyphicon glyphicon-upload hspacer-md"></i><?php echo "<b>{$this->lang['step 2']}</b> {$this->lang['upload or choose csv file']}"; ?></h3>
 						</div>
 						<div class="panel-body">
-							<label for="upload_csv" class="btn btn-primary ">
+							<label for="upload_csv" class="btn btn-primary btn-lg">
 								<i class="glyphicon glyphicon-upload"></i> &nbsp;<?php echo $this->lang['choose csv upload']; ?>
 							</label>
 
 							<span class="hspacer-lg"></span>
 							<span id="csv_file_name"><?php echo $this->lang['no file chosen yet']; ?></span>
 							<input type="file" name="upload_csv" id="upload_csv" accept=".csv, text/csv">
-							<button type="submit" class="btn btn-success  hspacer-lg hidden" id="start_upload"><i class="glyphicon glyphicon-upload"></i> <?php echo $this->lang['start upload']; ?></button>
+							<button type="submit" class="btn btn-success btn-lg hspacer-lg hidden" id="start_upload"><i class="glyphicon glyphicon-upload"></i> <?php echo $this->lang['start upload']; ?></button>
 
 							<?php if(count($csv_files)){ ?>
 								<hr>
@@ -558,10 +558,10 @@
 
 								<div class="row">
 									<div class="col-sm-4 col-sm-offset-4">
-										<button class="btn btn-warning  btn-block" type="button" id="reset-settings"><i class="glyphicon glyphicon-repeat"></i> <?php echo $this->lang['reset']; ?></button>
+										<button class="btn btn-warning btn-lg btn-block" type="button" id="reset-settings"><i class="glyphicon glyphicon-repeat"></i> <?php echo $this->lang['reset']; ?></button>
 									</div>
 									<div class="col-sm-4">
-										<button class="btn btn-info  btn-block" type="button" id="apply-settings"><i class="glyphicon glyphicon-ok"></i> <?php echo $this->lang['ok']; ?></button>
+										<button class="btn btn-info btn-lg btn-block" type="button" id="apply-settings"><i class="glyphicon glyphicon-ok"></i> <?php echo $this->lang['ok']; ?></button>
 									</div>
 								</div>
 							</form>
@@ -587,7 +587,7 @@
 			<div class="row">
 				<div class="col-sm-offset-7 col-sm-5 col-md-offset-8 col-md-4 col-lg-offset-9 col-lg-3">
 					<b class="text-danger hidden" id="mappings-warning"><i class="glyphicon glyphicon-info-sign"></i> <?php echo $this->lang['no columns selected']; ?></b>
-					<button type="button" class="hidden btn btn-primary  btn-block" id="start-import"><i class="glyphicon glyphicon-ok"></i> <?php echo $this->lang['import CSV']; ?></button>
+					<button type="button" class="hidden btn btn-primary btn-lg btn-block" id="start-import"><i class="glyphicon glyphicon-ok"></i> <?php echo $this->lang['import CSV']; ?></button>
 				</div>
 			</div>
 
@@ -1292,7 +1292,7 @@
 
 			<div id="next-action" class="hidden row">
 				<div class="col-lg-offset-8 col-lg-4 col-md-offset-6 col-md-6 col-sm-offset-2 col-sm-8">
-					<a href="pageAssignOwners.php" class="btn btn-success  btn-block"><i class="glyphicon glyphicon-user"></i> <?php echo "{$this->lang['next']}: {$this->lang['assign a records owner']}"; ?></a>
+					<a href="pageAssignOwners.php" class="btn btn-success btn-lg btn-block"><i class="glyphicon glyphicon-user"></i> <?php echo "{$this->lang['next']}: {$this->lang['assign a records owner']}"; ?></a>
 				</div>
 			</div>
 

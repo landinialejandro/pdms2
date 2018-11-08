@@ -319,8 +319,8 @@
 	<div class="form-group">
 		<label class="col-sm-4 col-md-3 col-lg-2 col-lg-offset-2 control-label"></label>
 		<div class="col-sm-8 col-md-9 col-lg-6">
-			<button type="submit" name="saveChanges" value="1" onclick="return jsValidateAdminSettings();" class="btn btn-primary "><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation['save changes']; ?></button>
-			<a href="pageSettings.php" class="btn btn-warning  hspacer-md"><i class="glyphicon glyphicon-remove"></i> <?php echo $Translation['cancel']; ?></a>
+			<button type="submit" name="saveChanges" value="1" onclick="return jsValidateAdminSettings();" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation['save changes']; ?></button>
+			<a href="pageSettings.php" class="btn btn-warning btn-lg hspacer-md"><i class="glyphicon glyphicon-remove"></i> <?php echo $Translation['cancel']; ?></a>
 		</div>
 	</div>
 

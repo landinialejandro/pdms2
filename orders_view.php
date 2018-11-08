@@ -31,11 +31,12 @@
 		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Documento */" => "typeDoc",
 		"`orders`.`multiOrder`" => "multiOrder",
 		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Cliente */" => "customer",
+		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Supplier */" => "supplier",
 		"IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') /* Impiegato */" => "employee",
 		"if(`orders`.`date`,date_format(`orders`.`date`,'%d/%m/%Y'),'')" => "date",
 		"if(`orders`.`requiredDate`,date_format(`orders`.`requiredDate`,'%d/%m/%Y'),'')" => "requiredDate",
 		"if(`orders`.`shippedDate`,date_format(`orders`.`shippedDate`,'%d/%m/%Y'),'')" => "shippedDate",
-		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Spedizione a mezzo */" => "shipVia",
+		"IF(    CHAR_LENGTH(`companies4`.`companyName`), CONCAT_WS('',   `companies4`.`companyName`), '') /* Spedizione a mezzo */" => "shipVia",
 		"`orders`.`Freight`" => "Freight",
 		"`orders`.`pallets`" => "pallets",
 		"if(CHAR_LENGTH(`orders`.`licencePlate`)>100, concat(left(`orders`.`licencePlate`,100),' ...'), `orders`.`licencePlate`)" => "licencePlate",
@@ -60,23 +61,24 @@
 		7 => 7,
 		8 => '`orders`.`multiOrder`',
 		9 => '`companies2`.`companyName`',
-		10 => '`contacts1`.`name`',
-		11 => '`orders`.`date`',
-		12 => '`orders`.`requiredDate`',
-		13 => '`orders`.`shippedDate`',
-		14 => '`companies3`.`companyName`',
-		15 => '`orders`.`Freight`',
-		16 => '`orders`.`pallets`',
-		17 => 17,
-		18 => '`orders`.`orderTotal`',
-		19 => 19,
-		20 => '`orders`.`trust`',
-		21 => '`orders`.`overdraft`',
-		22 => '`orders`.`commisionFee`',
-		23 => '`orders`.`consigneeHour`',
-		24 => 24,
-		25 => '`orders`.`related`',
-		26 => 26
+		10 => '`companies3`.`companyName`',
+		11 => '`contacts1`.`name`',
+		12 => '`orders`.`date`',
+		13 => '`orders`.`requiredDate`',
+		14 => '`orders`.`shippedDate`',
+		15 => '`companies4`.`companyName`',
+		16 => '`orders`.`Freight`',
+		17 => '`orders`.`pallets`',
+		18 => 18,
+		19 => '`orders`.`orderTotal`',
+		20 => 20,
+		21 => '`orders`.`trust`',
+		22 => '`orders`.`overdraft`',
+		23 => '`orders`.`commisionFee`',
+		24 => '`orders`.`consigneeHour`',
+		25 => 25,
+		26 => '`orders`.`related`',
+		27 => 27
 	);
 
 	// Fields that can be displayed in the csv file
@@ -90,11 +92,12 @@
 		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Documento */" => "typeDoc",
 		"`orders`.`multiOrder`" => "multiOrder",
 		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Cliente */" => "customer",
+		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Supplier */" => "supplier",
 		"IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') /* Impiegato */" => "employee",
 		"if(`orders`.`date`,date_format(`orders`.`date`,'%d/%m/%Y'),'')" => "date",
 		"if(`orders`.`requiredDate`,date_format(`orders`.`requiredDate`,'%d/%m/%Y'),'')" => "requiredDate",
 		"if(`orders`.`shippedDate`,date_format(`orders`.`shippedDate`,'%d/%m/%Y'),'')" => "shippedDate",
-		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Spedizione a mezzo */" => "shipVia",
+		"IF(    CHAR_LENGTH(`companies4`.`companyName`), CONCAT_WS('',   `companies4`.`companyName`), '') /* Spedizione a mezzo */" => "shipVia",
 		"`orders`.`Freight`" => "Freight",
 		"`orders`.`pallets`" => "pallets",
 		"`orders`.`licencePlate`" => "licencePlate",
@@ -119,11 +122,12 @@
 		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Documento */" => "Documento",
 		"`orders`.`multiOrder`" => "Numero",
 		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Cliente */" => "Cliente",
+		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Supplier */" => "Supplier",
 		"IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') /* Impiegato */" => "Impiegato",
 		"`orders`.`date`" => "Data Ordine",
 		"`orders`.`requiredDate`" => "Data dell\'ordine",
 		"`orders`.`shippedDate`" => "Data di spedizione",
-		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Spedizione a mezzo */" => "Spedizione a mezzo",
+		"IF(    CHAR_LENGTH(`companies4`.`companyName`), CONCAT_WS('',   `companies4`.`companyName`), '') /* Spedizione a mezzo */" => "Spedizione a mezzo",
 		"`orders`.`Freight`" => "Nolo",
 		"`orders`.`pallets`" => "Pallets",
 		"`orders`.`licencePlate`" => "Targa Automezzo",
@@ -149,11 +153,12 @@
 		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Documento */" => "typeDoc",
 		"`orders`.`multiOrder`" => "multiOrder",
 		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Cliente */" => "customer",
+		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Supplier */" => "supplier",
 		"IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') /* Impiegato */" => "employee",
 		"if(`orders`.`date`,date_format(`orders`.`date`,'%d/%m/%Y'),'')" => "date",
 		"if(`orders`.`requiredDate`,date_format(`orders`.`requiredDate`,'%d/%m/%Y'),'')" => "requiredDate",
 		"if(`orders`.`shippedDate`,date_format(`orders`.`shippedDate`,'%d/%m/%Y'),'')" => "shippedDate",
-		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Spedizione a mezzo */" => "shipVia",
+		"IF(    CHAR_LENGTH(`companies4`.`companyName`), CONCAT_WS('',   `companies4`.`companyName`), '') /* Spedizione a mezzo */" => "shipVia",
 		"`orders`.`Freight`" => "Freight",
 		"`orders`.`pallets`" => "pallets",
 		"`orders`.`licencePlate`" => "Targa Automezzo",
@@ -169,9 +174,9 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'kind' => 'Kind', 'company' => 'ID Azienda', 'typeDoc' => 'Documento', 'customer' => 'Cliente', 'employee' => 'Impiegato', 'shipVia' => 'Spedizione a mezzo');
+	$x->filterers = array(  'kind' => 'Kind', 'company' => 'ID Azienda', 'typeDoc' => 'Documento', 'customer' => 'Cliente', 'supplier' => 'Supplier', 'employee' => 'Impiegato', 'shipVia' => 'Spedizione a mezzo');
 
-	$x->QueryFrom = "`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`orders`.`employee` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`shipVia` ";
+	$x->QueryFrom = "`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`supplier` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`orders`.`employee` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`orders`.`shipVia` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -200,10 +205,10 @@
 	$x->DefaultSortField = '1';
 	$x->DefaultSortDirection = 'desc';
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Kind", "ID Azienda", "Documento", "Numero", "Cliente", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Fido Cliente", "Scoperto Cliente", "Provvigione su ordine", "Ora di consegna", "Luogo consegna");
-	$x->ColFieldName = array('kind', 'company', 'typeDoc', 'multiOrder', 'customer', 'date', 'shippedDate', 'shipVia', 'pallets', 'licencePlate', 'orderTotal', 'cashCredit', 'trust', 'overdraft', 'commisionFee', 'consigneeHour', 'consigneePlace');
-	$x->ColNumber  = array(2, 6, 7, 8, 9, 11, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24);
+	$x->ColWidth   = array(  150, 150, 150, 150, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Kind", "ID Azienda", "Documento", "Numero", "Cliente", "Supplier", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Fido Cliente", "Scoperto Cliente", "Provvigione su ordine", "Ora di consegna", "Luogo consegna");
+	$x->ColFieldName = array('kind', 'company', 'typeDoc', 'multiOrder', 'customer', 'supplier', 'date', 'shippedDate', 'shipVia', 'pallets', 'licencePlate', 'orderTotal', 'cashCredit', 'trust', 'overdraft', 'commisionFee', 'consigneeHour', 'consigneePlace');
+	$x->ColNumber  = array(2, 6, 7, 8, 9, 10, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/orders_templateTV.html';
@@ -269,6 +274,7 @@
 			$sumRow .= '<td class="orders-typeDoc"></td>';
 			$sumRow .= '<td class="orders-multiOrder"></td>';
 			$sumRow .= '<td class="orders-customer"></td>';
+			$sumRow .= '<td class="orders-supplier"></td>';
 			$sumRow .= '<td class="orders-date"></td>';
 			$sumRow .= '<td class="orders-shippedDate"></td>';
 			$sumRow .= '<td class="orders-shipVia"></td>';

@@ -78,7 +78,7 @@ function getNumbers(inputString){
 
 function showCard(field, dest, cmd){
     //field = field to get the ID from
-    //dest = where to put the html result
+    //dest = ID where to put the html result
     //cmd = comand for ajax and ajax file name
     var Data = $j('#' + field + '-container').select2("data");
     var id = parseInt(Data.id) || 0;

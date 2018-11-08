@@ -144,7 +144,7 @@
 			?>
 		</div>
 
-		<a href="pageTransferOwnership.php" class="btn btn-default  vspacer-lg"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $Translation['batch transfer']; ?></a>
+		<a href="pageTransferOwnership.php" class="btn btn-default btn-lg vspacer-lg"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $Translation['batch transfer']; ?></a>
 
 		<?php
 
@@ -360,7 +360,7 @@
 	<?php if($destinationGroupID){ ?>
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-				<button type="submit" name="beginTransfer" value="1" class="btn  btn-success btn-block" onClick="return jsConfirmTransfer();">
+				<button type="submit" name="beginTransfer" value="1" class="btn btn-lg btn-success btn-block" onClick="return jsConfirmTransfer();">
 					<i class="glyphicon glyphicon-ok"></i> 
 					<?php echo $Translation['begin transfer']; ?>
 				</button>

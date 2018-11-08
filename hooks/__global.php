@@ -1,21 +1,23 @@
 <?php
+	// For help on using hooks, please refer to https://bigprof.com/appgini/help/working-with-generated-web-database-application/hooks
 
 	function login_ok($memberInfo, &$args){
-                $sql = file_get_contents('hooks/SQL_defaultsCompanies.sql');
-                $qr = sql($sql,$eo);
-                $sql = file_get_contents('hooks/SQL_companiesAddresses.sql');
-                $qr = sql($sql,$eo);
-                $sql = file_get_contents('hooks/SQL_resumeOrders.sql');
-                $qr = sql($sql,$eo);
-                $sql = file_get_contents('hooks/SQL_ordersDetails.sql');
-                $qr = sql($sql,$eo);
-                $sql = file_get_contents('hooks/SQL_customersCredit.sql');
-                $qr = sql($sql,$eo);
-                $sql = file_get_contents('hooks/SQL_productsStock.sql');
-                $qr = sql($sql,$eo);
+            
+            $views = array(
+                'hooks/SQL_defaultsCompanies.sql',
+                'hooks/SQL_companiesAddresses.sql',
+                'hooks/SQL_resumeOrders.sql',
+                'hooks/SQL_ordersDetails.sql',
+                'hooks/SQL_customersCredit.sql',
+                'hooks/SQL_productsStock.sql'
+            );
+            
+            foreach ($views as $sql){
+                        $res = sql(file_get_contents($sql),$eo);
+            }
+            
 		return '';
 	}
-
 
 	function login_failed($attempt, &$args){
 

@@ -57,6 +57,13 @@
                                                 </div>
                                         </div>
 
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="customer" class="control-label col-lg-3" data-parent_link="view_parent_modal">Cliente</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(customer)%%><%%PLINK(customer)%%><%%ADDNEW(companies)%%></div>
+					</div>
+				</div>
 
                                         <div class="form-group">
                                                 <label for="date" class="control-label col-lg-2">Data</label>
@@ -130,7 +137,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="licencePlate" class="control-label col-lg-3">Targa Automezzo</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="licencePlate" id="licencePlate" value="<%%VALUE(licencePlate)%%>">
+						<input maxlength="255" type="text" class="form-control" name="licencePlate" id="licencePlate" value="<%%VALUE(licencePlate)%%>">
 					</div>
 				</div>
 

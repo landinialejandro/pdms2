@@ -15,6 +15,7 @@ include("$cardDir/../language.php");
 include("$cardDir/../lib.php");
 include("$cardDir/../myLib.php");
 
+setlocale(LC_MONETARY, 'it_IT');
 /* grant access to all users who have access to the companies table */
 $table_name = 'companies';
 $table_from = get_sql_from($table_name);
@@ -99,9 +100,9 @@ ob_start();
                     </div>
                 <?php 
                 } 
-                if ($databar['overdraft'] > 0){
+                if ($databar['overdraft'] ){
                 ?>
-                overdraft: <?php echo $databar['overdraft']; ?>
+                    scoperto: <?php echo money_format("%.2n",$databar['overdraft']); ?>
                 <?php
                 }
           ?>
