@@ -23,7 +23,7 @@ require "$currDir/vendor/autoload.php";
 
 /* get order ID */
 $order_id = intval($_REQUEST['OrderID']);
-if(!$order_id) exit(error_message('Invalid order ID!', false));
+if(!$order_id) {exit(error_message('Invalid order ID!', false));}
 
 /* retrieve order info */
 ///////////////////////////
@@ -66,7 +66,6 @@ $filename = $company['companyCode']."_".$docCategorie_id."#".$order['multiOrder'
 
 // shipper via
 
-
 /* retrieve order items */
 ///////////////////////////
 $item_fields = get_sql_fields('ordersDetails');
@@ -75,7 +74,7 @@ $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$
 ///////////////////////////
 
 ob_start();
-include_once("$currDir/header.php");
+include_once("$currDir/header_old.php");
 ?>
 <!-- insert HTML code table version-->
 <!-- MultyCompy data-->
