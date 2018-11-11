@@ -1,0 +1,13 @@
+{
+    "name": "vendor/pdms2",
+    "description": "Description of project pdms2.",
+    "authors": [
+        {
+            "name": "ale",
+            "email": "your@email.here"
+        }
+    ],
+    "require": {
+        "mpdf/mpdf": "dev-master"
+    }
+}
