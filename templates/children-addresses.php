@@ -96,6 +96,32 @@
 
 		<div class="table-responsive">
 			<table class="table table-striped table-hover table-condensed table-bordered">
+				<thead>
+					<tr>
+						<?php if($config['open-detail-view-on-click']){ ?>
+							<th>&nbsp;</th>
+						<?php } ?>
+						<?php if(is_array($config['display-fields'])) foreach($config['display-fields'] as $fieldIndex => $fieldLabel){ ?>
+							<th 
+								<?php if($config['sortable-fields'][$fieldIndex]){ ?>
+									onclick="<?php echo $current_table; ?>GetChildrenRecordsList({
+										Verb: 'sort', 
+										SortBy: <?php echo $fieldIndex; ?>, 
+										SortDirection: '<?php echo ($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'asc' ? 'desc' : 'asc'); ?>'
+									});" 
+									style="cursor: pointer;" 
+								<?php } ?>
+								class="<?php echo "{$current_table}-{$config['display-field-names'][$fieldIndex]}"; ?>">
+								<?php echo $fieldLabel; ?>
+								<?php if($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'desc'){ ?>
+									<i class="glyphicon glyphicon-sort-by-attributes-alt text-warning"></i>
+								<?php }elseif($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'asc'){ ?>
+									<i class="glyphicon glyphicon-sort-by-attributes text-warning"></i>
+								<?php } ?>
+							</th>
+						<?php } ?>
+					</tr>
+				</thead>
 				<tbody>
 					<?php if(is_array($records)) 
                                             foreach($records as $pkValue => $record){?>

@@ -30,7 +30,7 @@
 		"`firstCashNote`.`revenue`" => "revenue",
 		"`firstCashNote`.`outputs`" => "outputs",
 		"`firstCashNote`.`balance`" => "balance",
-		"`firstCashNote`.`idBank`" => "idBank",
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "idBank",
 		"`firstCashNote`.`bank`" => "bank",
 		"`firstCashNote`.`note`" => "note",
 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
@@ -46,7 +46,7 @@
 		6 => '`firstCashNote`.`revenue`',
 		7 => '`firstCashNote`.`outputs`',
 		8 => '`firstCashNote`.`balance`',
-		9 => '`firstCashNote`.`idBank`',
+		9 => '`companies1`.`companyName`',
 		10 => '`firstCashNote`.`bank`',
 		11 => 11,
 		12 => '`firstCashNote`.`paymentDeadLine`',
@@ -63,7 +63,7 @@
 		"`firstCashNote`.`revenue`" => "revenue",
 		"`firstCashNote`.`outputs`" => "outputs",
 		"`firstCashNote`.`balance`" => "balance",
-		"`firstCashNote`.`idBank`" => "idBank",
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "idBank",
 		"`firstCashNote`.`bank`" => "bank",
 		"`firstCashNote`.`note`" => "note",
 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
@@ -79,7 +79,7 @@
 		"`firstCashNote`.`revenue`" => "Entrate",
 		"`firstCashNote`.`outputs`" => "Uscite",
 		"`firstCashNote`.`balance`" => "Bilancio",
-		"`firstCashNote`.`idBank`" => "IdBank",
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "IdBank",
 		"`firstCashNote`.`bank`" => "Banca",
 		"`firstCashNote`.`note`" => "Note pagamento",
 		"`firstCashNote`.`paymentDeadLine`" => "Pagamento in data",
@@ -96,7 +96,7 @@
 		"`firstCashNote`.`revenue`" => "revenue",
 		"`firstCashNote`.`outputs`" => "outputs",
 		"`firstCashNote`.`balance`" => "balance",
-		"`firstCashNote`.`idBank`" => "idBank",
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "idBank",
 		"`firstCashNote`.`bank`" => "bank",
 		"`firstCashNote`.`note`" => "note",
 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
@@ -104,9 +104,9 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'order' => 'Order');
+	$x->filterers = array(  'order' => 'Order', 'idBank' => 'IdBank');
 
-	$x->QueryFrom = "`firstCashNote` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` ";
+	$x->QueryFrom = "`firstCashNote` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`firstCashNote`.`idBank` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 

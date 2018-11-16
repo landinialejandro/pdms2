@@ -109,7 +109,16 @@
 
 
 	function orders_after_insert($data, $memberInfo, &$args){
-
+            // add prima nota
+            include "firstCashNote_dml.php";
+            $fc['order']=$data['id'];
+            $fc['causal']=$data['kind'];
+            if($data['kind'] === 'OUT'){
+                $fc['outputs']=$data['orderTotal'];
+            }else{
+                $fc['revenue']=$data['orderTotal'];
+            }
+            firstCashNote_insert($fc);
             return TRUE;
 	}
 
