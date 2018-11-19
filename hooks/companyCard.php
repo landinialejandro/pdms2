@@ -111,7 +111,9 @@ ob_start();
 </div>
 <?php } ?>
     <div class="small-box bg-aqua">
-            <small><?php echo 'Last update ?'; ?>  </small>
+            <small><?php 
+            $date = date('j/n/Y', sqlValue("select dateUpdated from membership_userrecords where tableName ='companies' and pkValue='$where_id'"));
+            echo "Last update $date"; ?>  </small>
             <a id="companies_view_parent" pt="companies" myid="<?php echo $where_id; ?>" class="btn btn-sm view_parent" type="button" title="Azienda Details" onclick="showParent(this);" >more info
                 <i class="fa fa-arrow-circle-right"></i>
             </a>

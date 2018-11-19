@@ -1,4 +1,4 @@
-/* global $j */
+/* global $j, autoSet */
 
 //
 // 

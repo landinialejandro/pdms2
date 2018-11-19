@@ -96,34 +96,8 @@
 
 		<div class="table-responsive">
 			<table class="table table-striped table-hover table-condensed table-bordered">
-				<thead>
-					<tr>
-						<?php if($config['open-detail-view-on-click']){ ?>
-							<th>&nbsp;</th>
-						<?php } ?>
-						<?php if(is_array($config['display-fields'])) foreach($config['display-fields'] as $fieldIndex => $fieldLabel){ ?>
-							<th 
-								<?php if($config['sortable-fields'][$fieldIndex]){ ?>
-									onclick="<?php echo $current_table; ?>GetChildrenRecordsList({
-										Verb: 'sort', 
-										SortBy: <?php echo $fieldIndex; ?>, 
-										SortDirection: '<?php echo ($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'asc' ? 'desc' : 'asc'); ?>'
-									});" 
-									style="cursor: pointer;" 
-								<?php } ?>
-								class="<?php echo "{$current_table}-{$config['display-field-names'][$fieldIndex]}"; ?>">
-								<?php echo $fieldLabel; ?>
-								<?php if($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'desc'){ ?>
-									<i class="glyphicon glyphicon-sort-by-attributes-alt text-warning"></i>
-								<?php }elseif($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'asc'){ ?>
-									<i class="glyphicon glyphicon-sort-by-attributes text-warning"></i>
-								<?php } ?>
-							</th>
-						<?php } ?>
-					</tr>
-				</thead>
 				<tbody>
-					<?php if(is_array($records)) 
+					<?php if(is_array($records)) {
                                             foreach($records as $pkValue => $record){?>
 					<tr>
                                                 <?php if(is_array($config['display-fields'])){?>
@@ -133,7 +107,7 @@
 							<?php }else{ ?>
 								<td class="text-center view-on-click"><a href="#" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'open', ChildID: '<?php echo html_attr($record[$config['child-primary-key-index']]); ?>'}); return false;" class="h6"><i class="fa fa-pencil hspacer-md"></i></a></td>
 							<?php } ?>
-						<?php } ?>
+                                                <?php } }?>
                                             <td>
                                                 
                                                 <div id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}-" . html_attr($record[$config['child-primary-key-index']]); ?>" class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}"; ?>" style="margin-bottom: 0px;"><a onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'open', ChildID: '<?php echo html_attr($record[$config['child-primary-key-index']]); ?>'}); return false;" href="#" style="display: block; padding:0px;"><?php echo safe_html($record[1]); ?></a></div>
