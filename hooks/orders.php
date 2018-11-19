@@ -110,15 +110,8 @@
 
 	function orders_after_insert($data, $memberInfo, &$args){
             // add prima nota
-            include "firstCashNote_dml.php";
-            $fc['order']=$data['id'];
-            $fc['causal']=$data['kind'];
-            if($data['kind'] === 'OUT'){
-                $fc['outputs']=$data['orderTotal'];
-            }else{
-                $fc['revenue']=$data['orderTotal'];
-            }
-            firstCashNote_insert($fc);
+            setFirstCash($data);
+            
             return TRUE;
 	}
 
@@ -130,7 +123,7 @@
 
 
 	function orders_after_update($data, $memberInfo, &$args){
-            
+            setFirstCash($data);
 		return TRUE;
 	}
 
@@ -166,7 +159,7 @@
                     $mc_code = sqlValue("select companyCode from companies where id = {$mc_id}");
                     $mc_text = $mc_code . " - " . $mc_name;
                     $dk_id = makeSafe($_REQUEST['dk']);
-                    $dk_name = sqlValue("select name from kinds where code = '{$dk_id}'");
+                    $dk_name = kindName($dk_id);
                     $dk_text = $dk_id . " - " . $dk_name;
                 }
                 ob_start();
@@ -202,3 +195,32 @@
 
 		return array();
 	}
+
+        
+        
+        function setFirstCash($data){
+            $currDir = dirname(__FILE__);
+            if(!function_exists('firstCashNote_update')){
+                include ("$currDir/../firstCashNote_dml.php");
+            }
+            $res = sql("select * from firstCashNote where firstCashNote.`order` = '{$data['id']}' order by id asc limit 1",$eo);
+            $fc = db_fetch_assoc($res);
+            $fc['order']=$data['id'];
+            $descKind=kindName($data['kind']);
+            $fc['causal']= ( $descKind ? $descKind : $data['kind']);
+            
+            if($data['kind'] === 'IN'){
+                $fc['outputs']=$data['orderTotal'];
+            }else{
+                $fc['revenue']=$data['orderTotal'];
+            }
+            
+            if ($res->lengths){
+                //update fc
+                firstCashNote_update($fc['id'],$fc);
+            }else{
+                //new fcNote
+                firstCashNote_insert($fc);
+            }
+            return;
+        }

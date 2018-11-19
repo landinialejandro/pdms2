@@ -13,7 +13,6 @@ $cardDir = dirname(__FILE__);
 include("$cardDir/../defaultLang.php");
 include("$cardDir/../language.php");
 include("$cardDir/../lib.php");
-include("$cardDir/../myLib.php");
 
 setlocale(LC_MONETARY, 'it_IT');
 /* grant access to all users who have access to the companies table */

@@ -13,7 +13,6 @@ $currDir = dirname(__FILE__);
 include("$currDir/defaultLang.php");
 include("$currDir/language.php");
 include("$currDir/lib.php");
-include("$currDir/myLib.php");
 //if(function_exists('orders_before_insert')){
     include_once("$currDir/hooks/orders.php");
 //}

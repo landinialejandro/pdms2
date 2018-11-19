@@ -23,7 +23,7 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
 		"`firstCashNote`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') /* Order */" => "order",
+		"IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') /* Order */" => "order",
 		"if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'')" => "operationDate",
 		"`firstCashNote`.`documentNumber`" => "documentNumber",
 		"`firstCashNote`.`causal`" => "causal",
@@ -39,7 +39,7 @@
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
 		1 => '`firstCashNote`.`id`',
-		2 => '`orders1`.`id`',
+		2 => '`orders1`.`multiOrder`',
 		3 => '`firstCashNote`.`operationDate`',
 		4 => '`firstCashNote`.`documentNumber`',
 		5 => 5,
@@ -56,7 +56,7 @@
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
 		"`firstCashNote`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') /* Order */" => "order",
+		"IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') /* Order */" => "order",
 		"if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'')" => "operationDate",
 		"`firstCashNote`.`documentNumber`" => "documentNumber",
 		"`firstCashNote`.`causal`" => "causal",
@@ -72,7 +72,7 @@
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
 		"`firstCashNote`.`id`" => "ID",
-		"IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') /* Order */" => "Order",
+		"IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') /* Order */" => "Order",
 		"`firstCashNote`.`operationDate`" => "Data operazione",
 		"`firstCashNote`.`documentNumber`" => "Numero ordine",
 		"`firstCashNote`.`causal`" => "Causale",
@@ -89,7 +89,7 @@
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
 		"`firstCashNote`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') /* Order */" => "order",
+		"IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') /* Order */" => "order",
 		"if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'')" => "operationDate",
 		"`firstCashNote`.`documentNumber`" => "documentNumber",
 		"`firstCashNote`.`causal`" => "causal",

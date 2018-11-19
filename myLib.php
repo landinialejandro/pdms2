@@ -68,3 +68,7 @@ function dataBar($id){
     }
     return $ret;
 }
+
+function kindName($code){
+    return makeSafe(sqlValue("select name from kinds where code = '{$code}'"));
+}

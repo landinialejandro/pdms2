@@ -145,12 +145,13 @@
                     dataType: 'text', //json,text,html
                     url: './hooks/ordersDetails_AJX.php',
                     cache: 'false',
-                    data: {action: 'fastDel',id: IdChaild}
+                    data: {action: 'fastDel', id: IdChaild, IDorder:"<?php echo addslashes($parameters['SelectedID']); ?>" }
                 })
                         .done(function (msg) {
                             //function at response
                     ActualizaValorTotal();
                     <?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'reload' });
+                    firstCashNoteOrderGetRecords({ Verb: 'reload' });
                 });
                 
             }else{
@@ -158,7 +159,7 @@
             }
             return;
         }
-        function ActualizaValorTotal(){
+        function ActualizaValorTotal(){//only view
                     $j.ajax({
                         method: 'post', //post, get
                         dataType: 'html', //json,text,html
@@ -176,6 +177,7 @@
                             var sumRows = msg;
                             sumRows = parseFloat(sumRows).toFixed(2);
                             $j('#orderTotal').val(sumRows);
+                            firstCashNoteOrderGetRecords({ Verb: 'reload' });
                         }, 1000);
                     });
                     

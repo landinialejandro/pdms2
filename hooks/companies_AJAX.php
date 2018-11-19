@@ -1,7 +1,6 @@
 <?php
 header('Content-type: application/json');
 $currDir = dirname(__FILE__);
-include("$currDir/../myLib.php");
 include("$currDir/../lib.php");
 
 if(isset($_REQUEST['cmd']) && isset($_REQUEST['id'])){

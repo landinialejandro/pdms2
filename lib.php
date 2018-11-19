@@ -36,6 +36,7 @@ include("$currDir/ci_input.php");
 include("$currDir/datalist.php");
 include("$currDir/incCommon.php");
 include("$currDir/admin/incFunctions.php");
+include("$currDir/myLib.php");
 
 	ob_start();
 

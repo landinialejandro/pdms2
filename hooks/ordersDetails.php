@@ -82,10 +82,10 @@
 
 	function ordersDetails_after_insert($data, $memberInfo, &$args){
                 // get tot to order
-            if(!function_exists('getTotdetails')){
+                if(!function_exists('setTotalOrder')){
                     include'ordersDetails_AJX.php';
                 }
-                sql("UPDATE orders SET OrderTotal = '" . floatval(getTotdetails($data)) . "' WHERE id = {$data['order']}",$eo);
+                setTotalOrder($data['order']);
             
 		return TRUE;
 	}
@@ -98,11 +98,11 @@
 
 
 	function ordersDetails_after_update($data, $memberInfo, &$args){
-                // get tot to order 
-            if(!function_exists('getTotdetails')){
+                // set tot to order 
+                if(!function_exists('setTotalOrder')){
                     include'ordersDetails_AJX.php';
                 }
-                sql("UPDATE orders SET OrderTotal = '" . floatval(getTotdetails($data)) . "' WHERE id = {$data['order']}",$eo);
+                setTotalOrder($data['order']);
 
 		return TRUE;
 	}

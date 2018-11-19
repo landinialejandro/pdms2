@@ -29,13 +29,14 @@ function processRequest($cmd, $id, $cant, $order){
         $ret = getTotOrder($parameters, $id);
     }
     if ($cmd === 'fastDel'){
-        $ret = fastDel($id);
+        $ret = fastDel($id,$order);
     }
     
     return $ret;
 }
 
 function fastAdd($id, $cant, $order){
+    //$order = idfrom orders
     $statment="select sellPrice from products where id = '$id'";
     $unitPrice = sqlValue($statment);
     $statment="select kinds.`value` from products left join kinds on kinds.code = products.`tax` where products.id = '$id'";
@@ -47,14 +48,30 @@ function fastAdd($id, $cant, $order){
     $val = $imponibile+$imposta;
     $statment = "insert into ordersDetails SET ordersDetails.manufactureDate = '$today', ordersDetails.sellDate = '$today', ordersDetails.order = '$order', productCode = '$id', QuantityReal = '$cant', taxes = '$imposta', UnitPrice = '$unitPrice', Subtotal = '$imponibile', LineTotal = '$val', transaction_type = 'Outgoing' ";
     $ret = sql($statment,$eo);
+    
+    //update tot order
+    setTotalOrder($order);
     return $ret;
 }
 
-function getTotdetails($data){
+function setTotalOrder($order){
+    $currDir = dirname(__FILE__);
     $parameters['ChildTable'] = 'ordersDetails';
-    $parameters['SelectedID'] = $data['order'];
+    $parameters['SelectedID'] = $order;
     $parameters['ChildLookupField'] = 'order';
-    $tot = getTotOrder($parameters,'LineTotal');
+    $tot = floatval(getTotOrder($parameters,'LineTotal'));
+    sql("UPDATE orders SET OrderTotal = '{$tot}' WHERE id = {$order}",$eo);
+    
+    if(!function_exists('orders_after_update')){
+        include("$currDir/orders.php");
+    }
+    $res = sql("select * from orders where id = {$order}",$eo);
+    $data = db_fetch_assoc($res);
+    if ($data){
+        $memberInfo = getMemberInfo();
+        orders_after_update($data,$memberInfo,$args);
+    }
+    
     return $tot;
 }
         
@@ -63,8 +80,9 @@ function getTotOrder($parameters,$fieldToSUM){
     $res= sqlValue($sumQuery);
     return $res;
 }
-function fastDel($id){
+function fastDel($id, $order){
     $statment="delete from ordersDetails where id = '$id'";
     $res=sql($statment,$eo);
+    setTotalOrder($order);
     return $res;
 }       
