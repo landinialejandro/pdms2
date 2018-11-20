@@ -143,28 +143,28 @@ function firstCashNote_dataRequest($request=false){
         if (!$request){
             $request=$_REQUEST;
         }
-        $data['order'] = makeSafe($request['order']);
-                if($data['order'] == empty_lookup_value){ $data['order'] = ''; }
-        $data['operationDate'] = intval($request['operationDateYear']) . '-' . intval($_REQUEST['operationDateMonth']) . '-' . intval($_REQUEST['operationDateDay']);
-        $data['operationDate'] = parseMySQLDate($data['operationDate'], '<%%creationDate%%>');
-        $data['documentNumber'] = makeSafe($request['documentNumber']);
-                if($data['documentNumber'] == empty_lookup_value){ $data['documentNumber'] = ''; }
-        $data['causal'] = br2nl(makeSafe($request['causal']));
-        $data['revenue'] = makeSafe($request['revenue']);
-                if($data['revenue'] == empty_lookup_value){ $data['revenue'] = ''; }
-        $data['outputs'] = makeSafe($request['outputs']);
-                if($data['outputs'] == empty_lookup_value){ $data['outputs'] = ''; }
-        $data['balance'] = makeSafe($request['balance']);
-                if($data['balance'] == empty_lookup_value){ $data['balance'] = ''; }
-        $data['idBank'] = makeSafe($request['idBank']);
-                if($data['idBank'] == empty_lookup_value){ $data['idBank'] = ''; }
-        $data['bank'] = makeSafe($request['bank']);
-                if($data['bank'] == empty_lookup_value){ $data['bank'] = ''; }
-        $data['note'] = br2nl(makeSafe($request['note']));
-        $data['paymentDeadLine'] = intval($request['paymentDeadLineYear']) . '-' . intval($_REQUEST['paymentDeadLineMonth']) . '-' . intval($_REQUEST['paymentDeadLineDay']);
-        $data['paymentDeadLine'] = parseMySQLDate($data['paymentDeadLine'], '<%%creationDate%%>');
-        $data['payed'] = makeSafe($request['payed']);
-                if($data['payed'] == empty_lookup_value){ $data['payed'] = ''; }
+	$data['order'] = makeSafe($_REQUEST['order']);
+		if($data['order'] == empty_lookup_value){ $data['order'] = ''; }
+	$data['operationDate'] = intval($_REQUEST['operationDateYear']) . '-' . intval($_REQUEST['operationDateMonth']) . '-' . intval($_REQUEST['operationDateDay']);
+	$data['operationDate'] = parseMySQLDate($data['operationDate'], '<%%creationDate%%>');
+	$data['documentNumber'] = makeSafe($_REQUEST['documentNumber']);
+		if($data['documentNumber'] == empty_lookup_value){ $data['documentNumber'] = ''; }
+	$data['causal'] = br2nl(makeSafe($_REQUEST['causal']));
+	$data['revenue'] = makeSafe($_REQUEST['revenue']);
+		if($data['revenue'] == empty_lookup_value){ $data['revenue'] = ''; }
+	$data['outputs'] = makeSafe($_REQUEST['outputs']);
+		if($data['outputs'] == empty_lookup_value){ $data['outputs'] = ''; }
+	$data['balance'] = makeSafe($_REQUEST['balance']);
+		if($data['balance'] == empty_lookup_value){ $data['balance'] = ''; }
+	$data['idBank'] = makeSafe($_REQUEST['idBank']);
+		if($data['idBank'] == empty_lookup_value){ $data['idBank'] = ''; }
+	$data['bank'] = makeSafe($_REQUEST['idBank']);
+		if($data['bank'] == empty_lookup_value){ $data['bank'] = ''; }
+	$data['note'] = br2nl(makeSafe($_REQUEST['note']));
+	$data['paymentDeadLine'] = intval($_REQUEST['paymentDeadLineYear']) . '-' . intval($_REQUEST['paymentDeadLineMonth']) . '-' . intval($_REQUEST['paymentDeadLineDay']);
+	$data['paymentDeadLine'] = parseMySQLDate($data['paymentDeadLine'], '<%%creationDate%%>');
+	$data['payed'] = makeSafe($_REQUEST['payed']);
+		if($data['payed'] == empty_lookup_value){ $data['payed'] = ''; }
         
         return $data;
 }
@@ -494,7 +494,6 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$jsReadOnly .= "\tjQuery('#balance').replaceWith('<div class=\"form-control-static\" id=\"balance\">' + (jQuery('#balance').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#idBank').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#idBank_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
-		$jsReadOnly .= "\tjQuery('#bank').replaceWith('<div class=\"form-control-static\" id=\"bank\">' + (jQuery('#bank').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#note').replaceWith('<div class=\"form-control-static\" id=\"note\">' + (jQuery('#note').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#paymentDeadLine').prop('readonly', true);\n";
 		$jsReadOnly .= "\tjQuery('#paymentDeadLineDay, #paymentDeadLineMonth, #paymentDeadLineYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
@@ -545,7 +544,6 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$templateCode = str_replace('<%%UPLOADFILE(outputs)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(balance)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(idBank)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(bank)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(note)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(paymentDeadLine)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(payed)%%>', '', $templateCode);
@@ -581,9 +579,6 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(idBank)%%>', safe_html($urow['idBank']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(idBank)%%>', html_attr($row['idBank']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(idBank)%%>', urlencode($urow['idBank']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(bank)%%>', safe_html($urow['bank']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(bank)%%>', html_attr($row['bank']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(bank)%%>', urlencode($urow['bank']), $templateCode);
 		if($dvprint || (!$AllowUpdate && !$AllowInsert)){
 			$templateCode = str_replace('<%%VALUE(note)%%>', safe_html($urow['note']), $templateCode);
 		}else{
@@ -612,8 +607,6 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$templateCode = str_replace('<%%URLVALUE(balance)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(idBank)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(idBank)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(bank)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(bank)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(note)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(note)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(paymentDeadLine)%%>', '<%%creationDate%%>', $templateCode);
@@ -651,6 +644,19 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	// ajaxed auto-fill fields
 	$templateCode .= '<script>';
 	$templateCode .= '$j(function() {';
+
+	$templateCode .= "\tidBank_update_autofills$rnd1 = function(){\n";
+	$templateCode .= "\t\t\$j.ajax({\n";
+	if($dvprint){
+		$templateCode .= "\t\t\turl: 'firstCashNote_autofill.php?rnd1=$rnd1&mfk=idBank&id=' + encodeURIComponent('".addslashes($row['idBank'])."'),\n";
+		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET'\n";
+	}else{
+		$templateCode .= "\t\t\turl: 'firstCashNote_autofill.php?rnd1=$rnd1&mfk=idBank&id=' + encodeURIComponent(AppGini.current_idBank{$rnd1}.value),\n";
+		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET', beforeSend: function(){ /* */ \$j('#idBank$rnd1').prop('disabled', true); \$j('#idBankLoading').html('<img src=loading.gif align=top>'); }, complete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#idBank$rnd1').prop('disabled', false); " : "\$j('#idBank$rnd1').prop('disabled', true); ")."\$j('#idBankLoading').html('');}\n";
+	}
+	$templateCode.="\t\t});\n";
+	$templateCode.="\t};\n";
+	if(!$dvprint) $templateCode.="\tif(\$j('#idBank_caption').length) \$j('#idBank_caption').click(function(){ /* */ idBank_update_autofills$rnd1(); });\n";
 
 
 	$templateCode.="});";

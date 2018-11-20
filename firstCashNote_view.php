@@ -31,7 +31,7 @@
 		"`firstCashNote`.`outputs`" => "outputs",
 		"`firstCashNote`.`balance`" => "balance",
 		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "idBank",
-		"`firstCashNote`.`bank`" => "bank",
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Banca */" => "bank",
 		"`firstCashNote`.`note`" => "note",
 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
 		"if(CHAR_LENGTH(`firstCashNote`.`payed`)>100, concat(left(`firstCashNote`.`payed`,100),' ...'), `firstCashNote`.`payed`)" => "payed"
@@ -47,7 +47,7 @@
 		7 => '`firstCashNote`.`outputs`',
 		8 => '`firstCashNote`.`balance`',
 		9 => '`companies1`.`companyName`',
-		10 => '`firstCashNote`.`bank`',
+		10 => '`companies1`.`companyName`',
 		11 => 11,
 		12 => '`firstCashNote`.`paymentDeadLine`',
 		13 => 13
@@ -64,7 +64,7 @@
 		"`firstCashNote`.`outputs`" => "outputs",
 		"`firstCashNote`.`balance`" => "balance",
 		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "idBank",
-		"`firstCashNote`.`bank`" => "bank",
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Banca */" => "bank",
 		"`firstCashNote`.`note`" => "note",
 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
 		"`firstCashNote`.`payed`" => "payed"
@@ -80,7 +80,7 @@
 		"`firstCashNote`.`outputs`" => "Uscite",
 		"`firstCashNote`.`balance`" => "Bilancio",
 		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "IdBank",
-		"`firstCashNote`.`bank`" => "Banca",
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Banca */" => "Banca",
 		"`firstCashNote`.`note`" => "Note pagamento",
 		"`firstCashNote`.`paymentDeadLine`" => "Pagamento in data",
 		"`firstCashNote`.`payed`" => "Pagato SI/NO"
@@ -97,7 +97,7 @@
 		"`firstCashNote`.`outputs`" => "outputs",
 		"`firstCashNote`.`balance`" => "balance",
 		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "idBank",
-		"`firstCashNote`.`bank`" => "bank",
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Banca */" => "bank",
 		"`firstCashNote`.`note`" => "note",
 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
 		"`firstCashNote`.`payed`" => "Pagato SI/NO"

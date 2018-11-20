@@ -74,8 +74,11 @@
 
 
 	function firstCashNote_before_insert(&$data, $memberInfo, &$args){
+	
+                $data['balance'] = $data['revenue'] - $data['outputs'];
 
 		return TRUE;
+
 	}
 
 
@@ -86,12 +89,15 @@
 
 
 	function firstCashNote_before_update(&$data, $memberInfo, &$args){
+	
+                $data['balance'] = $data['revenue'] - $data['outputs'];
 
 		return TRUE;
 	}
 
 
 	function firstCashNote_after_update($data, $memberInfo, &$args){
+	
 
 		return TRUE;
 	}
@@ -109,8 +115,18 @@
 
 
 	function firstCashNote_dv($selectedID, $memberInfo, &$html, &$args){
-
-	}
+	
+                /* current user is not an admin? */
+		if($mi['group'] != 'Admins'){
+			$html .= <<<EOC
+				<script>
+					\$j(function(){
+						\$j('#balance').prop('readonly', true);
+					})
+				</script>
+EOC;
+                }
+        }
 
 
 	function firstCashNote_csv($query, $memberInfo, &$args){

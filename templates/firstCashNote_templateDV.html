@@ -89,7 +89,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="idBank" class="control-label col-lg-3" data-parent_link="view_parent_modal">IdBank</label>
 					<div class="col-lg-9">
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(idBank)%%><%%PLINK(idBank)%%><%%ADDNEW(companies)%%></div>
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(idBank)%%><%%PLINK(idBank)%%><%%ADDNEW(companies)%%><span id="idBankLoading"></span></div>
 					</div>
 				</div>
 
@@ -97,7 +97,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="bank" class="control-label col-lg-3">Banca</label>
 					<div class="col-lg-9">
-						<input maxlength="" type="text" class="form-control" name="bank" id="bank" value="<%%VALUE(bank)%%>">
+						<div class="form-control-static" id="bank"></div>
 					</div>
 				</div>
 

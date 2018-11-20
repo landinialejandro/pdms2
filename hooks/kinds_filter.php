@@ -63,7 +63,8 @@
 		<input type="hidden" class="populatedOptionsData" name="1" value="<?php echo htmlspecialchars($FilterValue[1]); ?>" >
 		<input type="hidden" name="FilterAnd[1]" value="and">
 		<input type="hidden" name="FilterField[1]" value="1">
-		<input type="hidden" name="FilterOperator[1]" value="equal-to">
+                <!-- cahngue operator to like for multiple select -->
+		<input type="hidden" name="FilterOperator[1]" value="like">
 		<input type="hidden" name="FilterValue[1]" id="1_currValue" value="<?php echo htmlspecialchars($FilterValue[1]); ?>" size="3">
 
 		

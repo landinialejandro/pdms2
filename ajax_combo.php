@@ -294,6 +294,17 @@
 				'inherit_permissions' => false,
 				'list_type' => 0,
 				'not_null' => false
+			),
+			'bank' => array(
+				'parent_table' => 'companies',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`companies`.`companyName`',
+				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
 			)
 		),
 		'vatRegister' => array(   
