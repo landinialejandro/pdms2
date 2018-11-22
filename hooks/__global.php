@@ -2,20 +2,11 @@
 	// For help on using hooks, please refer to https://bigprof.com/appgini/help/working-with-generated-web-database-application/hooks
 
 	function login_ok($memberInfo, &$args){
-            
-            $views = array(
-                'hooks/SQL_defaultsCompanies.sql',
-                'hooks/SQL_companiesAddresses.sql',
-                'hooks/SQL_resumeOrders.sql',
-                'hooks/SQL_ordersDetails.sql',
-                'hooks/SQL_customersCredit.sql',
-                'hooks/SQL_productsStock.sql'
-            );
-            
+            $dir = __DIR__."/SQL_Views";
+            $views = array_diff(scandir($dir), array('.', '..'));
             foreach ($views as $sql){
-                        $res = sql(file_get_contents($sql),$eo);
+                        $res = sql(file_get_contents("$dir/$sql"),$eo);
             }
-            
 		return '';
 	}
 
