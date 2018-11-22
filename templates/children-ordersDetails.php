@@ -126,7 +126,7 @@
 				<tbody>
 					<?php if(is_array($records)){
                                             
-                                        } foreach($records as $pkValue => $record){ ?>
+                                            foreach($records as $pkValue => $record){ ?>
 					<tr>
 						<?php if($config['open-detail-view-on-click']){ ?>
 							<?php if(stripos($_SERVER['HTTP_USER_AGENT'], 'msie ')){ ?>

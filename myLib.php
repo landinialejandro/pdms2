@@ -21,9 +21,9 @@ function getDataTable($table_name,$where_id){
     return db_fetch_assoc($res);
 }
 
-function getCreditCompany($id){
-    /* return json llimit credit*/
-    $res = sql("select * from SQL_customersCredit where cust_id = '$id' LIMIT 1;",$eo);
+function getLimitsCompany($id, $code){
+    /* return json limit credit*/
+    $res = sql("select * from SQL_customersLimits where cust_id = '$id' and attr_code = '$code' LIMIT 1;",$eo);
     if(!($row = db_fetch_array($res))){
         $row[]="";
     }
@@ -40,7 +40,7 @@ function getPurchasesCompany($id){ //customers
 }
 
 function dataBar($id){
-    $data = array_merge(getCreditCompany($id),getPurchasesCompany($id));
+    $data = array_merge(getLimitsCompany($id,'CUST_CREDIT'),getPurchasesCompany($id));
 //    var_dump($data);
     //si el limite de credito es mayor que lo comprado? total comprado / credito : exede el credito.
     if ($data['val_limit']){

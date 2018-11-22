@@ -151,7 +151,6 @@
                             //function at response
                     ActualizaValorTotal();
                     <?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'reload' });
-                    firstCashNoteOrderGetRecords({ Verb: 'reload' });
                 });
                 
             }else{

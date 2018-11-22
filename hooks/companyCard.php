@@ -47,10 +47,13 @@ $table_from=get_sql_from('addresses');
 $res= sql("SELECT {$table_fields} FROM {$table_from} AND `addresses`.`company` = {$where_id} AND `addresses`.`default` = 1",$eo);
 
 if (!($address = db_fetch_assoc($res))) {
-    $defaultAddress = "not found default address";
-}else{
-    $defaultAddress = "{$address['address']} {$address['houseNumber']} {$address['town']} {$address['district']} {$address['country']}";
+    //if not setting a default address, get the first.
+    $res= sql("SELECT {$table_fields} FROM {$table_from} AND `addresses`.`company` = {$where_id} order by `addresses`.id ASC LIMIT 1",$eo);
+    if (!($address = db_fetch_assoc($res))) {
+        $address['address'] = "not found default address";
+    }
 }
+$defaultAddress = "{$address['address']} {$address['houseNumber']} {$address['town']} {$address['district']} {$address['country']}";
 
 
 ob_start();

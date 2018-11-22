@@ -49,8 +49,8 @@
 				}, panelID, undefined, 'pc-loading');
 				break;
 			case 'new': /* new record */
-                                var parts = command.select ? '&addNew_x=1&Embedded=1&ak=CUST_CREDIT' : '&addNew_x=1&Embedded=1';
-//                                console.log(parts);
+                                var parts = command.select ? '&addNew_x=1&Embedded=1&ak=' + command.code : '&addNew_x=1&Embedded=1';
+//                                console.log(command);
 				var url = $j('#' + param.ChildTable + '_hclink').val() + parts + (param.AutoClose ? '&AutoClose=1' : '');
 				modal_window({
 					url: url,
