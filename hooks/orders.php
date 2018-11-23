@@ -203,7 +203,7 @@
             if(!function_exists('firstCashNote_update')){
                 include ("$currDir/../firstCashNote_dml.php");
             }
-            $res = sql("select * from firstCashNote where firstCashNote.`order` = '{$data['id']}' order by id asc limit 1",$eo);
+            $res = sql("select * from firstCashNote where firstCashNote.`order` = '{$data['id']}' order by id asc limit 1;",$eo);
             $fc = db_fetch_assoc($res);
             $fc['order']=$data['id'];
             $descKind=kindName($data['kind']);
