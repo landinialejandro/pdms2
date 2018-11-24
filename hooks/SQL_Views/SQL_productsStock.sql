@@ -16,7 +16,6 @@ FROM
     orders
 LEFT JOIN ordersDetails ON ordersDetails.`order` = orders.id
 LEFT JOIN products on products.id = ordersDetails.productCode
-WHERE orders.typeDoc = 'DDT'
+WHERE orders.typeDoc = 'DDT' or orders.typeDoc = 'FTIM'
 GROUP BY
-ordersDetails.productCode,
-orders.typeDoc
+ordersDetails.productCode

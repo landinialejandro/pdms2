@@ -275,13 +275,17 @@
 							<?php } ?>
 						<?php }else { ?>
                                                                 <td class="text-center view-on-click"></td>
-                                                    <?php } 
+                                                    <?php }
+                                                    $kindOrder=sqlValue("select kind from orders where id = {$parameters['SelectedID']}");
+                                                    $dateOrder=sqlValue("select date from orders where id = {$parameters['SelectedID']}");
                                                     $stock = sqlvalue("SELECT stock FROM SQL_productsStock where code='{$record[7]}' LIMIT 1;");
+                                                    $price = number_format(sqlvalue("SELECT AVGPrice$kindOrder FROM SQL_averageWeightPrice where code='{$record[7]}' and date = '$dateOrder' LIMIT 1;"),2,'.',',');
+                                                    $weight = number_format(sqlvalue("SELECT AVGWeight$kindOrder FROM SQL_averageWeightPrice where code='{$record[7]}' and date ='$dateOrder' LIMIT 1;"),2,'.',',');
                                                     $classes='lightcoral';
                                                     if($stock>0){
                                                         $classes='green';
                                                     }
-                                                    elseif($stock==0){
+                                                    elseif($stock===0){
                                                         $classes='gold';
                                                     }
 
@@ -300,8 +304,8 @@
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][18]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][18]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[18]); ?></td>
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][19]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][19]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[19]); ?></td>
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][20]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][20]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[20]); ?></td>
-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][22]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][22]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[22]); ?></td>
-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][23]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][23]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[23]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][22]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][22]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($price); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][23]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][23]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($weight); ?></td>
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][24]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][24]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[24]); ?></td>
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][25]}"; ?> text-center" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][25]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[25]); ?></td>
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][26]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][26]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[26]); ?></td>

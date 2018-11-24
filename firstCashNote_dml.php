@@ -20,6 +20,9 @@ function firstCashNote_insert($data=[]){
         $data = firstCashNote_dataRequest($data);
         
 	// hook: firstCashNote_before_insert
+        if(!function_exists('firstCashNote_before_update')){
+            include 'hooks/firstCashNote.php';
+        }
 	if(function_exists('firstCashNote_before_insert')){
 		$args=array();
 		if(!firstCashNote_before_insert($data, getMemberInfo(), $args)){ return false; }
@@ -68,6 +71,9 @@ function firstCashNote_delete($selected_id, $AllowDeleteOfParents=false, $skipCh
 	}
 
 	// hook: firstCashNote_before_delete
+        if(!function_exists('firstCashNote_before_update')){
+            include 'hooks/firstCashNote.php';
+        }
 	if(function_exists('firstCashNote_before_delete')){
 		$args=array();
 		if(!firstCashNote_before_delete($selected_id, $skipChecks, getMemberInfo(), $args))
@@ -109,6 +115,9 @@ function firstCashNote_update($selected_id, $data=[]){
         $data['selectedID']=makeSafe($selected_id);
             
 	// hook: firstCashNote_before_update
+	if(!function_exists('firstCashNote_before_update')){
+            include 'hooks/firstCashNote.php';
+        }
 	if(function_exists('firstCashNote_before_update')){
 		$args=array();
 		if(!firstCashNote_before_update($data, getMemberInfo(), $args)){ return false; }
@@ -143,29 +152,32 @@ function firstCashNote_dataRequest($request=false){
         if (!$request){
             $request=$_REQUEST;
         }
-	$data['order'] = makeSafe($_REQUEST['order']);
+		$data['order'] = makeSafe($request['order']);
 		if($data['order'] == empty_lookup_value){ $data['order'] = ''; }
-	$data['operationDate'] = intval($_REQUEST['operationDateYear']) . '-' . intval($_REQUEST['operationDateMonth']) . '-' . intval($_REQUEST['operationDateDay']);
+	$data['company'] = makeSafe($request['company']);
+		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
+	$data['customer'] = makeSafe($request['customer']);
+		if($data['customer'] == empty_lookup_value){ $data['customer'] = ''; }
+	$data['operationDate'] = intval($request['operationDateYear']) . '-' . intval($request['operationDateMonth']) . '-' . intval($request['operationDateDay']);
 	$data['operationDate'] = parseMySQLDate($data['operationDate'], '<%%creationDate%%>');
-	$data['documentNumber'] = makeSafe($_REQUEST['documentNumber']);
+	$data['documentNumber'] = makeSafe($request['documentNumber']);
 		if($data['documentNumber'] == empty_lookup_value){ $data['documentNumber'] = ''; }
-	$data['causal'] = br2nl(makeSafe($_REQUEST['causal']));
-	$data['revenue'] = makeSafe($_REQUEST['revenue']);
+	$data['causal'] = br2nl(makeSafe($request['causal']));
+	$data['revenue'] = makeSafe($request['revenue']);
 		if($data['revenue'] == empty_lookup_value){ $data['revenue'] = ''; }
-	$data['outputs'] = makeSafe($_REQUEST['outputs']);
+	$data['outputs'] = makeSafe($request['outputs']);
 		if($data['outputs'] == empty_lookup_value){ $data['outputs'] = ''; }
-	$data['balance'] = makeSafe($_REQUEST['balance']);
+	$data['balance'] = makeSafe($request['balance']);
 		if($data['balance'] == empty_lookup_value){ $data['balance'] = ''; }
-	$data['idBank'] = makeSafe($_REQUEST['idBank']);
+	$data['idBank'] = makeSafe($request['idBank']);
 		if($data['idBank'] == empty_lookup_value){ $data['idBank'] = ''; }
-	$data['bank'] = makeSafe($_REQUEST['idBank']);
+	$data['bank'] = makeSafe($request['company']);
 		if($data['bank'] == empty_lookup_value){ $data['bank'] = ''; }
-	$data['note'] = br2nl(makeSafe($_REQUEST['note']));
-	$data['paymentDeadLine'] = intval($_REQUEST['paymentDeadLineYear']) . '-' . intval($_REQUEST['paymentDeadLineMonth']) . '-' . intval($_REQUEST['paymentDeadLineDay']);
+	$data['note'] = br2nl(makeSafe($request['note']));
+	$data['paymentDeadLine'] = intval($request['paymentDeadLineYear']) . '-' . intval($request['paymentDeadLineMonth']) . '-' . intval($request['paymentDeadLineDay']);
 	$data['paymentDeadLine'] = parseMySQLDate($data['paymentDeadLine'], '<%%creationDate%%>');
-	$data['payed'] = makeSafe($_REQUEST['payed']);
+	$data['payed'] = makeSafe($request['payed']);
 		if($data['payed'] == empty_lookup_value){ $data['payed'] = ''; }
-        
         return $data;
 }
 
@@ -188,6 +200,8 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	}
 
 	$filterer_order = thisOr(undo_magic_quotes($_REQUEST['filterer_order']), '');
+	$filterer_company = thisOr(undo_magic_quotes($_REQUEST['filterer_company']), '');
+	$filterer_customer = thisOr(undo_magic_quotes($_REQUEST['filterer_customer']), '');
 	$filterer_idBank = thisOr(undo_magic_quotes($_REQUEST['filterer_idBank']), '');
 
 	// populate filterers, starting from children to grand-parents
@@ -196,6 +210,10 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
 	// combobox: order
 	$combo_order = new DataCombo;
+	// combobox: company
+	$combo_company = new DataCombo;
+	// combobox: customer
+	$combo_customer = new DataCombo;
 	// combobox: operationDate
 	$combo_operationDate = new DateCombo;
 	$combo_operationDate->DateFormat = "dmy";
@@ -245,15 +263,23 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$hc = new CI_Input();
 		$row = $hc->xss_clean($row); /* sanitize data */
 		$combo_order->SelectedData = $row['order'];
+		$combo_company->SelectedData = $row['company'];
+		$combo_customer->SelectedData = $row['customer'];
 		$combo_operationDate->DefaultDate = $row['operationDate'];
 		$combo_idBank->SelectedData = $row['idBank'];
 		$combo_paymentDeadLine->DefaultDate = $row['paymentDeadLine'];
 	}else{
 		$combo_order->SelectedData = $filterer_order;
+		$combo_company->SelectedData = $filterer_company;
+		$combo_customer->SelectedData = $filterer_customer;
 		$combo_idBank->SelectedData = $filterer_idBank;
 	}
 	$combo_order->HTML = '<span id="order-container' . $rnd1 . '"></span><input type="hidden" name="order" id="order' . $rnd1 . '" value="' . html_attr($combo_order->SelectedData) . '">';
 	$combo_order->MatchText = '<span id="order-container-readonly' . $rnd1 . '"></span><input type="hidden" name="order" id="order' . $rnd1 . '" value="' . html_attr($combo_order->SelectedData) . '">';
+	$combo_company->HTML = '<span id="company-container' . $rnd1 . '"></span><input type="hidden" name="company" id="company' . $rnd1 . '" value="' . html_attr($combo_company->SelectedData) . '">';
+	$combo_company->MatchText = '<span id="company-container-readonly' . $rnd1 . '"></span><input type="hidden" name="company" id="company' . $rnd1 . '" value="' . html_attr($combo_company->SelectedData) . '">';
+	$combo_customer->HTML = '<span id="customer-container' . $rnd1 . '"></span><input type="hidden" name="customer" id="customer' . $rnd1 . '" value="' . html_attr($combo_customer->SelectedData) . '">';
+	$combo_customer->MatchText = '<span id="customer-container-readonly' . $rnd1 . '"></span><input type="hidden" name="customer" id="customer' . $rnd1 . '" value="' . html_attr($combo_customer->SelectedData) . '">';
 	$combo_idBank->HTML = '<span id="idBank-container' . $rnd1 . '"></span><input type="hidden" name="idBank" id="idBank' . $rnd1 . '" value="' . html_attr($combo_idBank->SelectedData) . '">';
 	$combo_idBank->MatchText = '<span id="idBank-container-readonly' . $rnd1 . '"></span><input type="hidden" name="idBank" id="idBank' . $rnd1 . '" value="' . html_attr($combo_idBank->SelectedData) . '">';
 
@@ -263,11 +289,15 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	<script>
 		// initial lookup values
 		AppGini.current_order__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['order'] : $filterer_order); ?>"};
+		AppGini.current_company__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['company'] : $filterer_company); ?>"};
+		AppGini.current_customer__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['customer'] : $filterer_customer); ?>"};
 		AppGini.current_idBank__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['idBank'] : $filterer_idBank); ?>"};
 
 		jQuery(function() {
 			setTimeout(function(){
 				if(typeof(order_reload__RAND__) == 'function') order_reload__RAND__();
+				if(typeof(company_reload__RAND__) == 'function') company_reload__RAND__();
+				if(typeof(customer_reload__RAND__) == 'function') customer_reload__RAND__();
 				if(typeof(idBank_reload__RAND__) == 'function') idBank_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
 		});
@@ -343,6 +373,160 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=orders_view_parent]').hide(); }else{ $j('.btn[id=orders_view_parent]').show(); }
 
 					if(typeof(order_update_autofills__RAND__) == 'function') order_update_autofills__RAND__();
+				}
+			});
+		<?php } ?>
+
+		}
+		function company_reload__RAND__(){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			$j("#company-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					$j.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: AppGini.current_company__RAND__.value, t: 'firstCashNote', f: 'company' },
+						success: function(resp){
+							c({
+								id: resp.results[0].id,
+								text: resp.results[0].text
+							});
+							$j('[name="company"]').val(resp.results[0].id);
+							$j('[id=company-container-readonly__RAND__]').html('<span id="company-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
+
+
+							if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
+						}
+					});
+				},
+				width: '100%',
+				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 10,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ /* */ return { s: term, p: page, t: 'firstCashNote', f: 'company' }; },
+					results: function(resp, page){ /* */ return resp; }
+				},
+				escapeMarkup: function(str){ /* */ return str; }
+			}).on('change', function(e){
+				AppGini.current_company__RAND__.value = e.added.id;
+				AppGini.current_company__RAND__.text = e.added.text;
+				$j('[name="company"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
+
+
+				if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
+			});
+
+			if(!$j("#company-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: AppGini.current_company__RAND__.value, t: 'firstCashNote', f: 'company' },
+					success: function(resp){
+						$j('[name="company"]').val(resp.results[0].id);
+						$j('[id=company-container-readonly__RAND__]').html('<span id="company-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
+
+						if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
+					}
+				});
+			}
+
+		<?php }else{ ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: AppGini.current_company__RAND__.value, t: 'firstCashNote', f: 'company' },
+				success: function(resp){
+					$j('[id=company-container__RAND__], [id=company-container-readonly__RAND__]').html('<span id="company-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
+
+					if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
+				}
+			});
+		<?php } ?>
+
+		}
+		function customer_reload__RAND__(){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			$j("#customer-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					$j.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: AppGini.current_customer__RAND__.value, t: 'firstCashNote', f: 'customer' },
+						success: function(resp){
+							c({
+								id: resp.results[0].id,
+								text: resp.results[0].text
+							});
+							$j('[name="customer"]').val(resp.results[0].id);
+							$j('[id=customer-container-readonly__RAND__]').html('<span id="customer-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
+
+
+							if(typeof(customer_update_autofills__RAND__) == 'function') customer_update_autofills__RAND__();
+						}
+					});
+				},
+				width: '100%',
+				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 10,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ /* */ return { s: term, p: page, t: 'firstCashNote', f: 'customer' }; },
+					results: function(resp, page){ /* */ return resp; }
+				},
+				escapeMarkup: function(str){ /* */ return str; }
+			}).on('change', function(e){
+				AppGini.current_customer__RAND__.value = e.added.id;
+				AppGini.current_customer__RAND__.text = e.added.text;
+				$j('[name="customer"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
+
+
+				if(typeof(customer_update_autofills__RAND__) == 'function') customer_update_autofills__RAND__();
+			});
+
+			if(!$j("#customer-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: AppGini.current_customer__RAND__.value, t: 'firstCashNote', f: 'customer' },
+					success: function(resp){
+						$j('[name="customer"]').val(resp.results[0].id);
+						$j('[id=customer-container-readonly__RAND__]').html('<span id="customer-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
+
+						if(typeof(customer_update_autofills__RAND__) == 'function') customer_update_autofills__RAND__();
+					}
+				});
+			}
+
+		<?php }else{ ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: AppGini.current_customer__RAND__.value, t: 'firstCashNote', f: 'customer' },
+				success: function(resp){
+					$j('[id=customer-container__RAND__], [id=customer-container-readonly__RAND__]').html('<span id="customer-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
+
+					if(typeof(customer_update_autofills__RAND__) == 'function') customer_update_autofills__RAND__();
 				}
 			});
 		<?php } ?>
@@ -485,6 +669,10 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	if(($selected_id && !$AllowUpdate && !$AllowInsert) || (!$selected_id && !$AllowInsert)){
 		$jsReadOnly .= "\tjQuery('#order').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#order_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+		$jsReadOnly .= "\tjQuery('#company').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#company_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+		$jsReadOnly .= "\tjQuery('#customer').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#customer_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#operationDate').prop('readonly', true);\n";
 		$jsReadOnly .= "\tjQuery('#operationDateDay, #operationDateMonth, #operationDateYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#documentNumber').replaceWith('<div class=\"form-control-static\" id=\"documentNumber\">' + (jQuery('#documentNumber').val() || '') + '</div>');\n";
@@ -510,6 +698,12 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$templateCode = str_replace('<%%COMBO(order)%%>', $combo_order->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(order)%%>', $combo_order->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(order)%%>', urlencode($combo_order->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(company)%%>', $combo_company->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(company)%%>', $combo_company->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(company)%%>', urlencode($combo_company->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(customer)%%>', $combo_customer->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(customer)%%>', $combo_customer->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(customer)%%>', urlencode($combo_customer->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(operationDate)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_operationDate->GetHTML(true) . '</div>' : $combo_operationDate->GetHTML()), $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(operationDate)%%>', $combo_operationDate->GetHTML(true), $templateCode);
 	$templateCode = str_replace('<%%COMBO(idBank)%%>', $combo_idBank->HTML, $templateCode);
@@ -519,7 +713,7 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$templateCode = str_replace('<%%COMBOTEXT(paymentDeadLine)%%>', $combo_paymentDeadLine->GetHTML(true), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'order' => array('orders', 'Order'), 'idBank' => array('companies', 'IdBank'));
+	$lookup_fields = array(  'order' => array('orders', 'Order'), 'company' => array('companies', 'Company'), 'customer' => array('companies', 'Customer'), 'idBank' => array('companies', 'IdBank'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -537,6 +731,8 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	// process images
 	$templateCode = str_replace('<%%UPLOADFILE(id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(order)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(company)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(customer)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(operationDate)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(documentNumber)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(causal)%%>', '', $templateCode);
@@ -556,6 +752,12 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(order)%%>', safe_html($urow['order']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(order)%%>', html_attr($row['order']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(order)%%>', urlencode($urow['order']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', safe_html($urow['company']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', html_attr($row['company']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode($urow['company']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(customer)%%>', safe_html($urow['customer']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(customer)%%>', html_attr($row['customer']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(customer)%%>', urlencode($urow['customer']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(operationDate)%%>', @date('d/m/Y', @strtotime(html_attr($row['operationDate']))), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(operationDate)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['operationDate'])))), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(documentNumber)%%>', safe_html($urow['documentNumber']), $templateCode);
@@ -593,6 +795,10 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(order)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(order)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(company)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(customer)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(customer)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(operationDate)%%>', '<%%creationDate%%>', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(operationDate)%%>', urlencode('<%%creationDate%%>'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(documentNumber)%%>', '', $templateCode);
@@ -645,18 +851,18 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$templateCode .= '<script>';
 	$templateCode .= '$j(function() {';
 
-	$templateCode .= "\tidBank_update_autofills$rnd1 = function(){\n";
+	$templateCode .= "\tcompany_update_autofills$rnd1 = function(){\n";
 	$templateCode .= "\t\t\$j.ajax({\n";
 	if($dvprint){
-		$templateCode .= "\t\t\turl: 'firstCashNote_autofill.php?rnd1=$rnd1&mfk=idBank&id=' + encodeURIComponent('".addslashes($row['idBank'])."'),\n";
+		$templateCode .= "\t\t\turl: 'firstCashNote_autofill.php?rnd1=$rnd1&mfk=company&id=' + encodeURIComponent('".addslashes($row['company'])."'),\n";
 		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET'\n";
 	}else{
-		$templateCode .= "\t\t\turl: 'firstCashNote_autofill.php?rnd1=$rnd1&mfk=idBank&id=' + encodeURIComponent(AppGini.current_idBank{$rnd1}.value),\n";
-		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET', beforeSend: function(){ /* */ \$j('#idBank$rnd1').prop('disabled', true); \$j('#idBankLoading').html('<img src=loading.gif align=top>'); }, complete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#idBank$rnd1').prop('disabled', false); " : "\$j('#idBank$rnd1').prop('disabled', true); ")."\$j('#idBankLoading').html('');}\n";
+		$templateCode .= "\t\t\turl: 'firstCashNote_autofill.php?rnd1=$rnd1&mfk=company&id=' + encodeURIComponent(AppGini.current_company{$rnd1}.value),\n";
+		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET', beforeSend: function(){ /* */ \$j('#company$rnd1').prop('disabled', true); \$j('#companyLoading').html('<img src=loading.gif align=top>'); }, complete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#company$rnd1').prop('disabled', false); " : "\$j('#company$rnd1').prop('disabled', true); ")."\$j('#companyLoading').html('');}\n";
 	}
 	$templateCode.="\t\t});\n";
 	$templateCode.="\t};\n";
-	if(!$dvprint) $templateCode.="\tif(\$j('#idBank_caption').length) \$j('#idBank_caption').click(function(){ /* */ idBank_update_autofills$rnd1(); });\n";
+	if(!$dvprint) $templateCode.="\tif(\$j('#company_caption').length) \$j('#company_caption').click(function(){ /* */ company_update_autofills$rnd1(); });\n";
 
 
 	$templateCode.="});";

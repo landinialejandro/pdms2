@@ -106,6 +106,8 @@
 		'firstCashNote' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'order' => array('appgini' => 'INT unsigned '),
+			'company' => array('appgini' => 'INT unsigned '),
+			'customer' => array('appgini' => 'INT unsigned '),
 			'operationDate' => array('appgini' => 'DATE '),
 			'documentNumber' => array('appgini' => 'INT '),
 			'causal' => array('appgini' => 'VARCHAR(255) '),

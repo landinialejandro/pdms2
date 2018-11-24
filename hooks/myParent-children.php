@@ -4,7 +4,7 @@
 
 	/* Configuration */
 	/*************************************/
-
+$dir = __DIR__;
 		$pcConfig = array(
                         'addresses' => array(   
 				'kind' => array(   

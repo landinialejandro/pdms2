@@ -107,7 +107,7 @@ ob_start();
         </div>
             <div class="small-box bg-aqua">
                 <small><?php echo 'Last update ' . time_elapsed_string($product_update); ?>  </small>
-                <a id="companies_view_parent" pt="companies" myid="<?php echo $where_id; ?>" class="btn btn-sm view_parent" type="button" title="Azienda Details" onclick="showParent(this);" >more info
+                <a id="products_view_parent" pt="products" myid="<?php echo $where_id; ?>" class="btn btn-sm view_parent" type="button" title="Product Details" onclick="showParent(this);" >more info
                     <i class="fa fa-arrow-circle-right"></i>
                 </a>
                 <a class="btn btn-sm pull-right" type="button" title="Refresh data" onclick="refreshCards()" >refresh

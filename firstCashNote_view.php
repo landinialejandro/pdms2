@@ -24,13 +24,15 @@
 	$x->QueryFieldsTV = array(   
 		"`firstCashNote`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') /* Order */" => "order",
+		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* Company */" => "company",
+		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Customer */" => "customer",
 		"if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'')" => "operationDate",
 		"`firstCashNote`.`documentNumber`" => "documentNumber",
 		"`firstCashNote`.`causal`" => "causal",
 		"`firstCashNote`.`revenue`" => "revenue",
 		"`firstCashNote`.`outputs`" => "outputs",
 		"`firstCashNote`.`balance`" => "balance",
-		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "idBank",
+		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* IdBank */" => "idBank",
 		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Banca */" => "bank",
 		"`firstCashNote`.`note`" => "note",
 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
@@ -40,30 +42,34 @@
 	$x->SortFields = array(   
 		1 => '`firstCashNote`.`id`',
 		2 => '`orders1`.`multiOrder`',
-		3 => '`firstCashNote`.`operationDate`',
-		4 => '`firstCashNote`.`documentNumber`',
-		5 => 5,
-		6 => '`firstCashNote`.`revenue`',
-		7 => '`firstCashNote`.`outputs`',
-		8 => '`firstCashNote`.`balance`',
-		9 => '`companies1`.`companyName`',
-		10 => '`companies1`.`companyName`',
-		11 => 11,
-		12 => '`firstCashNote`.`paymentDeadLine`',
-		13 => 13
+		3 => 3,
+		4 => '`companies2`.`companyName`',
+		5 => '`firstCashNote`.`operationDate`',
+		6 => '`firstCashNote`.`documentNumber`',
+		7 => 7,
+		8 => '`firstCashNote`.`revenue`',
+		9 => '`firstCashNote`.`outputs`',
+		10 => '`firstCashNote`.`balance`',
+		11 => '`companies3`.`companyName`',
+		12 => '`companies1`.`companyName`',
+		13 => 13,
+		14 => '`firstCashNote`.`paymentDeadLine`',
+		15 => 15
 	);
 
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
 		"`firstCashNote`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') /* Order */" => "order",
+		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* Company */" => "company",
+		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Customer */" => "customer",
 		"if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'')" => "operationDate",
 		"`firstCashNote`.`documentNumber`" => "documentNumber",
 		"`firstCashNote`.`causal`" => "causal",
 		"`firstCashNote`.`revenue`" => "revenue",
 		"`firstCashNote`.`outputs`" => "outputs",
 		"`firstCashNote`.`balance`" => "balance",
-		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "idBank",
+		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* IdBank */" => "idBank",
 		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Banca */" => "bank",
 		"`firstCashNote`.`note`" => "note",
 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
@@ -73,13 +79,15 @@
 	$x->QueryFieldsFilters = array(   
 		"`firstCashNote`.`id`" => "ID",
 		"IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') /* Order */" => "Order",
+		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* Company */" => "Company",
+		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Customer */" => "Customer",
 		"`firstCashNote`.`operationDate`" => "Data operazione",
 		"`firstCashNote`.`documentNumber`" => "Numero ordine",
 		"`firstCashNote`.`causal`" => "Causale",
 		"`firstCashNote`.`revenue`" => "Entrate",
 		"`firstCashNote`.`outputs`" => "Uscite",
 		"`firstCashNote`.`balance`" => "Bilancio",
-		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "IdBank",
+		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* IdBank */" => "IdBank",
 		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Banca */" => "Banca",
 		"`firstCashNote`.`note`" => "Note pagamento",
 		"`firstCashNote`.`paymentDeadLine`" => "Pagamento in data",
@@ -90,13 +98,15 @@
 	$x->QueryFieldsQS = array(   
 		"`firstCashNote`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') /* Order */" => "order",
+		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* Company */" => "company",
+		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Customer */" => "customer",
 		"if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'')" => "operationDate",
 		"`firstCashNote`.`documentNumber`" => "documentNumber",
 		"`firstCashNote`.`causal`" => "causal",
 		"`firstCashNote`.`revenue`" => "revenue",
 		"`firstCashNote`.`outputs`" => "outputs",
 		"`firstCashNote`.`balance`" => "balance",
-		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "idBank",
+		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* IdBank */" => "idBank",
 		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Banca */" => "bank",
 		"`firstCashNote`.`note`" => "note",
 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
@@ -104,9 +114,9 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'order' => 'Order', 'idBank' => 'IdBank');
+	$x->filterers = array(  'order' => 'Order', 'company' => 'Company', 'customer' => 'Customer', 'idBank' => 'IdBank');
 
-	$x->QueryFrom = "`firstCashNote` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`firstCashNote`.`idBank` ";
+	$x->QueryFrom = "`firstCashNote` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`firstCashNote`.`company` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`firstCashNote`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`firstCashNote`.`idBank` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -133,10 +143,10 @@
 	$x->TableIcon = "resources/table_icons/data_sort.png";
 	$x->PrimaryKey = "`firstCashNote`.`id`";
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Order", "Data operazione", "Numero ordine", "Causale", "Entrate", "Uscite", "Bilancio", "Banca", "Note pagamento", "Pagamento in data", "Pagato SI/NO");
-	$x->ColFieldName = array('order', 'operationDate', 'documentNumber', 'causal', 'revenue', 'outputs', 'balance', 'bank', 'note', 'paymentDeadLine', 'payed');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Order", "Company", "Customer", "Data operazione", "Numero ordine", "Causale", "Entrate", "Uscite", "Bilancio", "Banca", "Note pagamento", "Pagamento in data", "Pagato SI/NO");
+	$x->ColFieldName = array('order', 'company', 'customer', 'operationDate', 'documentNumber', 'causal', 'revenue', 'outputs', 'balance', 'bank', 'note', 'paymentDeadLine', 'payed');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/firstCashNote_templateTV.html';
@@ -198,6 +208,8 @@
 			$sumRow = '<tr class="success">';
 			if(!isset($_REQUEST['Print_x'])) $sumRow .= '<td class="text-center"><strong>&sum;</strong></td>';
 			$sumRow .= '<td class="firstCashNote-order"></td>';
+			$sumRow .= '<td class="firstCashNote-company"></td>';
+			$sumRow .= '<td class="firstCashNote-customer"></td>';
 			$sumRow .= '<td class="firstCashNote-operationDate"></td>';
 			$sumRow .= '<td class="firstCashNote-documentNumber"></td>';
 			$sumRow .= '<td class="firstCashNote-causal"></td>';

@@ -284,6 +284,28 @@
 				'list_type' => 0,
 				'not_null' => false
 			),
+			'company' => array(
+				'parent_table' => 'companies',
+				'parent_pk_field' => 'id',
+				'parent_caption' => 'IF(CHAR_LENGTH(`companies`.`companyCode`) || CHAR_LENGTH(`companies`.`companyName`), CONCAT_WS(\'\', `companies`.`companyCode`, \' - \', `companies`.`companyName`), \'\')',
+				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` ',
+				'filterers' => array(),
+				'custom_query' => 'SELECT `companies`.`id`, IF(CHAR_LENGTH(`companies`.`companyCode`) || CHAR_LENGTH(`companies`.`companyName`), CONCAT_WS(\'\', `companies`.`companyCode`, \' - \', `companies`.`companyName`), \'\') FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`name`=`companies`.`kind` WHERE `companies`.`kind` like \'%MC%\' ORDER BY 2',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
+			'customer' => array(
+				'parent_table' => 'companies',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`companies`.`companyName`',
+				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` ',
+				'filterers' => array(),
+				'custom_query' => 'SELECT `companies`.`id`, `companies`.`companyName` FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`name`=`companies`.`kind` WHERE `companies`.`kind` like \'%CUST%\' ORDER BY 2',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
 			'idBank' => array(
 				'parent_table' => 'companies',
 				'parent_pk_field' => 'id',

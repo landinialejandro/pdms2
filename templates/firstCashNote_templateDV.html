@@ -17,7 +17,7 @@
 		<div class="col-md-8 col-lg-10" id="firstCashNote_dv_form">
 			<fieldset class="form-horizontal">
 
-				<div class="form-group" hidden="">
+				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
 					<label for="id" class="control-label col-lg-3">ID</label>
 					<div class="col-lg-9">
@@ -35,13 +35,29 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
+					<label for="company" class="control-label col-lg-3" data-parent_link="view_parent_modal">Company</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(company)%%><%%PLINK(company)%%><%%ADDNEW(companies)%%><span id="companyLoading"></span></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="customer" class="control-label col-lg-3" data-parent_link="view_parent_modal">Customer</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(customer)%%><%%PLINK(customer)%%><%%ADDNEW(companies)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
 					<label for="operationDate" class="control-label col-lg-3">Data operazione</label>
 					<div class="col-lg-9">
 						<%%COMBO(operationDate)%%>
 					</div>
 				</div>
 
-                            <div class="form-group" hidden="">
+				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
 					<label for="documentNumber" class="control-label col-lg-3">Numero ordine</label>
 					<div class="col-lg-9">
@@ -89,7 +105,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="idBank" class="control-label col-lg-3" data-parent_link="view_parent_modal">IdBank</label>
 					<div class="col-lg-9">
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(idBank)%%><%%PLINK(idBank)%%><%%ADDNEW(companies)%%><span id="idBankLoading"></span></div>
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(idBank)%%><%%PLINK(idBank)%%><%%ADDNEW(companies)%%></div>
 					</div>
 				</div>
 
