@@ -1,0 +1,1518 @@
+From 2979bb29c412210277b29297f163cf5a76c9923c Mon Sep 17 00:00:00 2001
+From: ale <ale@localhost>
+Date: Fri, 23 Nov 2018 22:03:58 -0300
+Subject: =?UTF-8?q?23/11/18=09*Fixin=20sql=20for=20stck=20and=20es.colli?=
+ =?UTF-8?q?=2022/11/18=09*fixin=20bugs=20=09=09=09*automitic=20SQL=20views?=
+ =?UTF-8?q?.=20Prima=20Nota=09=09=09Aggiungere=20il=20campo=20Azienda=20?=
+ =?UTF-8?q?=E2=80=9CMulty=20Company=E2=80=9D=09=09=09=09=09=09ok=20Prima?=
+ =?UTF-8?q?=20Nota=09=09=09Nella=20Causale=20ci=20va=20il=20Campo=20Client?=
+ =?UTF-8?q?e=09=09=09=09=09=09ok=20Prima=20Nota=09=09=09nr.=20Ordine=20edi?=
+ =?UTF-8?q?tabile=20quando=20si=20crea=20una=20scrittura=20che=20non=20pro?=
+ =?UTF-8?q?viene=20da=20un=20ordine=09=09=09=09=09=09ok=20Prima=20Nota=09?=
+ =?UTF-8?q?=09=09Il=20campo=20Bilancio=20l=E2=80=99ho=20modificato=20io=20?=
+ =?UTF-8?q?negli=20hooks=09=09=09=09=09=09gi=C3=A0=20aggiornato=20Prima=20?=
+ =?UTF-8?q?Nota=09=09=09Il=20campo=20pagato=20SI/NO=20di=20default=20NO=20?=
+ =?UTF-8?q?e=20deve=20comparire=20con=20la=20casella=20di=20spunta=09=09?=
+ =?UTF-8?q?=09=09=09=09ok?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Companies Table			Nella table “Companies” eviterei di fare il collegamento ad order_details,						ok
+			per impedire che si possano aggiungere ordini a meno che non siano in sola lettura
+Addresse details 			Il campo Town deve consentire di fare la ricerca delle città ed essere collegato						ok
+			a Italian towns
+Orders table			Nel campo supplier non compare la lista dei supplier, che pure esistono						il codice for Supplier é PROV no SUP
+			In ordini in entrata non c’è corrispondenza con indirizzo 						e bisogno definir quale indirizzo é il default
+			“Address: not found default address”						comunque si c’é una indiridzzo prende il primo che trova se non e una in default
+Es. Colli			La balance tra colli entranti e colli uscenti non funziona, serve  un calcolo						il valore é statico, non cambia si no fai refresh, pero ho prvatto y funziona bene
+			come in prima nota
+
+
+
+20/11/18	*purge database
+			*fixing search kind by entity
+19/11/18	*orders bugs, refreching values fromo orders total and first chash note
+			*fixing myLib.php under lib.php
+			*add last update to companies card
+			*fix address children view
+			*fix first cash note children display
+
+15/11/18	*adding prima nota automated insert
+				*reform _dml.php for automated inser and update in firstcahshnote
+			*others bug
+11/11/18	*update git with ignore folders
+08/11/18	*adding supplier field,
+			*update data from appgini project
+			*fixing bug ordes-dv
+			*fixing bug report order, i put the original hedear
+06/11/18	*fixing last commit
+06/11/18	*fixing orders detaila data
+			*adding stock data
+05/11/18	*minor changues and fixing bugs
+21/10/18	*try last compiling appgini
+20/10/18	*fixin filter order and add new
+16/10/18 	*changeing to LTE template
+			*error bug
+06/10/18
+			*fixed bug in MPI plugin
+			*starting LTE
+05/10/18
+			*fixed bug in order number
+04/10/18
+			* fixed bugs
+			* readonly form if order is printed
+			* add documente field to order
+
+30/09/18
+			*factura diferida
+			*se relaciona con el documento original
+			*se archiva en una carpeta el pdf
+
+diff --git a/admin/pageRebuildFields.php b/admin/pageRebuildFields.php
+index 0c2a612..0ac26d7 100644
+--- a/admin/pageRebuildFields.php
++++ b/admin/pageRebuildFields.php
+@@ -106,6 +106,8 @@
+ 		'firstCashNote' => array(   
+ 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
+ 			'order' => array('appgini' => 'INT unsigned '),
++			'company' => array('appgini' => 'INT unsigned '),
++			'customer' => array('appgini' => 'INT unsigned '),
+ 			'operationDate' => array('appgini' => 'DATE '),
+ 			'documentNumber' => array('appgini' => 'INT '),
+ 			'causal' => array('appgini' => 'VARCHAR(255) '),
+diff --git a/ajax_combo.php b/ajax_combo.php
+index ddf8110..4b96e98 100644
+--- a/ajax_combo.php
++++ b/ajax_combo.php
+@@ -284,6 +284,28 @@
+ 				'list_type' => 0,
+ 				'not_null' => false
+ 			),
++			'company' => array(
++				'parent_table' => 'companies',
++				'parent_pk_field' => 'id',
++				'parent_caption' => 'IF(CHAR_LENGTH(`companies`.`companyCode`) || CHAR_LENGTH(`companies`.`companyName`), CONCAT_WS(\'\', `companies`.`companyCode`, \' - \', `companies`.`companyName`), \'\')',
++				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` ',
++				'filterers' => array(),
++				'custom_query' => 'SELECT `companies`.`id`, IF(CHAR_LENGTH(`companies`.`companyCode`) || CHAR_LENGTH(`companies`.`companyName`), CONCAT_WS(\'\', `companies`.`companyCode`, \' - \', `companies`.`companyName`), \'\') FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`name`=`companies`.`kind` WHERE `companies`.`kind` like \'%MC%\' ORDER BY 2',
++				'inherit_permissions' => false,
++				'list_type' => 0,
++				'not_null' => false
++			),
++			'customer' => array(
++				'parent_table' => 'companies',
++				'parent_pk_field' => 'id',
++				'parent_caption' => '`companies`.`companyName`',
++				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` ',
++				'filterers' => array(),
++				'custom_query' => 'SELECT `companies`.`id`, `companies`.`companyName` FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`name`=`companies`.`kind` WHERE `companies`.`kind` like \'%CUST%\' ORDER BY 2',
++				'inherit_permissions' => false,
++				'list_type' => 0,
++				'not_null' => false
++			),
+ 			'idBank' => array(
+ 				'parent_table' => 'companies',
+ 				'parent_pk_field' => 'id',
+diff --git a/companies_dml.php b/companies_dml.php
+index d04411d..000b4bf 100644
+--- a/companies_dml.php
++++ b/companies_dml.php
+@@ -201,6 +201,44 @@ function companies_delete($selected_id, $AllowDeleteOfParents=false, $skipChecks
+ 		return $RetMsg;
+ 	}
+ 
++	// child table: firstCashNote
++	$res = sql("select `id` from `companies` where `id`='$selected_id'", $eo);
++	$id = db_fetch_row($res);
++	$rires = sql("select count(1) from `firstCashNote` where `company`='".addslashes($id[0])."'", $eo);
++	$rirow = db_fetch_row($rires);
++	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
++		$RetMsg = $Translation["couldn't delete"];
++		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
++		$RetMsg = str_replace("<TableName>", "firstCashNote", $RetMsg);
++		return $RetMsg;
++	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
++		$RetMsg = $Translation["confirm delete"];
++		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
++		$RetMsg = str_replace("<TableName>", "firstCashNote", $RetMsg);
++		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='companies_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
++		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='companies_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
++		return $RetMsg;
++	}
++
++	// child table: firstCashNote
++	$res = sql("select `id` from `companies` where `id`='$selected_id'", $eo);
++	$id = db_fetch_row($res);
++	$rires = sql("select count(1) from `firstCashNote` where `customer`='".addslashes($id[0])."'", $eo);
++	$rirow = db_fetch_row($rires);
++	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
++		$RetMsg = $Translation["couldn't delete"];
++		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
++		$RetMsg = str_replace("<TableName>", "firstCashNote", $RetMsg);
++		return $RetMsg;
++	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
++		$RetMsg = $Translation["confirm delete"];
++		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
++		$RetMsg = str_replace("<TableName>", "firstCashNote", $RetMsg);
++		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='companies_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
++		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='companies_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
++		return $RetMsg;
++	}
++
+ 	// child table: firstCashNote
+ 	$res = sql("select `id` from `companies` where `id`='$selected_id'", $eo);
+ 	$id = db_fetch_row($res);
+diff --git a/firstCashNote_autofill.php b/firstCashNote_autofill.php
+index d978f25..89b019b 100644
+--- a/firstCashNote_autofill.php
++++ b/firstCashNote_autofill.php
+@@ -24,7 +24,7 @@
+ 
+ 	switch($mfk){
+ 
+-		case 'idBank':
++		case 'company':
+ 			if(!$id){
+ 				?>
+ 				$j('#bank<?php echo $rnd1; ?>').html('&nbsp;');
+@@ -41,4 +41,4 @@
+ 
+ 	}
+ 
+-?>
+\ No newline at end of file
++?>
+diff --git a/firstCashNote_dml.php b/firstCashNote_dml.php
+index 7ff1b94..71d326b 100644
+--- a/firstCashNote_dml.php
++++ b/firstCashNote_dml.php
+@@ -20,6 +20,9 @@ function firstCashNote_insert($data=[]){
+         $data = firstCashNote_dataRequest($data);
+         
+ 	// hook: firstCashNote_before_insert
++        if(!function_exists('firstCashNote_before_update')){
++            include 'hooks/firstCashNote.php';
++        }
+ 	if(function_exists('firstCashNote_before_insert')){
+ 		$args=array();
+ 		if(!firstCashNote_before_insert($data, getMemberInfo(), $args)){ return false; }
+@@ -68,6 +71,9 @@ function firstCashNote_delete($selected_id, $AllowDeleteOfParents=false, $skipCh
+ 	}
+ 
+ 	// hook: firstCashNote_before_delete
++        if(!function_exists('firstCashNote_before_update')){
++            include 'hooks/firstCashNote.php';
++        }
+ 	if(function_exists('firstCashNote_before_delete')){
+ 		$args=array();
+ 		if(!firstCashNote_before_delete($selected_id, $skipChecks, getMemberInfo(), $args))
+@@ -109,6 +115,9 @@ function firstCashNote_update($selected_id, $data=[]){
+         $data['selectedID']=makeSafe($selected_id);
+             
+ 	// hook: firstCashNote_before_update
++	if(!function_exists('firstCashNote_before_update')){
++            include 'hooks/firstCashNote.php';
++        }
+ 	if(function_exists('firstCashNote_before_update')){
+ 		$args=array();
+ 		if(!firstCashNote_before_update($data, getMemberInfo(), $args)){ return false; }
+@@ -143,29 +152,32 @@ function firstCashNote_dataRequest($request=false){
+         if (!$request){
+             $request=$_REQUEST;
+         }
+-	$data['order'] = makeSafe($_REQUEST['order']);
++		$data['order'] = makeSafe($request['order']);
+ 		if($data['order'] == empty_lookup_value){ $data['order'] = ''; }
+-	$data['operationDate'] = intval($_REQUEST['operationDateYear']) . '-' . intval($_REQUEST['operationDateMonth']) . '-' . intval($_REQUEST['operationDateDay']);
++	$data['company'] = makeSafe($request['company']);
++		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
++	$data['customer'] = makeSafe($request['customer']);
++		if($data['customer'] == empty_lookup_value){ $data['customer'] = ''; }
++	$data['operationDate'] = intval($request['operationDateYear']) . '-' . intval($request['operationDateMonth']) . '-' . intval($request['operationDateDay']);
+ 	$data['operationDate'] = parseMySQLDate($data['operationDate'], '<%%creationDate%%>');
+-	$data['documentNumber'] = makeSafe($_REQUEST['documentNumber']);
++	$data['documentNumber'] = makeSafe($request['documentNumber']);
+ 		if($data['documentNumber'] == empty_lookup_value){ $data['documentNumber'] = ''; }
+-	$data['causal'] = br2nl(makeSafe($_REQUEST['causal']));
+-	$data['revenue'] = makeSafe($_REQUEST['revenue']);
++	$data['causal'] = br2nl(makeSafe($request['causal']));
++	$data['revenue'] = makeSafe($request['revenue']);
+ 		if($data['revenue'] == empty_lookup_value){ $data['revenue'] = ''; }
+-	$data['outputs'] = makeSafe($_REQUEST['outputs']);
++	$data['outputs'] = makeSafe($request['outputs']);
+ 		if($data['outputs'] == empty_lookup_value){ $data['outputs'] = ''; }
+-	$data['balance'] = makeSafe($_REQUEST['balance']);
++	$data['balance'] = makeSafe($request['balance']);
+ 		if($data['balance'] == empty_lookup_value){ $data['balance'] = ''; }
+-	$data['idBank'] = makeSafe($_REQUEST['idBank']);
++	$data['idBank'] = makeSafe($request['idBank']);
+ 		if($data['idBank'] == empty_lookup_value){ $data['idBank'] = ''; }
+-	$data['bank'] = makeSafe($_REQUEST['idBank']);
++	$data['bank'] = makeSafe($request['company']);
+ 		if($data['bank'] == empty_lookup_value){ $data['bank'] = ''; }
+-	$data['note'] = br2nl(makeSafe($_REQUEST['note']));
+-	$data['paymentDeadLine'] = intval($_REQUEST['paymentDeadLineYear']) . '-' . intval($_REQUEST['paymentDeadLineMonth']) . '-' . intval($_REQUEST['paymentDeadLineDay']);
++	$data['note'] = br2nl(makeSafe($request['note']));
++	$data['paymentDeadLine'] = intval($request['paymentDeadLineYear']) . '-' . intval($request['paymentDeadLineMonth']) . '-' . intval($request['paymentDeadLineDay']);
+ 	$data['paymentDeadLine'] = parseMySQLDate($data['paymentDeadLine'], '<%%creationDate%%>');
+-	$data['payed'] = makeSafe($_REQUEST['payed']);
++	$data['payed'] = makeSafe($request['payed']);
+ 		if($data['payed'] == empty_lookup_value){ $data['payed'] = ''; }
+-        
+         return $data;
+ }
+ 
+@@ -188,6 +200,8 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
+ 	}
+ 
+ 	$filterer_order = thisOr(undo_magic_quotes($_REQUEST['filterer_order']), '');
++	$filterer_company = thisOr(undo_magic_quotes($_REQUEST['filterer_company']), '');
++	$filterer_customer = thisOr(undo_magic_quotes($_REQUEST['filterer_customer']), '');
+ 	$filterer_idBank = thisOr(undo_magic_quotes($_REQUEST['filterer_idBank']), '');
+ 
+ 	// populate filterers, starting from children to grand-parents
+@@ -196,6 +210,10 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
+ 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
+ 	// combobox: order
+ 	$combo_order = new DataCombo;
++	// combobox: company
++	$combo_company = new DataCombo;
++	// combobox: customer
++	$combo_customer = new DataCombo;
+ 	// combobox: operationDate
+ 	$combo_operationDate = new DateCombo;
+ 	$combo_operationDate->DateFormat = "dmy";
+@@ -245,15 +263,23 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
+ 		$hc = new CI_Input();
+ 		$row = $hc->xss_clean($row); /* sanitize data */
+ 		$combo_order->SelectedData = $row['order'];
++		$combo_company->SelectedData = $row['company'];
++		$combo_customer->SelectedData = $row['customer'];
+ 		$combo_operationDate->DefaultDate = $row['operationDate'];
+ 		$combo_idBank->SelectedData = $row['idBank'];
+ 		$combo_paymentDeadLine->DefaultDate = $row['paymentDeadLine'];
+ 	}else{
+ 		$combo_order->SelectedData = $filterer_order;
++		$combo_company->SelectedData = $filterer_company;
++		$combo_customer->SelectedData = $filterer_customer;
+ 		$combo_idBank->SelectedData = $filterer_idBank;
+ 	}
+ 	$combo_order->HTML = '<span id="order-container' . $rnd1 . '"></span><input type="hidden" name="order" id="order' . $rnd1 . '" value="' . html_attr($combo_order->SelectedData) . '">';
+ 	$combo_order->MatchText = '<span id="order-container-readonly' . $rnd1 . '"></span><input type="hidden" name="order" id="order' . $rnd1 . '" value="' . html_attr($combo_order->SelectedData) . '">';
++	$combo_company->HTML = '<span id="company-container' . $rnd1 . '"></span><input type="hidden" name="company" id="company' . $rnd1 . '" value="' . html_attr($combo_company->SelectedData) . '">';
++	$combo_company->MatchText = '<span id="company-container-readonly' . $rnd1 . '"></span><input type="hidden" name="company" id="company' . $rnd1 . '" value="' . html_attr($combo_company->SelectedData) . '">';
++	$combo_customer->HTML = '<span id="customer-container' . $rnd1 . '"></span><input type="hidden" name="customer" id="customer' . $rnd1 . '" value="' . html_attr($combo_customer->SelectedData) . '">';
++	$combo_customer->MatchText = '<span id="customer-container-readonly' . $rnd1 . '"></span><input type="hidden" name="customer" id="customer' . $rnd1 . '" value="' . html_attr($combo_customer->SelectedData) . '">';
+ 	$combo_idBank->HTML = '<span id="idBank-container' . $rnd1 . '"></span><input type="hidden" name="idBank" id="idBank' . $rnd1 . '" value="' . html_attr($combo_idBank->SelectedData) . '">';
+ 	$combo_idBank->MatchText = '<span id="idBank-container-readonly' . $rnd1 . '"></span><input type="hidden" name="idBank" id="idBank' . $rnd1 . '" value="' . html_attr($combo_idBank->SelectedData) . '">';
+ 
+@@ -263,11 +289,15 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
+ 	<script>
+ 		// initial lookup values
+ 		AppGini.current_order__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['order'] : $filterer_order); ?>"};
++		AppGini.current_company__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['company'] : $filterer_company); ?>"};
++		AppGini.current_customer__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['customer'] : $filterer_customer); ?>"};
+ 		AppGini.current_idBank__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['idBank'] : $filterer_idBank); ?>"};
+ 
+ 		jQuery(function() {
+ 			setTimeout(function(){
+ 				if(typeof(order_reload__RAND__) == 'function') order_reload__RAND__();
++				if(typeof(company_reload__RAND__) == 'function') company_reload__RAND__();
++				if(typeof(customer_reload__RAND__) == 'function') customer_reload__RAND__();
+ 				if(typeof(idBank_reload__RAND__) == 'function') idBank_reload__RAND__();
+ 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
+ 		});
+@@ -347,6 +377,160 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
+ 			});
+ 		<?php } ?>
+ 
++		}
++		function company_reload__RAND__(){
++		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
++
++			$j("#company-container__RAND__").select2({
++				/* initial default value */
++				initSelection: function(e, c){
++					$j.ajax({
++						url: 'ajax_combo.php',
++						dataType: 'json',
++						data: { id: AppGini.current_company__RAND__.value, t: 'firstCashNote', f: 'company' },
++						success: function(resp){
++							c({
++								id: resp.results[0].id,
++								text: resp.results[0].text
++							});
++							$j('[name="company"]').val(resp.results[0].id);
++							$j('[id=company-container-readonly__RAND__]').html('<span id="company-match-text">' + resp.results[0].text + '</span>');
++							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
++
++
++							if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
++						}
++					});
++				},
++				width: '100%',
++				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
++				minimumResultsForSearch: 10,
++				loadMorePadding: 200,
++				ajax: {
++					url: 'ajax_combo.php',
++					dataType: 'json',
++					cache: true,
++					data: function(term, page){ /* */ return { s: term, p: page, t: 'firstCashNote', f: 'company' }; },
++					results: function(resp, page){ /* */ return resp; }
++				},
++				escapeMarkup: function(str){ /* */ return str; }
++			}).on('change', function(e){
++				AppGini.current_company__RAND__.value = e.added.id;
++				AppGini.current_company__RAND__.text = e.added.text;
++				$j('[name="company"]').val(e.added.id);
++				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
++
++
++				if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
++			});
++
++			if(!$j("#company-container__RAND__").length){
++				$j.ajax({
++					url: 'ajax_combo.php',
++					dataType: 'json',
++					data: { id: AppGini.current_company__RAND__.value, t: 'firstCashNote', f: 'company' },
++					success: function(resp){
++						$j('[name="company"]').val(resp.results[0].id);
++						$j('[id=company-container-readonly__RAND__]').html('<span id="company-match-text">' + resp.results[0].text + '</span>');
++						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
++
++						if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
++					}
++				});
++			}
++
++		<?php }else{ ?>
++
++			$j.ajax({
++				url: 'ajax_combo.php',
++				dataType: 'json',
++				data: { id: AppGini.current_company__RAND__.value, t: 'firstCashNote', f: 'company' },
++				success: function(resp){
++					$j('[id=company-container__RAND__], [id=company-container-readonly__RAND__]').html('<span id="company-match-text">' + resp.results[0].text + '</span>');
++					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
++
++					if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
++				}
++			});
++		<?php } ?>
++
++		}
++		function customer_reload__RAND__(){
++		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
++
++			$j("#customer-container__RAND__").select2({
++				/* initial default value */
++				initSelection: function(e, c){
++					$j.ajax({
++						url: 'ajax_combo.php',
++						dataType: 'json',
++						data: { id: AppGini.current_customer__RAND__.value, t: 'firstCashNote', f: 'customer' },
++						success: function(resp){
++							c({
++								id: resp.results[0].id,
++								text: resp.results[0].text
++							});
++							$j('[name="customer"]').val(resp.results[0].id);
++							$j('[id=customer-container-readonly__RAND__]').html('<span id="customer-match-text">' + resp.results[0].text + '</span>');
++							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
++
++
++							if(typeof(customer_update_autofills__RAND__) == 'function') customer_update_autofills__RAND__();
++						}
++					});
++				},
++				width: '100%',
++				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
++				minimumResultsForSearch: 10,
++				loadMorePadding: 200,
++				ajax: {
++					url: 'ajax_combo.php',
++					dataType: 'json',
++					cache: true,
++					data: function(term, page){ /* */ return { s: term, p: page, t: 'firstCashNote', f: 'customer' }; },
++					results: function(resp, page){ /* */ return resp; }
++				},
++				escapeMarkup: function(str){ /* */ return str; }
++			}).on('change', function(e){
++				AppGini.current_customer__RAND__.value = e.added.id;
++				AppGini.current_customer__RAND__.text = e.added.text;
++				$j('[name="customer"]').val(e.added.id);
++				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
++
++
++				if(typeof(customer_update_autofills__RAND__) == 'function') customer_update_autofills__RAND__();
++			});
++
++			if(!$j("#customer-container__RAND__").length){
++				$j.ajax({
++					url: 'ajax_combo.php',
++					dataType: 'json',
++					data: { id: AppGini.current_customer__RAND__.value, t: 'firstCashNote', f: 'customer' },
++					success: function(resp){
++						$j('[name="customer"]').val(resp.results[0].id);
++						$j('[id=customer-container-readonly__RAND__]').html('<span id="customer-match-text">' + resp.results[0].text + '</span>');
++						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
++
++						if(typeof(customer_update_autofills__RAND__) == 'function') customer_update_autofills__RAND__();
++					}
++				});
++			}
++
++		<?php }else{ ?>
++
++			$j.ajax({
++				url: 'ajax_combo.php',
++				dataType: 'json',
++				data: { id: AppGini.current_customer__RAND__.value, t: 'firstCashNote', f: 'customer' },
++				success: function(resp){
++					$j('[id=customer-container__RAND__], [id=customer-container-readonly__RAND__]').html('<span id="customer-match-text">' + resp.results[0].text + '</span>');
++					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
++
++					if(typeof(customer_update_autofills__RAND__) == 'function') customer_update_autofills__RAND__();
++				}
++			});
++		<?php } ?>
++
+ 		}
+ 		function idBank_reload__RAND__(){
+ 		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+@@ -485,6 +669,10 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
+ 	if(($selected_id && !$AllowUpdate && !$AllowInsert) || (!$selected_id && !$AllowInsert)){
+ 		$jsReadOnly .= "\tjQuery('#order').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+ 		$jsReadOnly .= "\tjQuery('#order_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
++		$jsReadOnly .= "\tjQuery('#company').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
++		$jsReadOnly .= "\tjQuery('#company_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
++		$jsReadOnly .= "\tjQuery('#customer').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
++		$jsReadOnly .= "\tjQuery('#customer_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+ 		$jsReadOnly .= "\tjQuery('#operationDate').prop('readonly', true);\n";
+ 		$jsReadOnly .= "\tjQuery('#operationDateDay, #operationDateMonth, #operationDateYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+ 		$jsReadOnly .= "\tjQuery('#documentNumber').replaceWith('<div class=\"form-control-static\" id=\"documentNumber\">' + (jQuery('#documentNumber').val() || '') + '</div>');\n";
+@@ -510,6 +698,12 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
+ 	$templateCode = str_replace('<%%COMBO(order)%%>', $combo_order->HTML, $templateCode);
+ 	$templateCode = str_replace('<%%COMBOTEXT(order)%%>', $combo_order->MatchText, $templateCode);
+ 	$templateCode = str_replace('<%%URLCOMBOTEXT(order)%%>', urlencode($combo_order->MatchText), $templateCode);
++	$templateCode = str_replace('<%%COMBO(company)%%>', $combo_company->HTML, $templateCode);
++	$templateCode = str_replace('<%%COMBOTEXT(company)%%>', $combo_company->MatchText, $templateCode);
++	$templateCode = str_replace('<%%URLCOMBOTEXT(company)%%>', urlencode($combo_company->MatchText), $templateCode);
++	$templateCode = str_replace('<%%COMBO(customer)%%>', $combo_customer->HTML, $templateCode);
++	$templateCode = str_replace('<%%COMBOTEXT(customer)%%>', $combo_customer->MatchText, $templateCode);
++	$templateCode = str_replace('<%%URLCOMBOTEXT(customer)%%>', urlencode($combo_customer->MatchText), $templateCode);
+ 	$templateCode = str_replace('<%%COMBO(operationDate)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_operationDate->GetHTML(true) . '</div>' : $combo_operationDate->GetHTML()), $templateCode);
+ 	$templateCode = str_replace('<%%COMBOTEXT(operationDate)%%>', $combo_operationDate->GetHTML(true), $templateCode);
+ 	$templateCode = str_replace('<%%COMBO(idBank)%%>', $combo_idBank->HTML, $templateCode);
+@@ -519,7 +713,7 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
+ 	$templateCode = str_replace('<%%COMBOTEXT(paymentDeadLine)%%>', $combo_paymentDeadLine->GetHTML(true), $templateCode);
+ 
+ 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
+-	$lookup_fields = array(  'order' => array('orders', 'Order'), 'idBank' => array('companies', 'IdBank'));
++	$lookup_fields = array(  'order' => array('orders', 'Order'), 'company' => array('companies', 'Company'), 'customer' => array('companies', 'Customer'), 'idBank' => array('companies', 'IdBank'));
+ 	foreach($lookup_fields as $luf => $ptfc){
+ 		$pt_perm = getTablePermissions($ptfc[0]);
+ 
+@@ -537,6 +731,8 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
+ 	// process images
+ 	$templateCode = str_replace('<%%UPLOADFILE(id)%%>', '', $templateCode);
+ 	$templateCode = str_replace('<%%UPLOADFILE(order)%%>', '', $templateCode);
++	$templateCode = str_replace('<%%UPLOADFILE(company)%%>', '', $templateCode);
++	$templateCode = str_replace('<%%UPLOADFILE(customer)%%>', '', $templateCode);
+ 	$templateCode = str_replace('<%%UPLOADFILE(operationDate)%%>', '', $templateCode);
+ 	$templateCode = str_replace('<%%UPLOADFILE(documentNumber)%%>', '', $templateCode);
+ 	$templateCode = str_replace('<%%UPLOADFILE(causal)%%>', '', $templateCode);
+@@ -556,6 +752,12 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
+ 		if( $dvprint) $templateCode = str_replace('<%%VALUE(order)%%>', safe_html($urow['order']), $templateCode);
+ 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(order)%%>', html_attr($row['order']), $templateCode);
+ 		$templateCode = str_replace('<%%URLVALUE(order)%%>', urlencode($urow['order']), $templateCode);
++		if( $dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', safe_html($urow['company']), $templateCode);
++		if(!$dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', html_attr($row['company']), $templateCode);
++		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode($urow['company']), $templateCode);
++		if( $dvprint) $templateCode = str_replace('<%%VALUE(customer)%%>', safe_html($urow['customer']), $templateCode);
++		if(!$dvprint) $templateCode = str_replace('<%%VALUE(customer)%%>', html_attr($row['customer']), $templateCode);
++		$templateCode = str_replace('<%%URLVALUE(customer)%%>', urlencode($urow['customer']), $templateCode);
+ 		$templateCode = str_replace('<%%VALUE(operationDate)%%>', @date('d/m/Y', @strtotime(html_attr($row['operationDate']))), $templateCode);
+ 		$templateCode = str_replace('<%%URLVALUE(operationDate)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['operationDate'])))), $templateCode);
+ 		if( $dvprint) $templateCode = str_replace('<%%VALUE(documentNumber)%%>', safe_html($urow['documentNumber']), $templateCode);
+@@ -593,6 +795,10 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
+ 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
+ 		$templateCode = str_replace('<%%VALUE(order)%%>', '', $templateCode);
+ 		$templateCode = str_replace('<%%URLVALUE(order)%%>', urlencode(''), $templateCode);
++		$templateCode = str_replace('<%%VALUE(company)%%>', '', $templateCode);
++		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode(''), $templateCode);
++		$templateCode = str_replace('<%%VALUE(customer)%%>', '', $templateCode);
++		$templateCode = str_replace('<%%URLVALUE(customer)%%>', urlencode(''), $templateCode);
+ 		$templateCode = str_replace('<%%VALUE(operationDate)%%>', '<%%creationDate%%>', $templateCode);
+ 		$templateCode = str_replace('<%%URLVALUE(operationDate)%%>', urlencode('<%%creationDate%%>'), $templateCode);
+ 		$templateCode = str_replace('<%%VALUE(documentNumber)%%>', '', $templateCode);
+@@ -645,18 +851,18 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
+ 	$templateCode .= '<script>';
+ 	$templateCode .= '$j(function() {';
+ 
+-	$templateCode .= "\tidBank_update_autofills$rnd1 = function(){\n";
++	$templateCode .= "\tcompany_update_autofills$rnd1 = function(){\n";
+ 	$templateCode .= "\t\t\$j.ajax({\n";
+ 	if($dvprint){
+-		$templateCode .= "\t\t\turl: 'firstCashNote_autofill.php?rnd1=$rnd1&mfk=idBank&id=' + encodeURIComponent('".addslashes($row['idBank'])."'),\n";
++		$templateCode .= "\t\t\turl: 'firstCashNote_autofill.php?rnd1=$rnd1&mfk=company&id=' + encodeURIComponent('".addslashes($row['company'])."'),\n";
+ 		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET'\n";
+ 	}else{
+-		$templateCode .= "\t\t\turl: 'firstCashNote_autofill.php?rnd1=$rnd1&mfk=idBank&id=' + encodeURIComponent(AppGini.current_idBank{$rnd1}.value),\n";
+-		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET', beforeSend: function(){ /* */ \$j('#idBank$rnd1').prop('disabled', true); \$j('#idBankLoading').html('<img src=loading.gif align=top>'); }, complete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#idBank$rnd1').prop('disabled', false); " : "\$j('#idBank$rnd1').prop('disabled', true); ")."\$j('#idBankLoading').html('');}\n";
++		$templateCode .= "\t\t\turl: 'firstCashNote_autofill.php?rnd1=$rnd1&mfk=company&id=' + encodeURIComponent(AppGini.current_company{$rnd1}.value),\n";
++		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET', beforeSend: function(){ /* */ \$j('#company$rnd1').prop('disabled', true); \$j('#companyLoading').html('<img src=loading.gif align=top>'); }, complete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#company$rnd1').prop('disabled', false); " : "\$j('#company$rnd1').prop('disabled', true); ")."\$j('#companyLoading').html('');}\n";
+ 	}
+ 	$templateCode.="\t\t});\n";
+ 	$templateCode.="\t};\n";
+-	if(!$dvprint) $templateCode.="\tif(\$j('#idBank_caption').length) \$j('#idBank_caption').click(function(){ /* */ idBank_update_autofills$rnd1(); });\n";
++	if(!$dvprint) $templateCode.="\tif(\$j('#company_caption').length) \$j('#company_caption').click(function(){ /* */ company_update_autofills$rnd1(); });\n";
+ 
+ 
+ 	$templateCode.="});";
+diff --git a/firstCashNote_view.php b/firstCashNote_view.php
+index 67cd688..67fe3e1 100644
+--- a/firstCashNote_view.php
++++ b/firstCashNote_view.php
+@@ -24,13 +24,15 @@
+ 	$x->QueryFieldsTV = array(   
+ 		"`firstCashNote`.`id`" => "id",
+ 		"IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') /* Order */" => "order",
++		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* Company */" => "company",
++		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Customer */" => "customer",
+ 		"if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'')" => "operationDate",
+ 		"`firstCashNote`.`documentNumber`" => "documentNumber",
+ 		"`firstCashNote`.`causal`" => "causal",
+ 		"`firstCashNote`.`revenue`" => "revenue",
+ 		"`firstCashNote`.`outputs`" => "outputs",
+ 		"`firstCashNote`.`balance`" => "balance",
+-		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "idBank",
++		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* IdBank */" => "idBank",
+ 		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Banca */" => "bank",
+ 		"`firstCashNote`.`note`" => "note",
+ 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
+@@ -40,30 +42,34 @@
+ 	$x->SortFields = array(   
+ 		1 => '`firstCashNote`.`id`',
+ 		2 => '`orders1`.`multiOrder`',
+-		3 => '`firstCashNote`.`operationDate`',
+-		4 => '`firstCashNote`.`documentNumber`',
+-		5 => 5,
+-		6 => '`firstCashNote`.`revenue`',
+-		7 => '`firstCashNote`.`outputs`',
+-		8 => '`firstCashNote`.`balance`',
+-		9 => '`companies1`.`companyName`',
+-		10 => '`companies1`.`companyName`',
+-		11 => 11,
+-		12 => '`firstCashNote`.`paymentDeadLine`',
+-		13 => 13
++		3 => 3,
++		4 => '`companies2`.`companyName`',
++		5 => '`firstCashNote`.`operationDate`',
++		6 => '`firstCashNote`.`documentNumber`',
++		7 => 7,
++		8 => '`firstCashNote`.`revenue`',
++		9 => '`firstCashNote`.`outputs`',
++		10 => '`firstCashNote`.`balance`',
++		11 => '`companies3`.`companyName`',
++		12 => '`companies1`.`companyName`',
++		13 => 13,
++		14 => '`firstCashNote`.`paymentDeadLine`',
++		15 => 15
+ 	);
+ 
+ 	// Fields that can be displayed in the csv file
+ 	$x->QueryFieldsCSV = array(   
+ 		"`firstCashNote`.`id`" => "id",
+ 		"IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') /* Order */" => "order",
++		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* Company */" => "company",
++		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Customer */" => "customer",
+ 		"if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'')" => "operationDate",
+ 		"`firstCashNote`.`documentNumber`" => "documentNumber",
+ 		"`firstCashNote`.`causal`" => "causal",
+ 		"`firstCashNote`.`revenue`" => "revenue",
+ 		"`firstCashNote`.`outputs`" => "outputs",
+ 		"`firstCashNote`.`balance`" => "balance",
+-		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "idBank",
++		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* IdBank */" => "idBank",
+ 		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Banca */" => "bank",
+ 		"`firstCashNote`.`note`" => "note",
+ 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
+@@ -73,13 +79,15 @@
+ 	$x->QueryFieldsFilters = array(   
+ 		"`firstCashNote`.`id`" => "ID",
+ 		"IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') /* Order */" => "Order",
++		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* Company */" => "Company",
++		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Customer */" => "Customer",
+ 		"`firstCashNote`.`operationDate`" => "Data operazione",
+ 		"`firstCashNote`.`documentNumber`" => "Numero ordine",
+ 		"`firstCashNote`.`causal`" => "Causale",
+ 		"`firstCashNote`.`revenue`" => "Entrate",
+ 		"`firstCashNote`.`outputs`" => "Uscite",
+ 		"`firstCashNote`.`balance`" => "Bilancio",
+-		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "IdBank",
++		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* IdBank */" => "IdBank",
+ 		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Banca */" => "Banca",
+ 		"`firstCashNote`.`note`" => "Note pagamento",
+ 		"`firstCashNote`.`paymentDeadLine`" => "Pagamento in data",
+@@ -90,13 +98,15 @@
+ 	$x->QueryFieldsQS = array(   
+ 		"`firstCashNote`.`id`" => "id",
+ 		"IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') /* Order */" => "order",
++		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* Company */" => "company",
++		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Customer */" => "customer",
+ 		"if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'')" => "operationDate",
+ 		"`firstCashNote`.`documentNumber`" => "documentNumber",
+ 		"`firstCashNote`.`causal`" => "causal",
+ 		"`firstCashNote`.`revenue`" => "revenue",
+ 		"`firstCashNote`.`outputs`" => "outputs",
+ 		"`firstCashNote`.`balance`" => "balance",
+-		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* IdBank */" => "idBank",
++		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* IdBank */" => "idBank",
+ 		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Banca */" => "bank",
+ 		"`firstCashNote`.`note`" => "note",
+ 		"if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'')" => "paymentDeadLine",
+@@ -104,9 +114,9 @@
+ 	);
+ 
+ 	// Lookup fields that can be used as filterers
+-	$x->filterers = array(  'order' => 'Order', 'idBank' => 'IdBank');
++	$x->filterers = array(  'order' => 'Order', 'company' => 'Company', 'customer' => 'Customer', 'idBank' => 'IdBank');
+ 
+-	$x->QueryFrom = "`firstCashNote` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`firstCashNote`.`idBank` ";
++	$x->QueryFrom = "`firstCashNote` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`firstCashNote`.`company` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`firstCashNote`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`firstCashNote`.`idBank` ";
+ 	$x->QueryWhere = '';
+ 	$x->QueryOrder = '';
+ 
+@@ -133,10 +143,10 @@
+ 	$x->TableIcon = "resources/table_icons/data_sort.png";
+ 	$x->PrimaryKey = "`firstCashNote`.`id`";
+ 
+-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+-	$x->ColCaption = array("Order", "Data operazione", "Numero ordine", "Causale", "Entrate", "Uscite", "Bilancio", "Banca", "Note pagamento", "Pagamento in data", "Pagato SI/NO");
+-	$x->ColFieldName = array('order', 'operationDate', 'documentNumber', 'causal', 'revenue', 'outputs', 'balance', 'bank', 'note', 'paymentDeadLine', 'payed');
+-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13);
++	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
++	$x->ColCaption = array("Order", "Company", "Customer", "Data operazione", "Numero ordine", "Causale", "Entrate", "Uscite", "Bilancio", "Banca", "Note pagamento", "Pagamento in data", "Pagato SI/NO");
++	$x->ColFieldName = array('order', 'company', 'customer', 'operationDate', 'documentNumber', 'causal', 'revenue', 'outputs', 'balance', 'bank', 'note', 'paymentDeadLine', 'payed');
++	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
+ 
+ 	// template paths below are based on the app main directory
+ 	$x->Template = 'templates/firstCashNote_templateTV.html';
+@@ -198,6 +208,8 @@
+ 			$sumRow = '<tr class="success">';
+ 			if(!isset($_REQUEST['Print_x'])) $sumRow .= '<td class="text-center"><strong>&sum;</strong></td>';
+ 			$sumRow .= '<td class="firstCashNote-order"></td>';
++			$sumRow .= '<td class="firstCashNote-company"></td>';
++			$sumRow .= '<td class="firstCashNote-customer"></td>';
+ 			$sumRow .= '<td class="firstCashNote-operationDate"></td>';
+ 			$sumRow .= '<td class="firstCashNote-documentNumber"></td>';
+ 			$sumRow .= '<td class="firstCashNote-causal"></td>';
+@@ -241,4 +253,4 @@
+ 		ob_start(); include_once("$currDir/footer.php"); $dFooter=ob_get_contents(); ob_end_clean();
+ 		echo str_replace('<%%FOOTER%%>', $dFooter, $footerCode);
+ 	}
+-?>
+\ No newline at end of file
++?>
+diff --git a/hooks/SQL_Views/SQL_averageWeightPrice.sql b/hooks/SQL_Views/SQL_averageWeightPrice.sql
+new file mode 100644
+index 0000000..c855f21
+--- /dev/null
++++ b/hooks/SQL_Views/SQL_averageWeightPrice.sql
+@@ -0,0 +1,25 @@
++/**
++ * Author:  ale
++ * Created: 22/11/2018
++ */
++CREATE OR REPLACE VIEW SQL_averageWeightPrice AS 
++SELECT
++    orders.`date` as 'date',
++    ordersDetails.productCode as 'prodId',
++    products.productCode as 'code',
++    products.productName as 'name',
++    sum(IF(orders.kind = 'IN',ordersDetails.QuantityReal,0)) as 'PesoIN',
++    sum(IF(orders.kind = 'OUT',ordersDetails.QuantityReal,0)) as 'PesoOUT',
++    sum(IF(orders.kind = 'OUT',ordersDetails.QuantityReal * -1,ordersDetails.QuantityReal)) as 'PesoStock',
++    avg(IF(orders.kind = 'IN',ordersDetails.QuantityReal,0)) as 'AVGWeightIN',
++    avg(IF(orders.kind = 'OUT',ordersDetails.QuantityReal,0)) as 'AVGWeightOUT',
++    avg(IF(orders.kind = 'IN',ordersDetails.LineTotal,0)) as 'AVGPriceIN',
++    avg(IF(orders.kind = 'OUT',ordersDetails.LineTotal,0)) as 'AVGPriceOUT'
++FROM
++    orders
++LEFT JOIN ordersDetails ON ordersDetails.`order` = orders.id
++LEFT JOIN products on products.id = ordersDetails.productCode
++WHERE orders.typeDoc = 'DDT' or orders.typeDoc = 'FTIM' 
++GROUP BY
++orders.`date`,
++ordersDetails.productCode
+diff --git a/hooks/SQL_Views/SQL_productsStock.sql b/hooks/SQL_Views/SQL_productsStock.sql
+index 5974da7..cf5680a 100644
+--- a/hooks/SQL_Views/SQL_productsStock.sql
++++ b/hooks/SQL_Views/SQL_productsStock.sql
+@@ -16,7 +16,6 @@ FROM
+     orders
+ LEFT JOIN ordersDetails ON ordersDetails.`order` = orders.id
+ LEFT JOIN products on products.id = ordersDetails.productCode
+-WHERE orders.typeDoc = 'DDT'
++WHERE orders.typeDoc = 'DDT' or orders.typeDoc = 'FTIM'
+ GROUP BY
+-ordersDetails.productCode,
+-orders.typeDoc
+\ No newline at end of file
++ordersDetails.productCode
+\ No newline at end of file
+diff --git a/hooks/SQL_odersDetailsToInsert.sql b/hooks/SQL_odersDetailsToInsert.sql
+deleted file mode 100644
+index 6654bf6..0000000
+--- a/hooks/SQL_odersDetailsToInsert.sql
++++ /dev/null
+@@ -1,62 +0,0 @@
+-INSERT INTO `ordersDetails` 
+-(`id`,
+-    `order`,
+-    `manufactureDate`,
+-    `sellDate`,
+-    `expiryDate`,
+-    `daysToExpiry`,
+-    `codebar`,
+-    `UM`,
+-    `productCode`,
+-    `batch`,
+-    `packages`,
+-    `noSell`,
+-    `Quantity`,
+-    `QuantityReal`,
+-    `UnitPrice`,
+-    `Subtotal`,
+-    `taxes`,
+-    `Discount`,
+-    `LineTotal`,
+-    `section`,
+-    `transaction_type`,
+-    `skBatches`,
+-    `averagePrice`,
+-    `averageWeight`,
+-    `commission`,
+-    `return`,
+-    `supplierCode`)
+-SELECT
+-    `id`,
+-    {$recID} as `order`,
+-    `manufactureDate`,
+-    `sellDate`,
+-    `expiryDate`,
+-    `daysToExpiry`,
+-    `codebar`,
+-    `UM`,
+-    `productCode`,
+-    `batch`,
+-    `packages`,
+-    `noSell`,
+-    `Quantity`,
+-    `QuantityReal`,
+-    `UnitPrice`,
+-    `Subtotal`,
+-    `taxes`,
+-    `Discount`,
+-    `LineTotal`,
+-    `section`,
+-    `transaction_type`,
+-    `skBatches`,
+-    `averagePrice`,
+-    `averageWeight`,
+-    `commission`,
+-    `return`,
+-    `supplierCode`
+-FROM
+-    `SQL_ordersDetails`
+-WHERE company = {$company_id} 
+-AND customer ={$customer_id} 
+-AND MONTH = {$month_} 
+-AND YEAR = {$year_}
+\ No newline at end of file
+diff --git a/hooks/SQLadd_kinds.sql b/hooks/SQLadd_kinds.sql
+deleted file mode 100644
+index d759461..0000000
+--- a/hooks/SQLadd_kinds.sql
++++ /dev/null
+@@ -1,79 +0,0 @@
+--- phpMyAdmin SQL Dump
+--- version 4.8.3
+--- https://www.phpmyadmin.net/
+---
+--- Host: localhost:3306
+--- Creato il: Nov 20, 2018 alle 16:20
+--- Versione del server: 10.2.19-MariaDB
+--- Versione PHP: 7.1.14
+-
+-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+-SET AUTOCOMMIT = 0;
+-START TRANSACTION;
+-SET time_zone = "+00:00";
+-
+-
+-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+-/*!40101 SET NAMES utf8mb4 */;
+-
+---
+--- Database: `fruttitaliacom_alejandro`
+---
+-
+--- --------------------------------------------------------
+-
+---
+--- Struttura della tabella `kinds`
+---
+-
+--- CREATE TABLE `kinds` (
+---   `entity` blob NOT NULL,
+---   `code` varchar(40) NOT NULL,
+---   `name` varchar(255) NOT NULL,
+---   `value` text DEFAULT NULL,
+---   `descriptions` text DEFAULT NULL
+--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+--- 
+--- --
+--- -- Dump dei dati per la tabella `kinds`
+--- --
+-
+-INSERT INTO `kinds` (`entity`, `code`, `name`, `value`, `descriptions`) VALUES
+-(0x5461786573, '4', 'IVA 4%', '4', NULL),
+-(0x436f6e7461637473, 'ADRPR', 'Indirizzo Privato', NULL, NULL),
+-(0x436f6d70616e696573, 'CUST', 'customers', NULL, NULL),
+-(0x41747472696275746573, 'CUST_CREDIT', 'Limit credit', '{\"code_filter\":\"\", \"default\":\"10000\"}', 'Establecer el limite de crédito en los clientes.\r\nEstablish the credit limit in the clients.\r\nStabilire il limite di fido nei clienti.'),
+-(0x446f63756d656e7473, 'DDT', 'Documento di trasporto', NULL, NULL),
+-(0x41747472696275746573, 'DEF_A', 'Default A', '1', NULL),
+-(0x446f63756d656e7473, 'DFD', 'Documento Fattura Differita', NULL, NULL),
+-(0x436f6e7461637473, 'e-mail', 'e-mail', NULL, NULL),
+-(0x50726f6475637473, 'FAB', 'Prodotto confezionato', NULL, NULL),
+-(0x4f7264657273, 'IN', 'Ordine in entrata', NULL, NULL),
+-(0x5461786573, 'IVA10', 'iva 10%', '10', NULL),
+-(0x5461786573, 'IVA3', 'iva 3%', '3', NULL),
+-(0x436f6d70616e696573, 'MC', 'MultiCompany', NULL, NULL),
+-(0x4f7264657273, 'OUT', 'Ordine in uscita', NULL, NULL),
+-(0x50686f6e6573, 'Pho', 'telephone', NULL, NULL),
+-(0x41747472696275746573, 'PROD_Brand', 'Brand', NULL, NULL),
+-(0x41747472696275746573, 'PROD_Pallet', 'Pallet', NULL, NULL),
+-(0x436f6d70616e696573, 'PROV', 'Provider', NULL, NULL),
+-(0x436f6d70616e696573, 'SHIP', 'Shippers', NULL, NULL),
+-(0x436f6d70616e696573, 'SUP', 'Suppliers', NULL, NULL),
+-(0x416464726573736573, 'VMCT GEMG', 'Address comerciale', NULL, NULL);
+-
+---
+--- Indici per le tabelle scaricate
+---
+-
+--- --
+--- -- Indici per le tabelle `kinds`
+--- --
+--- ALTER TABLE `kinds`
+---   ADD PRIMARY KEY (`code`);
+--- COMMIT;
+--- 
+--- /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+--- /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+--- /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+diff --git a/hooks/__global.php b/hooks/__global.php
+index 4131891..2b80d8b 100644
+--- a/hooks/__global.php
++++ b/hooks/__global.php
+@@ -1,5 +1,4 @@
+ <?php
+-	// For help on using hooks, please refer to https://bigprof.com/appgini/help/working-with-generated-web-database-application/hooks
+ 
+ 	function login_ok($memberInfo, &$args){
+             $dir = __DIR__."/SQL_Views";
+diff --git a/hooks/children-ordersDetails.php b/hooks/children-ordersDetails.php
+index 77f143c..6cfa42e 100644
+--- a/hooks/children-ordersDetails.php
++++ b/hooks/children-ordersDetails.php
+@@ -275,13 +275,17 @@
+ 							<?php } ?>
+ 						<?php }else { ?>
+                                                                 <td class="text-center view-on-click"></td>
+-                                                    <?php } 
++                                                    <?php }
++                                                    $kindOrder=sqlValue("select kind from orders where id = {$parameters['SelectedID']}");
++                                                    $dateOrder=sqlValue("select date from orders where id = {$parameters['SelectedID']}");
+                                                     $stock = sqlvalue("SELECT stock FROM SQL_productsStock where code='{$record[7]}' LIMIT 1;");
++                                                    $price = number_format(sqlvalue("SELECT AVGPrice$kindOrder FROM SQL_averageWeightPrice where code='{$record[7]}' and date = '$dateOrder' LIMIT 1;"),2,'.',',');
++                                                    $weight = number_format(sqlvalue("SELECT AVGWeight$kindOrder FROM SQL_averageWeightPrice where code='{$record[7]}' and date ='$dateOrder' LIMIT 1;"),2,'.',',');
+                                                     $classes='lightcoral';
+                                                     if($stock>0){
+                                                         $classes='green';
+                                                     }
+-                                                    elseif($stock==0){
++                                                    elseif($stock===0){
+                                                         $classes='gold';
+                                                     }
+ 
+@@ -300,8 +304,8 @@
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][18]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][18]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[18]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][19]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][19]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[19]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][20]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][20]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[20]); ?></td>
+-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][22]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][22]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[22]); ?></td>
+-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][23]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][23]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[23]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][22]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][22]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($price); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][23]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][23]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($weight); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][24]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][24]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[24]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][25]}"; ?> text-center" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][25]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[25]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][26]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][26]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[26]); ?></td>
+diff --git a/hooks/deprecated/SQL_odersDetailsToInsert.sql b/hooks/deprecated/SQL_odersDetailsToInsert.sql
+new file mode 100644
+index 0000000..6654bf6
+--- /dev/null
++++ b/hooks/deprecated/SQL_odersDetailsToInsert.sql
+@@ -0,0 +1,62 @@
++INSERT INTO `ordersDetails` 
++(`id`,
++    `order`,
++    `manufactureDate`,
++    `sellDate`,
++    `expiryDate`,
++    `daysToExpiry`,
++    `codebar`,
++    `UM`,
++    `productCode`,
++    `batch`,
++    `packages`,
++    `noSell`,
++    `Quantity`,
++    `QuantityReal`,
++    `UnitPrice`,
++    `Subtotal`,
++    `taxes`,
++    `Discount`,
++    `LineTotal`,
++    `section`,
++    `transaction_type`,
++    `skBatches`,
++    `averagePrice`,
++    `averageWeight`,
++    `commission`,
++    `return`,
++    `supplierCode`)
++SELECT
++    `id`,
++    {$recID} as `order`,
++    `manufactureDate`,
++    `sellDate`,
++    `expiryDate`,
++    `daysToExpiry`,
++    `codebar`,
++    `UM`,
++    `productCode`,
++    `batch`,
++    `packages`,
++    `noSell`,
++    `Quantity`,
++    `QuantityReal`,
++    `UnitPrice`,
++    `Subtotal`,
++    `taxes`,
++    `Discount`,
++    `LineTotal`,
++    `section`,
++    `transaction_type`,
++    `skBatches`,
++    `averagePrice`,
++    `averageWeight`,
++    `commission`,
++    `return`,
++    `supplierCode`
++FROM
++    `SQL_ordersDetails`
++WHERE company = {$company_id} 
++AND customer ={$customer_id} 
++AND MONTH = {$month_} 
++AND YEAR = {$year_}
+\ No newline at end of file
+diff --git a/hooks/deprecated/SQLadd_kinds.sql b/hooks/deprecated/SQLadd_kinds.sql
+new file mode 100644
+index 0000000..d759461
+--- /dev/null
++++ b/hooks/deprecated/SQLadd_kinds.sql
+@@ -0,0 +1,79 @@
++-- phpMyAdmin SQL Dump
++-- version 4.8.3
++-- https://www.phpmyadmin.net/
++--
++-- Host: localhost:3306
++-- Creato il: Nov 20, 2018 alle 16:20
++-- Versione del server: 10.2.19-MariaDB
++-- Versione PHP: 7.1.14
++
++SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
++SET AUTOCOMMIT = 0;
++START TRANSACTION;
++SET time_zone = "+00:00";
++
++
++/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
++/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
++/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
++/*!40101 SET NAMES utf8mb4 */;
++
++--
++-- Database: `fruttitaliacom_alejandro`
++--
++
++-- --------------------------------------------------------
++
++--
++-- Struttura della tabella `kinds`
++--
++
++-- CREATE TABLE `kinds` (
++--   `entity` blob NOT NULL,
++--   `code` varchar(40) NOT NULL,
++--   `name` varchar(255) NOT NULL,
++--   `value` text DEFAULT NULL,
++--   `descriptions` text DEFAULT NULL
++-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
++-- 
++-- --
++-- -- Dump dei dati per la tabella `kinds`
++-- --
++
++INSERT INTO `kinds` (`entity`, `code`, `name`, `value`, `descriptions`) VALUES
++(0x5461786573, '4', 'IVA 4%', '4', NULL),
++(0x436f6e7461637473, 'ADRPR', 'Indirizzo Privato', NULL, NULL),
++(0x436f6d70616e696573, 'CUST', 'customers', NULL, NULL),
++(0x41747472696275746573, 'CUST_CREDIT', 'Limit credit', '{\"code_filter\":\"\", \"default\":\"10000\"}', 'Establecer el limite de crédito en los clientes.\r\nEstablish the credit limit in the clients.\r\nStabilire il limite di fido nei clienti.'),
++(0x446f63756d656e7473, 'DDT', 'Documento di trasporto', NULL, NULL),
++(0x41747472696275746573, 'DEF_A', 'Default A', '1', NULL),
++(0x446f63756d656e7473, 'DFD', 'Documento Fattura Differita', NULL, NULL),
++(0x436f6e7461637473, 'e-mail', 'e-mail', NULL, NULL),
++(0x50726f6475637473, 'FAB', 'Prodotto confezionato', NULL, NULL),
++(0x4f7264657273, 'IN', 'Ordine in entrata', NULL, NULL),
++(0x5461786573, 'IVA10', 'iva 10%', '10', NULL),
++(0x5461786573, 'IVA3', 'iva 3%', '3', NULL),
++(0x436f6d70616e696573, 'MC', 'MultiCompany', NULL, NULL),
++(0x4f7264657273, 'OUT', 'Ordine in uscita', NULL, NULL),
++(0x50686f6e6573, 'Pho', 'telephone', NULL, NULL),
++(0x41747472696275746573, 'PROD_Brand', 'Brand', NULL, NULL),
++(0x41747472696275746573, 'PROD_Pallet', 'Pallet', NULL, NULL),
++(0x436f6d70616e696573, 'PROV', 'Provider', NULL, NULL),
++(0x436f6d70616e696573, 'SHIP', 'Shippers', NULL, NULL),
++(0x436f6d70616e696573, 'SUP', 'Suppliers', NULL, NULL),
++(0x416464726573736573, 'VMCT GEMG', 'Address comerciale', NULL, NULL);
++
++--
++-- Indici per le tabelle scaricate
++--
++
++-- --
++-- -- Indici per le tabelle `kinds`
++-- --
++-- ALTER TABLE `kinds`
++--   ADD PRIMARY KEY (`code`);
++-- COMMIT;
++-- 
++-- /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
++-- /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
++-- /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+diff --git a/hooks/myParent-children.php b/hooks/myParent-children.php
+index b793f1a..a187093 100644
+--- a/hooks/myParent-children.php
++++ b/hooks/myParent-children.php
+@@ -4,7 +4,7 @@
+ 
+ 	/* Configuration */
+ 	/*************************************/
+-
++$dir = __DIR__;
+ 		$pcConfig = array(
+                         'addresses' => array(   
+ 				'kind' => array(   
+diff --git a/hooks/productCard.php b/hooks/productCard.php
+index 87b6c95..6f7d92d 100644
+--- a/hooks/productCard.php
++++ b/hooks/productCard.php
+@@ -107,7 +107,7 @@ ob_start();
+         </div>
+             <div class="small-box bg-aqua">
+                 <small><?php echo 'Last update ' . time_elapsed_string($product_update); ?>  </small>
+-                <a id="companies_view_parent" pt="companies" myid="<?php echo $where_id; ?>" class="btn btn-sm view_parent" type="button" title="Azienda Details" onclick="showParent(this);" >more info
++                <a id="products_view_parent" pt="products" myid="<?php echo $where_id; ?>" class="btn btn-sm view_parent" type="button" title="Product Details" onclick="showParent(this);" >more info
+                     <i class="fa fa-arrow-circle-right"></i>
+                 </a>
+                 <a class="btn btn-sm pull-right" type="button" title="Refresh data" onclick="refreshCards()" >refresh
+diff --git a/images/mpi.json b/images/mpi.json
+index 6e6aa82..8caf0f4 100644
+--- a/images/mpi.json
++++ b/images/mpi.json
+@@ -1 +1 @@
+-[{"user":"admin","image":"248167a0f974c903e.jpg","thumb":"248167a0f974c903e_mpi.jpg"},[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}]]
+\ No newline at end of file
++[{"user":"admin","image":"248167a0f974c903e.jpg","thumb":"248167a0f974c903e_mpi.jpg"},[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"alejandro","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"salesman","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}],[{"user":"guest","image":"no_image.png","thumb":"no_image.png"}]]
+\ No newline at end of file
+diff --git a/incCommon.php b/incCommon.php
+index 4fec69a..d67c63c 100644
+--- a/incCommon.php
++++ b/incCommon.php
+@@ -156,7 +156,7 @@
+ 			'ordersDetails' => "`ordersDetails`.`id` as 'id', IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') as 'order', if(`ordersDetails`.`manufactureDate`,date_format(`ordersDetails`.`manufactureDate`,'%d/%m/%Y'),'') as 'manufactureDate', if(`ordersDetails`.`sellDate`,date_format(`ordersDetails`.`sellDate`,'%d/%m/%Y'),'') as 'sellDate', if(`ordersDetails`.`expiryDate`,date_format(`ordersDetails`.`expiryDate`,'%d/%m/%Y'),'') as 'expiryDate', `ordersDetails`.`daysToExpiry` as 'daysToExpiry', IF(    CHAR_LENGTH(`products1`.`codebar`), CONCAT_WS('',   `products1`.`codebar`), '') as 'codebar', IF(    CHAR_LENGTH(`products1`.`UM`), CONCAT_WS('',   `products1`.`UM`), '') as 'UM', IF(    CHAR_LENGTH(`products1`.`productCode`), CONCAT_WS('',   `products1`.`productCode`), '') as 'productCode', IF(    CHAR_LENGTH(`products1`.`productCode`) || CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`productCode`, '-', `products1`.`id`), '') as 'batch', `ordersDetails`.`packages` as 'packages', `ordersDetails`.`noSell` as 'noSell', `ordersDetails`.`Quantity` as 'Quantity', `ordersDetails`.`QuantityReal` as 'QuantityReal', CONCAT('&euro;', FORMAT(`ordersDetails`.`UnitPrice`, 2)) as 'UnitPrice', CONCAT('&euro;', FORMAT(`ordersDetails`.`Subtotal`, 2)) as 'Subtotal', CONCAT('&euro;', FORMAT(`ordersDetails`.`taxes`, 2)) as 'taxes', `ordersDetails`.`Discount` as 'Discount', CONCAT('&euro;', FORMAT(`ordersDetails`.`LineTotal`, 2)) as 'LineTotal', IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') as 'section', `ordersDetails`.`transaction_type` as 'transaction_type', `ordersDetails`.`skBatches` as 'skBatches', `ordersDetails`.`averagePrice` as 'averagePrice', `ordersDetails`.`averageWeight` as 'averageWeight', `ordersDetails`.`commission` as 'commission', `ordersDetails`.`return` as 'return', `ordersDetails`.`supplierCode` as 'supplierCode'",
+ 			'_resumeOrders' => "IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'typedoc', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'customer', `_resumeOrders`.`TOT` as 'TOT', `_resumeOrders`.`MONTH` as 'MONTH', `_resumeOrders`.`YEAR` as 'YEAR', `_resumeOrders`.`DOCs` as 'DOCs', IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') as 'related', `_resumeOrders`.`id` as 'id'",
+ 			'products' => "`products`.`id` as 'id', `products`.`codebar` as 'codebar', `products`.`productCode` as 'productCode', `products`.`productName` as 'productName', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'tax', `products`.`increment` as 'increment', IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') as 'CategoryID', `products`.`UM` as 'UM', `products`.`tare` as 'tare', `products`.`QuantityPerUnit` as 'QuantityPerUnit', CONCAT('&euro;', FORMAT(`products`.`UnitPrice`, 2)) as 'UnitPrice', CONCAT('&euro;', FORMAT(`products`.`sellPrice`, 2)) as 'sellPrice', `products`.`UnitsInStock` as 'UnitsInStock', `products`.`UnitsOnOrder` as 'UnitsOnOrder', `products`.`ReorderLevel` as 'ReorderLevel', `products`.`balance` as 'balance', `products`.`Discontinued` as 'Discontinued', if(`products`.`manufactured_date`,date_format(`products`.`manufactured_date`,'%d/%m/%Y'),'') as 'manufactured_date', if(`products`.`expiry_date`,date_format(`products`.`expiry_date`,'%d/%m/%Y'),'') as 'expiry_date', `products`.`note` as 'note', if(`products`.`update_date`,date_format(`products`.`update_date`,'%d/%m/%Y %h:%i %p'),'') as 'update_date'",
+-			'firstCashNote' => "`firstCashNote`.`id` as 'id', IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') as 'order', if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'') as 'operationDate', `firstCashNote`.`documentNumber` as 'documentNumber', `firstCashNote`.`causal` as 'causal', `firstCashNote`.`revenue` as 'revenue', `firstCashNote`.`outputs` as 'outputs', `firstCashNote`.`balance` as 'balance', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'idBank', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'bank', `firstCashNote`.`note` as 'note', if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'') as 'paymentDeadLine', `firstCashNote`.`payed` as 'payed'",
++			'firstCashNote' => "`firstCashNote`.`id` as 'id', IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') as 'order', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'customer', if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'') as 'operationDate', `firstCashNote`.`documentNumber` as 'documentNumber', `firstCashNote`.`causal` as 'causal', `firstCashNote`.`revenue` as 'revenue', `firstCashNote`.`outputs` as 'outputs', `firstCashNote`.`balance` as 'balance', IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') as 'idBank', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'bank', `firstCashNote`.`note` as 'note', if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'') as 'paymentDeadLine', `firstCashNote`.`payed` as 'payed'",
+ 			'vatRegister' => "`vatRegister`.`id` as 'id', IF(    CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyCode`), '') as 'idCompany', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'companyName', `vatRegister`.`tax` as 'tax', `vatRegister`.`month` as 'month', `vatRegister`.`year` as 'year', `vatRegister`.`amount` as 'amount'",
+ 			'companies' => "`companies`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `companies`.`companyCode` as 'companyCode', `companies`.`companyName` as 'companyName', `companies`.`fiscalCode` as 'fiscalCode', `companies`.`vat` as 'vat', `companies`.`notes` as 'notes'",
+ 			'contacts' => "`contacts`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `contacts`.`titleCourtesy` as 'titleCourtesy', `contacts`.`name` as 'name', `contacts`.`lastName` as 'lastName', `contacts`.`notes` as 'notes', `contacts`.`title` as 'title', if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'') as 'birthDate'",
+@@ -190,7 +190,7 @@
+ 			'ordersDetails' => "`ordersDetails` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`ordersDetails`.`order` LEFT JOIN `products` as products1 ON `products1`.`id`=`ordersDetails`.`productCode` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`ordersDetails`.`section` ",
+ 			'_resumeOrders' => "`_resumeOrders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`_resumeOrders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`_resumeOrders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`_resumeOrders`.`typedoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`_resumeOrders`.`customer` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`_resumeOrders`.`related` ",
+ 			'products' => "`products` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`products`.`tax` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`products`.`CategoryID` ",
+-			'firstCashNote' => "`firstCashNote` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`firstCashNote`.`idBank` ",
++			'firstCashNote' => "`firstCashNote` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`firstCashNote`.`company` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`firstCashNote`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`firstCashNote`.`idBank` ",
+ 			'vatRegister' => "`vatRegister` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`vatRegister`.`idCompany` ",
+ 			'companies' => "`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` ",
+ 			'contacts' => "`contacts` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`contacts`.`kind` ",
+@@ -374,6 +374,8 @@
+ 			'firstCashNote' => array(
+ 				'id' => '',
+ 				'order' => '',
++				'company' => '',
++				'customer' => '',
+ 				'operationDate' => '',
+ 				'documentNumber' => '',
+ 				'causal' => '',
+@@ -606,7 +608,7 @@
+ 				<?php if(getLoggedAdmin()){ ?>
+ 					<ul class="nav navbar-nav">
+ 						<a href="<?php echo PREPEND_PATH; ?>admin/pageHome.php" class="btn btn-danger navbar-btn hidden-xs" title="<?php echo html_attr($Translation['admin area']); ?>"><i class="glyphicon glyphicon-cog"></i> <?php echo $Translation['admin area']; ?></a>
+-						<a href="<?php echo PREPEND_PATH; ?>admin/pageHome.php" class="btn btn-danger navbar-btn visible-xs " title="<?php echo html_attr($Translation['admin area']); ?>"><i class="glyphicon glyphicon-cog"></i> <?php echo $Translation['admin area']; ?></a>
++						<a href="<?php echo PREPEND_PATH; ?>admin/pageHome.php" class="btn btn-danger navbar-btn visible-xs btn-lg" title="<?php echo html_attr($Translation['admin area']); ?>"><i class="glyphicon glyphicon-cog"></i> <?php echo $Translation['admin area']; ?></a>
+ 					</ul>
+ 				<?php } ?>
+ 
+@@ -625,7 +627,7 @@
+ 							</p>
+ 						</ul>
+ 						<ul class="nav navbar-nav visible-xs">
+-							<a class="btn navbar-btn btn-default  visible-xs" href="<?php echo PREPEND_PATH; ?>index.php?signOut=1"><i class="glyphicon glyphicon-log-out"></i> <?php echo $Translation['sign out']; ?></a>
++							<a class="btn navbar-btn btn-default btn-lg visible-xs" href="<?php echo PREPEND_PATH; ?>index.php?signOut=1"><i class="glyphicon glyphicon-log-out"></i> <?php echo $Translation['sign out']; ?></a>
+ 							<p class="navbar-text text-center">
+ 								<?php echo $Translation['signed as']; ?> <strong><a href="<?php echo PREPEND_PATH; ?>membership_profile.php" class="navbar-link"><?php echo getLoggedMemberID(); ?></a></strong>
+ 							</p>
+diff --git a/parent-children.php b/parent-children.php
+index 941a3eb..7a14e7b 100644
+--- a/parent-children.php
++++ b/parent-children.php
+@@ -194,9 +194,9 @@
+ 					'display-refresh' => true,
+ 					'display-add-new' => true,
+ 					'forced-where' => '',
+-					'display-fields' => array(1 => 'Order', 2 => 'Data operazione', 3 => 'Numero ordine', 4 => 'Causale', 5 => 'Entrate', 6 => 'Uscite', 7 => 'Bilancio', 9 => 'Banca', 10 => 'Note pagamento', 11 => 'Pagamento in data', 12 => 'Pagato SI/NO'),
+-					'display-field-names' => array(1 => 'order', 2 => 'operationDate', 3 => 'documentNumber', 4 => 'causal', 5 => 'revenue', 6 => 'outputs', 7 => 'balance', 9 => 'bank', 10 => 'note', 11 => 'paymentDeadLine', 12 => 'payed'),
+-					'sortable-fields' => array(0 => '`firstCashNote`.`id`', 1 => '`orders1`.`multiOrder`', 2 => '`firstCashNote`.`operationDate`', 3 => '`firstCashNote`.`documentNumber`', 4 => 5, 5 => '`firstCashNote`.`revenue`', 6 => '`firstCashNote`.`outputs`', 7 => '`firstCashNote`.`balance`', 8 => '`companies1`.`companyName`', 9 => '`companies1`.`companyName`', 10 => 11, 11 => '`firstCashNote`.`paymentDeadLine`', 12 => 13),
++					'display-fields' => array(1 => 'Order', 2 => 'Company', 3 => 'Customer', 4 => 'Data operazione', 5 => 'Numero ordine', 6 => 'Causale', 7 => 'Entrate', 8 => 'Uscite', 9 => 'Bilancio', 11 => 'Banca', 12 => 'Note pagamento', 13 => 'Pagamento in data', 14 => 'Pagato SI/NO'),
++					'display-field-names' => array(1 => 'order', 2 => 'company', 3 => 'customer', 4 => 'operationDate', 5 => 'documentNumber', 6 => 'causal', 7 => 'revenue', 8 => 'outputs', 9 => 'balance', 11 => 'bank', 12 => 'note', 13 => 'paymentDeadLine', 14 => 'payed'),
++					'sortable-fields' => array(0 => '`firstCashNote`.`id`', 1 => '`orders1`.`multiOrder`', 2 => 3, 3 => '`companies2`.`companyName`', 4 => '`firstCashNote`.`operationDate`', 5 => '`firstCashNote`.`documentNumber`', 6 => 7, 7 => '`firstCashNote`.`revenue`', 8 => '`firstCashNote`.`outputs`', 9 => '`firstCashNote`.`balance`', 10 => '`companies3`.`companyName`', 11 => '`companies1`.`companyName`', 12 => 13, 13 => '`firstCashNote`.`paymentDeadLine`', 14 => 15),
+ 					'records-per-page' => 10,
+ 					'default-sort-by' => false,
+ 					'default-sort-direction' => 'asc',
+@@ -205,7 +205,7 @@
+ 					'show-page-progress' => true,
+ 					'template' => 'children-firstCashNote',
+ 					'template-printable' => 'children-firstCashNote-printable',
+-					'query' => "SELECT `firstCashNote`.`id` as 'id', IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') as 'order', if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'') as 'operationDate', `firstCashNote`.`documentNumber` as 'documentNumber', `firstCashNote`.`causal` as 'causal', `firstCashNote`.`revenue` as 'revenue', `firstCashNote`.`outputs` as 'outputs', `firstCashNote`.`balance` as 'balance', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'idBank', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'bank', `firstCashNote`.`note` as 'note', if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'') as 'paymentDeadLine', if(CHAR_LENGTH(`firstCashNote`.`payed`)>100, concat(left(`firstCashNote`.`payed`,100),' ...'), `firstCashNote`.`payed`) as 'payed' FROM `firstCashNote` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`firstCashNote`.`idBank` "
++					'query' => "SELECT `firstCashNote`.`id` as 'id', IF(    CHAR_LENGTH(`orders1`.`multiOrder`), CONCAT_WS('',   `orders1`.`multiOrder`), '') as 'order', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'customer', if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'') as 'operationDate', `firstCashNote`.`documentNumber` as 'documentNumber', `firstCashNote`.`causal` as 'causal', `firstCashNote`.`revenue` as 'revenue', `firstCashNote`.`outputs` as 'outputs', `firstCashNote`.`balance` as 'balance', IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') as 'idBank', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'bank', `firstCashNote`.`note` as 'note', if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'') as 'paymentDeadLine', if(CHAR_LENGTH(`firstCashNote`.`payed`)>100, concat(left(`firstCashNote`.`payed`,100),' ...'), `firstCashNote`.`payed`) as 'payed' FROM `firstCashNote` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`firstCashNote`.`company` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`firstCashNote`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`firstCashNote`.`idBank` "
+ 				)
+ 			),
+ 			'vatRegister' => array(   
+diff --git a/setup.md5 b/setup.md5
+index 444eeae..0648a0c 100644
+--- a/setup.md5
++++ b/setup.md5
+@@ -1 +1 @@
+-6c70de7ca52792c91ae910d22034f867
+\ No newline at end of file
++db21c524cb8f4c5ae3587146ce49796d
+\ No newline at end of file
+diff --git a/templates/children-firstCashNote-printable.php b/templates/children-firstCashNote-printable.php
+index a61dac1..f823311 100644
+--- a/templates/children-firstCashNote-printable.php
++++ b/templates/children-firstCashNote-printable.php
+@@ -102,15 +102,17 @@
+ 					<tr>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[1]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][2]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][2]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[2]); ?></td>
+-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][3]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][3]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[3]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][3]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][3]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[3]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][4]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][4]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[4]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][5]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][5]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[5]); ?></td>
+-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][6]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][6]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[6]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][6]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][6]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[6]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][7]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][7]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[7]); ?></td>
+-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][9]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][9]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[9]); ?></td>
+-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][10]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][10]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[10]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][8]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][8]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[8]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][9]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][9]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[9]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][11]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][11]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[11]); ?></td>
+-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[12]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[12]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][13]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][13]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[13]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][14]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][14]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[14]); ?></td>
+ 					</tr>
+ 					<?php } ?>
+ 				</tbody>
+diff --git a/templates/children-firstCashNote.php b/templates/children-firstCashNote.php
+index 6b6823e..02414d3 100644
+--- a/templates/children-firstCashNote.php
++++ b/templates/children-firstCashNote.php
+@@ -23,7 +23,7 @@
+ 
+ 		switch(command.Verb){
+ 			case 'sort': /* order by given field index in 'SortBy' */
+-				post("parent-children.php", {
++				post("./hooks/myParent-children.php", {
+ 					ChildTable: param.ChildTable,
+ 					ChildLookupField: param.ChildLookupField,
+ 					SelectedID: param.SelectedID,
+@@ -38,7 +38,7 @@
+ 				else if(command.Page.toLowerCase() == 'previous'){ command.Page = param.Page - 1; }
+ 
+ 				if(command.Page < 1 || command.Page > <?php echo ceil($totalMatches / $config['records-per-page']); ?>){ return; }
+-				post("parent-children.php", {
++				post("./hooks/myParent-children.php", {
+ 					ChildTable: param.ChildTable,
+ 					ChildLookupField: param.ChildLookupField,
+ 					SelectedID: param.SelectedID,
+@@ -67,7 +67,7 @@
+ 				});
+ 				break;
+ 			case 'reload': /* just a way of refreshing children, retaining sorting and pagination & without reloading the whole page */
+-				post("parent-children.php", {
++				post("./hooks/myParent-children.php", {
+ 					ChildTable: param.ChildTable,
+ 					ChildLookupField: param.ChildLookupField,
+ 					SelectedID: param.SelectedID,
+@@ -135,15 +135,17 @@
+ 
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[1]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][2]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][2]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[2]); ?></td>
+-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][3]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][3]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[3]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][3]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][3]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[3]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][4]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][4]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[4]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][5]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][5]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[5]); ?></td>
+-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][6]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][6]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[6]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][6]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][6]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[6]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][7]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][7]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[7]); ?></td>
+-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][9]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][9]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[9]); ?></td>
+-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][10]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][10]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[10]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][8]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][8]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[8]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][9]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][9]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[9]); ?></td>
+ 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][11]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][11]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[11]); ?></td>
+-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[12]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[12]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][13]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][13]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[13]); ?></td>
++						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][14]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][14]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[14]); ?></td>
+ 					</tr>
+ 					<?php } ?>
+ 				</tbody>
+diff --git a/templates/companies_templateDV.html b/templates/companies_templateDV.html
+index 128fa82..6e1e703 100644
+--- a/templates/companies_templateDV.html
++++ b/templates/companies_templateDV.html
+@@ -11,7 +11,9 @@
+ 			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="orders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_orders_link"><i class="glyphicon glyphicon-list-alt"></i> Ordini</a>
+ 			<input type="hidden" id="orders_hclink" value="orders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+ 			<input type="hidden" id="_resumeOrders_hclink" value="_resumeOrders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+-			<input type="hidden" id="firstCashNote_hclink" value="firstCashNote_view.php?filterer_idBank=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
++			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="firstCashNote_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="firstCashNote_link"><i class="glyphicon glyphicon-list-alt"></i> Prima Nota</a>
++			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="firstCashNote_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_firstCashNote_link"><i class="glyphicon glyphicon-list-alt"></i> Prima Nota</a>
++			<input type="hidden" id="firstCashNote_hclink" value="firstCashNote_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+ 			<input type="hidden" id="vatRegister_hclink" value="vatRegister_view.php?filterer_idCompany=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+ 			<input type="hidden" id="attributes_hclink" value="attributes_view.php?filterer_companies=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+ 			<input type="hidden" id="addresses_hclink" value="addresses_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+diff --git a/templates/firstCashNote-ajax-cache.php b/templates/firstCashNote-ajax-cache.php
+index 1c375c6..544be71 100644
+--- a/templates/firstCashNote-ajax-cache.php
++++ b/templates/firstCashNote-ajax-cache.php
+@@ -9,6 +9,8 @@
+ 		/* data for selected record, or defaults if none is selected */
+ 		var data = {
+ 			order: <?php echo json_encode(array('id' => $rdata['order'], 'value' => $rdata['order'], 'text' => $jdata['order'])); ?>,
++			company: <?php echo json_encode(array('id' => $rdata['company'], 'value' => $rdata['company'], 'text' => $jdata['company'])); ?>,
++			customer: <?php echo json_encode(array('id' => $rdata['customer'], 'value' => $rdata['customer'], 'text' => $jdata['customer'])); ?>,
+ 			idBank: <?php echo json_encode(array('id' => $rdata['idBank'], 'value' => $rdata['idBank'], 'text' => $jdata['idBank'])); ?>,
+ 			bank: <?php echo json_encode($jdata['bank']); ?>
+ 		};
+@@ -26,21 +28,21 @@
+ 			return false;
+ 		});
+ 
+-		/* saved value for idBank */
++		/* saved value for company */
+ 		cache.addCheck(function(u, d){
+ 			if(u != 'ajax_combo.php') return false;
+-			if(d.t == tn && d.f == 'idBank' && d.id == data.idBank.id)
+-				return { results: [ data.idBank ], more: false, elapsed: 0.01 };
++			if(d.t == tn && d.f == 'company' && d.id == data.company.id)
++				return { results: [ data.company ], more: false, elapsed: 0.01 };
+ 			return false;
+ 		});
+ 
+-		/* saved value for idBank autofills */
++		/* saved value for company autofills */
+ 		cache.addCheck(function(u, d){
+ 			if(u != tn + '_autofill.php') return false;
+ 
+ 			for(var rnd in d) if(rnd.match(/^rnd/)) break;
+ 
+-			if(d.mfk == 'idBank' && d.id == data.idBank.id){
++			if(d.mfk == 'company' && d.id == data.company.id){
+ 				$j('#bank' + d[rnd]).html(data.bank);
+ 				return true;
+ 			}
+@@ -48,6 +50,22 @@
+ 			return false;
+ 		});
+ 
++		/* saved value for customer */
++		cache.addCheck(function(u, d){
++			if(u != 'ajax_combo.php') return false;
++			if(d.t == tn && d.f == 'customer' && d.id == data.customer.id)
++				return { results: [ data.customer ], more: false, elapsed: 0.01 };
++			return false;
++		});
++
++		/* saved value for idBank */
++		cache.addCheck(function(u, d){
++			if(u != 'ajax_combo.php') return false;
++			if(d.t == tn && d.f == 'idBank' && d.id == data.idBank.id)
++				return { results: [ data.idBank ], more: false, elapsed: 0.01 };
++			return false;
++		});
++
+ 		cache.start();
+ 	});
+ </script>
+diff --git a/templates/firstCashNote_templateDV.html b/templates/firstCashNote_templateDV.html
+index ae99571..8a6fc03 100644
+--- a/templates/firstCashNote_templateDV.html
++++ b/templates/firstCashNote_templateDV.html
+@@ -17,7 +17,7 @@
+ 		<div class="col-md-8 col-lg-10" id="firstCashNote_dv_form">
+ 			<fieldset class="form-horizontal">
+ 
+-				<div class="form-group" hidden="">
++				<div class="form-group">
+ 					<hr class="hidden-md hidden-lg">
+ 					<label for="id" class="control-label col-lg-3">ID</label>
+ 					<div class="col-lg-9">
+@@ -33,6 +33,22 @@
+ 					</div>
+ 				</div>
+ 
++				<div class="form-group">
++					<hr class="hidden-md hidden-lg">
++					<label for="company" class="control-label col-lg-3" data-parent_link="view_parent_modal">Company</label>
++					<div class="col-lg-9">
++						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(company)%%><%%PLINK(company)%%><%%ADDNEW(companies)%%><span id="companyLoading"></span></div>
++					</div>
++				</div>
++
++				<div class="form-group">
++					<hr class="hidden-md hidden-lg">
++					<label for="customer" class="control-label col-lg-3" data-parent_link="view_parent_modal">Customer</label>
++					<div class="col-lg-9">
++						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(customer)%%><%%PLINK(customer)%%><%%ADDNEW(companies)%%></div>
++					</div>
++				</div>
++
+ 				<div class="form-group">
+ 					<hr class="hidden-md hidden-lg">
+ 					<label for="operationDate" class="control-label col-lg-3">Data operazione</label>
+@@ -41,7 +57,7 @@
+ 					</div>
+ 				</div>
+ 
+-                            <div class="form-group" hidden="">
++				<div class="form-group">
+ 					<hr class="hidden-md hidden-lg">
+ 					<label for="documentNumber" class="control-label col-lg-3">Numero ordine</label>
+ 					<div class="col-lg-9">
+@@ -89,7 +105,7 @@
+ 					<hr class="hidden-md hidden-lg">
+ 					<label for="idBank" class="control-label col-lg-3" data-parent_link="view_parent_modal">IdBank</label>
+ 					<div class="col-lg-9">
+-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(idBank)%%><%%PLINK(idBank)%%><%%ADDNEW(companies)%%><span id="idBankLoading"></span></div>
++						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(idBank)%%><%%PLINK(idBank)%%><%%ADDNEW(companies)%%></div>
+ 					</div>
+ 				</div>
+ 
+diff --git a/templates/firstCashNote_templateDVP.html b/templates/firstCashNote_templateDVP.html
+index 341e662..4e1605a 100644
+--- a/templates/firstCashNote_templateDVP.html
++++ b/templates/firstCashNote_templateDVP.html
+@@ -26,6 +26,18 @@
+ 				<div class="form-control-static"><span id="order<%%RND1%%>"><%%COMBOTEXT(order)%%></span></div>
+ 			</div>
+ 		</div>
++		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
++			<label class="col-xs-3 control-label">Company</label>
++			<div class="col-xs-9">
++				<div class="form-control-static"><span id="company<%%RND1%%>"><%%COMBOTEXT(company)%%></span></div>
++			</div>
++		</div>
++		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
++			<label class="col-xs-3 control-label">Customer</label>
++			<div class="col-xs-9">
++				<div class="form-control-static"><span id="customer<%%RND1%%>"><%%COMBOTEXT(customer)%%></span></div>
++			</div>
++		</div>
+ 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+ 			<label class="col-xs-3 control-label">Data operazione</label>
+ 			<div class="col-xs-9">
+diff --git a/templates/firstCashNote_templateTV.html b/templates/firstCashNote_templateTV.html
+index fbd0b33..e379139 100644
+--- a/templates/firstCashNote_templateTV.html
++++ b/templates/firstCashNote_templateTV.html
+@@ -6,6 +6,8 @@
+ <!--     $options->ShowTableHeader = 0;     -->
+ 
+ 		<td id="firstCashNote-order-<%%VALUE(id)%%>" class="firstCashNote-order"><%%SELECT%%><%%VALUE(order)%%><%%ENDSELECT%%></td>
++		<td id="firstCashNote-company-<%%VALUE(id)%%>" class="firstCashNote-company"><%%SELECT%%><%%VALUE(company)%%><%%ENDSELECT%%></td>
++		<td id="firstCashNote-customer-<%%VALUE(id)%%>" class="firstCashNote-customer"><%%SELECT%%><%%VALUE(customer)%%><%%ENDSELECT%%></td>
+ 		<td id="firstCashNote-operationDate-<%%VALUE(id)%%>" class="firstCashNote-operationDate"><%%SELECT%%><%%VALUE(operationDate)%%><%%ENDSELECT%%></td>
+ 		<td id="firstCashNote-documentNumber-<%%VALUE(id)%%>" class="firstCashNote-documentNumber text-right"><%%SELECT%%><%%VALUE(documentNumber)%%><%%ENDSELECT%%></td>
+ 		<td id="firstCashNote-causal-<%%VALUE(id)%%>" class="firstCashNote-causal"><%%SELECT%%><%%VALUE(causal)%%><%%ENDSELECT%%></td>
+diff --git a/templates/firstCashNote_templateTVS.html b/templates/firstCashNote_templateTVS.html
+index 7778d3d..d97d9d7 100644
+--- a/templates/firstCashNote_templateTVS.html
++++ b/templates/firstCashNote_templateTVS.html
+@@ -6,6 +6,8 @@
+ <!--     $options->ShowTableHeader = 0;     -->
+ 
+ 		<td id="firstCashNote-order-<%%VALUE(id)%%>" class="firstCashNote-order"><%%VALUE(order)%%></td>
++		<td id="firstCashNote-company-<%%VALUE(id)%%>" class="firstCashNote-company"><%%VALUE(company)%%></td>
++		<td id="firstCashNote-customer-<%%VALUE(id)%%>" class="firstCashNote-customer"><%%VALUE(customer)%%></td>
+ 		<td id="firstCashNote-operationDate-<%%VALUE(id)%%>" class="firstCashNote-operationDate"><%%VALUE(operationDate)%%></td>
+ 		<td id="firstCashNote-documentNumber-<%%VALUE(id)%%>" class="firstCashNote-documentNumber text-right"><%%VALUE(documentNumber)%%></td>
+ 		<td id="firstCashNote-causal-<%%VALUE(id)%%>" class="firstCashNote-causal"><%%VALUE(causal)%%></td>
+diff --git a/updateDB.php b/updateDB.php
+index af09e35..c7af55c 100644
+--- a/updateDB.php
++++ b/updateDB.php
+@@ -19,8 +19,8 @@
+ 		setupIndexes('_resumeOrders', array('kind','company','typedoc','customer','related'));
+ 		setupTable('products', "create table if not exists `products` (   `id` INT not null auto_increment , primary key (`id`), `codebar` VARCHAR(16) , `productCode` VARCHAR(255) , `productName` VARCHAR(255) , `tax` VARCHAR(40) , `increment` DECIMAL(10,2) , `CategoryID` VARCHAR(40) , `UM` VARCHAR(40) , `tare` DECIMAL(10,2) , `QuantityPerUnit` VARCHAR(50) , `UnitPrice` DECIMAL(10,2) , `sellPrice` DECIMAL(10,2) , `UnitsInStock` DECIMAL(10,2) , `UnitsOnOrder` DECIMAL(10,2) default '0' , `ReorderLevel` DECIMAL(10,2) default '0' , `balance` DECIMAL(10,2) , `Discontinued` INT default '0' , `manufactured_date` DATE , `expiry_date` DATE , `note` TEXT , `update_date` DATETIME ) CHARSET utf8", $silent);
+ 		setupIndexes('products', array('tax','CategoryID'));
+-		setupTable('firstCashNote', "create table if not exists `firstCashNote` (   `id` INT unsigned not null auto_increment , primary key (`id`), `order` INT unsigned , `operationDate` DATE , `documentNumber` INT , `causal` VARCHAR(255) , `revenue` DECIMAL(10,2) , `outputs` DECIMAL(10,2) , `balance` DECIMAL(10,2) , `idBank` INT unsigned , `bank` INT unsigned , `note` VARCHAR(255) , `paymentDeadLine` DATE , `payed` VARCHAR(255) default '0' ) CHARSET utf8", $silent);
+-		setupIndexes('firstCashNote', array('order','idBank'));
++		setupTable('firstCashNote', "create table if not exists `firstCashNote` (   `id` INT unsigned not null auto_increment , primary key (`id`), `order` INT unsigned , `company` INT unsigned , `customer` INT unsigned , `operationDate` DATE , `documentNumber` INT , `causal` VARCHAR(255) , `revenue` DECIMAL(10,2) , `outputs` DECIMAL(10,2) , `balance` DECIMAL(10,2) , `idBank` INT unsigned , `bank` INT unsigned , `note` VARCHAR(255) , `paymentDeadLine` DATE , `payed` VARCHAR(255) default '0' ) CHARSET utf8", $silent, array( "ALTER TABLE firstCashNote ADD `field14` VARCHAR(40)","ALTER TABLE `firstCashNote` CHANGE `field14` `company` VARCHAR(40) ","ALTER TABLE firstCashNote ADD `field15` VARCHAR(40)","ALTER TABLE `firstCashNote` CHANGE `field15` `customer` VARCHAR(40) "));
++		setupIndexes('firstCashNote', array('order','company','customer','idBank'));
+ 		setupTable('vatRegister', "create table if not exists `vatRegister` (   `id` INT unsigned not null auto_increment , primary key (`id`), `idCompany` INT unsigned , `companyName` INT unsigned , `tax` VARCHAR(40) default '4%' , `month` VARCHAR(40) , `year` VARCHAR(40) default '2018' , `amount` DECIMAL(10,2) ) CHARSET utf8", $silent);
+ 		setupIndexes('vatRegister', array('idCompany'));
+ 		setupTable('companies', "create table if not exists `companies` (   `id` INT unsigned not null auto_increment , primary key (`id`), `kind` VARCHAR(40) not null , `companyCode` VARCHAR(255) , `companyName` VARCHAR(255) , `fiscalCode` VARCHAR(255) , `vat` VARCHAR(255) , `notes` TEXT ) CHARSET utf8", $silent);
