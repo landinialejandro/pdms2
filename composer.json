@@ -8,6 +8,7 @@
         }
     ],
     "require": {
-        "mpdf/mpdf": "dev-master"
+        "mpdf/mpdf": "dev-master",
+        "konekt/pdf-invoice": "1.1.4"
     }
 }
