@@ -27,7 +27,7 @@
 		<![endif]-->
 		<script src="<?php echo PREPEND_PATH; ?>resources/jquery/js/jquery-1.12.4.min.js"></script>
 		<script>var $j = jQuery.noConflict();</script>
-                <script src="LTE/dist/js/adminlte.js"></script>
+                <script src="<?php echo PREPEND_PATH; ?>LTE/dist/js/adminlte.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>resources/moment/moment-with-locales.min.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>resources/jquery/js/jquery.mark.min.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>LTE/dist/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -95,19 +95,18 @@
                                   <!-- Menu Toggle Button -->
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <!-- The user image in the navbar-->
-                                    <img src="images/248167a0f974c903e_mpi.jpg?m=1539632256714" class="user-image" alt="User Image">
+                                    <img src="images/no_image.png" class="user-image mpi-header-avatar" alt="User Image">
                                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                     <span class="hidden-xs"><?php echo getLoggedMemberID(); ?></span>
                                   </a>
                                   <ul class="dropdown-menu">
                                     <!-- The user image in the menu -->
                                     <li class="user-header">
-                                      <img src="images/248167a0f974c903e_mpi.jpg?m=1539632256714" class="img-circle user-image" alt="User Image">
-
-                                      <p>
-                                        <?php echo getLoggedMemberID(); ?> - <?php echo $memberInfo['group']; ?>
-                                        <small>Member since <?php echo $memberInfo['signupDate']; ?></small>
-                                      </p>
+                                        <img src="images/no_image.png" class="img-circle user-image mpi-header-avatar" alt="User Image">
+                                        <p>
+                                            <?php echo getLoggedMemberID(); ?> - <?php echo $memberInfo['group']; ?>
+                                            <small>Member since <?php echo $memberInfo['signupDate']; ?></small>
+                                        </p>
                                     </li>
                                     <?php if(!$_GET['signIn'] && !$_GET['loginFailed']){ ?>
                                     <!-- Menu Body -->
@@ -154,10 +153,10 @@
                                             <?php } ?>
                                       </div>
                                     </li>
+                                    <?php } ?>
                                   </ul>
                                 </li>
-                                        <?php } ?>
-                                </ul>
+                            </ul>
                         </div>
                         <!-- /Navbar Right Menu -->
                       </nav>
@@ -167,6 +166,7 @@
                     if(isset($_GET['loginFailed']) || isset($_GET['signIn'])){
                         return ;
                     }
+                    $homeLinks=[];
                     @include("{$currDir}/hooks/links-home.php"); 
                     ?>
                     
@@ -200,8 +200,7 @@
                               foreach ($groups as $lte_group => $lte_tables) {
                                   if (count($lte_tables)){
                                   ?>
-
-                                          <li class="treeview <?php echo ($i ? '' : 'active');?>">
+                                        <li class="treeview <?php echo ($i ? '' : 'active');?>">
                                           <a href="#"><i class="fa fa-table"></i> <span><?php echo $lte_group; ?></span>
                                               <span class="pull-right-container">
                                               <i class="fa fa-angle-left pull-right"></i>
@@ -257,7 +256,7 @@
                                                       }
                                               ?>
                                           </ul>
-                                      </li>
+                                        </li>
                                   <?php
                                   $i ++;
                                   }else{
