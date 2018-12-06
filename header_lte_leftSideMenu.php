@@ -1,10 +1,5 @@
                         <aside class="main-sidebar">
 <!-- Sidebar user panel -->
-      <div class="user-panel">
-      </div>
-      <!-- search form -->
-      <form action="#" method="get" class="sidebar-form">
-      </form>
       <!-- /.search form -->
                           <!-- sidebar: style can be found in sidebar.less -->
                           <section class="sidebar">
