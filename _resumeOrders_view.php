@@ -18,7 +18,7 @@
 	}
 
 	$x = new DataList;
-	$x->TableName = "SQL_resumeOrders";
+	$x->TableName = "_resumeOrders";
 
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   

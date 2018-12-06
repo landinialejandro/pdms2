@@ -110,7 +110,7 @@
 					'parent-primary-key' => 'id',
 					'child-primary-key' => 'id',
 					'child-primary-key-index' => 0,
-					'tab-label' => 'Ordini Out',
+					'tab-label' => 'Ordini',
 					'auto-close' => true,
 					'table-icon' => 'resources/table_icons/calendar_view_month.png',
 					'display-refresh' => true,

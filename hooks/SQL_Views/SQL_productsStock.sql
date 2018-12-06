@@ -6,10 +6,12 @@ SELECT
     ordersDetails.productCode as 'prodId',
     products.productCode as 'code',
     products.productName as 'name',
-    sum(IF(orders.kind = 'IN',ordersDetails.QuantityReal,0)) as 'PesoIN',
+    sum(IF(orders.kind = 'IN' ,ordersDetails.QuantityReal,0)) as 'PesoIN',
     sum(IF(orders.kind = 'OUT',ordersDetails.QuantityReal,0)) as 'PesoOUT',
     sum(IF(orders.kind = 'OUT',ordersDetails.QuantityReal * -1,ordersDetails.QuantityReal)) as 'PesoStock',
-    sum(IF(orders.kind = 'IN',ordersDetails.packages,0)) as 'IN',
+    sum(IF(orders.kind = 'IN' ,ordersDetails.QuantityReal,0)) - sum(IF(orders.kind = 'IN' ,ordersDetails.packages * products.tare,0)) as 'NetoIN',
+    sum(IF(orders.kind = 'OUT',ordersDetails.QuantityReal,0)) - sum(IF(orders.kind = 'OUT',ordersDetails.packages * products.tare,0)) as 'NetoOUT',
+    sum(IF(orders.kind = 'IN' ,ordersDetails.packages,0)) as 'IN',
     sum(IF(orders.kind = 'OUT',ordersDetails.packages,0)) as 'OUT',
     sum(IF(orders.kind = 'OUT',ordersDetails.packages * -1,ordersDetails.packages)) as 'Stock'
 FROM

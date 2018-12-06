@@ -14,6 +14,7 @@ SELECT
 FROM
     `orders`
 WHERE `typeDoc` = 'DDT'
+    AND `kind` = 'OUT'
     AND `related` IS NULL
 GROUP BY
     `kind`,

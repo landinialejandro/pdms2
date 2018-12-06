@@ -2,6 +2,20 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/srv/www/htdocs/pdms2/header_lte_leftSideMenu.php</file>
+            <file>file:/srv/www/htdocs/pdms2/hooks/children-ordersDetails.php</file>
+            <file>file:/srv/www/htdocs/pdms2/hooks/header-extras.php</file>
+            <file>file:/srv/www/htdocs/pdms2/hooks/productCard.php</file>
+            <file>file:/srv/www/htdocs/pdms2/LTE/dist/js/adminlte.js</file>
+            <file>file:/srv/www/htdocs/pdms2/hooks/SQL_Views/SQL_resumeOrders.sql</file>
+            <file>file:/srv/www/htdocs/pdms2/hooks/SQL_Views/SQL_productsStock.sql</file>
+            <file>file:/srv/www/htdocs/pdms2/hooks/products-dv.js</file>
+            <file>file:/srv/www/htdocs/pdms2/footer_lte.php</file>
+            <file>file:/srv/www/htdocs/pdms2/parent-children.php</file>
+            <file>file:/srv/www/htdocs/pdms2/LTE/dist/js/pages/dashboard2.js</file>
+            <file>file:/srv/www/htdocs/pdms2/header_lte.php</file>
+            <file>file:/srv/www/htdocs/pdms2/header_lte_main.php</file>
+        </group>
     </open-files>
 </project-private>

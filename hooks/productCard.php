@@ -56,12 +56,13 @@ $product = $result;
 
 $product_update = sqlvalue("select `update_date` from products where id = $where_id");
 
-$stock = sqlvalue("SELECT stock FROM SQL_productsStock where prodId=$where_id LIMIT 1;");
+$res = sql("SELECT * FROM SQL_productsStock where prodId=$where_id LIMIT 1;",$eo);
+$stock = db_fetch_assoc($res);
 $classes='danger';
-if($stock>0){
+if($stock['Stock']>0){
     $classes='success';
 }
-elseif($stock==0){
+elseif($stock['Stock']==0){
     $classes='warning';
 }
 
@@ -92,7 +93,9 @@ ob_start();
                     Tara: <?php echo $product['tare']; ?><br>
                     Prezzo Vendita: <?php echo $product['sellPrice']; ?><br>
                     <div class="callout callout-<?php echo $classes; ?>">
-                        <P>Stock: <?php echo $stock; ?></P>
+                        <P>Stock Casse: <?php echo $stock['Stock']; ?></P>
+                        <P>Stock Net Weight: <?php echo $stock['NetoIN'] - $stock['NetoOUT']; ?></P>
+                        <P>Stock Gross Weight: <?php echo $stock['PesoStock']; ?></P>
                     </div>
                 </div>
             </div>
