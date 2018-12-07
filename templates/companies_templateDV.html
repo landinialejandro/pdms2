@@ -101,12 +101,18 @@
 					<%%DESELECT_BUTTON%%>
 					<%%DVPRINT_BUTTON%%>
 					<%%DELETE_BUTTON%%>
-				</div><p></p>
-				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+				</div>
+                                <p></p>
+				<div class="btn-group-vertical" style="width: 100%;">
 					<%%INSERT_BUTTON%%>
 				</div>
+                                <p></p>
+				<div class="btn-group-vertical" style="width: 100%;">
+                                    <button id="CUST_CREDIT" class="btn btn-info" onclick="setLimit(<%%VALUE(id)%%>,this)" type="button" >Set Credit Limit</button>
+                                    <button id="CUST_PAYMENT" class="btn btn-info" onclick="setLimit(<%%VALUE(id)%%>,this)" type="button" >Set Payment Limit</button>
 			</div>
 		</div>
+	</div>
 	</div>
 
 

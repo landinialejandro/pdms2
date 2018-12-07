@@ -17,6 +17,7 @@ $j(document).ready(function(){
             refreshCards();
             appendPrintOrder();
             changueTitle();
+            commisionRate();
         },1000);
     }
     if (typeof autoSet !== 'undefined'){
@@ -26,12 +27,15 @@ $j(document).ready(function(){
         validateKind();
         orderNumber();
     },1100);
+    addWarningBtn('commisionRate');
+    addWarningBtn('commisionFee');
 });
 
 $j(function(){
     $j('#company-container').change(function(){
         showCard('company','myCompanyCard','companyCard');
         orderNumber();
+        commisionRate();
     });
     $j('#customer-container').change(function(){
         showCard('customer','customerCompanyCard','companyCard');
@@ -45,12 +49,71 @@ $j(function(){
     $j('#typeDoc-container').change(function(){
         orderNumber();
     });
+    $j('#commisionRate').change(function(){
+        commisionRate();
+    });
+    $j('#commisionFee').change(function(){
+        calcCommision();
+    });
     $j('#kind-container').change(function(){
         validateKind();
         orderNumber();
         changueTitle();
     });
+    $j( "body" ).on( "click", ".btn-fix",function(){
+        var field = this.attributes.myfield.value;
+        if (field === 'commisionRate'){
+            commisionRate(true);
+        };
+        if (field === 'commisionFee'){
+            calcCommision(true);
+        };
+        ToggleFix(field);
+    });
 });
+
+function commisionRate(fix = false){
+    var Data = $j('#company-container').select2("data");
+    var id = parseInt(Data.id) || 0;
+    $j.ajax({
+        method: 'post', //post, get
+        dataType: 'json', //json,text,html
+        url: 'hooks/companies_AJAX.php',
+        cache: 'false',
+        data: {cmd: 'commision',id:id}
+    })
+            .done(function (msg) {
+                //function at response
+                var rate=parseFloat(msg.value).toFixed(2) || 0;
+                var actualRate = parseFloat($j('#commisionRate').val()).toFixed(2) || 0;
+                
+                if (actualRate !== rate && actualRate >0 && !fix){
+                    ToggleFix('commisionRate','warning');
+                    calcCommision();
+                    return;
+                }
+                if (rate >0){
+                    $j('#commisionRate').val(rate);
+                    calcCommision(true);
+                }else{
+                    alert('Default rate value is undefined in selected company')
+                }
+                return rate;
+            });
+}
+
+function calcCommision(fix = false){
+    var rate = parseFloat($j('#commisionRate').val()).toFixed(2) || 0;
+    var orderTotal = parseFloat($j('#orderTotal').val()).toFixed(2) || 0;
+    var actualCommision = parseFloat($j('#commisionFee').val()).toFixed(2) || 0;
+    var commision = parseFloat(orderTotal * (rate /100)).toFixed(2) || 0 ;
+    if(actualCommision !== commision && actualCommision >0 && !fix){
+        ToggleFix('commisionFee','warning');
+        return;
+    }
+    $j('#commisionFee').val(parseFloat(commision).toFixed(2) ||0);
+    return ;
+}
 
 function changueTitle(){
     var id = getKindID();

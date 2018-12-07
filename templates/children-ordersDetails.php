@@ -3,6 +3,7 @@
 <?php
 	$cleaner = new CI_Input();
 	$cleaner->charset = datalist_db_encoding;
+        $curDir = __DIR__;
 ?>
 <script>
 	<?php echo $current_table; ?>GetChildrenRecordsList = function(command){
@@ -23,7 +24,7 @@
 
 		switch(command.Verb){
 			case 'sort': /* order by given field index in 'SortBy' */
-				post("./hooks/myParent-children.php", {
+				post("hooks/myParent-children.php", {
 					ChildTable: param.ChildTable,
 					ChildLookupField: param.ChildLookupField,
 					SelectedID: param.SelectedID,
@@ -38,7 +39,7 @@
 				else if(command.Page.toLowerCase() == 'previous'){ command.Page = param.Page - 1; }
 
 				if(command.Page < 1 || command.Page > <?php echo ceil($totalMatches / $config['records-per-page']); ?>){ return; }
-				post("./hooks/myParent-children.php", {
+				post("hooks/myParent-children.php", {
 					ChildTable: param.ChildTable,
 					ChildLookupField: param.ChildLookupField,
 					SelectedID: param.SelectedID,
@@ -67,7 +68,8 @@
 				});
 				break;
 			case 'reload': /* just a way of refreshing children, retaining sorting and pagination & without reloading the whole page */
-				post("./hooks/myParent-children.php", {
+                        console.log("<?php echo $curDir; ?>")
+                                post("hooks/myParent-children.php", {
 					ChildTable: param.ChildTable,
 					ChildLookupField: param.ChildLookupField,
 					SelectedID: param.SelectedID,

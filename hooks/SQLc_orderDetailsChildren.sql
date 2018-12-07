@@ -20,7 +20,8 @@ select     `ordersDetails`.`id` as 'id',
     IF(    CHAR_LENGTH(`ordersDetails`.`Discount`), CONCAT(FORMAT(`ordersDetails`.`Discount`,2), ' %'), '') as 'Discount',
     CONCAT('&euro;', FORMAT(`ordersDetails`.`LineTotal`, 2)) as 'LineTotal',
     IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') as 'section',
-    `ordersDetails`.`transaction_type` as 'transaction_type',     `ordersDetails`.`skBatches` as 'skBatches', 
+    `kinds3`.`name` as 'transaction_type',     
+    `ordersDetails`.`skBatches` as 'skBatches', 
     `ordersDetails`.`averagePrice` as 'averagePrice',     `ordersDetails`.`averageWeight` as 'averageWeight',
     `ordersDetails`.`commission` as 'commission',
     concat('<i class=\"glyphicon glyphicon-', if(`ordersDetails`.`return`, 'check', 'unchecked'), '\"></i>') as 'return',
@@ -30,3 +31,4 @@ FROM `ordersDetails`
     LEFT JOIN `products` as products1 ON `products1`.`id`=`ordersDetails`.`productCode` 
     LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`ordersDetails`.`section` 
     LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code` = `products1`.tax
+    LEFT JOIN `kinds` as kinds3 ON `kinds3`.`code` = `orders1`.kind

@@ -15,6 +15,8 @@
 */
 
 function getDataTable($table_name,$where_id){
+    // the $where_id need to be likle the next line
+    // $where_id =" AND attributes.attribute = {$id}";//change this to set select where
     $table_from = get_sql_from($table_name);
     $table_fields = get_sql_fields($table_name);
     $res = sql("SELECT {$table_fields} FROM {$table_from}" . $where_id, $eo);
@@ -71,4 +73,17 @@ function dataBar($id){
 
 function kindName($code){
     return makeSafe(sqlValue("select name from kinds where code = '{$code}'"));
+}
+
+function getKindsData($id){
+    $where_id =" AND kinds.code = {$id}";//change this to set select where
+    $kind = getDataTable('kinds', $where_id);
+
+    $result = json_decode($attr['value']);
+
+    if (json_last_error() === JSON_ERROR_NONE) {
+        // JSON is valid
+        $kind[]=$result;
+    }
+    return $kind;
 }

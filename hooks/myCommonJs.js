@@ -24,7 +24,7 @@ function show_warning(field, campo, msg){
 	
 	return false;
 }
-function addWarningBtn(field, title = "Warning"){
+function addWarningBtn(field, title = "Click to fix value"){
     var oldhtml='';
     var newhtml='';
     oldhtml = $j('#' + field ).closest('div').html();

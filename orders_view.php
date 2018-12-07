@@ -45,6 +45,7 @@
 		"`orders`.`trust`" => "trust",
 		"`orders`.`overdraft`" => "overdraft",
 		"`orders`.`commisionFee`" => "commisionFee",
+		"`orders`.`commisionRate`" => "commisionRate",
 		"if(`orders`.`consigneeHour`,date_format(`orders`.`consigneeHour`,'%d/%m/%Y %h:%i %p'),'')" => "consigneeHour",
 		"`orders`.`consigneePlace`" => "consigneePlace",
 		"`orders`.`related`" => "related",
@@ -75,10 +76,11 @@
 		21 => '`orders`.`trust`',
 		22 => '`orders`.`overdraft`',
 		23 => '`orders`.`commisionFee`',
-		24 => '`orders`.`consigneeHour`',
-		25 => 25,
-		26 => '`orders`.`related`',
-		27 => 27
+		24 => '`orders`.`commisionRate`',
+		25 => '`orders`.`consigneeHour`',
+		26 => 26,
+		27 => '`orders`.`related`',
+		28 => 28
 	);
 
 	// Fields that can be displayed in the csv file
@@ -106,6 +108,7 @@
 		"`orders`.`trust`" => "trust",
 		"`orders`.`overdraft`" => "overdraft",
 		"`orders`.`commisionFee`" => "commisionFee",
+		"`orders`.`commisionRate`" => "commisionRate",
 		"if(`orders`.`consigneeHour`,date_format(`orders`.`consigneeHour`,'%d/%m/%Y %h:%i %p'),'')" => "consigneeHour",
 		"`orders`.`consigneePlace`" => "consigneePlace",
 		"`orders`.`related`" => "related",
@@ -136,6 +139,7 @@
 		"`orders`.`trust`" => "Fido Cliente",
 		"`orders`.`overdraft`" => "Scoperto Cliente",
 		"`orders`.`commisionFee`" => "Provvigione su ordine",
+		"`orders`.`commisionRate`" => "CommisionRate",
 		"`orders`.`consigneeHour`" => "Ora di consegna",
 		"`orders`.`consigneePlace`" => "Luogo consegna",
 		"`orders`.`related`" => "Related",
@@ -167,6 +171,7 @@
 		"`orders`.`trust`" => "trust",
 		"`orders`.`overdraft`" => "overdraft",
 		"`orders`.`commisionFee`" => "commisionFee",
+		"`orders`.`commisionRate`" => "commisionRate",
 		"if(`orders`.`consigneeHour`,date_format(`orders`.`consigneeHour`,'%d/%m/%Y %h:%i %p'),'')" => "consigneeHour",
 		"`orders`.`consigneePlace`" => "consigneePlace",
 		"`orders`.`related`" => "related",
@@ -205,10 +210,10 @@
 	$x->DefaultSortField = '1';
 	$x->DefaultSortDirection = 'desc';
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Kind", "ID Azienda", "Documento", "Numero", "Cliente", "Supplier", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Fido Cliente", "Scoperto Cliente", "Provvigione su ordine", "Ora di consegna", "Luogo consegna");
-	$x->ColFieldName = array('kind', 'company', 'typeDoc', 'multiOrder', 'customer', 'supplier', 'date', 'shippedDate', 'shipVia', 'pallets', 'licencePlate', 'orderTotal', 'cashCredit', 'trust', 'overdraft', 'commisionFee', 'consigneeHour', 'consigneePlace');
-	$x->ColNumber  = array(2, 6, 7, 8, 9, 10, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25);
+	$x->ColWidth   = array(  150, 150, 150, 150, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Kind", "ID Azienda", "Documento", "Numero", "Cliente", "Supplier", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Fido Cliente", "Scoperto Cliente", "Provvigione su ordine", "CommisionRate", "Ora di consegna", "Luogo consegna");
+	$x->ColFieldName = array('kind', 'company', 'typeDoc', 'multiOrder', 'customer', 'supplier', 'date', 'shippedDate', 'shipVia', 'pallets', 'licencePlate', 'orderTotal', 'cashCredit', 'trust', 'overdraft', 'commisionFee', 'commisionRate', 'consigneeHour', 'consigneePlace');
+	$x->ColNumber  = array(2, 6, 7, 8, 9, 10, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/orders_templateTV.html';
@@ -285,6 +290,7 @@
 			$sumRow .= '<td class="orders-trust"></td>';
 			$sumRow .= '<td class="orders-overdraft"></td>';
 			$sumRow .= '<td class="orders-commisionFee"></td>';
+			$sumRow .= '<td class="orders-commisionRate"></td>';
 			$sumRow .= '<td class="orders-consigneeHour"></td>';
 			$sumRow .= '<td class="orders-consigneePlace"></td>';
 			$sumRow .= '</tr>';

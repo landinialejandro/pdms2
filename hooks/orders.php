@@ -7,7 +7,6 @@
 		/* End of Search Page Maker for AppGini code */
 
                  $options->TemplateDV = 'hooks/orders_templateDV_lte.html';
-//                 $options->TemplateDVP = 'hooks/orders_templateDVP.html';
                  
                 if (isset($_REQUEST['SelectedID']) && $_REQUEST['SelectedID']){
                     $selectedID = intval(makeSafe($_REQUEST['SelectedID']));

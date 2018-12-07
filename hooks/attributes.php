@@ -111,25 +111,25 @@
 	function attributes_dv($selectedID, $memberInfo, &$html, &$args){
             if (isset($_REQUEST['addNew_x'])){
                 if (isset($_REQUEST['ak'])){
-                        $_id = makeSafe($_REQUEST['ak']);
-                        $_text = sqlValue("select name from kinds where code = '{$_id}'");    
+                    $_id = makeSafe($_REQUEST['ak']);
+                    $_text = sqlValue("select name from kinds where code = '{$_id}'");    
+                    ob_start();
+                    ?>
+                        <!-- insert HTML code-->
+                        <script>
+                         $j(function(){
+                             setTimeout(function(){
+                                 $j('#s2id_attribute-container').select2("data", {id: "<?php echo $_id; ?>", text: "<?php echo $_text; ?>"});
+                                 $j('#s2id_attribute-container').select2('readonly',true);
+                                 $j('#attribute').val("<?php echo $_id; ?>");
+                             },500);
+                         })  
+                        </script>
+                    <?php
+                    $html_code = ob_get_contents();
+                    ob_end_clean();
+                    $html= $html . $html_code;
                 }
-                ob_start();
-                ?>
-                    <!-- insert HTML code-->
-                    <script>
-                     $j(function(){
-                         setTimeout(function(){
-                             $j('#s2id_attribute-container').select2("data", {id: "<?php echo $_id; ?>", text: "<?php echo $_text; ?>"});
-                             $j('#s2id_attribute-container').select2('readonly',true);
-                             $j('#attribute').val("<?php echo $_id; ?>");
-                         },500);
-                     })  
-                    </script>
-                <?php
-                $html_code = ob_get_contents();
-                ob_end_clean();
-                $html= $html . $html_code;
             }
 	}
 
