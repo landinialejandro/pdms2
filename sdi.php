@@ -1,24 +1,16 @@
 <?php
 // 
 // Author: Alejandro Landini
-// _printReport 31/7/18, 21:00
 // 
-// GET parameteres for print documents
 // 
 // toDo: 
 // revision:
-//          *30/09/18   adding file to data base to close order.
-//                      adding save file to PDFfolder
-//                      check if exist save document and get it
-//          *22/09/18   adapted to new data 
-//          *25/08/18   add cusotmer data
 // 
 //
 $currDir = dirname(__FILE__);
 include("$currDir/defaultLang.php");
 include("$currDir/language.php");
 include("$currDir/lib.php");
-require "$currDir/vendor/autoload.php";
 
 /* get order ID */
 $order_id = intval($_REQUEST['id']);
@@ -72,7 +64,6 @@ $item_from = get_sql_from('ordersDetails');
 $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
 ///////////////////////////
 
-include_once("$currDir/header_old.php");
 $object = array(
     'FatturaElettronicaHeader' => array(
         'DatiTrasmissione' => array(
@@ -183,34 +174,8 @@ $object = array(
 );
 
 var_dump($object);
+
 $result = generate_valid_xml_from_array($object);
 
-   file_put_contents("xmlFiles/myxml.xml",$result);
+file_put_contents("xmlFiles/myxml.xml",$result);
    
-function generate_valid_xml_from_array($array, $node_block='nodes', $node_name='node') {
-	$xml = '<?xml version="1.0" encoding="UTF-8" ?>' . "\n";
-
-	$xml .= '<p:FatturaElettronica versione="FPR12" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd">'."\n";
-	$xml .= generate_xml_from_array($array, $node_name);
-	$xml .= '</p:FatturaElettronica>'."\n";
-
-	return $xml;
-}
-
-function generate_xml_from_array($array, $node_name) {
-    $xml = '';
-
-    if (is_array($array) || is_object($array)) {
-            foreach ($array as $key=>$value) {
-                    if (is_numeric($key)) {
-                            $key = $node_name;
-                    }
-
-                    $xml .= '<' . $key . '>' . "\n" . generate_xml_from_array($value, $node_name) . '</' . $key . '>' . "\n";
-            }
-    } else {
-            $xml = htmlspecialchars($array, ENT_QUOTES) . "\n";
-    }
-
-    return $xml;
-}

@@ -124,3 +124,31 @@ function get_xml_file($fileHash, &$projectFile){
                 exit;
         }
 }
+
+function generate_valid_xml_from_array($array, $node_block='nodes', $node_name='node') {
+	$xml = '<?xml version="1.0" encoding="UTF-8" ?>' . "\n";
+
+	$xml .= '<p:FatturaElettronica versione="FPR12" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd">'."\n";
+	$xml .= generate_xml_from_array($array, $node_name);
+	$xml .= '</p:FatturaElettronica>'."\n";
+
+	return $xml;
+}
+
+function generate_xml_from_array($array, $node_name) {
+    $xml = '';
+
+    if (is_array($array) || is_object($array)) {
+            foreach ($array as $key=>$value) {
+                    if (is_numeric($key)) {
+                            $key = $node_name;
+                    }
+
+                    $xml .= '<' . $key . '>' . "\n" . generate_xml_from_array($value, $node_name) . '</' . $key . '>' . "\n";
+            }
+    } else {
+            $xml = htmlspecialchars($array, ENT_QUOTES) . "\n";
+    }
+
+    return $xml;
+}
