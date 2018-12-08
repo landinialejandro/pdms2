@@ -21,6 +21,7 @@ if(!$order_id) {exit(error_message('Invalid order ID!', false));}
 $where_id =" AND orders.id = {$order_id}";//change this to set select where
 $order = getDataTable('orders',$where_id);
 $docCategorie_id= makeSafe(sqlValue("select typeDoc from orders where id={$order_id}"));
+$kindOrder = sqlValue("select kind from orders where id={$order_id}");
 ///////////////////////////
 
 if (!is_null($order['document'])){
@@ -28,6 +29,11 @@ if (!is_null($order['document'])){
         openpdf($order['document'], $order['document']);
     }
     return;
+}
+
+if($kindOrder !== 'OUT'){
+    echo '<h1>order not valid</h1>' . $order['kind'];
+    return ;
 }
 
 /* retrieve multycompany info */
@@ -43,17 +49,18 @@ $address = getDataTable('addresses',$where_id);
 /* retrieve customer info */
 ///////////////////////////
 $customer_id = intval(sqlValue("select customer from orders where orders.id={$order_id}"));
-$where_id=" AND companies.id = {$customer_id}";
-$customer = getDataTable('companies',$where_id);
-///////////////////////////Client address
-$where_id =" AND addresses.company = {$customer['id']} AND addresses.default = 1";//change this to set select where
-$addressCustomer = getDataTable('addresses',$where_id);
-///////////////////////////shiping client address
-$where_id =" AND addresses.company = {$customer['id']} AND addresses.ship = 1";//change this to set select where
-$addressCustomerShip = getDataTable('addresses',$where_id);
-///////////////////////////
+if ($customer_id){
+    $where_id=" AND companies.id = {$customer_id}";
+    $customer = getDataTable('companies',$where_id);
+    ///////////////////////////Client address
+    $where_id =" AND addresses.company = {$customer['id']} AND addresses.default = 1";//change this to set select where
+    $addressCustomer = getDataTable('addresses',$where_id);
 
-$filename = $company['companyCode']."_".$docCategorie_id."#".$order['multiOrder'].".pdf"; //pdf name
+    ///////////////////////////shiping client address
+    $where_id =" AND addresses.company = {$customer['id']} AND addresses.ship = 1";//change this to set select where
+    $addressCustomerShip = getDataTable('addresses',$where_id);
+    ///////////////////////////
+}
 
 // shipper via
 
