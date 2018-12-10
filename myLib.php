@@ -152,3 +152,20 @@ function generate_xml_from_array($array, $node_name) {
 
     return $xml;
 }
+//function defination to convert array to xml
+function array_to_xml($array, &$xml_user_info) {
+    foreach ($array as $key=>$value) {
+        if(is_array($value)) {
+            if(!is_numeric($key)){
+                $subnode = $xml_user_info->addChild("$key");
+                array_to_xml($value, $subnode);
+            }else{
+                //don't add sub item es a numeric
+                $subnode = $xml_user_info->addChild("item$key");
+                array_to_xml($value, $subnode);
+            }
+        }else {
+            $xml_user_info->addChild("$key",htmlspecialchars("$value"));
+        }
+    }
+}

@@ -3,15 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/srv/www/htdocs/pdms2/hooks/SLQc_productDetailsChildren.sql</file>
-            <file>file:/srv/www/htdocs/pdms2/hooks/children-ordersDetails.php</file>
-            <file>file:/srv/www/htdocs/pdms2/hooks/orders-dv.js</file>
-            <file>file:/srv/www/htdocs/pdms2/hooks/companies_AJAX.php</file>
-            <file>file:/srv/www/htdocs/pdms2/hooks/SQLc_orderDetailsChildren.sql</file>
-            <file>file:/srv/www/htdocs/pdms2/hooks/ordersDetails.php</file>
-            <file>file:/srv/www/htdocs/pdms2/hooks/myParent-children.php</file>
-            <file>file:/srv/www/htdocs/pdms2/templates/children-ordersDetails.php</file>
-            <file>file:/srv/www/htdocs/pdms2/hooks/products-dv.js</file>
+            <file>file:/srv/www/htdocs/pdms2/myLib.php</file>
+            <file>file:/srv/www/htdocs/pdms2/REP_printDocument.php</file>
+            <file>file:/srv/www/htdocs/pdms2/sdi.php</file>
+            <file>file:/srv/www/htdocs/pdms2/xmlFiles/users.xml</file>
+            <file>file:/srv/www/htdocs/pdms2/xmlFiles/_baseProforma.xml</file>
+            <file>file:/srv/www/htdocs/pdms2/xmlFiles/IT01234567890_FPR02.xml</file>
+            <file>file:/srv/www/htdocs/pdms2/hooks/orders_templateDV_lte.html</file>
         </group>
     </open-files>
 </project-private>

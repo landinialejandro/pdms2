@@ -64,125 +64,139 @@ if ($customer_id){
 
 // shipper via
 
+
+
+$invoice=<<<XML
+<?xml version="1.0" encoding="UTF-8" ?> 
+<p:FatturaElettronica versione="FPR12" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd">
+    <FatturaElettronicaHeader>
+        <DatiTrasmissione>
+            <IdTrasmittente>
+                <IdPaese>IT</IdPaese> 
+                <IdCodice>01234567890</IdCodice> 
+            </IdTrasmittente>
+            <ProgressivoInvio>{$order['multiOrder']}</ProgressivoInvio> 
+            <FormatoTrasmissione>FPR12</FormatoTrasmissione> 
+            <CodiceDestinatario>0000000</CodiceDestinatario> 
+            <PECDestinatario>betagamma@pec.it</PECDestinatario> 
+        </DatiTrasmissione>
+        <CedentePrestatore>
+            <DatiAnagrafici>
+                <IdFiscaleIVA>
+                    <IdPaese>IT</IdPaese> 
+                    <IdCodice>01234567890</IdCodice> 
+                </IdFiscaleIVA>
+                <Anagrafica>
+                    <Denominazione>{$company['companyName']}</Denominazione> 
+                </Anagrafica>
+                <RegimeFiscale>RF01</RegimeFiscale> 
+            </DatiAnagrafici>
+            <Sede>
+                <Indirizzo>{$address['address']} {$address['houseNumber']}</Indirizzo> 
+                <CAP>{$address['postalCode']}</CAP> 
+                <Comune>{$address['town']}</Comune> 
+                <Provincia>{$address['district']}</Provincia> 
+                <Nazione>{$address['country']}</Nazione> 
+            </Sede>
+        </CedentePrestatore>
+        <CessionarioCommittente>
+            <DatiAnagrafici>
+                <CodiceFiscale>09876543210</CodiceFiscale> 
+                <Anagrafica>
+                    <Denominazione>{$customer['companyName']}</Denominazione> 
+                </Anagrafica>
+            </DatiAnagrafici>
+            <Sede>
+                <Indirizzo>{$addressCustomer['address']} {$addressCustomer['houseNumber']}</Indirizzo> 
+                <CAP>{$addressCustomer['postalCode']}</CAP> 
+                <Comune>{$addressCustomerShip['town']}</Comune> 
+                <Provincia>{$addressCustomerShip['district']}</Provincia> 
+                <Nazione>{$addressCustomerShip['country']}</Nazione> 
+            </Sede>
+        </CessionarioCommittente>
+    </FatturaElettronicaHeader>
+    <FatturaElettronicaBody>
+        <DatiGenerali>
+            <DatiGeneraliDocumento>
+                <TipoDocumento>TD01</TipoDocumento> 
+                <Divisa>EUR</Divisa> 
+                <Data>{$order['sellDate']}</Data> 
+                <Numero>{$order['multiOrder']}</Numero> 
+                <Causale>LA FATTURA FA RIFERIMENTO AD UNA OPERAZIONE</Causale> 
+                <Causale>SEGUE DESCRIZIONE CAUSALE NEL CASO IN CUI NON SIANO STATI SUFFICIENTI 200 CARATTERI</Causale> 
+            </DatiGeneraliDocumento>
+            <DatiOrdineAcquisto>
+                <RiferimentoNumeroLinea>1</RiferimentoNumeroLinea> 
+                <IdDocumento>66685</IdDocumento> 
+                <NumItem>1</NumItem> 
+            </DatiOrdineAcquisto>
+            <DatiTrasporto>
+                <DatiAnagraficiVettore>
+                    <IdFiscaleIVA>
+                        <IdPaese>IT</IdPaese> 
+                        <IdCodice>24681012141</IdCodice> 
+                    </IdFiscaleIVA>
+                    <Anagrafica>
+                        <Denominazione>Trasporto spa</Denominazione> 
+                    </Anagrafica>
+                </DatiAnagraficiVettore>
+                <DataOraConsegna>{$order['consigneeHour']}</DataOraConsegna> 
+            </DatiTrasporto>
+        </DatiGenerali>
+        <DatiBeniServizi>
+        </DatiBeniServizi>
+        <DatiPagamento>
+            <CondizioniPagamento>TP01</CondizioniPagamento> 
+            <DettaglioPagamento>
+                <ModalitaPagamento>MP01</ModalitaPagamento> 
+                <DataScadenzaPagamento>2015-01-30</DataScadenzaPagamento> 
+                <ImportoPagamento>30.50</ImportoPagamento> 
+            </DettaglioPagamento>
+        </DatiPagamento>
+    </FatturaElettronicaBody>
+</p:FatturaElettronica>
+        
+XML;
+
+
+//creating object of SimpleXMLElement
+$xml_invoice = new SimpleXMLElement($invoice);
+
+$DatiBeniServizi = $xml_invoice->FatturaElettronicaBody->DatiBeniServizi;
+
 /* retrieve order items */
 ///////////////////////////
 $item_fields = get_sql_fields('ordersDetails');
 $item_from = get_sql_from('ordersDetails');
 $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
+foreach($items as $i => $item){
+    $DettaglioLinee = $DatiBeniServizi->addChild("DettaglioLinee");
+        $DettaglioLinee->addChild("NumeroLinea",$i+1);
+        $DettaglioLinee->addChild("Descrizione",$item['productCode']);
+        $DettaglioLinee->addChild("Quantita",$item['QuantityReal']);
+        $DettaglioLinee->addChild("PrezzoUnitario",$item['UnitPriceValue']);
+        $DettaglioLinee->addChild("PrezzoTotale",$item['SubTotalValue']);
+        $DettaglioLinee->addChild("AliquotaIVA",$item['taxesValue']);
+    $inponibiliTotale = $inponibiliTotale + $item['SubTotalValue'];
+    $taxesTotales = $taxesTotales + $item['taxesValue'];
+}
 ///////////////////////////
 
-$object = array(
-    'FatturaElettronicaHeader' => array(
-        'DatiTrasmissione' => array(
-            'IdTrasmittente' => array(
-                'IdPaese' => 'IT',
-                'IdCodice' => '01234567890'
-            ),
-            'ProgressivoInvio' => '00001',
-            'FormatoTrasmissione' => 'FPR12',
-            'CodiceDestinatario' => '0000000',
-            'PECDestinatario' => 'betagamma@pec.it'
-        ),
-        'CedentePrestatore' => array(
-            'DatiAnagrafici' => array(
-                'IdFiscaleIVA' => array(
-                    'IdPaese' => "IT",
-                    'IdCodice' => "01234567890"),
-                'Anagrafica' => array(
-                    'Denominazione' => "SOCIETA' ALPHA SRL"
-                ),
-                'RegimeFiscale' => "RF01"
-            ),
-            'Sede' => array(
-                'Indirizzo' => 'VIALE ROMA 543',
-                'CAP' => '07100',
-                'Comune' => 'SASSARI',
-                'Provincia' => 'SS',
-                'Nazione' => 'IT'
-            )
-        ),
-        'CessionarioCommittente' => array(
-            'DatiAnagrafici' => array(
-                'CodiceFiscale' => '09876543210',
-                'Anagrafica' => array(
-                    'Denominazione' => 'BETA GAMMA'
-                )
-            ),
-            'Sede' => array(
-                'Indirizzo' => 'VIA TORINO 38-B',
-                'CAP' => '00145',
-                'Comune' => 'ROMA',
-                'Provincia' => 'RM',
-                'Nazione' => 'IT'
-            )
-        )
-    ),
-    'FatturaElettronicaBody' => array(
-        'DatiGenerali' => array(
-            'DatiGeneraliDocumento' => array(
-                'TipoDocumento' => 'TD01',
-                'Divisa' => 'EUR',
-                'Data' => '2014-12-18',
-                'Numero' => '123',
-                'Causale' => 'LA FATTURA FA RIFERIMENTO AD UNA OPERAZIONE AAAA BBBBBBBBBBBBBBBBBB CCC DDDDDDDDDDDDDDD E FFFFFFFFFFFFFFFFFFFF GGGGGGGGGG HHHHHHH II LLLLLLLLLLLLLLLLL MMM NNNNN OO PPPPPPPPPPP QQQQ RRRR SSSSSSSSSSSSSS',
-                'Causale' => 'SEGUE DESCRIZIONE CAUSALE NEL CASO IN CUI NON SIANO STATI SUFFICIENTI 200 CARATTERI AAAAAAAAAAA BBBBBBBBBBBBBBBBB'
-            ),
-            'DatiOrdineAcquisto' => array(
-                'RiferimentoNumeroLinea' => '1',
-                'IdDocumento' => '66685',
-                'NumItem' => '1'
-            ),
-            'DatiTrasporto' => array(
-                'DatiAnagraficiVettore' => array(
-                    'IdFiscaleIVA' => array(
-                        'IdPaese' => 'IT',
-                        'IdCodice' => '24681012141'
-                    ),
-                    'Anagrafica' => array(
-                        'Denominazione' => 'Trasporto spa'
-                    )
-                ),
-                'DataOraConsegna' => '2012-10-22T16:46:12.000+02:00'
-            )
-        ),
-        'DatiBeniServizi' => array(
-            'DettaglioLinee' => array(
-                'NumeroLinea' => '1',
-                'Descrizione' => "LA DESCRIZIONE DELLA FORNITURA PUO' SUPERARE I CENTO CARATTERI CHE RAPPRESENTAVANO IL PRECEDENTE LIMITE DIMENSIONALE. TALE LIMITE NELLA NUOVA VERSIONE E' STATO PORTATO A MILLE CARATTERI",
-                'Quantita' => '5.00',
-                'PrezzoUnitario' => "1.00",
-                'PrezzoTotale' => "5.00",
-                'AliquotaIVA' => "22.00"
-            ),
-            'DettaglioLinee' => array(
-                'NumeroLinea' => "2",
-                'Descrizione' => "FORNITURE VARIE PER UFFICIO",
-                'Quantita' => "10.00",
-                'PrezzoUnitario' => "2.00",
-                'PrezzoTotale' => "20.00",
-                'AliquotaIVA' => "22.00"
-            ),
-            'DatiRiepilogo' => array(
-                'AliquotaIVA' => "22.00",
-                'ImponibileImporto' => "25.00",
-                'Imposta' => "5.50",
-                'EsigibilitaIVA' => "D"
-            )
-        ),
-        'DatiPagamento' => array(
-            'CondizioniPagamento' => "TP01",
-            'DettaglioPagamento' => array(
-                'ModalitaPagamento' => "MP01",
-                'DataScadenzaPagamento' => "2015-01-30",
-                'ImportoPagamento' => "30.50"
-            )
-        )
-    )
-);
+    $DatiRiepilogo = $DatiBeniServizi->addChild("DatiRiepilogo");
+        $DatiRiepilogo->addChild("AliquotaIVA","4.00");
+        $DatiRiepilogo->addChild("ImponibileImporto",$inponibiliTotale);
+        $DatiRiepilogo->addChild("Imposta",$taxesTotales);
+        $DatiRiepilogo->addChild("EsigibilitaIVA","D");
+    
+//saving generated xml file
+$xml_file = $xml_invoice->asXML('xmlFiles/users.xml');
 
-var_dump($object);
-
-$result = generate_valid_xml_from_array($object);
-
-file_put_contents("xmlFiles/myxml.xml",$result);
-   
+//success and error message based on xml creation
+if($xml_file){
+    echo 'XML file have been generated successfully.';
+    $link = "<script>window.open('xmlFiles/users.xml')</script>";
+    echo $link;
+    
+}else{
+    echo 'XML file generation error.';
+}
