@@ -14,7 +14,7 @@
 		'groupsPerPage' => "10",
 		'membersPerPage' => "10",
 		'recordsPerPage' => "10",
-		'custom1' => "Full Name",
+		'custom1' => "Full Names",
 		'custom2' => "Address",
 		'custom3' => "City",
 		'custom4' => "State",
