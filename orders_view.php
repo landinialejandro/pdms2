@@ -210,10 +210,10 @@
 	$x->DefaultSortField = '1';
 	$x->DefaultSortDirection = 'desc';
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Kind", "ID Azienda", "Documento", "Numero", "Cliente", "Supplier", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Fido Cliente", "Scoperto Cliente", "Provvigione su ordine", "CommisionRate", "Ora di consegna", "Luogo consegna");
-	$x->ColFieldName = array('kind', 'company', 'typeDoc', 'multiOrder', 'customer', 'supplier', 'date', 'shippedDate', 'shipVia', 'pallets', 'licencePlate', 'orderTotal', 'cashCredit', 'trust', 'overdraft', 'commisionFee', 'commisionRate', 'consigneeHour', 'consigneePlace');
-	$x->ColNumber  = array(2, 6, 7, 8, 9, 10, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26);
+	$x->ColWidth   = array(  150, 150, 150, 150, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Kind", "ID Azienda", "Documento", "Numero", "Cliente", "Supplier", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Provvigione su ordine", "CommisionRate", "Ora di consegna", "Luogo consegna");
+	$x->ColFieldName = array('kind', 'company', 'typeDoc', 'multiOrder', 'customer', 'supplier', 'date', 'shippedDate', 'shipVia', 'pallets', 'licencePlate', 'orderTotal', 'cashCredit', 'commisionFee', 'commisionRate', 'consigneeHour', 'consigneePlace');
+	$x->ColNumber  = array(2, 6, 7, 8, 9, 10, 12, 14, 15, 17, 18, 19, 20, 23, 24, 25, 26);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/orders_templateTV.html';
@@ -287,8 +287,6 @@
 			$sumRow .= '<td class="orders-licencePlate"></td>';
 			$sumRow .= "<td class=\"orders-orderTotal text-right\">{$row[1]}</td>";
 			$sumRow .= '<td class="orders-cashCredit"></td>';
-			$sumRow .= '<td class="orders-trust"></td>';
-			$sumRow .= '<td class="orders-overdraft"></td>';
 			$sumRow .= '<td class="orders-commisionFee"></td>';
 			$sumRow .= '<td class="orders-commisionRate"></td>';
 			$sumRow .= '<td class="orders-consigneeHour"></td>';

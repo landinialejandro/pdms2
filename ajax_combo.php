@@ -179,6 +179,17 @@
 				'list_type' => 0,
 				'not_null' => false
 			),
+			'transaction_type' => array(
+				'parent_table' => 'orders',
+				'parent_pk_field' => 'id',
+				'parent_caption' => 'IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS(\'\',   `kinds1`.`name`), \'\')',
+				'parent_from' => '`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`supplier` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`orders`.`employee` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`orders`.`shipVia` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
                         'IDproduct_lookup' => array(
                                 'parent_table' => 'products',
                                 'parent_pk_field' => 'id',

@@ -13,7 +13,8 @@
 			UM: <?php echo json_encode($jdata['UM']); ?>,
 			productCode: <?php echo json_encode(array('id' => $rdata['productCode'], 'value' => $rdata['productCode'], 'text' => $jdata['productCode'])); ?>,
 			batch: <?php echo json_encode($jdata['batch']); ?>,
-			section: <?php echo json_encode(array('id' => $rdata['section'], 'value' => $rdata['section'], 'text' => $jdata['section'])); ?>
+			section: <?php echo json_encode(array('id' => $rdata['section'], 'value' => $rdata['section'], 'text' => $jdata['section'])); ?>,
+			transaction_type: <?php echo json_encode($jdata['transaction_type']); ?>
 		};
 
 		/* initialize or continue using AppGini.cache for the current table */
@@ -26,6 +27,20 @@
 			if(u != 'ajax_combo.php') return false;
 			if(d.t == tn && d.f == 'order' && d.id == data.order.id)
 				return { results: [ data.order ], more: false, elapsed: 0.01 };
+			return false;
+		});
+
+		/* saved value for order autofills */
+		cache.addCheck(function(u, d){
+			if(u != tn + '_autofill.php') return false;
+
+			for(var rnd in d) if(rnd.match(/^rnd/)) break;
+
+			if(d.mfk == 'order' && d.id == data.order.id){
+				$j('#transaction_type' + d[rnd]).html(data.transaction_type);
+				return true;
+			}
+
 			return false;
 		});
 

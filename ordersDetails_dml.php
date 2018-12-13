@@ -52,7 +52,7 @@ function ordersDetails_insert(){
 		if($data['LineTotal'] == empty_lookup_value){ $data['LineTotal'] = ''; }
 	$data['section'] = makeSafe($_REQUEST['section']);
 		if($data['section'] == empty_lookup_value){ $data['section'] = ''; }
-	$data['transaction_type'] = makeSafe($_REQUEST['transaction_type']);
+	$data['transaction_type'] = makeSafe($_REQUEST['order']);
 		if($data['transaction_type'] == empty_lookup_value){ $data['transaction_type'] = ''; }
 	$data['skBatches'] = makeSafe($_REQUEST['skBatches']);
 		if($data['skBatches'] == empty_lookup_value){ $data['skBatches'] = ''; }
@@ -110,6 +110,11 @@ function ordersDetails_insert(){
 	// automatic section
 	if($_REQUEST['filterer_section']){
 		sql("update `ordersDetails` set `section`='" . makeSafe($_REQUEST['filterer_section']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
+	}
+
+	// automatic transaction_type
+	if($_REQUEST['filterer_transaction_type']){
+		sql("update `ordersDetails` set `transaction_type`='" . makeSafe($_REQUEST['filterer_transaction_type']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
 	}
 
 	// hook: ordersDetails_after_insert
@@ -214,7 +219,7 @@ function ordersDetails_update($selected_id){
 		if($data['LineTotal'] == empty_lookup_value){ $data['LineTotal'] = ''; }
 	$data['section'] = makeSafe($_REQUEST['section']);
 		if($data['section'] == empty_lookup_value){ $data['section'] = ''; }
-	$data['transaction_type'] = makeSafe($_REQUEST['transaction_type']);
+	$data['transaction_type'] = makeSafe($_REQUEST['order']);
 		if($data['transaction_type'] == empty_lookup_value){ $data['transaction_type'] = ''; }
 	$data['skBatches'] = makeSafe($_REQUEST['skBatches']);
 		if($data['skBatches'] == empty_lookup_value){ $data['skBatches'] = ''; }
@@ -317,21 +322,6 @@ function ordersDetails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$combo_productCode = new DataCombo;
 	// combobox: section
 	$combo_section = new DataCombo;
-	// combobox: transaction_type
-	$combo_transaction_type = new Combo;
-	$combo_transaction_type->ListType = 2;
-	$combo_transaction_type->MultipleSeparator = ', ';
-	$combo_transaction_type->ListBoxHeight = 10;
-	$combo_transaction_type->RadiosPerLine = 1;
-	if(is_file(dirname(__FILE__).'/hooks/ordersDetails.transaction_type.csv')){
-		$transaction_type_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/ordersDetails.transaction_type.csv')));
-		$combo_transaction_type->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($transaction_type_data)));
-		$combo_transaction_type->ListData = $combo_transaction_type->ListItem;
-	}else{
-		$combo_transaction_type->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("In entrata;;In uscita;;Scaduta;;Danneggiata")));
-		$combo_transaction_type->ListData = $combo_transaction_type->ListItem;
-	}
-	$combo_transaction_type->SelectName = 'transaction_type';
 
 	if($selected_id){
 		// mm: check member permissions
@@ -368,12 +358,10 @@ function ordersDetails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$combo_expiryDate->DefaultDate = $row['expiryDate'];
 		$combo_productCode->SelectedData = $row['productCode'];
 		$combo_section->SelectedData = $row['section'];
-		$combo_transaction_type->SelectedData = $row['transaction_type'];
 	}else{
 		$combo_order->SelectedData = $filterer_order;
 		$combo_productCode->SelectedData = $filterer_productCode;
 		$combo_section->SelectedData = $filterer_section;
-		$combo_transaction_type->SelectedText = ( $_REQUEST['FilterField'][1]=='21' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "Outgoing");
 	}
 	$combo_order->HTML = '<span id="order-container' . $rnd1 . '"></span><input type="hidden" name="order" id="order' . $rnd1 . '" value="' . html_attr($combo_order->SelectedData) . '">';
 	$combo_order->MatchText = '<span id="order-container-readonly' . $rnd1 . '"></span><input type="hidden" name="order" id="order' . $rnd1 . '" value="' . html_attr($combo_order->SelectedData) . '">';
@@ -381,7 +369,6 @@ function ordersDetails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$combo_productCode->MatchText = '<span id="productCode-container-readonly' . $rnd1 . '"></span><input type="hidden" name="productCode" id="productCode' . $rnd1 . '" value="' . html_attr($combo_productCode->SelectedData) . '">';
 	$combo_section->HTML = '<span id="section-container' . $rnd1 . '"></span><input type="hidden" name="section" id="section' . $rnd1 . '" value="' . html_attr($combo_section->SelectedData) . '">';
 	$combo_section->MatchText = '<span id="section-container-readonly' . $rnd1 . '"></span><input type="hidden" name="section" id="section' . $rnd1 . '" value="' . html_attr($combo_section->SelectedData) . '">';
-	$combo_transaction_type->Render();
 
 	ob_start();
 	?>
@@ -737,8 +724,6 @@ function ordersDetails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$templateCode = str_replace('<%%COMBO(section)%%>', $combo_section->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(section)%%>', $combo_section->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(section)%%>', urlencode($combo_section->MatchText), $templateCode);
-	$templateCode = str_replace('<%%COMBO(transaction_type)%%>', $combo_transaction_type->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(transaction_type)%%>', $combo_transaction_type->SelectedData, $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
 	$lookup_fields = array(  'order' => array('orders', 'Id Azienda'), 'productCode' => array('products', 'Codice prodotto'), 'section' => array('kinds', 'Reparto'));
@@ -774,7 +759,6 @@ function ordersDetails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$templateCode = str_replace('<%%UPLOADFILE(Discount)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(LineTotal)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(section)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(transaction_type)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(skBatches)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(averagePrice)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(averageWeight)%%>', '', $templateCode);
@@ -832,9 +816,6 @@ function ordersDetails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(section)%%>', safe_html($urow['section']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(section)%%>', html_attr($row['section']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(section)%%>', urlencode($urow['section']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(transaction_type)%%>', safe_html($urow['transaction_type']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(transaction_type)%%>', html_attr($row['transaction_type']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(transaction_type)%%>', urlencode($urow['transaction_type']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(skBatches)%%>', safe_html($urow['skBatches']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(skBatches)%%>', html_attr($row['skBatches']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(skBatches)%%>', urlencode($urow['skBatches']), $templateCode);
@@ -886,8 +867,6 @@ function ordersDetails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$templateCode = str_replace('<%%URLVALUE(LineTotal)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(section)%%>', ( $_REQUEST['FilterField'][1]=='20' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_section->SelectedData : 'Magazzino Metaponto'), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(section)%%>', urlencode( $_REQUEST['FilterField'][1]=='20' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_section->SelectedData : 'Magazzino Metaponto'), $templateCode);
-		$templateCode = str_replace('<%%VALUE(transaction_type)%%>', 'Outgoing', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(transaction_type)%%>', urlencode('Outgoing'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(skBatches)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(skBatches)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(averagePrice)%%>', '', $templateCode);
@@ -931,6 +910,19 @@ function ordersDetails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	// ajaxed auto-fill fields
 	$templateCode .= '<script>';
 	$templateCode .= '$j(function() {';
+
+	$templateCode .= "\torder_update_autofills$rnd1 = function(){\n";
+	$templateCode .= "\t\t\$j.ajax({\n";
+	if($dvprint){
+		$templateCode .= "\t\t\turl: 'ordersDetails_autofill.php?rnd1=$rnd1&mfk=order&id=' + encodeURIComponent('".addslashes($row['order'])."'),\n";
+		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET'\n";
+	}else{
+		$templateCode .= "\t\t\turl: 'ordersDetails_autofill.php?rnd1=$rnd1&mfk=order&id=' + encodeURIComponent(AppGini.current_order{$rnd1}.value),\n";
+		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET', beforeSend: function(){ /* */ \$j('#order$rnd1').prop('disabled', true); \$j('#orderLoading').html('<img src=loading.gif align=top>'); }, complete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#order$rnd1').prop('disabled', false); " : "\$j('#order$rnd1').prop('disabled', true); ")."\$j('#orderLoading').html('');}\n";
+	}
+	$templateCode.="\t\t});\n";
+	$templateCode.="\t};\n";
+	if(!$dvprint) $templateCode.="\tif(\$j('#order_caption').length) \$j('#order_caption').click(function(){ /* */ order_update_autofills$rnd1(); });\n";
 
 	$templateCode .= "\tproductCode_update_autofills$rnd1 = function(){\n";
 	$templateCode .= "\t\t\$j.ajax({\n";

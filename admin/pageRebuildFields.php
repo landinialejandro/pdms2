@@ -61,7 +61,7 @@
 			'Discount' => array('appgini' => 'DECIMAL(10,2) '),
 			'LineTotal' => array('appgini' => 'DECIMAL(10,2) '),
 			'section' => array('appgini' => 'VARCHAR(40) default \'Magazzino Metaponto\' '),
-			'transaction_type' => array('appgini' => 'VARCHAR(40) default \'Outgoing\' '),
+			'transaction_type' => array('appgini' => 'INT unsigned '),
 			'skBatches' => array('appgini' => 'INT unsigned '),
 			'averagePrice' => array('appgini' => 'DECIMAL(10,2) '),
 			'averageWeight' => array('appgini' => 'DECIMAL(10,2) '),

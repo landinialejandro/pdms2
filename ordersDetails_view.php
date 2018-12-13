@@ -42,7 +42,7 @@
 		"`ordersDetails`.`Discount`" => "Discount",
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`LineTotal`, 2))" => "LineTotal",
 		"IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') /* Reparto */" => "section",
-		"`ordersDetails`.`transaction_type`" => "transaction_type",
+		"IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') /* Tipo transazione */" => "transaction_type",
 		"`ordersDetails`.`skBatches`" => "skBatches",
 		"`ordersDetails`.`averagePrice`" => "averagePrice",
 		"`ordersDetails`.`averageWeight`" => "averageWeight",
@@ -103,7 +103,7 @@
 		"`ordersDetails`.`Discount`" => "Discount",
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`LineTotal`, 2))" => "LineTotal",
 		"IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') /* Reparto */" => "section",
-		"`ordersDetails`.`transaction_type`" => "transaction_type",
+		"IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') /* Tipo transazione */" => "transaction_type",
 		"`ordersDetails`.`skBatches`" => "skBatches",
 		"`ordersDetails`.`averagePrice`" => "averagePrice",
 		"`ordersDetails`.`averageWeight`" => "averageWeight",
@@ -133,7 +133,7 @@
 		"`ordersDetails`.`Discount`" => "Sconto",
 		"`ordersDetails`.`LineTotal`" => "SubTotale",
 		"IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') /* Reparto */" => "Reparto",
-		"`ordersDetails`.`transaction_type`" => "Tipo transazione",
+		"IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') /* Tipo transazione */" => "Tipo transazione",
 		"`ordersDetails`.`skBatches`" => "Giacenza",
 		"`ordersDetails`.`averagePrice`" => "Prezzo medio giorno",
 		"`ordersDetails`.`averageWeight`" => "Peso medio giorno",
@@ -164,7 +164,7 @@
 		"`ordersDetails`.`Discount`" => "Discount",
 		"CONCAT('&euro;', FORMAT(`ordersDetails`.`LineTotal`, 2))" => "LineTotal",
 		"IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') /* Reparto */" => "section",
-		"`ordersDetails`.`transaction_type`" => "transaction_type",
+		"IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') /* Tipo transazione */" => "transaction_type",
 		"`ordersDetails`.`skBatches`" => "skBatches",
 		"`ordersDetails`.`averagePrice`" => "averagePrice",
 		"`ordersDetails`.`averageWeight`" => "averageWeight",
@@ -176,7 +176,7 @@
 	// Lookup fields that can be used as filterers
 	$x->filterers = array(  'order' => 'Id Azienda', 'productCode' => 'Codice prodotto', 'section' => 'Reparto');
 
-	$x->QueryFrom = "`ordersDetails` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`ordersDetails`.`order` LEFT JOIN `products` as products1 ON `products1`.`id`=`ordersDetails`.`productCode` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`ordersDetails`.`section` ";
+	$x->QueryFrom = "`ordersDetails` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`ordersDetails`.`order` LEFT JOIN `products` as products1 ON `products1`.`id`=`ordersDetails`.`productCode` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`ordersDetails`.`section` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders1`.`kind` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
