@@ -175,9 +175,9 @@ foreach($items as $i => $item){
         $DettaglioLinee->addChild("Descrizione",$item['productCode']);
         $DettaglioLinee->addChild("Quantita",$item['QuantityReal']);
         $DettaglioLinee->addChild("PrezzoUnitario",$item['UnitPriceValue']);
-        $DettaglioLinee->addChild("PrezzoTotale",$item['SubTotalValue']);
+        $DettaglioLinee->addChild("PrezzoTotale",$item['SubtotalValue']);
         $DettaglioLinee->addChild("AliquotaIVA",$item['taxesValue']);
-    $inponibiliTotale = $inponibiliTotale + $item['SubTotalValue'];
+    $inponibiliTotale = $inponibiliTotale + $item['SubtotalValue'];
     $taxesTotales = $taxesTotales + $item['taxesValue'];
 }
 ///////////////////////////
