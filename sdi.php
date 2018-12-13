@@ -25,9 +25,7 @@ $kindOrder = sqlValue("select kind from orders where id={$order_id}");
 ///////////////////////////
 
 if (!is_null($order['document'])){
-    if (is_file($order['document'])){
-        openpdf($order['document'], $order['document']);
-    }
+    echo 'The invoice file is exist, you can\'t make a new xml file after print invoice.';
     return;
 }
 
@@ -60,10 +58,23 @@ if ($customer_id){
     $where_id =" AND addresses.company = {$customer['id']} AND addresses.ship = 1";//change this to set select where
     $addressCustomerShip = getDataTable('addresses',$where_id);
     ///////////////////////////
+}else{
+    echo '<h1>order Customer not valid</h1>';
+    return;
 }
 
 // shipper via
-
+$shipper_id = intVal(sqlValue("select shipVia from orders where orders.id ={$order_id}"));
+if ($shipper_id){
+    $where_id=" AND companies.id = {$shipper_id}";
+    $shipper = getDataTable('companies',$where_id);
+    ///////////////////////////Client address
+    $where_id =" AND addresses.company = {$shipper['id']} AND addresses.default = 1";//change this to set select where
+    $addressShipper = getDataTable('addresses',$where_id);
+}else{
+    echo '<h1>order Shipper not valid</h1>';
+    return;
+}
 
 
 $invoice=<<<XML
@@ -137,7 +148,7 @@ $invoice=<<<XML
                         <IdCodice>24681012141</IdCodice> 
                     </IdFiscaleIVA>
                     <Anagrafica>
-                        <Denominazione>Trasporto spa</Denominazione> 
+                        <Denominazione>{$shipper['companyName']}</Denominazione> 
                     </Anagrafica>
                 </DatiAnagraficiVettore>
                 <DataOraConsegna>{$order['consigneeHour']}</DataOraConsegna> 
