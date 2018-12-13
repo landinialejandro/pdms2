@@ -2,10 +2,10 @@ config.php
 setup.md5
 images/
 .vscode/
-PDFfolder_/
+PDFfolder/
 vendor/
 resources/
 LTE/
 plugins/
-xmlFiles/
+xmlFiles_/
 nbproject/
