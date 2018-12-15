@@ -12,7 +12,6 @@ include("$cardDir/../defaultLang.php");
 include("$cardDir/../language.php");
 include("$cardDir/../lib.php");
 
-setlocale(LC_MONETARY, 'it_IT');
 /* grant access to all users who have access to the companies table */
 $table_name = 'companies';
 $table_from = get_sql_from($table_name);
