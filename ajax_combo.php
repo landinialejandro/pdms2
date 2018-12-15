@@ -287,7 +287,7 @@
 			'order' => array(
 				'parent_table' => 'orders',
 				'parent_pk_field' => 'id',
-				'parent_caption' => '`orders`.`multiOrder`',
+				'parent_caption' => 'IF(CHAR_LENGTH(`orders`.`multiOrder`) || CHAR_LENGTH(`orders`.`company`), CONCAT_WS(\'\', `orders`.`multiOrder`, \' - \', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS(\'\',   `companies1`.`companyCode`, \' - \', `companies1`.`companyName`), \'\')), \'\')',
 				'parent_from' => '`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`supplier` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`orders`.`employee` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`orders`.`shipVia` ',
 				'filterers' => array(),
 				'custom_query' => '',

@@ -25,7 +25,7 @@ $kindOrder = sqlValue("select kind from orders where id={$order_id}");
 ///////////////////////////
 
 if (!is_null($order['document'])){
-    echo 'The invoice file is exist, you can\'t make a new xml file after print invoice.';
+    echo 'The invoice file exist, you can\'t make a new xml file after print invoice.';
     return;
 }
 

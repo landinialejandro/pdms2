@@ -2,6 +2,8 @@
 
 
 	function firstCashNote_init(&$options, $memberInfo, &$args){
+            
+            $options->TemplateDV = 'hooks/firstCashNote_templateDV.html';
 
 		return TRUE;
 	}

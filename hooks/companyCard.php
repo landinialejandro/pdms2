@@ -1,9 +1,7 @@
 <?php
 //  
 // Author: Alejandro Landini
-// DDT_printResume.php 25/8/18, 10:00
 // 
-// GET parameteres for print documents
 // 
 // toDo: 
 // revision:
