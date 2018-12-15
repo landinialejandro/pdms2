@@ -136,7 +136,7 @@
 			'companyCode' => array('appgini' => 'VARCHAR(255) '),
 			'companyName' => array('appgini' => 'VARCHAR(255) '),
 			'fiscalCode' => array('appgini' => 'VARCHAR(255) '),
-			'vat' => array('appgini' => 'VARCHAR(255) '),
+			'vat' => array('appgini' => 'VARCHAR(255) not null '),
 			'notes' => array('appgini' => 'TEXT ')
 		),
 		'contacts' => array(   

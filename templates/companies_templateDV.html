@@ -7,13 +7,9 @@
 	<!-- child links -->
 	<div class="row vspacer-md">
 		<div class="col-xs-12">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="orders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="orders_link"><i class="glyphicon glyphicon-list-alt"></i> Ordini</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="orders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_orders_link"><i class="glyphicon glyphicon-list-alt"></i> Ordini</a>
 			<input type="hidden" id="orders_hclink" value="orders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="_resumeOrders_hclink" value="_resumeOrders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="firstCashNote_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="firstCashNote_link"><i class="glyphicon glyphicon-list-alt"></i> Prima Nota</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="firstCashNote_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_firstCashNote_link"><i class="glyphicon glyphicon-list-alt"></i> Prima Nota</a>
-			<input type="hidden" id="firstCashNote_hclink" value="firstCashNote_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+			<input type="hidden" id="firstCashNote_hclink" value="firstCashNote_view.php?filterer_idBank=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="vatRegister_hclink" value="vatRegister_view.php?filterer_idCompany=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="attributes_hclink" value="attributes_view.php?filterer_companies=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="addresses_hclink" value="addresses_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
@@ -73,9 +69,9 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="vat" class="control-label col-lg-3">Vat</label>
+					<label for="vat" class="control-label col-lg-3">Vat<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
-						<input maxlength="255" type="text" class="form-control" name="vat" id="vat" value="<%%VALUE(vat)%%>">
+						<input maxlength="255" type="text" class="form-control" name="vat" id="vat" value="<%%VALUE(vat)%%>" required>
 					</div>
 				</div>
 

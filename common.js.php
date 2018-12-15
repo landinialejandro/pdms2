@@ -303,6 +303,8 @@ function companies_validateData(){
 	$j('.has-error').removeClass('has-error');
 	/* Field kind can't be empty */
 	if($j('#kind').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Kind", close: function(){ /* */ $j('[name=kind]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	/* Field vat can't be empty */
+	if($j('#vat').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Vat", close: function(){ /* */ $j('[name=vat]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	return true;
 }
 function contacts_validateData(){

@@ -31,6 +31,11 @@ function companies_insert(){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
+	if($data['vat']== ''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Vat': " . $Translation['field not null'] . '<br><br>';
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
 
 	// hook: companies_before_insert
 	if(function_exists('companies_before_insert')){
@@ -196,44 +201,6 @@ function companies_delete($selected_id, $AllowDeleteOfParents=false, $skipChecks
 		$RetMsg = $Translation["confirm delete"];
 		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
 		$RetMsg = str_replace("<TableName>", "_resumeOrders", $RetMsg);
-		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='companies_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
-		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='companies_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
-		return $RetMsg;
-	}
-
-	// child table: firstCashNote
-	$res = sql("select `id` from `companies` where `id`='$selected_id'", $eo);
-	$id = db_fetch_row($res);
-	$rires = sql("select count(1) from `firstCashNote` where `company`='".addslashes($id[0])."'", $eo);
-	$rirow = db_fetch_row($rires);
-	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
-		$RetMsg = $Translation["couldn't delete"];
-		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "firstCashNote", $RetMsg);
-		return $RetMsg;
-	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
-		$RetMsg = $Translation["confirm delete"];
-		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "firstCashNote", $RetMsg);
-		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='companies_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
-		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='companies_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
-		return $RetMsg;
-	}
-
-	// child table: firstCashNote
-	$res = sql("select `id` from `companies` where `id`='$selected_id'", $eo);
-	$id = db_fetch_row($res);
-	$rires = sql("select count(1) from `firstCashNote` where `customer`='".addslashes($id[0])."'", $eo);
-	$rirow = db_fetch_row($rires);
-	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
-		$RetMsg = $Translation["couldn't delete"];
-		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "firstCashNote", $RetMsg);
-		return $RetMsg;
-	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
-		$RetMsg = $Translation["confirm delete"];
-		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "firstCashNote", $RetMsg);
 		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='companies_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
 		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='companies_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
 		return $RetMsg;
@@ -431,6 +398,11 @@ function companies_update($selected_id){
 		if($data['fiscalCode'] == empty_lookup_value){ $data['fiscalCode'] = ''; }
 	$data['vat'] = makeSafe($_REQUEST['vat']);
 		if($data['vat'] == empty_lookup_value){ $data['vat'] = ''; }
+	if($data['vat']==''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Vat': {$Translation['field not null']}<br><br>";
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
 	$data['notes'] = makeSafe($_REQUEST['notes']);
 		if($data['notes'] == empty_lookup_value){ $data['notes'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
