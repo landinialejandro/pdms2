@@ -151,33 +151,33 @@ function firstCashNote_dataRequest($request=false){
         if (!$request){
             $request=$_REQUEST;
         }
-        $data['kind'] = makeSafe($_REQUEST['kind']);
+        $data['kind'] = makeSafe($request['kind']);
 		if($data['kind'] == empty_lookup_value){ $data['kind'] = ''; }
-	$data['order'] = makeSafe($_REQUEST['order']);
+	$data['order'] = makeSafe($request['order']);
 		if($data['order'] == empty_lookup_value){ $data['order'] = ''; }
-	$data['operationDate'] = intval($_REQUEST['operationDateYear']) . '-' . intval($_REQUEST['operationDateMonth']) . '-' . intval($_REQUEST['operationDateDay']);
+	$data['operationDate'] = intval($request['operationDateYear']) . '-' . intval($request['operationDateMonth']) . '-' . intval($request['operationDateDay']);
 	$data['operationDate'] = parseMySQLDate($data['operationDate'], '<%%creationDate%%>');
-	$data['company'] = makeSafe($_REQUEST['company']);
+	$data['company'] = makeSafe($request['company']);
 		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
-	$data['customer'] = makeSafe($_REQUEST['customer']);
+	$data['customer'] = makeSafe($request['customer']);
 		if($data['customer'] == empty_lookup_value){ $data['customer'] = ''; }
-	$data['documentNumber'] = makeSafe($_REQUEST['documentNumber']);
+	$data['documentNumber'] = makeSafe($request['documentNumber']);
 		if($data['documentNumber'] == empty_lookup_value){ $data['documentNumber'] = ''; }
-	$data['causal'] = br2nl(makeSafe($_REQUEST['causal']));
-	$data['revenue'] = makeSafe($_REQUEST['revenue']);
+	$data['causal'] = br2nl(makeSafe($request['causal']));
+	$data['revenue'] = makeSafe($request['revenue']);
 		if($data['revenue'] == empty_lookup_value){ $data['revenue'] = ''; }
-	$data['outputs'] = makeSafe($_REQUEST['outputs']);
+	$data['outputs'] = makeSafe($request['outputs']);
 		if($data['outputs'] == empty_lookup_value){ $data['outputs'] = ''; }
-	$data['balance'] = makeSafe($_REQUEST['balance']);
+	$data['balance'] = makeSafe($request['balance']);
 		if($data['balance'] == empty_lookup_value){ $data['balance'] = ''; }
-	$data['idBank'] = makeSafe($_REQUEST['idBank']);
+	$data['idBank'] = makeSafe($request['idBank']);
 		if($data['idBank'] == empty_lookup_value){ $data['idBank'] = ''; }
-	$data['bank'] = makeSafe($_REQUEST['company']);
+	$data['bank'] = makeSafe($request['company']);
 		if($data['bank'] == empty_lookup_value){ $data['bank'] = ''; }
-	$data['note'] = br2nl(makeSafe($_REQUEST['note']));
-	$data['paymentDeadLine'] = intval($_REQUEST['paymentDeadLineYear']) . '-' . intval($_REQUEST['paymentDeadLineMonth']) . '-' . intval($_REQUEST['paymentDeadLineDay']);
+	$data['note'] = br2nl(makeSafe($request['note']));
+	$data['paymentDeadLine'] = intval($request['paymentDeadLineYear']) . '-' . intval($request['paymentDeadLineMonth']) . '-' . intval($request['paymentDeadLineDay']);
 	$data['paymentDeadLine'] = parseMySQLDate($data['paymentDeadLine'], '<%%creationDate%%>');
-	$data['payed'] = makeSafe($_REQUEST['payed']);
+	$data['payed'] = makeSafe($request['payed']);
 		if($data['payed'] == empty_lookup_value){ $data['payed'] = ''; }
         return $data;
 }

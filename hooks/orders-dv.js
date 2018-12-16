@@ -102,10 +102,10 @@ function commisionRate(fix = false){
 }
 
 function calcCommision(fix = false){
-    var rate = parseFloat($j('#commisionRate').val()).toFixed(2) || 0;
-    var orderTotal = parseFloat($j('#orderTotal').val()).toFixed(2) || 0;
-    var actualCommision = parseFloat($j('#commisionFee').val()).toFixed(2) || 0;
-    var commision = parseFloat(orderTotal * (rate /100)).toFixed(2) || 0 ;
+    var rate = parseFloat($j('#commisionRate').val())|| 0;
+    var orderTotal = parseFloat($j('#orderTotal').val())|| 0;
+    var actualCommision = parseFloat($j('#commisionFee').val()) || 0;
+    var commision = parseFloat(orderTotal * (rate /100)) || 0 ;
     if(actualCommision !== commision && actualCommision >0 && !fix){
         ToggleFix('commisionFee','warning');
         return;

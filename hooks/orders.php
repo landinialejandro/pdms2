@@ -195,8 +195,6 @@
 		return array();
 	}
 
-        
-        
         function setFirstCash($data){
             $currDir = dirname(__FILE__);
             if(!function_exists('firstCashNote_update')){
@@ -210,8 +208,10 @@
             
             if($data['kind'] === 'IN'){
                 $fc['outputs']=$data['orderTotal'];
+                $fc['kind']="CN_OUT";
             }else{
                 $fc['revenue']=$data['orderTotal'];
+                $fc['kind']="CN_IN";
             }
             
             if ($res->lengths){
