@@ -43,6 +43,7 @@
 		<script src="<?php echo PREPEND_PATH; ?>resources/jquery/js/jquery.mark.min.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>LTE/dist/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>LTE/dist/jquery-slimscroll/jquery.slimscroll.js"></script>
+		<script src="<?php echo PREPEND_PATH; ?>LTE/dist/fastclick/lib/fastclick.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>resources/lightbox/js/prototype.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>resources/lightbox/js/scriptaculous.js?load=effects"></script>
 		<script src="<?php echo PREPEND_PATH; ?>resources/select2/select2.min.js"></script>

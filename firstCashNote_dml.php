@@ -29,7 +29,7 @@ function firstCashNote_insert($data=[]){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `firstCashNote` set       `order`=' . (($data['order'] !== '' && $data['order'] !== NULL) ? "'{$data['order']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `operationDate`=' . (($data['operationDate'] !== '' && $data['operationDate'] !== NULL) ? "'{$data['operationDate']}'" : 'NULL') . ', `documentNumber`=' . (($data['documentNumber'] !== '' && $data['documentNumber'] !== NULL) ? "'{$data['documentNumber']}'" : 'NULL') . ', `causal`=' . (($data['causal'] !== '' && $data['causal'] !== NULL) ? "'{$data['causal']}'" : 'NULL') . ', `revenue`=' . (($data['revenue'] !== '' && $data['revenue'] !== NULL) ? "'{$data['revenue']}'" : 'NULL') . ', `outputs`=' . (($data['outputs'] !== '' && $data['outputs'] !== NULL) ? "'{$data['outputs']}'" : 'NULL') . ', `balance`=' . (($data['balance'] !== '' && $data['balance'] !== NULL) ? "'{$data['balance']}'" : 'NULL') . ', `idBank`=' . (($data['idBank'] !== '' && $data['idBank'] !== NULL) ? "'{$data['idBank']}'" : 'NULL') . ', `bank`=' . (($data['bank'] !== '' && $data['bank'] !== NULL) ? "'{$data['bank']}'" : 'NULL') . ', `note`=' . (($data['note'] !== '' && $data['note'] !== NULL) ? "'{$data['note']}'" : 'NULL') . ', `paymentDeadLine`=' . (($data['paymentDeadLine'] !== '' && $data['paymentDeadLine'] !== NULL) ? "'{$data['paymentDeadLine']}'" : 'NULL') . ', `payed`=' . (($data['payed'] !== '' && $data['payed'] !== NULL) ? "'{$data['payed']}'" : 'NULL'), $o);
+	sql('insert into `firstCashNote` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `order`=' . (($data['order'] !== '' && $data['order'] !== NULL) ? "'{$data['order']}'" : 'NULL') . ', `operationDate`=' . (($data['operationDate'] !== '' && $data['operationDate'] !== NULL) ? "'{$data['operationDate']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `documentNumber`=' . (($data['documentNumber'] !== '' && $data['documentNumber'] !== NULL) ? "'{$data['documentNumber']}'" : 'NULL') . ', `causal`=' . (($data['causal'] !== '' && $data['causal'] !== NULL) ? "'{$data['causal']}'" : 'NULL') . ', `revenue`=' . (($data['revenue'] !== '' && $data['revenue'] !== NULL) ? "'{$data['revenue']}'" : 'NULL') . ', `outputs`=' . (($data['outputs'] !== '' && $data['outputs'] !== NULL) ? "'{$data['outputs']}'" : 'NULL') . ', `balance`=' . (($data['balance'] !== '' && $data['balance'] !== NULL) ? "'{$data['balance']}'" : 'NULL') . ', `idBank`=' . (($data['idBank'] !== '' && $data['idBank'] !== NULL) ? "'{$data['idBank']}'" : 'NULL') . ', `bank`=' . (($data['bank'] !== '' && $data['bank'] !== NULL) ? "'{$data['bank']}'" : 'NULL') . ', `note`=' . (($data['note'] !== '' && $data['note'] !== NULL) ? "'{$data['note']}'" : 'NULL') . ', `paymentDeadLine`=' . (($data['paymentDeadLine'] !== '' && $data['paymentDeadLine'] !== NULL) ? "'{$data['paymentDeadLine']}'" : 'NULL') . ', `payed`=' . (($data['payed'] !== '' && $data['payed'] !== NULL) ? "'{$data['payed']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"firstCashNote_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -123,7 +123,7 @@ function firstCashNote_update($selected_id, $data=[]){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `firstCashNote` set       `order`=' . (($data['order'] !== '' && $data['order'] !== NULL) ? "'{$data['order']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `operationDate`=' . (($data['operationDate'] !== '' && $data['operationDate'] !== NULL) ? "'{$data['operationDate']}'" : 'NULL') . ', `documentNumber`=' . (($data['documentNumber'] !== '' && $data['documentNumber'] !== NULL) ? "'{$data['documentNumber']}'" : 'NULL') . ', `causal`=' . (($data['causal'] !== '' && $data['causal'] !== NULL) ? "'{$data['causal']}'" : 'NULL') . ', `revenue`=' . (($data['revenue'] !== '' && $data['revenue'] !== NULL) ? "'{$data['revenue']}'" : 'NULL') . ', `outputs`=' . (($data['outputs'] !== '' && $data['outputs'] !== NULL) ? "'{$data['outputs']}'" : 'NULL') . ', `balance`=' . (($data['balance'] !== '' && $data['balance'] !== NULL) ? "'{$data['balance']}'" : 'NULL') . ', `idBank`=' . (($data['idBank'] !== '' && $data['idBank'] !== NULL) ? "'{$data['idBank']}'" : 'NULL') . ', `bank`=' . (($data['bank'] !== '' && $data['bank'] !== NULL) ? "'{$data['bank']}'" : 'NULL') . ', `note`=' . (($data['note'] !== '' && $data['note'] !== NULL) ? "'{$data['note']}'" : 'NULL') . ', `paymentDeadLine`=' . (($data['paymentDeadLine'] !== '' && $data['paymentDeadLine'] !== NULL) ? "'{$data['paymentDeadLine']}'" : 'NULL') . ', `payed`=' . (($data['payed'] !== '' && $data['payed'] !== NULL) ? "'{$data['payed']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `firstCashNote` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `order`=' . (($data['order'] !== '' && $data['order'] !== NULL) ? "'{$data['order']}'" : 'NULL') . ', `operationDate`=' . (($data['operationDate'] !== '' && $data['operationDate'] !== NULL) ? "'{$data['operationDate']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `customer`=' . (($data['customer'] !== '' && $data['customer'] !== NULL) ? "'{$data['customer']}'" : 'NULL') . ', `documentNumber`=' . (($data['documentNumber'] !== '' && $data['documentNumber'] !== NULL) ? "'{$data['documentNumber']}'" : 'NULL') . ', `causal`=' . (($data['causal'] !== '' && $data['causal'] !== NULL) ? "'{$data['causal']}'" : 'NULL') . ', `revenue`=' . (($data['revenue'] !== '' && $data['revenue'] !== NULL) ? "'{$data['revenue']}'" : 'NULL') . ', `outputs`=' . (($data['outputs'] !== '' && $data['outputs'] !== NULL) ? "'{$data['outputs']}'" : 'NULL') . ', `balance`=' . (($data['balance'] !== '' && $data['balance'] !== NULL) ? "'{$data['balance']}'" : 'NULL') . ', `idBank`=' . (($data['idBank'] !== '' && $data['idBank'] !== NULL) ? "'{$data['idBank']}'" : 'NULL') . ', `bank`=' . (($data['bank'] !== '' && $data['bank'] !== NULL) ? "'{$data['bank']}'" : 'NULL') . ', `note`=' . (($data['note'] !== '' && $data['note'] !== NULL) ? "'{$data['note']}'" : 'NULL') . ', `paymentDeadLine`=' . (($data['paymentDeadLine'] !== '' && $data['paymentDeadLine'] !== NULL) ? "'{$data['paymentDeadLine']}'" : 'NULL') . ', `payed`=' . (($data['payed'] !== '' && $data['payed'] !== NULL) ? "'{$data['payed']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="firstCashNote_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -151,31 +151,33 @@ function firstCashNote_dataRequest($request=false){
         if (!$request){
             $request=$_REQUEST;
         }
-		$data['order'] = makeSafe($request['order']);
+        $data['kind'] = makeSafe($_REQUEST['kind']);
+		if($data['kind'] == empty_lookup_value){ $data['kind'] = ''; }
+	$data['order'] = makeSafe($_REQUEST['order']);
 		if($data['order'] == empty_lookup_value){ $data['order'] = ''; }
-	$data['company'] = makeSafe($request['company']);
-		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
-	$data['customer'] = makeSafe($request['customer']);
-		if($data['customer'] == empty_lookup_value){ $data['customer'] = ''; }
-	$data['operationDate'] = intval($request['operationDateYear']) . '-' . intval($request['operationDateMonth']) . '-' . intval($request['operationDateDay']);
+	$data['operationDate'] = intval($_REQUEST['operationDateYear']) . '-' . intval($_REQUEST['operationDateMonth']) . '-' . intval($_REQUEST['operationDateDay']);
 	$data['operationDate'] = parseMySQLDate($data['operationDate'], '<%%creationDate%%>');
-	$data['documentNumber'] = makeSafe($request['documentNumber']);
+	$data['company'] = makeSafe($_REQUEST['company']);
+		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
+	$data['customer'] = makeSafe($_REQUEST['customer']);
+		if($data['customer'] == empty_lookup_value){ $data['customer'] = ''; }
+	$data['documentNumber'] = makeSafe($_REQUEST['documentNumber']);
 		if($data['documentNumber'] == empty_lookup_value){ $data['documentNumber'] = ''; }
-	$data['causal'] = br2nl(makeSafe($request['causal']));
-	$data['revenue'] = makeSafe($request['revenue']);
+	$data['causal'] = br2nl(makeSafe($_REQUEST['causal']));
+	$data['revenue'] = makeSafe($_REQUEST['revenue']);
 		if($data['revenue'] == empty_lookup_value){ $data['revenue'] = ''; }
-	$data['outputs'] = makeSafe($request['outputs']);
+	$data['outputs'] = makeSafe($_REQUEST['outputs']);
 		if($data['outputs'] == empty_lookup_value){ $data['outputs'] = ''; }
-	$data['balance'] = makeSafe($request['balance']);
+	$data['balance'] = makeSafe($_REQUEST['balance']);
 		if($data['balance'] == empty_lookup_value){ $data['balance'] = ''; }
-	$data['idBank'] = makeSafe($request['idBank']);
+	$data['idBank'] = makeSafe($_REQUEST['idBank']);
 		if($data['idBank'] == empty_lookup_value){ $data['idBank'] = ''; }
-	$data['bank'] = makeSafe($request['company']);
+	$data['bank'] = makeSafe($_REQUEST['company']);
 		if($data['bank'] == empty_lookup_value){ $data['bank'] = ''; }
-	$data['note'] = br2nl(makeSafe($request['note']));
-	$data['paymentDeadLine'] = intval($request['paymentDeadLineYear']) . '-' . intval($request['paymentDeadLineMonth']) . '-' . intval($request['paymentDeadLineDay']);
+	$data['note'] = br2nl(makeSafe($_REQUEST['note']));
+	$data['paymentDeadLine'] = intval($_REQUEST['paymentDeadLineYear']) . '-' . intval($_REQUEST['paymentDeadLineMonth']) . '-' . intval($_REQUEST['paymentDeadLineDay']);
 	$data['paymentDeadLine'] = parseMySQLDate($data['paymentDeadLine'], '<%%creationDate%%>');
-	$data['payed'] = makeSafe($request['payed']);
+	$data['payed'] = makeSafe($_REQUEST['payed']);
 		if($data['payed'] == empty_lookup_value){ $data['payed'] = ''; }
         return $data;
 }

@@ -17,7 +17,7 @@
 		<div class="col-md-8 col-lg-10" id="firstCashNote_dv_form">
 			<fieldset class="form-horizontal">
 
-				<div class="form-group">
+                            <div class="form-group" hidden="">
 					<hr class="hidden-md hidden-lg">
 					<label for="id" class="control-label col-lg-3">ID</label>
 					<div class="col-lg-9">
@@ -27,18 +27,27 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="order" class="control-label col-lg-3" data-parent_link="view_parent_modal">Order</label>
+					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Kind</label>
 					<div class="col-lg-9">
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(order)%%><%%PLINK(order)%%><%%ADDNEW(orders)%%></div>
-                                                <div  id="orderCard"  class=""></div>
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(kind)%%><%%PLINK(kind)%%><%%ADDNEW(kinds)%%></div>
 					</div>
 				</div>
 
+				<div class="form-group hidden-manual">
+					<hr class="hidden-md hidden-lg">
+					<label for="order" class="control-label col-lg-3" data-parent_link="view_parent_modal">Order</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(order)%%><%%PLINK(order)%%></div>
+                                                <div  id="orderCard"  class=""></div>
+					</div>
+				</div>
+                            <div class="hidden-automatic" hidden="">
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
 					<label for="company" class="control-label col-lg-3" data-parent_link="view_parent_modal">Company</label>
 					<div class="col-lg-9">
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(company)%%><%%PLINK(company)%%><%%ADDNEW(companies)%%><span id="companyLoading"></span></div>
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(company)%%><%%PLINK(company)%%><span id="companyLoading"></span></div>
+                                                <div  id="myCompanyCard"  class=""></div>
 					</div>
 				</div>
 
@@ -46,15 +55,8 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="customer" class="control-label col-lg-3" data-parent_link="view_parent_modal">Customer</label>
 					<div class="col-lg-9">
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(customer)%%><%%PLINK(customer)%%><%%ADDNEW(companies)%%></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="operationDate" class="control-label col-lg-3">Data operazione</label>
-					<div class="col-lg-9">
-						<%%COMBO(operationDate)%%>
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(customer)%%><%%PLINK(customer)%%></div>
+                                                <div id="customerCompanyCard" class=""></div>
 					</div>
 				</div>
 
@@ -65,7 +67,16 @@
 						<input maxlength="" type="text" class="form-control" name="documentNumber" id="documentNumber" value="<%%VALUE(documentNumber)%%>">
 					</div>
 				</div>
+                            </div>
 
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="operationDate" class="control-label col-lg-3">Data operazione</label>
+					<div class="col-lg-9">
+						<%%COMBO(operationDate)%%>
+					</div>
+				</div>
+                            
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
 					<label for="causal" class="control-label col-lg-3">Causale</label>
@@ -104,18 +115,10 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="idBank" class="control-label col-lg-3" data-parent_link="view_parent_modal">IdBank</label>
+					<label for="idBank" class="control-label col-lg-3" data-parent_link="view_parent_modal">Banca</label>
 					<div class="col-lg-9">
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(idBank)%%><%%PLINK(idBank)%%><%%ADDNEW(companies)%%></div>
                                                 <div  id="idBankCompanyCard"  class=""></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="bank" class="control-label col-lg-3">Banca</label>
-					<div class="col-lg-9">
-						<div class="form-control-static" id="bank"></div>
 					</div>
 				</div>
 
@@ -135,13 +138,6 @@
 					</div>
 				</div>
 
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<div class="col-lg-offset-3 col-lg-9">
-						<div class="checkbox"><label for="payed"><input type="checkbox" name="payed" id="payed" value="1" <%%CHECKED(payed)%%>> Pagato SI/NO</label>
-						</div>
-					</div>
-				</div>
 
 			</fieldset>
 		</div>
@@ -150,16 +146,23 @@
 		<hr class="hidden-md hidden-lg">
 		<div class="col-md-4 col-lg-2" id="firstCashNote_dv_action_buttons">
 			<div class="btn-toolbar">
-				<div class="btn-group-vertical" style="width: 100%;">
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
 					<%%UPDATE_BUTTON%%>
 				</div><p></p>
-				<div class="btn-group-vertical" style="width: 100%;">
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
 					<%%DESELECT_BUTTON%%>
 					<%%DVPRINT_BUTTON%%>
 					<%%DELETE_BUTTON%%>
 				</div><p></p>
-				<div class="btn-group-vertical" style="width: 100%;">
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
 					<%%INSERT_BUTTON%%>
+				</div><p></p>
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<div class="col-lg-12">
+						<div class="checkbox"><label for="payed"><input type="checkbox" name="payed" id="payed" value="1" <%%CHECKED(payed)%%>> Pagato SI/NO</label>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

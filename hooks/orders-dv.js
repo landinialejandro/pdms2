@@ -155,7 +155,7 @@ function refreshCards(){
     $j('#company-container').select2("readonly",true);
     $j('#typeDoc-container').select2("readonly",true);
     $j('#kind-container').select2("readonly",true);
-    $j('#supplier-container').select2("readonly",true);
+//    $j('#supplier-container').select2("readonly",true);
     showCard('company','myCompanyCard','companyCard');
     showCard('customer','customerCompanyCard','companyCard');
     showCard('shipVia','shipCompanyCard','companyCard');
