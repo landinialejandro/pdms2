@@ -88,14 +88,40 @@
 			<?php if(stripos($_SERVER['HTTP_USER_AGENT'], 'msie ')){ ?>
 				<a href="<?php echo $parameters['ChildTable']; ?>_view.php?filterer_<?php echo $parameters['ChildLookupField']; ?>=<?php echo urlencode($parameters['SelectedID']); ?>&addNew_x=1" target="_viewchild" class="btn btn-success hspacer-sm vspacer-md"><i class="glyphicon glyphicon-plus-sign"></i> <?php echo html_attr($Translation['Add New']); ?></a>
 			<?php }else{ ?>
-				<a href="#" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'new' }); return false;" class="btn btn-success btn-xs hspacer-sm vspacer-md"><i class="glyphicon glyphicon-plus-sign"></i> <?php echo html_attr($Translation['Add New']); ?></a>
+				<a href="#" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'new' }); return false;" class="btn btn-success hspacer-sm vspacer-md"><i class="glyphicon glyphicon-plus-sign"></i> <?php echo html_attr($Translation['Add New']); ?></a>
 			<?php } ?>
 		<?php } ?>
-		<?php if($config['display-refresh']){ ?><a href="#" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'reload' }); return false;" class="btn btn-default btn-xs hspacer-sm vspacer-md"><i class="glyphicon glyphicon-refresh"></i></a><?php } ?>
+		<?php if($config['display-refresh']){ ?><a href="#" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'reload' }); return false;" class="btn btn-default hspacer-sm vspacer-md"><i class="glyphicon glyphicon-refresh"></i></a><?php } ?>
 
 
 		<div class="table-responsive">
 			<table class="table table-striped table-hover table-condensed table-bordered">
+				<thead>
+					<tr>
+						<?php if($config['open-detail-view-on-click']){ ?>
+							<th>&nbsp;</th>
+						<?php } ?>
+						<?php if(is_array($config['display-fields'])) foreach($config['display-fields'] as $fieldIndex => $fieldLabel){ ?>
+							<th 
+								<?php if($config['sortable-fields'][$fieldIndex]){ ?>
+									onclick="<?php echo $current_table; ?>GetChildrenRecordsList({
+										Verb: 'sort', 
+										SortBy: <?php echo $fieldIndex; ?>, 
+										SortDirection: '<?php echo ($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'asc' ? 'desc' : 'asc'); ?>'
+									});" 
+									style="cursor: pointer;" 
+								<?php } ?>
+								class="<?php echo "{$current_table}-{$config['display-field-names'][$fieldIndex]}"; ?>">
+								<?php echo $fieldLabel; ?>
+								<?php if($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'desc'){ ?>
+									<i class="glyphicon glyphicon-sort-by-attributes-alt text-warning"></i>
+								<?php }elseif($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'asc'){ ?>
+									<i class="glyphicon glyphicon-sort-by-attributes text-warning"></i>
+								<?php } ?>
+							</th>
+						<?php } ?>
+					</tr>
+				</thead>
 				<tbody>
 					<?php if(is_array($records)) {
                                             foreach($records as $pkValue => $record){?>
@@ -133,7 +159,7 @@
                                                 </div>
                                             </td>
 					</tr>
-                                                <?php } } ?>
+					<?php } ?>
 				</tbody>
 				<tfoot>
 					<tr>
@@ -156,8 +182,8 @@
 		<?php if($totalMatches){ ?>
 			<div class="row hidden-print">
 				<div class="col-xs-12">
-					<button type="button" class="btn btn-default btn-xs" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'page', Page: 'previous' });"><i class="glyphicon glyphicon-chevron-left"></i></button>
-					<button type="button" class="btn btn-default btn-xs" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'page', Page: 'next' });"><i class="glyphicon glyphicon-chevron-right"></i></button>
+					<button type="button" class="btn btn-default" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'page', Page: 'previous' });"><i class="glyphicon glyphicon-chevron-left"></i></button>
+					<button type="button" class="btn btn-default" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'page', Page: 'next' });"><i class="glyphicon glyphicon-chevron-right"></i></button>
 				</div>
 			</div>
 		<?php } ?>

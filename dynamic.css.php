@@ -104,7 +104,7 @@ img[src="blank.gif"] { max-height: 10px !important; }
 	padding: 4px 10px;
 }
 
-.theme-compact ., .theme-compact .btn-group-lg > .btn {
+.theme-compact .btn-lg, .theme-compact .btn-group-lg > .btn {
 	font-size: 15px;
 	padding: 6px 15px;
 }

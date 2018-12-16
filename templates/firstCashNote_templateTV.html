@@ -5,10 +5,11 @@
 <!-- add the following to the firstCashNote_init() hook (in hooks/firstCashNote.php file) -->
 <!--     $options->ShowTableHeader = 0;     -->
 
+		<td id="firstCashNote-kind-<%%VALUE(id)%%>" class="firstCashNote-kind"><%%SELECT%%><%%VALUE(kind)%%><%%ENDSELECT%%></td>
 		<td id="firstCashNote-order-<%%VALUE(id)%%>" class="firstCashNote-order"><%%SELECT%%><%%VALUE(order)%%><%%ENDSELECT%%></td>
+		<td id="firstCashNote-operationDate-<%%VALUE(id)%%>" class="firstCashNote-operationDate"><%%SELECT%%><%%VALUE(operationDate)%%><%%ENDSELECT%%></td>
 		<td id="firstCashNote-company-<%%VALUE(id)%%>" class="firstCashNote-company"><%%SELECT%%><%%VALUE(company)%%><%%ENDSELECT%%></td>
 		<td id="firstCashNote-customer-<%%VALUE(id)%%>" class="firstCashNote-customer"><%%SELECT%%><%%VALUE(customer)%%><%%ENDSELECT%%></td>
-		<td id="firstCashNote-operationDate-<%%VALUE(id)%%>" class="firstCashNote-operationDate"><%%SELECT%%><%%VALUE(operationDate)%%><%%ENDSELECT%%></td>
 		<td id="firstCashNote-documentNumber-<%%VALUE(id)%%>" class="firstCashNote-documentNumber text-right"><%%SELECT%%><%%VALUE(documentNumber)%%><%%ENDSELECT%%></td>
 		<td id="firstCashNote-causal-<%%VALUE(id)%%>" class="firstCashNote-causal"><%%SELECT%%><%%VALUE(causal)%%><%%ENDSELECT%%></td>
 		<td id="firstCashNote-revenue-<%%VALUE(id)%%>" class="firstCashNote-revenue text-right"><%%SELECT%%><%%VALUE(revenue)%%><%%ENDSELECT%%></td>

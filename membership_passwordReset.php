@@ -80,7 +80,7 @@
 
 						<div class="row">
 							<div class="col-sm-offset-3 col-sm-6">
-								<button class="btn btn-primary  btn-block" value="changePassword" id="changePassword" type="submit" name="changePassword" value="1"><?php echo $Translation['ok']; ?></button>
+								<button class="btn btn-primary btn-lg btn-block" value="changePassword" id="changePassword" type="submit" name="changePassword" value="1"><?php echo $Translation['ok']; ?></button>
 							</div>
 						</div>
 
@@ -197,7 +197,7 @@
 
 				<div class="row">
 					<div class="col-sm-offset-3 col-sm-6">
-						<button class="btn btn-primary  btn-block" value="<?php echo html_attr($Translation['ok']); ?>" id="reset" type="submit" name="reset"><?php echo $Translation['ok']; ?></button>
+						<button class="btn btn-primary btn-lg btn-block" value="<?php echo html_attr($Translation['ok']); ?>" id="reset" type="submit" name="reset"><?php echo $Translation['ok']; ?></button>
 					</div>
 				</div>
 

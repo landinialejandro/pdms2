@@ -165,7 +165,7 @@
 
 						<div class="row">
 							<div class="col-sm-offset-3 col-sm-6">
-								<button class="btn btn-primary  btn-block" value="signUp" id="submit" type="submit" name="signUp"><?php echo $Translation['sign up']; ?></button>
+								<button class="btn btn-primary btn-lg btn-block" value="signUp" id="submit" type="submit" name="signUp"><?php echo $Translation['sign up']; ?></button>
 							</div>
 						</div>
 

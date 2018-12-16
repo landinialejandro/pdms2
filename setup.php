@@ -33,7 +33,7 @@
 	}
 
 	function isEmail($email){
-		if(preg_match('/^([*+!.&#$Å \'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,45})$/i', $email)){
+		if(preg_match('/^([*+!.&#$¦\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,45})$/i', $email)){
 			return $email;
 		}else{
 			return FALSE;
@@ -120,7 +120,7 @@
 					<div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
 						<h2 class="text-danger"><?php echo $Translation['The following errors occured']; ?></h2>
 						<div class="alert alert-danger"><ul><li><?php echo implode('</li><li>', $errors); ?></li></ul></div>
-						<a class="btn btn-default vspacer-lg" href="#" onclick="history.go(-1); return false;"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $Translation['< back']; ?></a>
+						<a class="btn btn-default btn-lg vspacer-lg" href="#" onclick="history.go(-1); return false;"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $Translation['< back']; ?></a>
 					</div>
 				</div>
 			<?php
@@ -303,7 +303,7 @@
 			<p style="background-color: white; padding: 20px; margin-bottom: 40px; border-radius: 4px;"><img src="logo.png"></p>
 			<p><?php echo $Translation['setup intro 2']; ?></p>
 			<br><br>
-			<p class="text-center"><button class="btn btn-success" id="show-login-form" type="button"><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation['Lets go']; ?></button></p>
+			<p class="text-center"><button class="btn btn-success btn-lg" id="show-login-form" type="button"><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation['Lets go']; ?></button></p>
 		</div>
 
 	<?php }elseif($form){ /* show setup form */ ?>
@@ -422,7 +422,7 @@
 
 			<div class="row">
 				<div class="col-sm-offset-3 col-sm-6">
-					<button class="btn btn-primary btn-block" value="submit" id="submit" type="submit" name="submit"><?php echo $Translation['Submit']; ?></button>
+					<button class="btn btn-primary btn-lg btn-block" value="submit" id="submit" type="submit" name="submit"><?php echo $Translation['Submit']; ?></button>
 				</div>
 			</div>
 		</form>

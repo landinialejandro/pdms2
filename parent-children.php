@@ -183,6 +183,30 @@
 				)
 			),
 			'firstCashNote' => array(   
+				'kind' => array(   
+					'parent-table' => 'kinds',
+					'parent-primary-key' => 'code',
+					'child-primary-key' => 'id',
+					'child-primary-key-index' => 0,
+					'tab-label' => 'Prima Nota',
+					'auto-close' => true,
+					'table-icon' => 'resources/table_icons/data_sort.png',
+					'display-refresh' => true,
+					'display-add-new' => true,
+					'forced-where' => '',
+					'display-fields' => array(1 => 'Kind', 2 => 'Order', 3 => 'Data operazione', 4 => 'Company', 5 => 'Customer', 6 => 'Numero ordine', 7 => 'Causale', 8 => 'Entrate', 9 => 'Uscite', 10 => 'Bilancio', 12 => 'Banca', 13 => 'Note pagamento', 14 => 'Pagamento in data', 15 => 'Pagato SI/NO'),
+					'display-field-names' => array(1 => 'kind', 2 => 'order', 3 => 'operationDate', 4 => 'company', 5 => 'customer', 6 => 'documentNumber', 7 => 'causal', 8 => 'revenue', 9 => 'outputs', 10 => 'balance', 12 => 'bank', 13 => 'note', 14 => 'paymentDeadLine', 15 => 'payed'),
+					'sortable-fields' => array(0 => '`firstCashNote`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`firstCashNote`.`operationDate`', 4 => 5, 5 => 6, 6 => '`firstCashNote`.`documentNumber`', 7 => 8, 8 => '`firstCashNote`.`revenue`', 9 => '`firstCashNote`.`outputs`', 10 => '`firstCashNote`.`balance`', 11 => '`companies4`.`companyName`', 12 => '`companies2`.`companyName`', 13 => 14, 14 => '`firstCashNote`.`paymentDeadLine`', 15 => 16),
+					'records-per-page' => 10,
+					'default-sort-by' => false,
+					'default-sort-direction' => 'asc',
+					'open-detail-view-on-click' => true,
+					'display-page-selector' => true,
+					'show-page-progress' => true,
+					'template' => 'children-firstCashNote',
+					'template-printable' => 'children-firstCashNote-printable',
+					'query' => "SELECT `firstCashNote`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`orders1`.`multiOrder`) || CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `orders1`.`multiOrder`, ' - ', `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'order', if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'') as 'operationDate', IF(    CHAR_LENGTH(`companies2`.`companyCode`) || CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyCode`, ' - ', `companies2`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`companies3`.`companyCode`) || CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyCode`, ' - ', `companies3`.`companyName`), '') as 'customer', `firstCashNote`.`documentNumber` as 'documentNumber', `firstCashNote`.`causal` as 'causal', `firstCashNote`.`revenue` as 'revenue', `firstCashNote`.`outputs` as 'outputs', `firstCashNote`.`balance` as 'balance', IF(    CHAR_LENGTH(`companies4`.`companyName`), CONCAT_WS('',   `companies4`.`companyName`), '') as 'idBank', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'bank', `firstCashNote`.`note` as 'note', if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'') as 'paymentDeadLine', if(CHAR_LENGTH(`firstCashNote`.`payed`)>100, concat(left(`firstCashNote`.`payed`,100),' ...'), `firstCashNote`.`payed`) as 'payed' FROM `firstCashNote` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`firstCashNote`.`kind` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders1`.`company` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`firstCashNote`.`company` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`firstCashNote`.`customer` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`firstCashNote`.`idBank` "
+				),
 				'order' => array(   
 					'parent-table' => 'orders',
 					'parent-primary-key' => 'id',
@@ -194,9 +218,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Order', 2 => 'Company', 3 => 'Customer', 4 => 'Data operazione', 5 => 'Numero ordine', 6 => 'Causale', 7 => 'Entrate', 8 => 'Uscite', 9 => 'Bilancio', 11 => 'Banca', 12 => 'Note pagamento', 13 => 'Pagamento in data', 14 => 'Pagato SI/NO'),
-					'display-field-names' => array(1 => 'order', 2 => 'company', 3 => 'customer', 4 => 'operationDate', 5 => 'documentNumber', 6 => 'causal', 7 => 'revenue', 8 => 'outputs', 9 => 'balance', 11 => 'bank', 12 => 'note', 13 => 'paymentDeadLine', 14 => 'payed'),
-					'sortable-fields' => array(0 => '`firstCashNote`.`id`', 1 => 2, 2 => 3, 3 => '`companies2`.`companyName`', 4 => '`firstCashNote`.`operationDate`', 5 => '`firstCashNote`.`documentNumber`', 6 => 7, 7 => '`firstCashNote`.`revenue`', 8 => '`firstCashNote`.`outputs`', 9 => '`firstCashNote`.`balance`', 10 => '`companies2`.`companyName`', 11 => '`companies2`.`companyName`', 12 => 13, 13 => '`firstCashNote`.`paymentDeadLine`', 14 => 15),
+					'display-fields' => array(1 => 'Kind', 2 => 'Order', 3 => 'Data operazione', 4 => 'Company', 5 => 'Customer', 6 => 'Numero ordine', 7 => 'Causale', 8 => 'Entrate', 9 => 'Uscite', 10 => 'Bilancio', 12 => 'Banca', 13 => 'Note pagamento', 14 => 'Pagamento in data', 15 => 'Pagato SI/NO'),
+					'display-field-names' => array(1 => 'kind', 2 => 'order', 3 => 'operationDate', 4 => 'company', 5 => 'customer', 6 => 'documentNumber', 7 => 'causal', 8 => 'revenue', 9 => 'outputs', 10 => 'balance', 12 => 'bank', 13 => 'note', 14 => 'paymentDeadLine', 15 => 'payed'),
+					'sortable-fields' => array(0 => '`firstCashNote`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`firstCashNote`.`operationDate`', 4 => 5, 5 => 6, 6 => '`firstCashNote`.`documentNumber`', 7 => 8, 8 => '`firstCashNote`.`revenue`', 9 => '`firstCashNote`.`outputs`', 10 => '`firstCashNote`.`balance`', 11 => '`companies4`.`companyName`', 12 => '`companies2`.`companyName`', 13 => 14, 14 => '`firstCashNote`.`paymentDeadLine`', 15 => 16),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -205,7 +229,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-firstCashNote',
 					'template-printable' => 'children-firstCashNote-printable',
-					'query' => "SELECT `firstCashNote`.`id` as 'id', IF(    CHAR_LENGTH(`orders1`.`multiOrder`) || CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `orders1`.`multiOrder`, ' - ', `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'order', IF(    CHAR_LENGTH(`companies2`.`companyCode`) || CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyCode`, ' - ', `companies2`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'customer', if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'') as 'operationDate', `firstCashNote`.`documentNumber` as 'documentNumber', `firstCashNote`.`causal` as 'causal', `firstCashNote`.`revenue` as 'revenue', `firstCashNote`.`outputs` as 'outputs', `firstCashNote`.`balance` as 'balance', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'idBank', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'bank', `firstCashNote`.`note` as 'note', if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'') as 'paymentDeadLine', if(CHAR_LENGTH(`firstCashNote`.`payed`)>100, concat(left(`firstCashNote`.`payed`,100),' ...'), `firstCashNote`.`payed`) as 'payed' FROM `firstCashNote` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders1`.`company` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`firstCashNote`.`idBank` "
+					'query' => "SELECT `firstCashNote`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`orders1`.`multiOrder`) || CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `orders1`.`multiOrder`, ' - ', `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'order', if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'') as 'operationDate', IF(    CHAR_LENGTH(`companies2`.`companyCode`) || CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyCode`, ' - ', `companies2`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`companies3`.`companyCode`) || CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyCode`, ' - ', `companies3`.`companyName`), '') as 'customer', `firstCashNote`.`documentNumber` as 'documentNumber', `firstCashNote`.`causal` as 'causal', `firstCashNote`.`revenue` as 'revenue', `firstCashNote`.`outputs` as 'outputs', `firstCashNote`.`balance` as 'balance', IF(    CHAR_LENGTH(`companies4`.`companyName`), CONCAT_WS('',   `companies4`.`companyName`), '') as 'idBank', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'bank', `firstCashNote`.`note` as 'note', if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'') as 'paymentDeadLine', if(CHAR_LENGTH(`firstCashNote`.`payed`)>100, concat(left(`firstCashNote`.`payed`,100),' ...'), `firstCashNote`.`payed`) as 'payed' FROM `firstCashNote` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`firstCashNote`.`kind` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders1`.`company` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`firstCashNote`.`company` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`firstCashNote`.`customer` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`firstCashNote`.`idBank` "
 				)
 			),
 			'vatRegister' => array(   

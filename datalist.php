@@ -804,10 +804,10 @@ class DataList{
 				$this->HTML .= '<div id="top_buttons" class="hidden-print">';
 					/* .all_records: container for buttons that don't need a selection */
 					/* .selected_records: container for buttons that need a selection */
-					$this->HTML .= '<div class="btn-group visible-md visible-lg all_records pull-left">' . $buttons_all . '</div>';
-					$this->HTML .= '<div class="btn-group visible-md visible-lg selected_records hidden pull-left hspacer-lg">' . ($actual_more_count ? $more_menu : '') . '</div>';
-					$this->HTML .= '<div class="btn-group-vertical visible-xs visible-sm all_records">' . $buttons_all . '</div>';
-					$this->HTML .= '<div class="btn-group-vertical visible-xs visible-sm selected_records hidden vspacer-lg">' . ($actual_more_count ? $more_menu : '') . '</div>';
+					$this->HTML .= '<div class="btn-group btn-group-lg visible-md visible-lg all_records pull-left">' . $buttons_all . '</div>';
+					$this->HTML .= '<div class="btn-group btn-group-lg visible-md visible-lg selected_records hidden pull-left hspacer-lg">' . ($actual_more_count ? $more_menu : '') . '</div>';
+					$this->HTML .= '<div class="btn-group-vertical btn-group-lg visible-xs visible-sm all_records">' . $buttons_all . '</div>';
+					$this->HTML .= '<div class="btn-group-vertical btn-group-lg visible-xs visible-sm selected_records hidden vspacer-lg">' . ($actual_more_count ? $more_menu : '') . '</div>';
 					$this->HTML .= $this->tv_tools();
 					$this->HTML .= '<p></p>';
 				$this->HTML .= '</div>';

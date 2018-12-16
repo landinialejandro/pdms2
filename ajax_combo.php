@@ -284,6 +284,17 @@
 			)
 		),
 		'firstCashNote' => array(   
+			'kind' => array(
+				'parent_table' => 'kinds',
+				'parent_pk_field' => 'code',
+				'parent_caption' => '`kinds`.`name`',
+				'parent_from' => '`kinds` ',
+				'filterers' => array(),
+				'custom_query' => 'SELECT `kinds`.`code`, `kinds`.`name` FROM `kinds` WHERE `kinds`.`entity` LIKE \'%CashNote%\' ORDER BY 2 ',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
 			'order' => array(
 				'parent_table' => 'orders',
 				'parent_pk_field' => 'id',
@@ -309,7 +320,7 @@
 			'customer' => array(
 				'parent_table' => 'companies',
 				'parent_pk_field' => 'id',
-				'parent_caption' => '`companies`.`companyName`',
+				'parent_caption' => 'IF(CHAR_LENGTH(`companies`.`companyCode`) || CHAR_LENGTH(`companies`.`companyName`), CONCAT_WS(\'\', `companies`.`companyCode`, \' - \', `companies`.`companyName`), \'\')',
 				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` ',
 				'filterers' => array(),
 				'custom_query' => 'SELECT `companies`.`id`, `companies`.`companyName` FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`name`=`companies`.`kind` WHERE `companies`.`kind` like \'%CUST%\' ORDER BY 2',

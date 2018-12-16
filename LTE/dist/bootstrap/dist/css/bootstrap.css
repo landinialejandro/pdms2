@@ -3431,12 +3431,13 @@ fieldset[disabled] .btn-link:focus {
   color: #777;
   text-decoration: none;
 }
+/*like btn-default by Ale*/
 .btn-lg,
 .btn-group-lg > .btn {
-  padding: 10px 16px;
-  font-size: 18px;
-  line-height: 1.3333333;
-  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
 }
 .btn-sm,
 .btn-group-sm > .btn {
