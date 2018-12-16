@@ -93,7 +93,7 @@ $invoice=<<<XML
                 <IdCodice>{$company['vat']}</IdCodice> 
             </IdTrasmittente>
             <ProgressivoInvio>{$order['multiOrder']}</ProgressivoInvio> 
-            <FormatoTrasmissione>FPR12</FormatoTrasmissione> 
+            <FormatoTrasmissione>SDI10</FormatoTrasmissione> 
             <CodiceDestinatario>0000000</CodiceDestinatario> 
             <PECDestinatario>betagamma@pec.it</PECDestinatario> 
         </DatiTrasmissione>
