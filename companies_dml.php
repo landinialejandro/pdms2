@@ -26,6 +26,8 @@ function companies_insert(){
 		if($data['vat'] == empty_lookup_value){ $data['vat'] = ''; }
 	$data['notes'] = makeSafe($_REQUEST['notes']);
 		if($data['notes'] == empty_lookup_value){ $data['notes'] = ''; }
+	$data['codiceDestinatario'] = makeSafe($_REQUEST['codiceDestinatario']);
+		if($data['codiceDestinatario'] == empty_lookup_value){ $data['codiceDestinatario'] = ''; }
 	if($data['kind']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Kind': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
@@ -44,7 +46,7 @@ function companies_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL'), $o);
+	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"companies_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -443,6 +445,8 @@ function companies_update($selected_id){
 	}
 	$data['notes'] = makeSafe($_REQUEST['notes']);
 		if($data['notes'] == empty_lookup_value){ $data['notes'] = ''; }
+	$data['codiceDestinatario'] = makeSafe($_REQUEST['codiceDestinatario']);
+		if($data['codiceDestinatario'] == empty_lookup_value){ $data['codiceDestinatario'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: companies_before_update
@@ -452,7 +456,7 @@ function companies_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="companies_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -495,6 +499,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	}
 
 	$filterer_kind = thisOr(undo_magic_quotes($_REQUEST['filterer_kind']), '');
+	$filterer_codiceDestinatario = thisOr(undo_magic_quotes($_REQUEST['filterer_codiceDestinatario']), '');
 
 	// populate filterers, starting from children to grand-parents
 
@@ -502,6 +507,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
 	// combobox: kind
 	$combo_kind = new DataCombo;
+	// combobox: codiceDestinatario
+	$combo_codiceDestinatario = new DataCombo;
 
 	if($selected_id){
 		// mm: check member permissions
@@ -533,11 +540,15 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$hc = new CI_Input();
 		$row = $hc->xss_clean($row); /* sanitize data */
 		$combo_kind->SelectedData = $row['kind'];
+		$combo_codiceDestinatario->SelectedData = $row['codiceDestinatario'];
 	}else{
 		$combo_kind->SelectedData = $filterer_kind;
+		$combo_codiceDestinatario->SelectedData = $filterer_codiceDestinatario;
 	}
 	$combo_kind->HTML = '<span id="kind-container' . $rnd1 . '"></span><input type="hidden" name="kind" id="kind' . $rnd1 . '" value="' . html_attr($combo_kind->SelectedData) . '">';
 	$combo_kind->MatchText = '<span id="kind-container-readonly' . $rnd1 . '"></span><input type="hidden" name="kind" id="kind' . $rnd1 . '" value="' . html_attr($combo_kind->SelectedData) . '">';
+	$combo_codiceDestinatario->HTML = '<span id="codiceDestinatario-container' . $rnd1 . '"></span><input type="hidden" name="codiceDestinatario" id="codiceDestinatario' . $rnd1 . '" value="' . html_attr($combo_codiceDestinatario->SelectedData) . '">';
+	$combo_codiceDestinatario->MatchText = '<span id="codiceDestinatario-container-readonly' . $rnd1 . '"></span><input type="hidden" name="codiceDestinatario" id="codiceDestinatario' . $rnd1 . '" value="' . html_attr($combo_codiceDestinatario->SelectedData) . '">';
 
 	ob_start();
 	?>
@@ -545,10 +556,12 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	<script>
 		// initial lookup values
 		AppGini.current_kind__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['kind'] : $filterer_kind); ?>"};
+		AppGini.current_codiceDestinatario__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['codiceDestinatario'] : $filterer_codiceDestinatario); ?>"};
 
 		jQuery(function() {
 			setTimeout(function(){
 				if(typeof(kind_reload__RAND__) == 'function') kind_reload__RAND__();
+				if(typeof(codiceDestinatario_reload__RAND__) == 'function') codiceDestinatario_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
 		});
 		function kind_reload__RAND__(){
@@ -628,6 +641,83 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		<?php } ?>
 
 		}
+		function codiceDestinatario_reload__RAND__(){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			$j("#codiceDestinatario-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					$j.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: AppGini.current_codiceDestinatario__RAND__.value, t: 'companies', f: 'codiceDestinatario' },
+						success: function(resp){
+							c({
+								id: resp.results[0].id,
+								text: resp.results[0].text
+							});
+							$j('[name="codiceDestinatario"]').val(resp.results[0].id);
+							$j('[id=codiceDestinatario-container-readonly__RAND__]').html('<span id="codiceDestinatario-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=codiceDestinatario_view_parent]').hide(); }else{ $j('.btn[id=codiceDestinatario_view_parent]').show(); }
+
+
+							if(typeof(codiceDestinatario_update_autofills__RAND__) == 'function') codiceDestinatario_update_autofills__RAND__();
+						}
+					});
+				},
+				width: '100%',
+				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 10,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ /* */ return { s: term, p: page, t: 'companies', f: 'codiceDestinatario' }; },
+					results: function(resp, page){ /* */ return resp; }
+				},
+				escapeMarkup: function(str){ /* */ return str; }
+			}).on('change', function(e){
+				AppGini.current_codiceDestinatario__RAND__.value = e.added.id;
+				AppGini.current_codiceDestinatario__RAND__.text = e.added.text;
+				$j('[name="codiceDestinatario"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=codiceDestinatario_view_parent]').hide(); }else{ $j('.btn[id=codiceDestinatario_view_parent]').show(); }
+
+
+				if(typeof(codiceDestinatario_update_autofills__RAND__) == 'function') codiceDestinatario_update_autofills__RAND__();
+			});
+
+			if(!$j("#codiceDestinatario-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: AppGini.current_codiceDestinatario__RAND__.value, t: 'companies', f: 'codiceDestinatario' },
+					success: function(resp){
+						$j('[name="codiceDestinatario"]').val(resp.results[0].id);
+						$j('[id=codiceDestinatario-container-readonly__RAND__]').html('<span id="codiceDestinatario-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=codiceDestinatario_view_parent]').hide(); }else{ $j('.btn[id=codiceDestinatario_view_parent]').show(); }
+
+						if(typeof(codiceDestinatario_update_autofills__RAND__) == 'function') codiceDestinatario_update_autofills__RAND__();
+					}
+				});
+			}
+
+		<?php }else{ ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: AppGini.current_codiceDestinatario__RAND__.value, t: 'companies', f: 'codiceDestinatario' },
+				success: function(resp){
+					$j('[id=codiceDestinatario-container__RAND__], [id=codiceDestinatario-container-readonly__RAND__]').html('<span id="codiceDestinatario-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=codiceDestinatario_view_parent]').hide(); }else{ $j('.btn[id=codiceDestinatario_view_parent]').show(); }
+
+					if(typeof(codiceDestinatario_update_autofills__RAND__) == 'function') codiceDestinatario_update_autofills__RAND__();
+				}
+			});
+		<?php } ?>
+
+		}
 	</script>
 	<?php
 
@@ -692,6 +782,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$jsReadOnly .= "\tjQuery('#companyName').replaceWith('<div class=\"form-control-static\" id=\"companyName\">' + (jQuery('#companyName').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#fiscalCode').replaceWith('<div class=\"form-control-static\" id=\"fiscalCode\">' + (jQuery('#fiscalCode').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#vat').replaceWith('<div class=\"form-control-static\" id=\"vat\">' + (jQuery('#vat').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#codiceDestinatario').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#codiceDestinatario_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -704,9 +796,12 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%COMBO(kind)%%>', $combo_kind->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(kind)%%>', $combo_kind->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(kind)%%>', urlencode($combo_kind->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(codiceDestinatario)%%>', $combo_codiceDestinatario->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(codiceDestinatario)%%>', $combo_codiceDestinatario->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(codiceDestinatario)%%>', urlencode($combo_codiceDestinatario->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'kind' => array('kinds', 'Kind'));
+	$lookup_fields = array(  'kind' => array('kinds', 'Kind'), 'codiceDestinatario' => array('codiceDestinatario', 'Codice Destinatario'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -729,6 +824,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%UPLOADFILE(fiscalCode)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(vat)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(notes)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(codiceDestinatario)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -757,6 +853,9 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		}
 		$templateCode = str_replace('<%%VALUE(notes)%%>', nl2br($row['notes']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(notes)%%>', urlencode($urow['notes']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(codiceDestinatario)%%>', safe_html($urow['codiceDestinatario']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(codiceDestinatario)%%>', html_attr($row['codiceDestinatario']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(codiceDestinatario)%%>', urlencode($urow['codiceDestinatario']), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -771,6 +870,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$templateCode = str_replace('<%%VALUE(vat)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(vat)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%HTMLAREA(notes)%%>', '<textarea name="notes" id="notes" rows="5"></textarea>', $templateCode);
+		$templateCode = str_replace('<%%VALUE(codiceDestinatario)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(codiceDestinatario)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

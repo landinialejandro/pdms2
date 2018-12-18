@@ -6,11 +6,11 @@
 	include("$currDir/defaultLang.php");
 	include("$currDir/language.php");
 	include("$currDir/lib.php");
-	@include("$currDir/hooks/countries.php");
-	include("$currDir/countries_dml.php");
+	@include("$currDir/hooks/codiceDestinatario.php");
+	include("$currDir/codiceDestinatario_dml.php");
 
 	// mm: can the current member access this page?
-	$perm=getTablePermissions('countries');
+	$perm=getTablePermissions('codiceDestinatario');
 	if(!$perm[0]){
 		echo error_message($Translation['tableAccessDenied'], false);
 		echo '<script>setTimeout("window.location=\'index.php?signOut=1\'", 2000);</script>';
@@ -18,50 +18,45 @@
 	}
 
 	$x = new DataList;
-	$x->TableName = "countries";
+	$x->TableName = "codiceDestinatario";
 
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
-		"`countries`.`id`" => "id",
-		"if(CHAR_LENGTH(`countries`.`country`)>100, concat(left(`countries`.`country`,100),' ...'), `countries`.`country`)" => "country",
-		"if(CHAR_LENGTH(`countries`.`code`)>50, concat(left(`countries`.`code`,50),' ...'), `countries`.`code`)" => "code",
-		"`countries`.`ISOcode`" => "ISOcode"
+		"`codiceDestinatario`.`id`" => "id",
+		"`codiceDestinatario`.`code`" => "code",
+		"`codiceDestinatario`.`list`" => "list"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
-		1 => '`countries`.`id`',
+		1 => '`codiceDestinatario`.`id`',
 		2 => 2,
-		3 => 3,
-		4 => 4
+		3 => 3
 	);
 
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
-		"`countries`.`id`" => "id",
-		"`countries`.`country`" => "country",
-		"`countries`.`code`" => "code",
-		"`countries`.`ISOcode`" => "ISOcode"
+		"`codiceDestinatario`.`id`" => "id",
+		"`codiceDestinatario`.`code`" => "code",
+		"`codiceDestinatario`.`list`" => "list"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
-		"`countries`.`id`" => "ID",
-		"`countries`.`country`" => "Country",
-		"`countries`.`code`" => "Code",
-		"`countries`.`ISOcode`" => "ISOcode"
+		"`codiceDestinatario`.`id`" => "ID",
+		"`codiceDestinatario`.`code`" => "Code",
+		"`codiceDestinatario`.`list`" => "List"
 	);
 
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
-		"`countries`.`id`" => "id",
-		"`countries`.`country`" => "Country",
-		"`countries`.`code`" => "Code",
-		"`countries`.`ISOcode`" => "ISOcode"
+		"`codiceDestinatario`.`id`" => "id",
+		"`codiceDestinatario`.`code`" => "code",
+		"`codiceDestinatario`.`list`" => "list"
 	);
 
 	// Lookup fields that can be used as filterers
 	$x->filterers = array();
 
-	$x->QueryFrom = "`countries` ";
+	$x->QueryFrom = "`codiceDestinatario` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -82,24 +77,22 @@
 	$x->RecordsPerPage = 10;
 	$x->QuickSearch = 1;
 	$x->QuickSearchText = $Translation["quick search"];
-	$x->ScriptFileName = "countries_view.php";
-	$x->RedirectAfterInsert = "countries_view.php?SelectedID=#ID#";
-	$x->TableTitle = "Countries";
-	$x->TableIcon = "resources/table_icons/globe_model.png";
-	$x->PrimaryKey = "`countries`.`id`";
-	$x->DefaultSortField = '2';
-	$x->DefaultSortDirection = 'asc';
+	$x->ScriptFileName = "codiceDestinatario_view.php";
+	$x->RedirectAfterInsert = "codiceDestinatario_view.php?SelectedID=#ID#";
+	$x->TableTitle = "Codice Destinatario";
+	$x->TableIcon = "table.gif";
+	$x->PrimaryKey = "`codiceDestinatario`.`id`";
 
-	$x->ColWidth   = array(  150, 150, 150);
-	$x->ColCaption = array("Country", "Code", "ISOcode");
-	$x->ColFieldName = array('country', 'code', 'ISOcode');
-	$x->ColNumber  = array(2, 3, 4);
+	$x->ColWidth   = array(  150, 150);
+	$x->ColCaption = array("Code", "List");
+	$x->ColFieldName = array('code', 'list');
+	$x->ColNumber  = array(2, 3);
 
 	// template paths below are based on the app main directory
-	$x->Template = 'templates/countries_templateTV.html';
-	$x->SelectedTemplate = 'templates/countries_templateTVS.html';
-	$x->TemplateDV = 'templates/countries_templateDV.html';
-	$x->TemplateDVP = 'templates/countries_templateDVP.html';
+	$x->Template = 'templates/codiceDestinatario_templateTV.html';
+	$x->SelectedTemplate = 'templates/codiceDestinatario_templateTVS.html';
+	$x->TemplateDV = 'templates/codiceDestinatario_templateDV.html';
+	$x->TemplateDVP = 'templates/codiceDestinatario_templateDVP.html';
 
 	$x->ShowTableHeader = 1;
 	$x->TVClasses = "";
@@ -111,32 +104,32 @@
 	if(!in_array($DisplayRecords, array('user', 'group'))){ $DisplayRecords = 'all'; }
 	if($perm[2]==1 || ($perm[2]>1 && $DisplayRecords=='user' && !$_REQUEST['NoFilter_x'])){ // view owner only
 		$x->QueryFrom.=', membership_userrecords';
-		$x->QueryWhere="where `countries`.`id`=membership_userrecords.pkValue and membership_userrecords.tableName='countries' and lcase(membership_userrecords.memberID)='".getLoggedMemberID()."'";
+		$x->QueryWhere="where `codiceDestinatario`.`id`=membership_userrecords.pkValue and membership_userrecords.tableName='codiceDestinatario' and lcase(membership_userrecords.memberID)='".getLoggedMemberID()."'";
 	}elseif($perm[2]==2 || ($perm[2]>2 && $DisplayRecords=='group' && !$_REQUEST['NoFilter_x'])){ // view group only
 		$x->QueryFrom.=', membership_userrecords';
-		$x->QueryWhere="where `countries`.`id`=membership_userrecords.pkValue and membership_userrecords.tableName='countries' and membership_userrecords.groupID='".getLoggedGroupID()."'";
+		$x->QueryWhere="where `codiceDestinatario`.`id`=membership_userrecords.pkValue and membership_userrecords.tableName='codiceDestinatario' and membership_userrecords.groupID='".getLoggedGroupID()."'";
 	}elseif($perm[2]==3){ // view all
 		// no further action
 	}elseif($perm[2]==0){ // view none
 		$x->QueryFields = array("Not enough permissions" => "NEP");
-		$x->QueryFrom = '`countries`';
+		$x->QueryFrom = '`codiceDestinatario`';
 		$x->QueryWhere = '';
 		$x->DefaultSortField = '';
 	}
-	// hook: countries_init
+	// hook: codiceDestinatario_init
 	$render=TRUE;
-	if(function_exists('countries_init')){
+	if(function_exists('codiceDestinatario_init')){
 		$args=array();
-		$render=countries_init($x, getMemberInfo(), $args);
+		$render=codiceDestinatario_init($x, getMemberInfo(), $args);
 	}
 
 	if($render) $x->Render();
 
-	// hook: countries_header
+	// hook: codiceDestinatario_header
 	$headerCode='';
-	if(function_exists('countries_header')){
+	if(function_exists('codiceDestinatario_header')){
 		$args=array();
-		$headerCode=countries_header($x->ContentType, getMemberInfo(), $args);
+		$headerCode=codiceDestinatario_header($x->ContentType, getMemberInfo(), $args);
 	}  
 	if(!$headerCode){
 		include_once("$currDir/header.php"); 
@@ -146,11 +139,11 @@
 	}
 
 	echo $x->HTML;
-	// hook: countries_footer
+	// hook: codiceDestinatario_footer
 	$footerCode='';
-	if(function_exists('countries_footer')){
+	if(function_exists('codiceDestinatario_footer')){
 		$args=array();
-		$footerCode=countries_footer($x->ContentType, getMemberInfo(), $args);
+		$footerCode=codiceDestinatario_footer($x->ContentType, getMemberInfo(), $args);
 	}  
 	if(!$footerCode){
 		include_once("$currDir/footer.php"); 

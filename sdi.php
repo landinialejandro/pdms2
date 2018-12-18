@@ -43,6 +43,9 @@ $company = getDataTable('companies',$where_id);
 $where_id =" AND addresses.company = {$company['id']} AND addresses.default = 1";//change this to set select where
 $address = getDataTable('addresses',$where_id);
 ///////////////////////////
+$where_id =" AND mails.company = {$company['id']} AND mails.kind = 'WORK'";//change this to set select where
+$mails = getDataTable('mails',$where_id);
+///////////////////////////
 
 /* retrieve customer info */
 ///////////////////////////
@@ -94,14 +97,14 @@ $invoice=<<<XML
             </IdTrasmittente>
             <ProgressivoInvio>{$order['multiOrder']}</ProgressivoInvio> 
             <FormatoTrasmissione>SDI10</FormatoTrasmissione> 
-            <CodiceDestinatario>0000000</CodiceDestinatario> 
-            <PECDestinatario>betagamma@pec.it</PECDestinatario> 
+            <CodiceDestinatario>{$order['codiceDestinatario']}</CodiceDestinatario> 
+            <PECDestinatario>{$mails['mail']}</PECDestinatario> 
         </DatiTrasmissione>
         <CedentePrestatore>
             <DatiAnagrafici>
                 <IdFiscaleIVA>
                     <IdPaese>IT</IdPaese> 
-                    <IdCodice>01234567890</IdCodice> 
+                    <IdCodice>{$company['vat']}</IdCodice> 
                 </IdFiscaleIVA>
                 <Anagrafica>
                     <Denominazione>{$company['companyName']}</Denominazione> 

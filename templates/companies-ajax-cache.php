@@ -8,7 +8,8 @@
 
 		/* data for selected record, or defaults if none is selected */
 		var data = {
-			kind: <?php echo json_encode(array('id' => $rdata['kind'], 'value' => $rdata['kind'], 'text' => $jdata['kind'])); ?>
+			kind: <?php echo json_encode(array('id' => $rdata['kind'], 'value' => $rdata['kind'], 'text' => $jdata['kind'])); ?>,
+			codiceDestinatario: <?php echo json_encode(array('id' => $rdata['codiceDestinatario'], 'value' => $rdata['codiceDestinatario'], 'text' => $jdata['codiceDestinatario'])); ?>
 		};
 
 		/* initialize or continue using AppGini.cache for the current table */
@@ -21,6 +22,14 @@
 			if(u != 'ajax_combo.php') return false;
 			if(d.t == tn && d.f == 'kind' && d.id == data.kind.id)
 				return { results: [ data.kind ], more: false, elapsed: 0.01 };
+			return false;
+		});
+
+		/* saved value for codiceDestinatario */
+		cache.addCheck(function(u, d){
+			if(u != 'ajax_combo.php') return false;
+			if(d.t == tn && d.f == 'codiceDestinatario' && d.id == data.codiceDestinatario.id)
+				return { results: [ data.codiceDestinatario ], more: false, elapsed: 0.01 };
 			return false;
 		});
 

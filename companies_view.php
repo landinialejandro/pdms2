@@ -28,7 +28,8 @@
 		"if(CHAR_LENGTH(`companies`.`companyName`)>100, concat(left(`companies`.`companyName`,100),' ...'), `companies`.`companyName`)" => "companyName",
 		"if(CHAR_LENGTH(`companies`.`fiscalCode`)>100, concat(left(`companies`.`fiscalCode`,100),' ...'), `companies`.`fiscalCode`)" => "fiscalCode",
 		"if(CHAR_LENGTH(`companies`.`vat`)>100, concat(left(`companies`.`vat`,100),' ...'), `companies`.`vat`)" => "vat",
-		"`companies`.`notes`" => "notes"
+		"`companies`.`notes`" => "notes",
+		"IF(    CHAR_LENGTH(`codiceDestinatario1`.`code`) || CHAR_LENGTH(`codiceDestinatario1`.`list`), CONCAT_WS('',   `codiceDestinatario1`.`code`, ' - ', `codiceDestinatario1`.`list`), '') /* Codice Destinatario */" => "codiceDestinatario"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -38,7 +39,8 @@
 		4 => 4,
 		5 => 5,
 		6 => 6,
-		7 => 7
+		7 => 7,
+		8 => 8
 	);
 
 	// Fields that can be displayed in the csv file
@@ -49,7 +51,8 @@
 		"`companies`.`companyName`" => "companyName",
 		"`companies`.`fiscalCode`" => "fiscalCode",
 		"`companies`.`vat`" => "vat",
-		"`companies`.`notes`" => "notes"
+		"`companies`.`notes`" => "notes",
+		"IF(    CHAR_LENGTH(`codiceDestinatario1`.`code`) || CHAR_LENGTH(`codiceDestinatario1`.`list`), CONCAT_WS('',   `codiceDestinatario1`.`code`, ' - ', `codiceDestinatario1`.`list`), '') /* Codice Destinatario */" => "codiceDestinatario"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -59,7 +62,8 @@
 		"`companies`.`companyName`" => "CompanyName",
 		"`companies`.`fiscalCode`" => "FiscalCode",
 		"`companies`.`vat`" => "Vat",
-		"`companies`.`notes`" => "Notes"
+		"`companies`.`notes`" => "Notes",
+		"IF(    CHAR_LENGTH(`codiceDestinatario1`.`code`) || CHAR_LENGTH(`codiceDestinatario1`.`list`), CONCAT_WS('',   `codiceDestinatario1`.`code`, ' - ', `codiceDestinatario1`.`list`), '') /* Codice Destinatario */" => "Codice Destinatario"
 	);
 
 	// Fields that can be quick searched
@@ -70,13 +74,14 @@
 		"`companies`.`companyName`" => "CompanyName",
 		"`companies`.`fiscalCode`" => "FiscalCode",
 		"`companies`.`vat`" => "Vat",
-		"`companies`.`notes`" => "notes"
+		"`companies`.`notes`" => "notes",
+		"IF(    CHAR_LENGTH(`codiceDestinatario1`.`code`) || CHAR_LENGTH(`codiceDestinatario1`.`list`), CONCAT_WS('',   `codiceDestinatario1`.`code`, ' - ', `codiceDestinatario1`.`list`), '') /* Codice Destinatario */" => "codiceDestinatario"
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'kind' => 'Kind');
+	$x->filterers = array(  'kind' => 'Kind', 'codiceDestinatario' => 'Codice Destinatario');
 
-	$x->QueryFrom = "`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` ";
+	$x->QueryFrom = "`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `codiceDestinatario` as codiceDestinatario1 ON `codiceDestinatario1`.`id`=`companies`.`codiceDestinatario` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -105,10 +110,10 @@
 	$x->DefaultSortField = '4';
 	$x->DefaultSortDirection = 'asc';
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Kind", "CompanyCode", "CompanyName", "FiscalCode", "Vat", "Notes");
-	$x->ColFieldName = array('kind', 'companyCode', 'companyName', 'fiscalCode', 'vat', 'notes');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Kind", "CompanyCode", "CompanyName", "FiscalCode", "Vat", "Notes", "Codice Destinatario");
+	$x->ColFieldName = array('kind', 'companyCode', 'companyName', 'fiscalCode', 'vat', 'notes', 'codiceDestinatario');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/companies_templateTV.html';

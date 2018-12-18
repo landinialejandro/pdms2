@@ -3,21 +3,11 @@
 <a name="detail-view"></a>
 <div class="panel-heading"><h3 class="panel-title"><strong><%%DETAIL_VIEW_TITLE%%></strong></h3></div>
 
-<div class="panel-body" id="kinds_dv_container">
+<div class="panel-body" id="codiceDestinatario_dv_container">
 	<!-- child links -->
 	<div class="row vspacer-md">
 		<div class="col-xs-12">
-			<input type="hidden" id="orders_hclink" value="orders_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="ordersDetails_hclink" value="ordersDetails_view.php?filterer_section=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="_resumeOrders_hclink" value="_resumeOrders_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="products_hclink" value="products_view.php?filterer_tax=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="firstCashNote_hclink" value="firstCashNote_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="companies_hclink" value="companies_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="contacts_hclink" value="contacts_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="attributes_hclink" value="attributes_view.php?filterer_attribute=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="addresses_hclink" value="addresses_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="phones_hclink" value="phones_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="mails_hclink" value="mails_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
+			<input type="hidden" id="companies_hclink" value="companies_view.php?filterer_codiceDestinatario=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -25,49 +15,30 @@
 
 	<div class="row">
 		<!-- form inputs -->
-		<div class="col-md-8 col-lg-10" id="kinds_dv_form">
+		<div class="col-md-8 col-lg-10" id="codiceDestinatario_dv_form">
 			<fieldset class="form-horizontal">
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="entity" class="control-label col-lg-3">Entity<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="id" class="control-label col-lg-3">ID</label>
 					<div class="col-lg-9">
-						<%%COMBO(entity)%%>
+						<div class="form-control-static" id="id"><%%VALUE(id)%%></div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="code" class="control-label col-lg-3">Code/prefix</label>
+					<label for="code" class="control-label col-lg-3">Code</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="code" id="code" value="<%%VALUE(code)%%>" required>
+						<input maxlength="40" type="text" class="form-control" name="code" id="code" value="<%%VALUE(code)%%>">
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="name" class="control-label col-lg-3">Name<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="list" class="control-label col-lg-3">List</label>
 					<div class="col-lg-9">
-						<textarea class="form-control" name="name" id="name" rows="5"><%%VALUE(name)%%></textarea>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="value" class="control-label col-lg-3">Value <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#value-description"></i></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="value-description"><div class="alert alert-info">Value field, you can use JSON object to define multi value.
-<br>predefined value: rowcolor: use bootstrap css color (success, warning, etc.), ico: use for icon image in sidebar menu.</div></span>
-
-						<textarea class="form-control" name="value" id="value" rows="5"><%%VALUE(value)%%></textarea>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="descriptions" class="control-label col-lg-3">Descriptions</label>
-					<div class="col-lg-9">
-						<textarea class="form-control" name="descriptions" id="descriptions" rows="5"><%%VALUE(descriptions)%%></textarea>
+						<input maxlength="40" type="text" class="form-control" name="list" id="list" value="<%%VALUE(list)%%>">
 					</div>
 				</div>
 
@@ -76,7 +47,7 @@
 
 		<!-- DV action buttons -->
 		<hr class="hidden-md hidden-lg">
-		<div class="col-md-4 col-lg-2" id="kinds_dv_action_buttons">
+		<div class="col-md-4 col-lg-2" id="codiceDestinatario_dv_action_buttons">
 			<div class="btn-toolbar">
 				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
 					<%%UPDATE_BUTTON%%>
@@ -98,7 +69,7 @@
 	<hr>
 	<div class="row">
 		<div class="col-lg-10 col-lg-offset-1">
-			<div id="kinds-children" class="children-tabs"></div>
+			<div id="codiceDestinatario-children" class="children-tabs"></div>
 		</div>
 	</div>
 
@@ -156,11 +127,11 @@
 			}else{
 				post(
 					'parent-children.php', {
-						ParentTable: 'kinds',
-						SelectedID: '<%%VALUE(code)%%>',
+						ParentTable: 'codiceDestinatario',
+						SelectedID: '<%%VALUE(id)%%>',
 						Operation: 'show-children'
 					},
-					'kinds-children'
+					'codiceDestinatario-children'
 				);
 			}
 
@@ -229,10 +200,10 @@
 			if(!add_new_mode){
 				$j('body').append('<div id="admin-tools-appendix"></div>');
 				$j('#admin-tools-appendix').load(
-					'ajax_admin_tools.php?table=kinds&id=<%%URLVALUE(code)%%>',
+					'ajax_admin_tools.php?table=codiceDestinatario&id=<%%URLVALUE(id)%%>',
 					function(resp){
 						if(!resp.length) return;
-						$j.ajax('ajax_admin_tools.php?action=get_admin_tools_js&table=kinds&id=<%%URLVALUE(code)%%>');
+						$j.ajax('ajax_admin_tools.php?action=get_admin_tools_js&table=codiceDestinatario&id=<%%URLVALUE(id)%%>');
 					}
 				);
 			}

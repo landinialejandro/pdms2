@@ -106,7 +106,7 @@
 		),
 		'firstCashNote' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
-			'kind' => array('appgini' => 'VARCHAR(40) '),
+			'kind' => array('appgini' => 'VARCHAR(40) not null '),
 			'order' => array('appgini' => 'INT unsigned '),
 			'operationDate' => array('appgini' => 'DATE '),
 			'company' => array('appgini' => 'INT unsigned '),
@@ -138,7 +138,8 @@
 			'companyName' => array('appgini' => 'VARCHAR(255) '),
 			'fiscalCode' => array('appgini' => 'VARCHAR(255) '),
 			'vat' => array('appgini' => 'VARCHAR(255) not null '),
-			'notes' => array('appgini' => 'TEXT ')
+			'notes' => array('appgini' => 'TEXT '),
+			'codiceDestinatario' => array('appgini' => 'INT unsigned ')
 		),
 		'contacts' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -171,7 +172,8 @@
 		'countries' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'country' => array('appgini' => 'VARCHAR(255) '),
-			'code' => array('appgini' => 'VARCHAR(100) ')
+			'code' => array('appgini' => 'VARCHAR(100) '),
+			'ISOcode' => array('appgini' => 'VARCHAR(40) ')
 		),
 		'town' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -252,6 +254,11 @@
 			'contact' => array('appgini' => 'INT unsigned '),
 			'company' => array('appgini' => 'INT unsigned '),
 			'thumbUse' => array('appgini' => 'INT default \'0\' ')
+		),
+		'codiceDestinatario' => array(   
+			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
+			'code' => array('appgini' => 'VARCHAR(40) '),
+			'list' => array('appgini' => 'VARCHAR(40) ')
 		)
 	);
 
