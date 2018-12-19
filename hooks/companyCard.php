@@ -26,12 +26,12 @@ if (!$where_id) {
 
 /* retrive from companies info */
 $table_fields = get_sql_fields($table_name);
-$res = sql("SELECT {$table_fields} FROM {$table_from} AND id = {$where_id}", $eo);
+$res = sql("SELECT {$table_fields} FROM {$table_from} AND companies.id = {$where_id}", $eo);
 
 if (!($result = db_fetch_assoc($res))) {
     exit(error_message('company not found','', false));
 }
-$CompanyKind = sqlValue("select kind from companies where id = {$where_id} LIMIT 1;");
+$CompanyKind = sqlValue("select kind from companies where companies.id = {$where_id} LIMIT 1;");
 
 /* retrieve company attributes*/
 $table_fields = get_sql_fields("attributes");
