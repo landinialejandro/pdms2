@@ -42,6 +42,8 @@ $company = getDataTable('companies',$where_id);
 ///////////////////////////
 $where_id =" AND addresses.company = {$company['id']} AND addresses.default = 1";//change this to set select where
 $address = getDataTable('addresses',$where_id);
+$addressCountryId = sqlValue("select country from addresses where addresses.id = {$address['id']}");
+$countryCode = sqlValue("select code from countries where countries.id = {$addressCountryId} ");
 ///////////////////////////
 $where_id =" AND mails.company = {$company['id']} AND mails.kind = 'WORK'";//change this to set select where
 $mails = getDataTable('mails',$where_id);
@@ -92,7 +94,7 @@ $invoice=<<<XML
     <FatturaElettronicaHeader>
         <DatiTrasmissione>
             <IdTrasmittente>
-                <IdPaese>IT</IdPaese> 
+                <IdPaese>{$countryCode}</IdPaese> 
                 <IdCodice>{$company['vat']}</IdCodice> 
             </IdTrasmittente>
             <ProgressivoInvio>{$order['multiOrder']}</ProgressivoInvio> 
@@ -103,7 +105,7 @@ $invoice=<<<XML
         <CedentePrestatore>
             <DatiAnagrafici>
                 <IdFiscaleIVA>
-                    <IdPaese>IT</IdPaese> 
+                    <IdPaese>{$countryCode}</IdPaese> 
                     <IdCodice>{$company['vat']}</IdCodice> 
                 </IdFiscaleIVA>
                 <Anagrafica>
@@ -121,7 +123,7 @@ $invoice=<<<XML
         </CedentePrestatore>
         <CessionarioCommittente>
             <DatiAnagrafici>
-                <CodiceFiscale>09876543210</CodiceFiscale> 
+                <CodiceFiscale>{$customer['vat']}</CodiceFiscale> 
                 <Anagrafica>
                     <Denominazione>{$customer['companyName']}</Denominazione> 
                 </Anagrafica>
@@ -129,9 +131,9 @@ $invoice=<<<XML
             <Sede>
                 <Indirizzo>{$addressCustomer['address']} {$addressCustomer['houseNumber']}</Indirizzo> 
                 <CAP>{$addressCustomer['postalCode']}</CAP> 
-                <Comune>{$addressCustomerShip['town']}</Comune> 
-                <Provincia>{$addressCustomerShip['district']}</Provincia> 
-                <Nazione>{$addressCustomerShip['country']}</Nazione> 
+                <Comune>{$addressCustomer['town']}</Comune> 
+                <Provincia>{$addressCustomer['district']}</Provincia> 
+                <Nazione>{$addressCustomer['country']}</Nazione> 
             </Sede>
         </CessionarioCommittente>
     </FatturaElettronicaHeader>
