@@ -636,7 +636,7 @@
 			'contact' => array(
 				'parent_table' => 'contacts',
 				'parent_pk_field' => 'id',
-				'parent_caption' => '`contacts`.`name`',
+				'parent_caption' => 'IF(CHAR_LENGTH(`contacts`.`name`) || CHAR_LENGTH(`contacts`.`lastName`), CONCAT_WS(\'\', `contacts`.`name`, \' \', `contacts`.`lastName`), \'\')',
 				'parent_from' => '`contacts` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`contacts`.`kind` ',
 				'filterers' => array(),
 				'custom_query' => '',
@@ -647,7 +647,7 @@
 			'company' => array(
 				'parent_table' => 'companies',
 				'parent_pk_field' => 'id',
-				'parent_caption' => '`companies`.`companyName`',
+				'parent_caption' => 'IF(CHAR_LENGTH(`companies`.`companyName`) || CHAR_LENGTH(`companies`.`companyCode`), CONCAT_WS(\'\', `companies`.`companyName`, \' - \', `companies`.`companyCode`), \'\')',
 				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `codiceDestinatario` as codiceDestinatario1 ON `codiceDestinatario1`.`id`=`companies`.`codiceDestinatario` ',
 				'filterers' => array(),
 				'custom_query' => '',

@@ -320,9 +320,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'Title Of Courtesy', 3 => 'Name', 4 => 'LastName', 5 => 'Notes', 6 => 'Title', 7 => 'Birth Date'),
-					'display-field-names' => array(1 => 'kind', 2 => 'titleCourtesy', 3 => 'name', 4 => 'lastName', 5 => 'notes', 6 => 'title', 7 => 'birthDate'),
-					'sortable-fields' => array(0 => '`contacts`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => '`contacts`.`birthDate`'),
+					'display-fields' => array(1 => 'Kind', 2 => 'Title Of Courtesy', 3 => 'Name', 4 => 'LastName', 5 => 'Notes', 6 => 'Title', 7 => 'Birth Date', 8 => 'Codice EORI'),
+					'display-field-names' => array(1 => 'kind', 2 => 'titleCourtesy', 3 => 'name', 4 => 'lastName', 5 => 'notes', 6 => 'title', 7 => 'birthDate', 8 => 'CodEORI'),
+					'sortable-fields' => array(0 => '`contacts`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => '`contacts`.`birthDate`', 8 => 9),
 					'records-per-page' => 10,
 					'default-sort-by' => 4,
 					'default-sort-direction' => 'desc',
@@ -331,7 +331,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-contacts',
 					'template-printable' => 'children-contacts-printable',
-					'query' => "SELECT `contacts`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `contacts`.`titleCourtesy` as 'titleCourtesy', if(CHAR_LENGTH(`contacts`.`name`)>100, concat(left(`contacts`.`name`,100),' ...'), `contacts`.`name`) as 'name', if(CHAR_LENGTH(`contacts`.`lastName`)>100, concat(left(`contacts`.`lastName`,100),' ...'), `contacts`.`lastName`) as 'lastName', `contacts`.`notes` as 'notes', if(CHAR_LENGTH(`contacts`.`title`)>100, concat(left(`contacts`.`title`,100),' ...'), `contacts`.`title`) as 'title', if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'') as 'birthDate' FROM `contacts` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`contacts`.`kind` "
+					'query' => "SELECT `contacts`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `contacts`.`titleCourtesy` as 'titleCourtesy', if(CHAR_LENGTH(`contacts`.`name`)>100, concat(left(`contacts`.`name`,100),' ...'), `contacts`.`name`) as 'name', if(CHAR_LENGTH(`contacts`.`lastName`)>100, concat(left(`contacts`.`lastName`,100),' ...'), `contacts`.`lastName`) as 'lastName', `contacts`.`notes` as 'notes', if(CHAR_LENGTH(`contacts`.`title`)>100, concat(left(`contacts`.`title`,100),' ...'), `contacts`.`title`) as 'title', if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'') as 'birthDate', `contacts`.`CodEORI` as 'CodEORI' FROM `contacts` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`contacts`.`kind` "
 				)
 			),
 			'creditDocument' => array(   
@@ -778,7 +778,7 @@
 					'forced-where' => '',
 					'display-fields' => array(1 => 'Contact', 2 => 'Company'),
 					'display-field-names' => array(1 => 'contact', 2 => 'company'),
-					'sortable-fields' => array(0 => '`contacts_companies`.`id`', 1 => '`contacts1`.`name`', 2 => '`companies1`.`companyName`'),
+					'sortable-fields' => array(0 => '`contacts_companies`.`id`', 1 => 2, 2 => 3),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -787,7 +787,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-contacts_companies',
 					'template-printable' => 'children-contacts_companies-printable',
-					'query' => "SELECT `contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'company' FROM `contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` "
+					'query' => "SELECT `contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') as 'company' FROM `contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` "
 				),
 				'company' => array(   
 					'parent-table' => 'companies',
@@ -802,7 +802,7 @@
 					'forced-where' => '',
 					'display-fields' => array(1 => 'Contact', 2 => 'Company'),
 					'display-field-names' => array(1 => 'contact', 2 => 'company'),
-					'sortable-fields' => array(0 => '`contacts_companies`.`id`', 1 => '`contacts1`.`name`', 2 => '`companies1`.`companyName`'),
+					'sortable-fields' => array(0 => '`contacts_companies`.`id`', 1 => 2, 2 => 3),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -811,7 +811,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-contacts_companies',
 					'template-printable' => 'children-contacts_companies-printable',
-					'query' => "SELECT `contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'company' FROM `contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` "
+					'query' => "SELECT `contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') as 'company' FROM `contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` "
 				)
 			),
 			'attachments' => array(   
