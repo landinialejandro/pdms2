@@ -28,6 +28,8 @@ function contacts_insert(){
 		if($data['title'] == empty_lookup_value){ $data['title'] = ''; }
 	$data['birthDate'] = intval($_REQUEST['birthDateYear']) . '-' . intval($_REQUEST['birthDateMonth']) . '-' . intval($_REQUEST['birthDateDay']);
 	$data['birthDate'] = parseMySQLDate($data['birthDate'], '');
+	$data['CodEORI'] = makeSafe($_REQUEST['CodEORI']);
+		if($data['CodEORI'] == empty_lookup_value){ $data['CodEORI'] = ''; }
 
 	// hook: contacts_before_insert
 	if(function_exists('contacts_before_insert')){
@@ -36,7 +38,7 @@ function contacts_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `contacts` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `titleCourtesy`=' . (($data['titleCourtesy'] !== '' && $data['titleCourtesy'] !== NULL) ? "'{$data['titleCourtesy']}'" : 'NULL') . ', `name`=' . (($data['name'] !== '' && $data['name'] !== NULL) ? "'{$data['name']}'" : 'NULL') . ', `lastName`=' . (($data['lastName'] !== '' && $data['lastName'] !== NULL) ? "'{$data['lastName']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `title`=' . (($data['title'] !== '' && $data['title'] !== NULL) ? "'{$data['title']}'" : 'NULL') . ', `birthDate`=' . (($data['birthDate'] !== '' && $data['birthDate'] !== NULL) ? "'{$data['birthDate']}'" : 'NULL'), $o);
+	sql('insert into `contacts` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `titleCourtesy`=' . (($data['titleCourtesy'] !== '' && $data['titleCourtesy'] !== NULL) ? "'{$data['titleCourtesy']}'" : 'NULL') . ', `name`=' . (($data['name'] !== '' && $data['name'] !== NULL) ? "'{$data['name']}'" : 'NULL') . ', `lastName`=' . (($data['lastName'] !== '' && $data['lastName'] !== NULL) ? "'{$data['lastName']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `title`=' . (($data['title'] !== '' && $data['title'] !== NULL) ? "'{$data['title']}'" : 'NULL') . ', `birthDate`=' . (($data['birthDate'] !== '' && $data['birthDate'] !== NULL) ? "'{$data['birthDate']}'" : 'NULL') . ', `CodEORI`=' . (($data['CodEORI'] !== '' && $data['CodEORI'] !== NULL) ? "'{$data['CodEORI']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"contacts_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -256,6 +258,8 @@ function contacts_update($selected_id){
 		if($data['title'] == empty_lookup_value){ $data['title'] = ''; }
 	$data['birthDate'] = intval($_REQUEST['birthDateYear']) . '-' . intval($_REQUEST['birthDateMonth']) . '-' . intval($_REQUEST['birthDateDay']);
 	$data['birthDate'] = parseMySQLDate($data['birthDate'], '');
+	$data['CodEORI'] = makeSafe($_REQUEST['CodEORI']);
+		if($data['CodEORI'] == empty_lookup_value){ $data['CodEORI'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: contacts_before_update
@@ -265,7 +269,7 @@ function contacts_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `contacts` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `titleCourtesy`=' . (($data['titleCourtesy'] !== '' && $data['titleCourtesy'] !== NULL) ? "'{$data['titleCourtesy']}'" : 'NULL') . ', `name`=' . (($data['name'] !== '' && $data['name'] !== NULL) ? "'{$data['name']}'" : 'NULL') . ', `lastName`=' . (($data['lastName'] !== '' && $data['lastName'] !== NULL) ? "'{$data['lastName']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `title`=' . (($data['title'] !== '' && $data['title'] !== NULL) ? "'{$data['title']}'" : 'NULL') . ', `birthDate`=' . (($data['birthDate'] !== '' && $data['birthDate'] !== NULL) ? "'{$data['birthDate']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `contacts` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `titleCourtesy`=' . (($data['titleCourtesy'] !== '' && $data['titleCourtesy'] !== NULL) ? "'{$data['titleCourtesy']}'" : 'NULL') . ', `name`=' . (($data['name'] !== '' && $data['name'] !== NULL) ? "'{$data['name']}'" : 'NULL') . ', `lastName`=' . (($data['lastName'] !== '' && $data['lastName'] !== NULL) ? "'{$data['lastName']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `title`=' . (($data['title'] !== '' && $data['title'] !== NULL) ? "'{$data['title']}'" : 'NULL') . ', `birthDate`=' . (($data['birthDate'] !== '' && $data['birthDate'] !== NULL) ? "'{$data['birthDate']}'" : 'NULL') . ', `CodEORI`=' . (($data['CodEORI'] !== '' && $data['CodEORI'] !== NULL) ? "'{$data['CodEORI']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="contacts_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -516,6 +520,7 @@ function contacts_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 		$jsReadOnly .= "\tjQuery('#title').replaceWith('<div class=\"form-control-static\" id=\"title\">' + (jQuery('#title').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#birthDate').prop('readonly', true);\n";
 		$jsReadOnly .= "\tjQuery('#birthDateDay, #birthDateMonth, #birthDateYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#CodEORI').replaceWith('<div class=\"form-control-static\" id=\"CodEORI\">' + (jQuery('#CodEORI').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -556,6 +561,7 @@ function contacts_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 	$templateCode = str_replace('<%%UPLOADFILE(notes)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(title)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(birthDate)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(CodEORI)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -586,6 +592,9 @@ function contacts_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 		$templateCode = str_replace('<%%URLVALUE(title)%%>', urlencode($urow['title']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(birthDate)%%>', @date('d/m/Y', @strtotime(html_attr($row['birthDate']))), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(birthDate)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['birthDate'])))), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(CodEORI)%%>', safe_html($urow['CodEORI']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(CodEORI)%%>', html_attr($row['CodEORI']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(CodEORI)%%>', urlencode($urow['CodEORI']), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -602,6 +611,8 @@ function contacts_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 		$templateCode = str_replace('<%%URLVALUE(title)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(birthDate)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(birthDate)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(CodEORI)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(CodEORI)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

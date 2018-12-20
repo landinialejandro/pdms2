@@ -29,7 +29,8 @@
 		"if(CHAR_LENGTH(`contacts`.`lastName`)>100, concat(left(`contacts`.`lastName`,100),' ...'), `contacts`.`lastName`)" => "lastName",
 		"`contacts`.`notes`" => "notes",
 		"if(CHAR_LENGTH(`contacts`.`title`)>100, concat(left(`contacts`.`title`,100),' ...'), `contacts`.`title`)" => "title",
-		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'')" => "birthDate"
+		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'')" => "birthDate",
+		"`contacts`.`CodEORI`" => "CodEORI"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -40,7 +41,8 @@
 		5 => 5,
 		6 => 6,
 		7 => 7,
-		8 => '`contacts`.`birthDate`'
+		8 => '`contacts`.`birthDate`',
+		9 => 9
 	);
 
 	// Fields that can be displayed in the csv file
@@ -52,7 +54,8 @@
 		"`contacts`.`lastName`" => "lastName",
 		"`contacts`.`notes`" => "notes",
 		"`contacts`.`title`" => "title",
-		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'')" => "birthDate"
+		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'')" => "birthDate",
+		"`contacts`.`CodEORI`" => "CodEORI"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -63,7 +66,8 @@
 		"`contacts`.`lastName`" => "LastName",
 		"`contacts`.`notes`" => "Notes",
 		"`contacts`.`title`" => "Title",
-		"`contacts`.`birthDate`" => "Birth Date"
+		"`contacts`.`birthDate`" => "Birth Date",
+		"`contacts`.`CodEORI`" => "Codice EORI"
 	);
 
 	// Fields that can be quick searched
@@ -75,7 +79,8 @@
 		"`contacts`.`lastName`" => "LastName",
 		"`contacts`.`notes`" => "notes",
 		"`contacts`.`title`" => "Title",
-		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'')" => "birthDate"
+		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'')" => "birthDate",
+		"`contacts`.`CodEORI`" => "CodEORI"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -110,10 +115,10 @@
 	$x->DefaultSortField = '5';
 	$x->DefaultSortDirection = 'desc';
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Kind", "Title Of Courtesy", "Name", "LastName", "Notes", "Title", "Birth Date");
-	$x->ColFieldName = array('kind', 'titleCourtesy', 'name', 'lastName', 'notes', 'title', 'birthDate');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Kind", "Title Of Courtesy", "Name", "LastName", "Notes", "Title", "Birth Date", "Codice EORI");
+	$x->ColFieldName = array('kind', 'titleCourtesy', 'name', 'lastName', 'notes', 'title', 'birthDate', 'CodEORI');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/contacts_templateTV.html';
