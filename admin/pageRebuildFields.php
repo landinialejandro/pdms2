@@ -149,7 +149,8 @@
 			'lastName' => array('appgini' => 'VARCHAR(255) '),
 			'notes' => array('appgini' => 'TEXT '),
 			'title' => array('appgini' => 'VARCHAR(255) '),
-			'birthDate' => array('appgini' => 'DATE ')
+			'birthDate' => array('appgini' => 'DATE '),
+			'CodEORI' => array('appgini' => 'VARCHAR(40) ')
 		),
 		'creditDocument' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),

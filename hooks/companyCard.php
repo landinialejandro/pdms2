@@ -47,7 +47,7 @@ if (!($address = db_fetch_assoc($res))) {
     //if not setting a default address, get the first.
     $res= sql("SELECT {$table_fields} FROM {$table_from} AND `addresses`.`company` = {$where_id} order by `addresses`.id ASC LIMIT 1",$eo);
     if (!($address = db_fetch_assoc($res))) {
-        $address['address'] = "not found default address";
+        $address['address'] = '<p class="text-yellow"><i class="fa fa-bell-o"></i> not found default address</p>';
     }
 }
 $defaultAddress = "{$address['address']} {$address['houseNumber']} {$address['town']} {$address['district']} {$address['country']}";
@@ -64,7 +64,7 @@ ob_start();
                 </div>
                 Fiscal code: <?php echo $result['fiscalCode']; ?><br>
                 vat: <?php echo $result['vat']; ?><br>
-                Address: <?php echo $defaultAddress; ?><br>
+                <i class="fa fa-envelope"></i>: <?php echo $defaultAddress; ?><br>
             </div>
         </div>
         <div class="col-lg-8">
