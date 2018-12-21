@@ -43,7 +43,7 @@
 		setupIndexes('phones', array('kind','contact','company'));
 		setupTable('mails', "create table if not exists `mails` (   `id` INT unsigned not null auto_increment , primary key (`id`), `kind` VARCHAR(40) , `mail` VARCHAR(255) , `contact` INT unsigned , `company` INT unsigned ) CHARSET utf8", $silent);
 		setupIndexes('mails', array('kind','contact','company'));
-		setupTable('contacts_companies', "create table if not exists `contacts_companies` (   `id` INT unsigned not null auto_increment , primary key (`id`), `contact` INT unsigned , `company` INT unsigned ) CHARSET utf8", $silent);
+		setupTable('contacts_companies', "create table if not exists `contacts_companies` (   `id` INT unsigned not null auto_increment , primary key (`id`), `contact` INT unsigned , `company` INT unsigned , `default` VARCHAR(40) default '0' ) CHARSET utf8", $silent, array( "ALTER TABLE contacts_companies ADD `field4` VARCHAR(40)","ALTER TABLE `contacts_companies` CHANGE `field4` `default` VARCHAR(40) "," ALTER TABLE `contacts_companies` CHANGE `default` `default` VARCHAR(40) default '0' "));
 		setupIndexes('contacts_companies', array('contact','company'));
 		setupTable('attachments', "create table if not exists `attachments` (   `id` INT unsigned not null auto_increment , primary key (`id`), `name` VARCHAR(255) , `file` VARCHAR(255) , `contact` INT unsigned , `company` INT unsigned , `thumbUse` INT default '0' ) CHARSET utf8", $silent);
 		setupIndexes('attachments', array('contact','company'));

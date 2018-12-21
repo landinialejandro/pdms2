@@ -117,6 +117,10 @@ $invoice=<<<XML
                 </IdFiscaleIVA>
                 <Anagrafica>
                     <Denominazione>{$company['companyName']}</Denominazione> 
+                    <Nome></Nome>
+                    <Cognome></Cognome>
+                    <Titolo></Titolo>
+                    <codEORI></codEORI>
                 </Anagrafica>
                 <RegimeFiscale>RF01</RegimeFiscale> 
             </DatiAnagrafici>

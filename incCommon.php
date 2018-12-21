@@ -172,7 +172,7 @@
 			'addresses' => "`addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', `addresses`.`default` as 'default', `addresses`.`ship` as 'ship'",
 			'phones' => "`phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `phones`.`phoneNumber` as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company'",
 			'mails' => "`mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `mails`.`mail` as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company'",
-			'contacts_companies' => "`contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') as 'company'",
+			'contacts_companies' => "`contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') as 'company', `contacts_companies`.`default` as 'default'",
 			'attachments' => "`attachments`.`id` as 'id', `attachments`.`name` as 'name', `attachments`.`file` as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `attachments`.`thumbUse` as 'thumbUse'",
 			'codiceDestinatario' => "`codiceDestinatario`.`id` as 'id', `codiceDestinatario`.`code` as 'code', `codiceDestinatario`.`list` as 'list'"
 		);
@@ -518,7 +518,8 @@
 			'contacts_companies' => array(
 				'id' => '',
 				'contact' => '',
-				'company' => ''
+				'company' => '',
+				'default' => '0'
 			),
 			'attachments' => array(
 				'id' => '',

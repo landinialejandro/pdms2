@@ -24,33 +24,38 @@
 	$x->QueryFieldsTV = array(   
 		"`contacts_companies`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') /* Contact */" => "contact",
-		"IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') /* Company */" => "company"
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') /* Company */" => "company",
+		"concat('<i class=\"glyphicon glyphicon-', if(`contacts_companies`.`default`, 'check', 'unchecked'), '\"></i>')" => "default"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
 		1 => '`contacts_companies`.`id`',
 		2 => 2,
-		3 => 3
+		3 => 3,
+		4 => 4
 	);
 
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
 		"`contacts_companies`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') /* Contact */" => "contact",
-		"IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') /* Company */" => "company"
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') /* Company */" => "company",
+		"`contacts_companies`.`default`" => "default"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
 		"`contacts_companies`.`id`" => "ID",
 		"IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') /* Contact */" => "Contact",
-		"IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') /* Company */" => "Company"
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') /* Company */" => "Company",
+		"`contacts_companies`.`default`" => "Default"
 	);
 
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
 		"`contacts_companies`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') /* Contact */" => "contact",
-		"IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') /* Company */" => "company"
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') /* Company */" => "company",
+		"concat('<i class=\"glyphicon glyphicon-', if(`contacts_companies`.`default`, 'check', 'unchecked'), '\"></i>')" => "default"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -83,10 +88,10 @@
 	$x->TableIcon = "resources/table_icons/brick_link.png";
 	$x->PrimaryKey = "`contacts_companies`.`id`";
 
-	$x->ColWidth   = array(  150, 150);
-	$x->ColCaption = array("Contact", "Company");
-	$x->ColFieldName = array('contact', 'company');
-	$x->ColNumber  = array(2, 3);
+	$x->ColWidth   = array(  150, 150, 150);
+	$x->ColCaption = array("Contact", "Company", "Default");
+	$x->ColFieldName = array('contact', 'company', 'default');
+	$x->ColNumber  = array(2, 3, 4);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/contacts_companies_templateTV.html';

@@ -18,6 +18,8 @@ function contacts_companies_insert(){
 		if($data['contact'] == empty_lookup_value){ $data['contact'] = ''; }
 	$data['company'] = makeSafe($_REQUEST['company']);
 		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
+	$data['default'] = makeSafe($_REQUEST['default']);
+		if($data['default'] == empty_lookup_value){ $data['default'] = ''; }
 
 	// hook: contacts_companies_before_insert
 	if(function_exists('contacts_companies_before_insert')){
@@ -26,7 +28,7 @@ function contacts_companies_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `contacts_companies` set       `contact`=' . (($data['contact'] !== '' && $data['contact'] !== NULL) ? "'{$data['contact']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL'), $o);
+	sql('insert into `contacts_companies` set       `contact`=' . (($data['contact'] !== '' && $data['contact'] !== NULL) ? "'{$data['contact']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"contacts_companies_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -103,6 +105,8 @@ function contacts_companies_update($selected_id){
 		if($data['contact'] == empty_lookup_value){ $data['contact'] = ''; }
 	$data['company'] = makeSafe($_REQUEST['company']);
 		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
+	$data['default'] = makeSafe($_REQUEST['default']);
+		if($data['default'] == empty_lookup_value){ $data['default'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: contacts_companies_before_update
@@ -112,7 +116,7 @@ function contacts_companies_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `contacts_companies` set       `contact`=' . (($data['contact'] !== '' && $data['contact'] !== NULL) ? "'{$data['contact']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `contacts_companies` set       `contact`=' . (($data['contact'] !== '' && $data['contact'] !== NULL) ? "'{$data['contact']}'" : 'NULL') . ', `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="contacts_companies_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -436,6 +440,7 @@ function contacts_companies_form($selected_id = '', $AllowUpdate = 1, $AllowInse
 		$jsReadOnly .= "\tjQuery('#contact_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#company').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#company_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+		$jsReadOnly .= "\tjQuery('#default').prop('disabled', true);\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -472,6 +477,7 @@ function contacts_companies_form($selected_id = '', $AllowUpdate = 1, $AllowInse
 	$templateCode = str_replace('<%%UPLOADFILE(id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(contact)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(company)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(default)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -484,6 +490,7 @@ function contacts_companies_form($selected_id = '', $AllowUpdate = 1, $AllowInse
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', safe_html($urow['company']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', html_attr($row['company']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode($urow['company']), $templateCode);
+		$templateCode = str_replace('<%%CHECKED(default)%%>', ($row['default'] ? "checked" : ""), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -491,6 +498,7 @@ function contacts_companies_form($selected_id = '', $AllowUpdate = 1, $AllowInse
 		$templateCode = str_replace('<%%URLVALUE(contact)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(company)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%CHECKED(default)%%>', '', $templateCode);
 	}
 
 	// process translations

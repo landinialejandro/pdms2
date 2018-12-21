@@ -246,7 +246,8 @@
 		'contacts_companies' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'contact' => array('appgini' => 'INT unsigned '),
-			'company' => array('appgini' => 'INT unsigned ')
+			'company' => array('appgini' => 'INT unsigned '),
+			'default' => array('appgini' => 'VARCHAR(40) default \'0\' ')
 		),
 		'attachments' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),

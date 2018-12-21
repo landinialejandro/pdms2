@@ -20,7 +20,7 @@ $dir = __DIR__;
 					'forced-where' => '',
 					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District', 11 => 'Default', 12 => 'Ship'),
 					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district', 11 => 'default', 12 => 'ship'),
-					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => 12, 12 => 13),
+					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => '`addresses`.`default`', 12 => '`addresses`.`ship`'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -29,7 +29,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-addresses',
 					'template-printable' => 'children-addresses-printable',
-					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
+					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`addresses`.`address`)>100, concat(left(`addresses`.`address`,100),' ...'), `addresses`.`address`) as 'address', if(CHAR_LENGTH(`addresses`.`houseNumber`)>100, concat(left(`addresses`.`houseNumber`,100),' ...'), `addresses`.`houseNumber`) as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
 				),
 				'country' => array(   
 					'parent-table' => 'countries',
@@ -44,7 +44,7 @@ $dir = __DIR__;
 					'forced-where' => '',
 					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District', 11 => 'Default', 12 => 'Ship'),
 					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district', 11 => 'default', 12 => 'ship'),
-					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => 12, 12 => 13),
+					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => '`addresses`.`default`', 12 => '`addresses`.`ship`'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -53,7 +53,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-addresses',
 					'template-printable' => 'children-addresses-printable',
-					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
+					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`addresses`.`address`)>100, concat(left(`addresses`.`address`,100),' ...'), `addresses`.`address`) as 'address', if(CHAR_LENGTH(`addresses`.`houseNumber`)>100, concat(left(`addresses`.`houseNumber`,100),' ...'), `addresses`.`houseNumber`) as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
 				),
 				'town' => array(   
 					'parent-table' => 'town',
@@ -68,7 +68,7 @@ $dir = __DIR__;
 					'forced-where' => '',
 					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District', 11 => 'Default', 12 => 'Ship'),
 					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district', 11 => 'default', 12 => 'ship'),
-					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => 12, 12 => 13),
+					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => '`addresses`.`default`', 12 => '`addresses`.`ship`'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -77,7 +77,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-addresses',
 					'template-printable' => 'children-addresses-printable',
-					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
+					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`addresses`.`address`)>100, concat(left(`addresses`.`address`,100),' ...'), `addresses`.`address`) as 'address', if(CHAR_LENGTH(`addresses`.`houseNumber`)>100, concat(left(`addresses`.`houseNumber`,100),' ...'), `addresses`.`houseNumber`) as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
 				),
 				'district' => array(   
 					'parent-table' => 'town',
@@ -92,7 +92,7 @@ $dir = __DIR__;
 					'forced-where' => '',
 					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District', 11 => 'Default', 12 => 'Ship'),
 					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district', 11 => 'default', 12 => 'ship'),
-					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => 12, 12 => 13),
+					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => '`addresses`.`default`', 12 => '`addresses`.`ship`'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -101,7 +101,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-addresses',
 					'template-printable' => 'children-addresses-printable',
-					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
+					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`addresses`.`address`)>100, concat(left(`addresses`.`address`,100),' ...'), `addresses`.`address`) as 'address', if(CHAR_LENGTH(`addresses`.`houseNumber`)>100, concat(left(`addresses`.`houseNumber`,100),' ...'), `addresses`.`houseNumber`) as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
 				),
 				'contact' => array(   
 					'parent-table' => 'contacts',
@@ -116,7 +116,7 @@ $dir = __DIR__;
 					'forced-where' => '',
 					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District', 11 => 'Default', 12 => 'Ship'),
 					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district', 11 => 'default', 12 => 'ship'),
-					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => 12, 12 => 13),
+					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => '`addresses`.`default`', 12 => '`addresses`.`ship`'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -125,7 +125,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-addresses',
 					'template-printable' => 'children-addresses-printable',
-					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
+					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`addresses`.`address`)>100, concat(left(`addresses`.`address`,100),' ...'), `addresses`.`address`) as 'address', if(CHAR_LENGTH(`addresses`.`houseNumber`)>100, concat(left(`addresses`.`houseNumber`,100),' ...'), `addresses`.`houseNumber`) as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
 				),
 				'company' => array(   
 					'parent-table' => 'companies',
@@ -140,7 +140,7 @@ $dir = __DIR__;
 					'forced-where' => '',
 					'display-fields' => array(1 => 'Kind', 2 => 'Address', 3 => 'HouseNumber', 4 => 'Country', 5 => 'Town', 6 => 'PostalCode', 7 => 'District', 11 => 'Default', 12 => 'Ship'),
 					'display-field-names' => array(1 => 'kind', 2 => 'address', 3 => 'houseNumber', 4 => 'country', 5 => 'town', 6 => 'postalCode', 7 => 'district', 11 => 'default', 12 => 'ship'),
-					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => 12, 12 => 13),
+					'sortable-fields' => array(0 => '`addresses`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => '`countries1`.`country`', 5 => '`town1`.`town`', 6 => '`town1`.`shipCode`', 7 => '`town2`.`district`', 8 => '`contacts1`.`id`', 9 => '`companies1`.`id`', 10 => 11, 11 => '`addresses`.`default`', 12 => '`addresses`.`ship`'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -149,81 +149,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-addresses',
 					'template-printable' => 'children-addresses-printable',
-					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
-				)
-			),
-			'phones' => array(   
-				'kind' => array(   
-					'parent-table' => 'kinds',
-					'parent-primary-key' => 'code',
-					'child-primary-key' => 'id',
-					'child-primary-key-index' => 0,
-					'tab-label' => 'Phones',
-					'auto-close' => true,
-					'table-icon' => 'resources/table_icons/phone.png',
-					'display-refresh' => true,
-					'display-add-new' => true,
-					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'PhoneNumber'),
-					'display-field-names' => array(1 => 'kind', 2 => 'phoneNumber'),
-					'sortable-fields' => array(0 => '`phones`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`'),
-					'records-per-page' => 10,
-					'default-sort-by' => false,
-					'default-sort-direction' => 'asc',
-					'open-detail-view-on-click' => true,
-					'display-page-selector' => true,
-					'show-page-progress' => true,
-					'template' => 'children-phones',
-					'template-printable' => 'children-phones-printable',
-					'query' => "SELECT `phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `phones`.`phoneNumber` as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `phones` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`phones`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`phones`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`phones`.`company` "
-				),
-				'contact' => array(   
-					'parent-table' => 'contacts',
-					'parent-primary-key' => 'id',
-					'child-primary-key' => 'id',
-					'child-primary-key-index' => 0,
-					'tab-label' => 'Phones',
-					'auto-close' => true,
-					'table-icon' => 'resources/table_icons/phone.png',
-					'display-refresh' => true,
-					'display-add-new' => true,
-					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'PhoneNumber'),
-					'display-field-names' => array(1 => 'kind', 2 => 'phoneNumber'),
-					'sortable-fields' => array(0 => '`phones`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`'),
-					'records-per-page' => 10,
-					'default-sort-by' => false,
-					'default-sort-direction' => 'asc',
-					'open-detail-view-on-click' => true,
-					'display-page-selector' => true,
-					'show-page-progress' => true,
-					'template' => 'children-phones',
-					'template-printable' => 'children-phones-printable',
-					'query' => "SELECT `phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `phones`.`phoneNumber` as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `phones` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`phones`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`phones`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`phones`.`company` "
-				),
-				'company' => array(   
-					'parent-table' => 'companies',
-					'parent-primary-key' => 'id',
-					'child-primary-key' => 'id',
-					'child-primary-key-index' => 0,
-					'tab-label' => 'Phones',
-					'auto-close' => true,
-					'table-icon' => 'resources/table_icons/phone.png',
-					'display-refresh' => true,
-					'display-add-new' => true,
-					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'PhoneNumber'),
-					'display-field-names' => array(1 => 'kind', 2 => 'phoneNumber'),
-					'sortable-fields' => array(0 => '`phones`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`'),
-					'records-per-page' => 10,
-					'default-sort-by' => false,
-					'default-sort-direction' => 'asc',
-					'open-detail-view-on-click' => true,
-					'display-page-selector' => true,
-					'show-page-progress' => true,
-					'template' => 'children-phones',
-					'template-printable' => 'children-phones-printable',
-					'query' => "SELECT `phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `phones`.`phoneNumber` as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `phones` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`phones`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`phones`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`phones`.`company` "
+					'query' => "SELECT `addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`addresses`.`address`)>100, concat(left(`addresses`.`address`,100),' ...'), `addresses`.`address`) as 'address', if(CHAR_LENGTH(`addresses`.`houseNumber`)>100, concat(left(`addresses`.`houseNumber`,100),' ...'), `addresses`.`houseNumber`) as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`default`, 'check', 'unchecked'), '\"></i>') as 'default', concat('<i class=\"glyphicon glyphicon-', if(`addresses`.`ship`, 'check', 'unchecked'), '\"></i>') as 'ship' FROM `addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` "
 				)
 			),
 			'mails' => array(   
@@ -249,7 +175,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-mails',
 					'template-printable' => 'children-mails-printable',
-					'query' => "SELECT `mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `mails`.`mail` as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` "
+					'query' => "SELECT `mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`mails`.`mail`)>100, concat(left(`mails`.`mail`,100),' ...'), `mails`.`mail`) as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` "
 				),
 				'contact' => array(   
 					'parent-table' => 'contacts',
@@ -273,7 +199,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-mails',
 					'template-printable' => 'children-mails-printable',
-					'query' => "SELECT `mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `mails`.`mail` as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` "
+					'query' => "SELECT `mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`mails`.`mail`)>100, concat(left(`mails`.`mail`,100),' ...'), `mails`.`mail`) as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` "
 				),
 				'company' => array(   
 					'parent-table' => 'companies',
@@ -297,7 +223,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-mails',
 					'template-printable' => 'children-mails-printable',
-					'query' => "SELECT `mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `mails`.`mail` as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` "
+					'query' => "SELECT `mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`mails`.`mail`)>100, concat(left(`mails`.`mail`,100),' ...'), `mails`.`mail`) as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` "
 				)
 			),
 			'orders' => array(   
@@ -581,9 +507,9 @@ $dir = __DIR__;
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'CompanyCode', 3 => 'CompanyName', 4 => 'FiscalCode', 5 => 'Vat', 6 => 'Notes'),
-					'display-field-names' => array(1 => 'kind', 2 => 'companyCode', 3 => 'companyName', 4 => 'fiscalCode', 5 => 'vat', 6 => 'notes'),
-					'sortable-fields' => array(0 => '`companies`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7),
+					'display-fields' => array(1 => 'Kind', 2 => 'CompanyCode', 3 => 'CompanyName', 4 => 'FiscalCode', 5 => 'Vat', 6 => 'Notes', 7 => 'Codice Destinatario'),
+					'display-field-names' => array(1 => 'kind', 2 => 'companyCode', 3 => 'companyName', 4 => 'fiscalCode', 5 => 'vat', 6 => 'notes', 7 => 'codiceDestinatario'),
+					'sortable-fields' => array(0 => '`companies`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => 8),
 					'records-per-page' => 10,
 					'default-sort-by' => 3,
 					'default-sort-direction' => 'asc',
@@ -592,7 +518,31 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-companies',
 					'template-printable' => 'children-companies-printable',
-					'query' => "SELECT `companies`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `companies`.`companyCode` as 'companyCode', `companies`.`companyName` as 'companyName', `companies`.`fiscalCode` as 'fiscalCode', `companies`.`vat` as 'vat', `companies`.`notes` as 'notes' FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` "
+					'query' => "SELECT `companies`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`companies`.`companyCode`)>100, concat(left(`companies`.`companyCode`,100),' ...'), `companies`.`companyCode`) as 'companyCode', if(CHAR_LENGTH(`companies`.`companyName`)>100, concat(left(`companies`.`companyName`,100),' ...'), `companies`.`companyName`) as 'companyName', if(CHAR_LENGTH(`companies`.`fiscalCode`)>100, concat(left(`companies`.`fiscalCode`,100),' ...'), `companies`.`fiscalCode`) as 'fiscalCode', if(CHAR_LENGTH(`companies`.`vat`)>100, concat(left(`companies`.`vat`,100),' ...'), `companies`.`vat`) as 'vat', `companies`.`notes` as 'notes', IF(    CHAR_LENGTH(`codiceDestinatario1`.`code`) || CHAR_LENGTH(`codiceDestinatario1`.`list`), CONCAT_WS('',   `codiceDestinatario1`.`code`, ' - ', `codiceDestinatario1`.`list`), '') as 'codiceDestinatario' FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `codiceDestinatario` as codiceDestinatario1 ON `codiceDestinatario1`.`id`=`companies`.`codiceDestinatario` "
+				),
+				'codiceDestinatario' => array(   
+					'parent-table' => 'codiceDestinatario',
+					'parent-primary-key' => 'id',
+					'child-primary-key' => 'id',
+					'child-primary-key-index' => 0,
+					'tab-label' => 'Companies',
+					'auto-close' => false,
+					'table-icon' => 'resources/table_icons/factory.png',
+					'display-refresh' => true,
+					'display-add-new' => true,
+					'forced-where' => '',
+					'display-fields' => array(1 => 'Kind', 2 => 'CompanyCode', 3 => 'CompanyName', 4 => 'FiscalCode', 5 => 'Vat', 6 => 'Notes', 7 => 'Codice Destinatario'),
+					'display-field-names' => array(1 => 'kind', 2 => 'companyCode', 3 => 'companyName', 4 => 'fiscalCode', 5 => 'vat', 6 => 'notes', 7 => 'codiceDestinatario'),
+					'sortable-fields' => array(0 => '`companies`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => 8),
+					'records-per-page' => 10,
+					'default-sort-by' => 3,
+					'default-sort-direction' => 'asc',
+					'open-detail-view-on-click' => true,
+					'display-page-selector' => true,
+					'show-page-progress' => true,
+					'template' => 'children-companies',
+					'template-printable' => 'children-companies-printable',
+					'query' => "SELECT `companies`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`companies`.`companyCode`)>100, concat(left(`companies`.`companyCode`,100),' ...'), `companies`.`companyCode`) as 'companyCode', if(CHAR_LENGTH(`companies`.`companyName`)>100, concat(left(`companies`.`companyName`,100),' ...'), `companies`.`companyName`) as 'companyName', if(CHAR_LENGTH(`companies`.`fiscalCode`)>100, concat(left(`companies`.`fiscalCode`,100),' ...'), `companies`.`fiscalCode`) as 'fiscalCode', if(CHAR_LENGTH(`companies`.`vat`)>100, concat(left(`companies`.`vat`,100),' ...'), `companies`.`vat`) as 'vat', `companies`.`notes` as 'notes', IF(    CHAR_LENGTH(`codiceDestinatario1`.`code`) || CHAR_LENGTH(`codiceDestinatario1`.`list`), CONCAT_WS('',   `codiceDestinatario1`.`code`, ' - ', `codiceDestinatario1`.`list`), '') as 'codiceDestinatario' FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `codiceDestinatario` as codiceDestinatario1 ON `codiceDestinatario1`.`id`=`companies`.`codiceDestinatario` "
 				)
 			),
 			'contacts' => array(   
@@ -607,9 +557,9 @@ $dir = __DIR__;
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'Title Of Courtesy', 3 => 'Name', 4 => 'LastName', 5 => 'Notes', 6 => 'Title', 7 => 'Birth Date'),
-					'display-field-names' => array(1 => 'kind', 2 => 'titleCourtesy', 3 => 'name', 4 => 'lastName', 5 => 'notes', 6 => 'title', 7 => 'birthDate'),
-					'sortable-fields' => array(0 => '`contacts`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => '`contacts`.`birthDate`'),
+					'display-fields' => array(1 => 'Kind', 2 => 'Title Of Courtesy', 3 => 'Name', 4 => 'LastName', 5 => 'Notes', 6 => 'Title', 7 => 'Birth Date', 8 => 'Codice EORI'),
+					'display-field-names' => array(1 => 'kind', 2 => 'titleCourtesy', 3 => 'name', 4 => 'lastName', 5 => 'notes', 6 => 'title', 7 => 'birthDate', 8 => 'CodEORI'),
+					'sortable-fields' => array(0 => '`contacts`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => '`contacts`.`birthDate`', 8 => 9),
 					'records-per-page' => 10,
 					'default-sort-by' => 4,
 					'default-sort-direction' => 'desc',
@@ -618,7 +568,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-contacts',
 					'template-printable' => 'children-contacts-printable',
-					'query' => "SELECT `contacts`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `contacts`.`titleCourtesy` as 'titleCourtesy', `contacts`.`name` as 'name', `contacts`.`lastName` as 'lastName', `contacts`.`notes` as 'notes', `contacts`.`title` as 'title', if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y %h:%i %p'),'') as 'birthDate' FROM `contacts` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`contacts`.`kind` "
+					'query' => "SELECT `contacts`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `contacts`.`titleCourtesy` as 'titleCourtesy', if(CHAR_LENGTH(`contacts`.`name`)>100, concat(left(`contacts`.`name`,100),' ...'), `contacts`.`name`) as 'name', if(CHAR_LENGTH(`contacts`.`lastName`)>100, concat(left(`contacts`.`lastName`,100),' ...'), `contacts`.`lastName`) as 'lastName', `contacts`.`notes` as 'notes', if(CHAR_LENGTH(`contacts`.`title`)>100, concat(left(`contacts`.`title`,100),' ...'), `contacts`.`title`) as 'title', if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'') as 'birthDate', `contacts`.`CodEORI` as 'CodEORI' FROM `contacts` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`contacts`.`kind` "
 				)
 			),
 			'creditDocument' => array(   
@@ -650,7 +600,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-town',
 					'template-printable' => 'children-town-printable',
-					'query' => "SELECT `town`.`id` as 'id', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', `town`.`idIstat` as 'idIstat', `town`.`town` as 'town', `town`.`district` as 'district', `town`.`region` as 'region', `town`.`prefix` as 'prefix', `town`.`shipCode` as 'shipCode', `town`.`fiscCode` as 'fiscCode', `town`.`inhabitants` as 'inhabitants', `town`.`link` as 'link' FROM `town` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`town`.`country` "
+					'query' => "SELECT `town`.`id` as 'id', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country', if(CHAR_LENGTH(`town`.`idIstat`)>100, concat(left(`town`.`idIstat`,100),' ...'), `town`.`idIstat`) as 'idIstat', if(CHAR_LENGTH(`town`.`town`)>100, concat(left(`town`.`town`,100),' ...'), `town`.`town`) as 'town', if(CHAR_LENGTH(`town`.`district`)>100, concat(left(`town`.`district`,100),' ...'), `town`.`district`) as 'district', if(CHAR_LENGTH(`town`.`region`)>100, concat(left(`town`.`region`,100),' ...'), `town`.`region`) as 'region', if(CHAR_LENGTH(`town`.`prefix`)>100, concat(left(`town`.`prefix`,100),' ...'), `town`.`prefix`) as 'prefix', if(CHAR_LENGTH(`town`.`shipCode`)>100, concat(left(`town`.`shipCode`,100),' ...'), `town`.`shipCode`) as 'shipCode', if(CHAR_LENGTH(`town`.`fiscCode`)>100, concat(left(`town`.`fiscCode`,100),' ...'), `town`.`fiscCode`) as 'fiscCode', if(CHAR_LENGTH(`town`.`inhabitants`)>100, concat(left(`town`.`inhabitants`,100),' ...'), `town`.`inhabitants`) as 'inhabitants', if(CHAR_LENGTH(`town`.`link`)>100, concat(left(`town`.`link`,100),' ...'), `town`.`link`) as 'link' FROM `town` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`town`.`country` "
 				)
 			),
 			'GPSTrackingSystem' => array(   
@@ -771,7 +721,7 @@ $dir = __DIR__;
 					'forced-where' => '',
 					'display-fields' => array(1 => 'Contact', 2 => 'Company'),
 					'display-field-names' => array(1 => 'contact', 2 => 'company'),
-					'sortable-fields' => array(0 => '`contacts_companies`.`id`', 1 => '`contacts1`.`name`', 2 => '`companies1`.`companyName`'),
+					'sortable-fields' => array(0 => '`contacts_companies`.`id`', 1 => 2, 2 => 3),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -780,7 +730,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-contacts_companies',
 					'template-printable' => 'children-contacts_companies-printable',
-					'query' => "SELECT `contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'company' FROM `contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` "
+					'query' => "SELECT `contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') as 'company' FROM `contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` "
 				),
 				'company' => array(   
 					'parent-table' => 'companies',
@@ -795,7 +745,7 @@ $dir = __DIR__;
 					'forced-where' => '',
 					'display-fields' => array(1 => 'Contact', 2 => 'Company'),
 					'display-field-names' => array(1 => 'contact', 2 => 'company'),
-					'sortable-fields' => array(0 => '`contacts_companies`.`id`', 1 => '`contacts1`.`name`', 2 => '`companies1`.`companyName`'),
+					'sortable-fields' => array(0 => '`contacts_companies`.`id`', 1 => 2, 2 => 3),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -804,7 +754,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-contacts_companies',
 					'template-printable' => 'children-contacts_companies-printable',
-					'query' => "SELECT `contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'company' FROM `contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` "
+					'query' => "SELECT `contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') as 'company' FROM `contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` "
 				)
 			),
 			'attachments' => array(   
@@ -821,7 +771,7 @@ $dir = __DIR__;
 					'forced-where' => '',
 					'display-fields' => array(1 => 'Name', 2 => 'File', 5 => 'ThumbUse'),
 					'display-field-names' => array(1 => 'name', 2 => 'file', 5 => 'thumbUse'),
-					'sortable-fields' => array(0 => '`attachments`.`id`', 1 => 2, 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`', 5 => 6),
+					'sortable-fields' => array(0 => '`attachments`.`id`', 1 => 2, 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`', 5 => '`attachments`.`thumbUse`'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -830,7 +780,7 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-attachments',
 					'template-printable' => 'children-attachments-printable',
-					'query' => "SELECT `attachments`.`id` as 'id', `attachments`.`name` as 'name', `attachments`.`file` as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `attachments`.`thumbUse` as 'thumbUse' FROM `attachments` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attachments`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attachments`.`company` "
+					'query' => "SELECT `attachments`.`id` as 'id', if(CHAR_LENGTH(`attachments`.`name`)>100, concat(left(`attachments`.`name`,100),' ...'), `attachments`.`name`) as 'name', if(CHAR_LENGTH(`attachments`.`file`)>100, concat(left(`attachments`.`file`,100),' ...'), `attachments`.`file`) as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', concat('<i class=\"glyphicon glyphicon-', if(`attachments`.`thumbUse`, 'check', 'unchecked'), '\"></i>') as 'thumbUse' FROM `attachments` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attachments`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attachments`.`company` "
 				),
 				'company' => array(   
 					'parent-table' => 'companies',
@@ -845,7 +795,7 @@ $dir = __DIR__;
 					'forced-where' => '',
 					'display-fields' => array(1 => 'Name', 2 => 'File', 5 => 'ThumbUse'),
 					'display-field-names' => array(1 => 'name', 2 => 'file', 5 => 'thumbUse'),
-					'sortable-fields' => array(0 => '`attachments`.`id`', 1 => 2, 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`', 5 => 6),
+					'sortable-fields' => array(0 => '`attachments`.`id`', 1 => 2, 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`', 5 => '`attachments`.`thumbUse`'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -854,8 +804,10 @@ $dir = __DIR__;
 					'show-page-progress' => true,
 					'template' => 'children-attachments',
 					'template-printable' => 'children-attachments-printable',
-					'query' => "SELECT `attachments`.`id` as 'id', `attachments`.`name` as 'name', `attachments`.`file` as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `attachments`.`thumbUse` as 'thumbUse' FROM `attachments` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attachments`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attachments`.`company` "
+					'query' => "SELECT `attachments`.`id` as 'id', if(CHAR_LENGTH(`attachments`.`name`)>100, concat(left(`attachments`.`name`,100),' ...'), `attachments`.`name`) as 'name', if(CHAR_LENGTH(`attachments`.`file`)>100, concat(left(`attachments`.`file`,100),' ...'), `attachments`.`file`) as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', concat('<i class=\"glyphicon glyphicon-', if(`attachments`.`thumbUse`, 'check', 'unchecked'), '\"></i>') as 'thumbUse' FROM `attachments` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attachments`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attachments`.`company` "
 				)
+			),
+                        'codiceDestinatario' => array(   
 			)
 		);
 
