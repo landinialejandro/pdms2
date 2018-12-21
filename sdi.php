@@ -42,7 +42,6 @@ $company = getDataTable('companies',$where_id);
 ///////////////////////////
 $where_id =" AND addresses.company = {$company['id']} AND addresses.default = 1";//change this to set select where
 $address = getDataTable('addresses',$where_id);
-var_dump($address);
 if (!$address){
     echo '<h1>Adrress order not valid</h1>';
     return;
@@ -54,6 +53,14 @@ $where_id =" AND mails.company = {$company['id']} AND mails.kind = 'WORK'";//cha
 $mails = getDataTable('mails',$where_id);
 $codiceDestinatarioId = intval(sqlValue("select codiceDestinatario from companies where companies.id = $multyCompany_id"));
 $codiceDestinatario = sqlValue("select code from codiceDestinatario where codiceDestinatario.id = $codiceDestinatarioId");
+///////////////////////////
+$defualtContactId = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$multyCompany_id} ORDER BY contacts_companies.default DESC LIMIT 1"));
+if (!$defualtContactId){
+    echo '<h1>Contact company not setting</h1>';
+    return;
+}
+$where_id = " AND  id = {$defualtContactId}";
+$contact = getDataTable("contacts", $where_id);
 ///////////////////////////
 
 /* retrieve customer info */
@@ -117,10 +124,10 @@ $invoice=<<<XML
                 </IdFiscaleIVA>
                 <Anagrafica>
                     <Denominazione>{$company['companyName']}</Denominazione> 
-                    <Nome></Nome>
-                    <Cognome></Cognome>
-                    <Titolo></Titolo>
-                    <codEORI></codEORI>
+                    <Nome>{$contact['name']}</Nome>
+                    <Cognome>{$contact['lastName']}</Cognome>
+                    <Titolo>{$contact['title']}</Titolo>
+                    <codEORI>{$contact['CodEORI']}</codEORI>
                 </Anagrafica>
                 <RegimeFiscale>RF01</RegimeFiscale> 
             </DatiAnagrafici>
