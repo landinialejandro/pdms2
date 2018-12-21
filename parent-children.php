@@ -776,9 +776,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Contact', 2 => 'Company'),
-					'display-field-names' => array(1 => 'contact', 2 => 'company'),
-					'sortable-fields' => array(0 => '`contacts_companies`.`id`', 1 => 2, 2 => 3),
+					'display-fields' => array(1 => 'Contact', 2 => 'Company', 3 => 'Default'),
+					'display-field-names' => array(1 => 'contact', 2 => 'company', 3 => 'default'),
+					'sortable-fields' => array(0 => '`contacts_companies`.`id`', 1 => 2, 2 => 3, 3 => 4),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -787,7 +787,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-contacts_companies',
 					'template-printable' => 'children-contacts_companies-printable',
-					'query' => "SELECT `contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') as 'company' FROM `contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` "
+					'query' => "SELECT `contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') as 'company', concat('<i class=\"glyphicon glyphicon-', if(`contacts_companies`.`default`, 'check', 'unchecked'), '\"></i>') as 'default' FROM `contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` "
 				),
 				'company' => array(   
 					'parent-table' => 'companies',
@@ -800,9 +800,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Contact', 2 => 'Company'),
-					'display-field-names' => array(1 => 'contact', 2 => 'company'),
-					'sortable-fields' => array(0 => '`contacts_companies`.`id`', 1 => 2, 2 => 3),
+					'display-fields' => array(1 => 'Contact', 2 => 'Company', 3 => 'Default'),
+					'display-field-names' => array(1 => 'contact', 2 => 'company', 3 => 'default'),
+					'sortable-fields' => array(0 => '`contacts_companies`.`id`', 1 => 2, 2 => 3, 3 => 4),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -811,7 +811,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-contacts_companies',
 					'template-printable' => 'children-contacts_companies-printable',
-					'query' => "SELECT `contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') as 'company' FROM `contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` "
+					'query' => "SELECT `contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') as 'company', concat('<i class=\"glyphicon glyphicon-', if(`contacts_companies`.`default`, 'check', 'unchecked'), '\"></i>') as 'default' FROM `contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` "
 				)
 			),
 			'attachments' => array(   
