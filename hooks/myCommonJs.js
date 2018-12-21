@@ -85,6 +85,10 @@ function showCard(field, dest, cmd){
     if (id < 1){
         id = parseInt($j('#' + field).val());
     }
+    ajaxCard(id,cmd,dest);
+}
+
+function ajaxCard(id,cmd,dest){
     if (id >0){
         $j.ajax({
             method: 'post', //post, get
@@ -97,6 +101,27 @@ function showCard(field, dest, cmd){
             //function at response
             $j("#" + dest).html(msg);
             $j("#" + dest).show();
+        });
+    }
+}
+
+function showCardsTV(field, dest, cmd){
+    //field = field to get the ID from
+    //dest = ID where to put the html result
+    //cmd = comand for ajax and ajax file name
+    var id = parseInt($j('#' + dest ).attr('myId')) || 0;//este id es el id del registro
+    if (id >0){
+        $j.ajax({
+            method: 'post', //post, get
+            dataType: 'html', //json,text,html
+            url: 'hooks/contacts_companies_AJAX.php',
+            cache: 'false',
+            data: {id: id, cmd: 'record'}
+        })
+        .done(function (msg) {
+            //function at response
+            var data = $j.parseJSON(msg);
+            ajaxCard(data[`${field}`],cmd,dest);
         });
     }
 }

@@ -5,7 +5,7 @@ include("$currDir/../lib.php");
 
 if(isset($_REQUEST['cmd']) && isset($_REQUEST['id'])){
     $id=makeSafe($_REQUEST['id']);
-    $data ="{invalid:data}";
+    $data ="{'invalid':'data'}";
     if ($_REQUEST['cmd']==='limit'){
         $code = $_REQUEST['code'];
         $data = array_merge(getLimitsCompany($id,$code),getPurchasesCompany($id));
