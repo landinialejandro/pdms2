@@ -103,7 +103,7 @@
 				results: function(resp, page){ 
                                             return resp; }
 			},
-			width: 350
+				width: '100%'
 		}).on('change', function(e){
 			$j('#art').val(e.added.id);
 		});
@@ -207,7 +207,7 @@
                         <?php } ?>
                         </div>
                         <div class="col-lg-8">
-                            <div class="col-md-8 hspacer-sm vspacer-md">
+                            <div class="col-lg-8 hspacer-sm vspacer-md" style="white-space: nowrap; overflow-x: hidden;">
                                 <span id="articulos_listado" ></span>
                                 <input type="hidden" name="art" id="art" value="">
                             </div>
