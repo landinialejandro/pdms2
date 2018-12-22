@@ -27,11 +27,11 @@
                     <!-- Ionicons -->
                     <link rel="stylesheet" href="LTE/Ionicons/css/ionicons.min.css">
                     <!-- Theme style -->
-                    <link rel="stylesheet" href="LTE/dist/css/AdminLTE.min.css">
+                    <link rel="stylesheet" href="LTE/dist/css/AdminLTE.css">
                     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
                         page. However, you can choose any other skin. Make sure you
                         apply the skin class to the body tag so the changes take effect. -->
-                    <link rel="stylesheet" href="LTE/dist/css/skins/skin-blue.min.css">
+                    <link rel="stylesheet" href="LTE/dist/css/skins/skin-blue.css">
                 <!-- \LTE adding -->
 		<!--[if lt IE 9]>
 			<script src="<?php echo PREPEND_PATH; ?>resources/initializr/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -80,17 +80,16 @@
 				<?php return; ?>
 			<?php } ?>
                     
-			<!-- Add header template below here .. -->
                         <?php include('header_lte_main.php'); ?>
-
-                        <?php if(isset($_GET['loginFailed']) || isset($_GET['signIn'])){return;} ?>
-                    
-                        <!-- Left side column. contains the logo and sidebar -->
-                        <?php include ('header_lte_leftSideMenu.php') ?>
-
                     <!-- Content Wrapper. Contains page content -->
                     <div class="content-wrapper">
                       <!-- Content Header (Page header) -->
                       <section class="content-header">
                           
                         <section class="content container-fluid">
+
+                        <?php if(isset($_GET['loginFailed']) || isset($_GET['signIn'])){return;} ?>
+                    
+                        <!-- Left side column. contains the logo and sidebar -->
+                        <?php include ('header_lte_leftSideMenu.php') ?>
+
