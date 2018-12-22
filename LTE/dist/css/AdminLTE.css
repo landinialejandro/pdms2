@@ -147,7 +147,8 @@ body {
   padding-right: 15px;
 }
 .content .row{
-    background-color: #ecf0f5;
+    background-color: white;
+    border-radius: 10px;
 }
 /* H1 - H6 font */
 h1,
