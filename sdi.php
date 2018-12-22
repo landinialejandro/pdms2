@@ -375,7 +375,6 @@ $invoice=<<<XML
         
 XML;
 
-
 //creating object of SimpleXMLElement
 $xml_invoice = new SimpleXMLElement($invoice);
 
@@ -387,26 +386,37 @@ $item_fields = get_sql_fields('ordersDetails');
 $item_from = get_sql_from('ordersDetails');
 $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
 foreach($items as $i => $item){
+    $productId = intval(sqlValue("select ordersDetails.productCode from ordersDetails where ordersDetails.id = {$item['id']} "));
+    if (!$productId){
+        echo '<div class="alert alert-danger alert-dismissible"><h1>product id not valid: '. $productId.'/'.$item['id'].'</h1></div>';
+    }
+    $where_id = " AND products.id = $productId";
+    $product = getDataTable("products", $where_id);
+    $categoryId = sqlValue("select products.CategoryID from products where products.id = {$product['id']}");
+    $categoryData = getKindsData($categoryId);
+    
+    var_dump($item);
+    
     $DettaglioLinee = $DatiBeniServizi->addChild("DettaglioLinee");
         $DettaglioLinee->addChild("NumeroLinea",$i+1);
-        $DettaglioLinee->addChild("TipoCessionePrestazione","");
+        $DettaglioLinee->addChild("TipoCessionePrestazione",$item['Discount']? "SC" : "");
         $CodiceArticolo = $DettaglioLinee->addChild("CodiceArticolo");//two childs
-            $CodiceArticolo->addChild("CodiceTipo","");
+            $CodiceArticolo->addChild("CodiceTipo",$categoryData['code']);
             $CodiceArticolo->addChild("CodiceValore",$item['productCode']);
         
-        $DettaglioLinee->addChild("Descrizione","");
+        $DettaglioLinee->addChild("Descrizione",$product['productName']);
         $DettaglioLinee->addChild("Quantita",$item['QuantityReal']);
-        $DettaglioLinee->addChild("UnitaMisura","");
+        $DettaglioLinee->addChild("UnitaMisura",$product['UM']);
         $DettaglioLinee->addChild("DataInizioPeriodo","");
         $DettaglioLinee->addChild("DataFinePeriodo","");
-        $DettaglioLinee->addChild("PrezzoUnitario",$item['UnitPriceValue']);
+        $DettaglioLinee->addChild("PrezzoUnitario",number_format($item['UnitPriceValue'] , 2));
         $ScontoMaggiorazione = $DettaglioLinee->addChild("ScontoMaggiorazione");//tree childs
-            $ScontoMaggiorazione->addChild("Tipo","");
-            $ScontoMaggiorazione->addChild("Percentuale","");
-            $ScontoMaggiorazione->addChild("Importo","");
+            $ScontoMaggiorazione->addChild("Tipo",$item['Discount']? "SC" : "");
+            $ScontoMaggiorazione->addChild("Percentuale",number_format($item['Discount'] , 2));
+            $ScontoMaggiorazione->addChild("Importo",number_format($item['SubtotalValue']*$item['Discount']/100 , 2));
             
-        $DettaglioLinee->addChild("PrezzoTotale",$item['SubtotalValue']);
-        $DettaglioLinee->addChild("AliquotaIVA",$item['taxesValue']);
+        $DettaglioLinee->addChild("PrezzoTotale",number_format($item['SubtotalValue'] , 2));
+        $DettaglioLinee->addChild("AliquotaIVA",number_format($item['taxesValue'] , 2));
         $DettaglioLinee->addChild("Ritenuta","");
         $DettaglioLinee->addChild("Natura","");
         $DettaglioLinee->addChild("RiferimentoAmministrazione","");
@@ -426,8 +436,8 @@ foreach($items as $i => $item){
         $DatiRiepilogo->addChild("Natura","");
         $DatiRiepilogo->addChild("SpeseAccessorie","");
         $DatiRiepilogo->addChild("Arrotondamento","");
-        $DatiRiepilogo->addChild("ImponibileImporto",$inponibiliTotale);
-        $DatiRiepilogo->addChild("Imposta",$taxesTotales);
+        $DatiRiepilogo->addChild("ImponibileImporto",number_format($inponibiliTotale , 2));
+        $DatiRiepilogo->addChild("Imposta",number_format($taxesTotales , 2));
         $DatiRiepilogo->addChild("EsigibilitaIVA","D");
         $DatiRiepilogo->addChild("RiferimentoNormativo","");
     
@@ -436,7 +446,10 @@ $xml_file = $xml_invoice->asXML('xmlFiles/users.xml');
 
 //success and error message based on xml creation
 if($xml_file){
-    echo 'XML file have been generated successfully.';
+            $msg = '<div class="alert alert-success"><h1>
+                XML file have been generated successfully.
+            </h1></div>';
+    echo $msg;
     $link = "<script>window.open('xmlFiles/users.xml')</script>";
     echo $link;
     

@@ -80,7 +80,7 @@ function kindName($code){
 }
 
 function getKindsData($id){
-    $where_id =" AND kinds.code = {$id}";//change this to set select where
+    $where_id =" AND kinds.code = '{$id}'";//change this to set select where
     $kind = getDataTable('kinds', $where_id);
 
     $result = json_decode($attr['value']);
@@ -92,84 +92,3 @@ function getKindsData($id){
     return $kind;
 }
 
-function get_xml_file($fileHash, &$projectFile){
-        try {
-
-                $projects = scandir("/xmlFiles");
-                $projects = array_diff($projects, array('.', '..'));
-                $userProject = $fileHash;
-                $projectFile = null;
-
-                foreach ($projects as $project) {
-                        if ($userProject == md5($project)) {
-                                $projectFile = $project;
-                                break;
-                        }
-                }
-                if (!$projectFile)
-                        throw new RuntimeException('Project file not found.');
-
-                // validate simpleXML extension enabled
-                if (!function_exists('simpleXML_load_file')) {
-                        throw new RuntimeException('Please, enable simplexml extention in your php.ini configuration file.');
-                }
-
-
-                // validate that the file is not corrupted
-                @$xmlFile = simpleXML_load_file("../projects/$projectFile", 'SimpleXMLElement', LIBXML_NOCDATA);
-                if (!$xmlFile) {
-                        throw new RuntimeException('Invalid axp file.');
-                }
-
-
-                return $xmlFile;
-        } catch (RuntimeException $e) {
-                echo "<br>" . $e->getMessage();
-                exit;
-        }
-}
-
-function generate_valid_xml_from_array($array, $node_block='nodes', $node_name='node') {
-	$xml = '<?xml version="1.0" encoding="UTF-8" ?>' . "\n";
-
-	$xml .= '<p:FatturaElettronica versione="FPR12" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd">'."\n";
-	$xml .= generate_xml_from_array($array, $node_name);
-	$xml .= '</p:FatturaElettronica>'."\n";
-
-	return $xml;
-}
-
-function generate_xml_from_array($array, $node_name) {
-    $xml = '';
-
-    if (is_array($array) || is_object($array)) {
-            foreach ($array as $key=>$value) {
-                    if (is_numeric($key)) {
-                            $key = $node_name;
-                    }
-
-                    $xml .= '<' . $key . '>' . "\n" . generate_xml_from_array($value, $node_name) . '</' . $key . '>' . "\n";
-            }
-    } else {
-            $xml = htmlspecialchars($array, ENT_QUOTES) . "\n";
-    }
-
-    return $xml;
-}
-//function defination to convert array to xml
-function array_to_xml($array, &$xml_user_info) {
-    foreach ($array as $key=>$value) {
-        if(is_array($value)) {
-            if(!is_numeric($key)){
-                $subnode = $xml_user_info->addChild("$key");
-                array_to_xml($value, $subnode);
-            }else{
-                //don't add sub item es a numeric
-                $subnode = $xml_user_info->addChild("item$key");
-                array_to_xml($value, $subnode);
-            }
-        }else {
-            $xml_user_info->addChild("$key",htmlspecialchars("$value"));
-        }
-    }
-}
