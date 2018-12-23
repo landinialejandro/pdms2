@@ -50,6 +50,7 @@
 				break;
 			case 'new': /* new record */
 				var url = $j('#' + param.ChildTable + '_hclink').val() + '&addNew_x=1&Embedded=1' + (param.AutoClose ? '&AutoClose=1' : '');
+//                                console.log(param);
 				modal_window({
 					url: url,
 					close: function(){ /* */ <?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'reload' }); },
@@ -123,7 +124,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php if(is_array($records)) foreach($records as $pkValue => $record){ ?>
+					<?php if(is_array($records)) { foreach($records as $pkValue => $record){ ?>
 					<tr>
 						<?php if($config['open-detail-view-on-click']){ ?>
 							<?php if(stripos($_SERVER['HTTP_USER_AGENT'], 'msie ')){ ?>
@@ -141,14 +142,37 @@
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][6]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][6]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[6]); ?></td>
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][7]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][7]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[7]); ?></td>
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][8]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][8]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[8]); ?></td>
-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][9]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][9]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[9]); ?></td>
-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][10]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][10]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[10]); ?></td>
-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[12]); ?></td>
-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][13]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][13]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[13]); ?></td>
-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][14]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][14]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[14]); ?></td>
-						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][15]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][15]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[15]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][9]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][10]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[10]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][10]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][11]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[11]); ?></td>
 					</tr>
-					<?php } ?>
+					<!-- Code add by Ale -->
+
+					<?php } 
+                                        }
+                                            //calcula el total
+                                            $totA = number_format(getTotCol($parameters,'revenue'),2);
+                                            $totB = number_format(getTotCol($parameters,'outputs'),2);
+                                            $balance = $totA-$totB;
+                                            $sumRow ="<tr class=\"success\">";
+                                            $colSpan = 1;
+                                            if(!isset($_REQUEST['Print_x'])){
+                                                $sumRow.="<td class=\"text-center\"><H3><strong>&sum;</strong></H3></td>";
+                                                
+                                            }
+                                            if($config['open-detail-view-on-click']){
+                                                $colSpan += 2;
+                                            }
+                                            $sumRow.="<td colspan=\"$colSpan\" ></td>";
+                                            $sumRow.="<td id=\"sumRows\" class=\"text-right\"><H4><span>&euro;</span>{$totA}</H4></td>";
+                                            $sumRow.="<td id=\"sumRows\" class=\"text-right\"><H4><span>&euro;</span>{$totB}</H4></td>";
+                                            $sumRow.="<td id=\"sumRows\" class=\"text-right\"><H4><span>&euro;</span>{$balance}</H4></td>";
+                                            $sumRow.="<td colspan=\"4\" ></td>";
+                                            $sumRow.="</tr>";
+
+                                            echo $sumRow;
+
+                                        ?>
+                                        <!-- End Code add by Ale -->
 				</tbody>
 				<tfoot>
 					<tr>

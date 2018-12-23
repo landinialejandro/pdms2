@@ -25,13 +25,11 @@ $kindOrder = sqlValue("select kind from orders where id={$order_id}");
 ///////////////////////////
 
 if (!is_null($order['document'])){
-    echo 'The invoice file exist, you can\'t make a new xml file after print invoice.';
-    return;
+    exit(error_message('The invoice file exist, you can\'t make a new xml file after print invoice.', false));
 }
 
 if($kindOrder !== 'OUT'){
-    echo '<h1>order not valid</h1>' . $order['kind'];
-    return ;
+    exit(error_message('<h1>order not valid</h1>' . $order['kind'], false));
 }
 
 /* retrieve multycompany info */
@@ -43,8 +41,7 @@ $company = getDataTable('companies',$where_id);
 $where_id =" AND addresses.company = {$company['id']} AND addresses.default = 1";//change this to set select where
 $address = getDataTable('addresses',$where_id);
 if (!$address){
-    echo '<h1>Adrress order not valid</h1>';
-    return;
+    exit(error_message('<h1>Adrress order not valid</h1>', false));
 }
 $addressCountryId = sqlValue("select country from addresses where addresses.id = {$address['id']}");
 $countryCode = sqlValue("select code from countries where countries.id = {$addressCountryId} ");
@@ -56,8 +53,7 @@ $codiceDestinatario = sqlValue("select code from codiceDestinatario where codice
 ///////////////////////////
 $defualtContactId = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$multyCompany_id} ORDER BY contacts_companies.default DESC LIMIT 1"));
 if (!$defualtContactId){
-    echo '<h1>Contact company not setting</h1>';
-    return;
+    exit(error_message('<h1>Contact company not setting</h1>', false));
 }
 $where_id = " AND  id = {$defualtContactId}";
 $contact = getDataTable("contacts", $where_id);
@@ -78,8 +74,7 @@ if ($customer_id){
     $addressCustomerShip = getDataTable('addresses',$where_id);
     ///////////////////////////
 }else{
-    echo '<h1>order Customer not valid</h1>';
-    return;
+    exit(error_message('<h1>order Customer not valid</h1>', false));
 }
 
 // shipper via
@@ -91,8 +86,7 @@ if ($shipper_id){
     $where_id =" AND addresses.company = {$shipper['id']} AND addresses.default = 1";//change this to set select where
     $addressShipper = getDataTable('addresses',$where_id);
 }else{
-    echo '<h1>order Shipper not valid</h1>';
-    return;
+    exit(error_message('<h1>order Shipper not valid</h1>', false));
 }
 
 
@@ -395,8 +389,6 @@ foreach($items as $i => $item){
     $categoryId = sqlValue("select products.CategoryID from products where products.id = {$product['id']}");
     $categoryData = getKindsData($categoryId);
     
-    var_dump($item);
-    
     $DettaglioLinee = $DatiBeniServizi->addChild("DettaglioLinee");
         $DettaglioLinee->addChild("NumeroLinea",$i+1);
         $DettaglioLinee->addChild("TipoCessionePrestazione",$item['Discount']? "SC" : "");
@@ -454,5 +446,5 @@ if($xml_file){
     echo $link;
     
 }else{
-    echo 'XML file generation error.';
+    exit(error_message('XML file generation error.', false));
 }

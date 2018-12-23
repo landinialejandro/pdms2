@@ -5,9 +5,14 @@
 <!-- add the following to the contacts_companies_init() hook (in hooks/contacts_companies.php file) -->
 <!--     $options->ShowTableHeader = 0;     -->
 
-		<td id="contacts_companies-contact-<%%VALUE(id)%%>" class="contacts_companies-contact"><%%SELECT%%><%%VALUE(contact)%%><%%ENDSELECT%%></td>
+		<td id="contacts_companies-contact-<%%VALUE(id)%%>" class="contacts_companies-contact">
+                    <%%SELECT%%><%%VALUE(contact)%%><%%ENDSELECT%%>
+                    <div id="contactCard-contacts_companies-contact-<%%VALUE(id)%%>" myId ="<%%VALUE(id)%%>" class=""></div>
+                </td>
 		<td id="contacts_companies-company-<%%VALUE(id)%%>" class="contacts_companies-company">
                     <%%SELECT%%><%%VALUE(company)%%><%%ENDSELECT%%>
-                    <div  id="companyCard-contacts_companies-company-<%%VALUE(id)%%>" myId ="<%%VALUE(id)%%>" class=""></div>
+                    <div id="companyCard-contacts_companies-company-<%%VALUE(id)%%>" myId ="<%%VALUE(id)%%>" class=""></div>
                 </td>
-		<td id="contacts_companies-default-<%%VALUE(id)%%>" class="contacts_companies-default"><%%SELECT%%><%%VALUE(default)%%><%%ENDSELECT%%></td>
+		<td id="contacts_companies-default-<%%VALUE(id)%%>" class="contacts_companies-default">
+                    <%%SELECT%%><%%VALUE(default)%%><%%ENDSELECT%%>
+                </td>

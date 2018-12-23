@@ -117,7 +117,6 @@
 
 
 	function firstCashNote_dv($selectedID, $memberInfo, &$html, &$args){
-	
                 /* current user is not an admin? */
 		if($mi['group'] != 'Admins'){
 			$html .= <<<EOC
@@ -127,6 +126,9 @@
 					})
 				</script>
 EOC;
+                }
+                if (isset($_REQUEST['addNew_x']) && isset($_REQUEST['Embedded'])){
+                    echo '<script>var AUTOMATICDV = true; </script>';
                 }
         }
 

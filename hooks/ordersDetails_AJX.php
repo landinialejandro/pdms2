@@ -26,7 +26,7 @@ function processRequest($cmd, $id, $cant, $order){
     }
     if ($cmd === 'totOrder'){
         $parameters = $_POST['parameters'];
-        $ret = getTotOrder($parameters, $id);
+        $ret = getTotCol($parameters, $id);
     }
     if ($cmd === 'fastDel'){
         $ret = fastDel($id,$order);
@@ -59,7 +59,7 @@ function setTotalOrder($order){
     $parameters['ChildTable'] = 'ordersDetails';
     $parameters['SelectedID'] = $order;
     $parameters['ChildLookupField'] = 'order';
-    $tot = floatval(getTotOrder($parameters,'LineTotal'));
+    $tot = floatval(getTotCol($parameters,'LineTotal'));
     sql("UPDATE orders SET OrderTotal = '{$tot}' WHERE id = {$order}",$eo);
     
     if(!function_exists('orders_after_update')){
@@ -75,11 +75,6 @@ function setTotalOrder($order){
     return $tot;
 }
         
-function getTotOrder($parameters,$fieldToSUM){
-    $sumQuery="select sum(`".$parameters['ChildTable']."`.`". $fieldToSUM ."`) from ".$parameters['ChildTable']." where `". $parameters['ChildLookupField']."` = '". $parameters['SelectedID']. "'";
-    $res= sqlValue($sumQuery);
-    return $res;
-}
 function fastDel($id, $order){
     $statment="delete from ordersDetails where id = '$id'";
     $res=sql($statment,$eo);

@@ -92,3 +92,8 @@ function getKindsData($id){
     return $kind;
 }
 
+function getTotCol($parameters,$fieldToSUM){
+    $sumQuery="select sum(`".$parameters['ChildTable']."`.`". $fieldToSUM ."`) from ".$parameters['ChildTable']." where `". $parameters['ChildLookupField']."` = '". $parameters['SelectedID']. "'";
+    $res= sqlValue($sumQuery);
+    return $res;
+}

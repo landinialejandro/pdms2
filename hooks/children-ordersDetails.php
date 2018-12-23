@@ -3,8 +3,6 @@
 <?php
 	$cleaner = new CI_Input();
 	$cleaner->charset = datalist_db_encoding;
-        $currDir = dirname(__FILE__);
-        include_once 'ordersDetails_AJX.php';
 ?>
 <script>
 	<?php echo $current_table; ?>GetChildrenRecordsList = function(command){
@@ -317,33 +315,19 @@
 
 					<?php } 
                                         }
-                                        
+//                                        getTotOrder
                                             //calcula el total
                                             $fieldToSUM = 'LineTotal';
-                                            $tot = number_format(getTotOrder($parameters,$fieldToSUM),2);
+                                            $tot = number_format(getTotCol($parameters,$fieldToSUM),2);
                                             $sumRow ="<tr class=\"success\">";
-                                            if(!isset($_REQUEST['Print_x'])) $sumRow.="<td class=\"text-center\"><H3><strong>&sum;</strong></H3></td>";
+                                            $colSpan = 10;
+                                            if(!isset($_REQUEST['Print_x'])){ $sumRow.="<td class=\"text-center\"><H3><strong>&sum;</strong></H3></td>";}
                                             if($config['open-detail-view-on-click']){
-                                                $sumRow.="<td></td>";
-                                                $sumRow.="<td></td>";
+                                                $colSpan += 2;
                                             }
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
+                                            $sumRow.="<td colspan=\"$colSpan\" ></td>";
                                             $sumRow.="<td id=\"sumRows\" class=\"text-right\"><H4><span>&euro;</span>{$tot}</H4></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
-                                            $sumRow.="<td></td>";
+                                            $sumRow.="<td colspan=\"6\" ></td>";
                                             $sumRow.="</tr>";
 
                                             echo $sumRow;
