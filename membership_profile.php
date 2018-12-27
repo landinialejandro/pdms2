@@ -98,14 +98,14 @@
 	/* the profile page view */
 	include_once("$currDir/header.php"); ?>
 
-	<div class="page-header">
-		<h1><?php echo sprintf($Translation['Hello user'], $mi['username']); ?></h1>
-	</div>
-	<div id="notify" class="alert alert-success" style="display: none;"></div>
-	<div id="loader" style="display: none;"><i class="glyphicon glyphicon-refresh"></i> <?php echo $Translation['Loading ...']; ?></div>
-
-	<?php echo csrf_token(); ?>
 	<div class="row">
+                <div class="page-header">
+                    <h1><?php echo sprintf($Translation['Hello user'], $mi['username']); ?></h1>
+                </div>
+                <div id="notify" class="alert alert-success" style="display: none;"></div>
+                <div id="loader" style="display: none;"><i class="glyphicon glyphicon-refresh"></i> <?php echo $Translation['Loading ...']; ?></div>
+
+                <?php echo csrf_token(); ?>
 
 		<div class="col-md-6">
 
