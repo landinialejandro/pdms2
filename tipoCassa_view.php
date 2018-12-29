@@ -6,11 +6,11 @@
 	include("$currDir/defaultLang.php");
 	include("$currDir/language.php");
 	include("$currDir/lib.php");
-	@include("$currDir/hooks/codiceDestinatario.php");
-	include("$currDir/codiceDestinatario_dml.php");
+	@include("$currDir/hooks/tipoCassa.php");
+	include("$currDir/tipoCassa_dml.php");
 
 	// mm: can the current member access this page?
-	$perm=getTablePermissions('codiceDestinatario');
+	$perm=getTablePermissions('tipoCassa');
 	if(!$perm[0]){
 		echo error_message($Translation['tableAccessDenied'], false);
 		echo '<script>setTimeout("window.location=\'index.php?signOut=1\'", 2000);</script>';
@@ -18,12 +18,12 @@
 	}
 
 	$x = new DataList;
-	$x->TableName = "codiceDestinatario";
+	$x->TableName = "tipoCassa";
 
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
-		"`codiceDestinatario`.`code`" => "code",
-		"`codiceDestinatario`.`text`" => "text"
+		"`tipoCassa`.`code`" => "code",
+		"`tipoCassa`.`text`" => "text"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -33,25 +33,25 @@
 
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
-		"`codiceDestinatario`.`code`" => "code",
-		"`codiceDestinatario`.`text`" => "text"
+		"`tipoCassa`.`code`" => "code",
+		"`tipoCassa`.`text`" => "text"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
-		"`codiceDestinatario`.`code`" => "Code",
-		"`codiceDestinatario`.`text`" => "List"
+		"`tipoCassa`.`code`" => "Code",
+		"`tipoCassa`.`text`" => "Text"
 	);
 
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
-		"`codiceDestinatario`.`code`" => "code",
-		"`codiceDestinatario`.`text`" => "text"
+		"`tipoCassa`.`code`" => "code",
+		"`tipoCassa`.`text`" => "text"
 	);
 
 	// Lookup fields that can be used as filterers
 	$x->filterers = array();
 
-	$x->QueryFrom = "`codiceDestinatario` ";
+	$x->QueryFrom = "`tipoCassa` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -72,22 +72,22 @@
 	$x->RecordsPerPage = 10;
 	$x->QuickSearch = 1;
 	$x->QuickSearchText = $Translation["quick search"];
-	$x->ScriptFileName = "codiceDestinatario_view.php";
-	$x->RedirectAfterInsert = "codiceDestinatario_view.php?SelectedID=#ID#";
-	$x->TableTitle = "Codice Destinatario";
+	$x->ScriptFileName = "tipoCassa_view.php";
+	$x->RedirectAfterInsert = "tipoCassa_view.php?SelectedID=#ID#";
+	$x->TableTitle = "TipoCassa";
 	$x->TableIcon = "table.gif";
-	$x->PrimaryKey = "`codiceDestinatario`.`code`";
+	$x->PrimaryKey = "`tipoCassa`.`code`";
 
 	$x->ColWidth   = array(  150, 150);
-	$x->ColCaption = array("Code", "List");
+	$x->ColCaption = array("Code", "Text");
 	$x->ColFieldName = array('code', 'text');
 	$x->ColNumber  = array(1, 2);
 
 	// template paths below are based on the app main directory
-	$x->Template = 'templates/codiceDestinatario_templateTV.html';
-	$x->SelectedTemplate = 'templates/codiceDestinatario_templateTVS.html';
-	$x->TemplateDV = 'templates/codiceDestinatario_templateDV.html';
-	$x->TemplateDVP = 'templates/codiceDestinatario_templateDVP.html';
+	$x->Template = 'templates/tipoCassa_templateTV.html';
+	$x->SelectedTemplate = 'templates/tipoCassa_templateTVS.html';
+	$x->TemplateDV = 'templates/tipoCassa_templateDV.html';
+	$x->TemplateDVP = 'templates/tipoCassa_templateDVP.html';
 
 	$x->ShowTableHeader = 1;
 	$x->TVClasses = "";
@@ -99,32 +99,32 @@
 	if(!in_array($DisplayRecords, array('user', 'group'))){ $DisplayRecords = 'all'; }
 	if($perm[2]==1 || ($perm[2]>1 && $DisplayRecords=='user' && !$_REQUEST['NoFilter_x'])){ // view owner only
 		$x->QueryFrom.=', membership_userrecords';
-		$x->QueryWhere="where `codiceDestinatario`.`code`=membership_userrecords.pkValue and membership_userrecords.tableName='codiceDestinatario' and lcase(membership_userrecords.memberID)='".getLoggedMemberID()."'";
+		$x->QueryWhere="where `tipoCassa`.`code`=membership_userrecords.pkValue and membership_userrecords.tableName='tipoCassa' and lcase(membership_userrecords.memberID)='".getLoggedMemberID()."'";
 	}elseif($perm[2]==2 || ($perm[2]>2 && $DisplayRecords=='group' && !$_REQUEST['NoFilter_x'])){ // view group only
 		$x->QueryFrom.=', membership_userrecords';
-		$x->QueryWhere="where `codiceDestinatario`.`code`=membership_userrecords.pkValue and membership_userrecords.tableName='codiceDestinatario' and membership_userrecords.groupID='".getLoggedGroupID()."'";
+		$x->QueryWhere="where `tipoCassa`.`code`=membership_userrecords.pkValue and membership_userrecords.tableName='tipoCassa' and membership_userrecords.groupID='".getLoggedGroupID()."'";
 	}elseif($perm[2]==3){ // view all
 		// no further action
 	}elseif($perm[2]==0){ // view none
 		$x->QueryFields = array("Not enough permissions" => "NEP");
-		$x->QueryFrom = '`codiceDestinatario`';
+		$x->QueryFrom = '`tipoCassa`';
 		$x->QueryWhere = '';
 		$x->DefaultSortField = '';
 	}
-	// hook: codiceDestinatario_init
+	// hook: tipoCassa_init
 	$render=TRUE;
-	if(function_exists('codiceDestinatario_init')){
+	if(function_exists('tipoCassa_init')){
 		$args=array();
-		$render=codiceDestinatario_init($x, getMemberInfo(), $args);
+		$render=tipoCassa_init($x, getMemberInfo(), $args);
 	}
 
 	if($render) $x->Render();
 
-	// hook: codiceDestinatario_header
+	// hook: tipoCassa_header
 	$headerCode='';
-	if(function_exists('codiceDestinatario_header')){
+	if(function_exists('tipoCassa_header')){
 		$args=array();
-		$headerCode=codiceDestinatario_header($x->ContentType, getMemberInfo(), $args);
+		$headerCode=tipoCassa_header($x->ContentType, getMemberInfo(), $args);
 	}  
 	if(!$headerCode){
 		include_once("$currDir/header.php"); 
@@ -134,11 +134,11 @@
 	}
 
 	echo $x->HTML;
-	// hook: codiceDestinatario_footer
+	// hook: tipoCassa_footer
 	$footerCode='';
-	if(function_exists('codiceDestinatario_footer')){
+	if(function_exists('tipoCassa_footer')){
 		$args=array();
-		$footerCode=codiceDestinatario_footer($x->ContentType, getMemberInfo(), $args);
+		$footerCode=tipoCassa_footer($x->ContentType, getMemberInfo(), $args);
 	}  
 	if(!$footerCode){
 		include_once("$currDir/footer.php"); 

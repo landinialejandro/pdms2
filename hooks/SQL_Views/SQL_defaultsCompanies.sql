@@ -13,6 +13,6 @@ SELECT
     
 FROM
     companies
-LEFT OUTER JOIN attributes ON attributes.companies = companies.id
+LEFT OUTER JOIN attributes ON attributes.company = companies.id
 WHERE
     companies.kind = 'MC' AND attributes.attribute LIKE 'DEF_%' AND attributes.value = '1'

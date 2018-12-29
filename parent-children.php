@@ -110,7 +110,7 @@
 					'parent-primary-key' => 'id',
 					'child-primary-key' => 'id',
 					'child-primary-key-index' => 0,
-					'tab-label' => 'Ordini',
+					'tab-label' => 'Ordini Out',
 					'auto-close' => true,
 					'table-icon' => 'resources/table_icons/calendar_view_month.png',
 					'display-refresh' => true,
@@ -270,9 +270,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'CompanyCode', 3 => 'CompanyName', 4 => 'FiscalCode', 5 => 'Vat', 6 => 'Notes', 7 => 'Codice Destinatario'),
-					'display-field-names' => array(1 => 'kind', 2 => 'companyCode', 3 => 'companyName', 4 => 'fiscalCode', 5 => 'vat', 6 => 'notes', 7 => 'codiceDestinatario'),
-					'sortable-fields' => array(0 => '`companies`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => 8),
+					'display-fields' => array(1 => 'Kind', 2 => 'CompanyCode', 3 => 'CompanyName', 4 => 'FiscalCode', 5 => 'Vat', 6 => 'Notes', 7 => 'Codice Destinatario', 8 => 'Regime Fiscale', 9 => 'TipoCassa'),
+					'display-field-names' => array(1 => 'kind', 2 => 'companyCode', 3 => 'companyName', 4 => 'fiscalCode', 5 => 'vat', 6 => 'notes', 7 => 'codiceDestinatario', 8 => 'regimeFiscale', 9 => 'tipoCassa'),
+					'sortable-fields' => array(0 => '`companies`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => 8, 8 => 9, 9 => 10),
 					'records-per-page' => 10,
 					'default-sort-by' => 3,
 					'default-sort-direction' => 'asc',
@@ -281,11 +281,11 @@
 					'show-page-progress' => true,
 					'template' => 'children-companies',
 					'template-printable' => 'children-companies-printable',
-					'query' => "SELECT `companies`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`companies`.`companyCode`)>100, concat(left(`companies`.`companyCode`,100),' ...'), `companies`.`companyCode`) as 'companyCode', if(CHAR_LENGTH(`companies`.`companyName`)>100, concat(left(`companies`.`companyName`,100),' ...'), `companies`.`companyName`) as 'companyName', if(CHAR_LENGTH(`companies`.`fiscalCode`)>100, concat(left(`companies`.`fiscalCode`,100),' ...'), `companies`.`fiscalCode`) as 'fiscalCode', if(CHAR_LENGTH(`companies`.`vat`)>100, concat(left(`companies`.`vat`,100),' ...'), `companies`.`vat`) as 'vat', `companies`.`notes` as 'notes', IF(    CHAR_LENGTH(`codiceDestinatario1`.`code`) || CHAR_LENGTH(`codiceDestinatario1`.`list`), CONCAT_WS('',   `codiceDestinatario1`.`code`, ' - ', `codiceDestinatario1`.`list`), '') as 'codiceDestinatario' FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `codiceDestinatario` as codiceDestinatario1 ON `codiceDestinatario1`.`id`=`companies`.`codiceDestinatario` "
+					'query' => "SELECT `companies`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`companies`.`companyCode`)>100, concat(left(`companies`.`companyCode`,100),' ...'), `companies`.`companyCode`) as 'companyCode', if(CHAR_LENGTH(`companies`.`companyName`)>100, concat(left(`companies`.`companyName`,100),' ...'), `companies`.`companyName`) as 'companyName', if(CHAR_LENGTH(`companies`.`fiscalCode`)>100, concat(left(`companies`.`fiscalCode`,100),' ...'), `companies`.`fiscalCode`) as 'fiscalCode', if(CHAR_LENGTH(`companies`.`vat`)>100, concat(left(`companies`.`vat`,100),' ...'), `companies`.`vat`) as 'vat', `companies`.`notes` as 'notes', IF(    CHAR_LENGTH(`codiceDestinatario1`.`code`) || CHAR_LENGTH(`codiceDestinatario1`.`text`), CONCAT_WS('',   `codiceDestinatario1`.`code`, ' - ', `codiceDestinatario1`.`text`), '') as 'codiceDestinatario', IF(    CHAR_LENGTH(`regimeFiscale1`.`code`) || CHAR_LENGTH(`regimeFiscale1`.`text`), CONCAT_WS('',   `regimeFiscale1`.`code`, ' - ', `regimeFiscale1`.`text`), '') as 'regimeFiscale', IF(    CHAR_LENGTH(`tipoCassa1`.`code`) || CHAR_LENGTH(`tipoCassa1`.`text`), CONCAT_WS('',   `tipoCassa1`.`code`, ' - ', `tipoCassa1`.`text`), '') as 'tipoCassa' FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `codiceDestinatario` as codiceDestinatario1 ON `codiceDestinatario1`.`code`=`companies`.`codiceDestinatario` LEFT JOIN `regimeFiscale` as regimeFiscale1 ON `regimeFiscale1`.`code`=`companies`.`regimeFiscale` LEFT JOIN `tipoCassa` as tipoCassa1 ON `tipoCassa1`.`code`=`companies`.`tipoCassa` "
 				),
 				'codiceDestinatario' => array(   
 					'parent-table' => 'codiceDestinatario',
-					'parent-primary-key' => 'id',
+					'parent-primary-key' => 'code',
 					'child-primary-key' => 'id',
 					'child-primary-key-index' => 0,
 					'tab-label' => 'Companies',
@@ -294,9 +294,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'CompanyCode', 3 => 'CompanyName', 4 => 'FiscalCode', 5 => 'Vat', 6 => 'Notes', 7 => 'Codice Destinatario'),
-					'display-field-names' => array(1 => 'kind', 2 => 'companyCode', 3 => 'companyName', 4 => 'fiscalCode', 5 => 'vat', 6 => 'notes', 7 => 'codiceDestinatario'),
-					'sortable-fields' => array(0 => '`companies`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => 8),
+					'display-fields' => array(1 => 'Kind', 2 => 'CompanyCode', 3 => 'CompanyName', 4 => 'FiscalCode', 5 => 'Vat', 6 => 'Notes', 7 => 'Codice Destinatario', 8 => 'Regime Fiscale', 9 => 'TipoCassa'),
+					'display-field-names' => array(1 => 'kind', 2 => 'companyCode', 3 => 'companyName', 4 => 'fiscalCode', 5 => 'vat', 6 => 'notes', 7 => 'codiceDestinatario', 8 => 'regimeFiscale', 9 => 'tipoCassa'),
+					'sortable-fields' => array(0 => '`companies`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => 4, 4 => 5, 5 => 6, 6 => 7, 7 => 8, 8 => 9, 9 => 10),
 					'records-per-page' => 10,
 					'default-sort-by' => 3,
 					'default-sort-direction' => 'asc',
@@ -865,6 +865,10 @@
 				)
 			),
 			'codiceDestinatario' => array(   
+			),
+			'regimeFiscale' => array(   
+			),
+			'tipoCassa' => array(   
 			)
 		);
 

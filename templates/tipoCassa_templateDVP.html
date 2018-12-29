@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">List</label>
+			<label class="col-xs-3 control-label">Text</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%VALUE(text)%%></div>
 			</div>
@@ -30,21 +30,21 @@
 </div>
 <!-- child records -->
 <div class="panel-body">
-	<div id="codiceDestinatario-children"></div>
+	<div id="tipoCassa-children"></div>
 </div>
 
 <script>
 	$j(function(){
 		/* prevent loading child records in multiple DVP */
-		if($j('[id=codiceDestinatario-children]').length > 1) return;
+		if($j('[id=tipoCassa-children]').length > 1) return;
 
 		post(
 			'parent-children.php', {
-				ParentTable: 'codiceDestinatario',
+				ParentTable: 'tipoCassa',
 				SelectedID: '<%%VALUE(code)%%>',
 				Operation: 'show-children-printable'
 			},
-			'codiceDestinatario-children',
+			'tipoCassa-children',
 			'disable-element',
 			'loading-element',
 			apply_persisting_children

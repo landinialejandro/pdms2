@@ -47,7 +47,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="companyCode" class="control-label col-lg-3">CompanyCode</label>
 					<div class="col-lg-9">
-						<input maxlength="255" type="text" class="form-control" name="companyCode" id="companyCode" value="<%%VALUE(companyCode)%%>">
+						<input maxlength="255" type="text" class="form-control" name="companyCode" id="companyCode" value="<%%VALUE(companyCode)%%>"><div class="text-danger vspacer-md" id="companyCode-uniqueness-note" style="display: none;"><%%TRANSLATION(unique field error)%%></div>
 					</div>
 				</div>
 
@@ -90,6 +90,22 @@
 						<span class="help-block collapse" id="codiceDestinatario-description"><div class="alert alert-info">codice dell'ufficio dell&#8217;amministrazione dello stato destinatario della fattura, definito dall'amministrazione di appartenenza come riportato nella rubrica &#8220;Indice PA&#8221;.</div></span>
 
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(codiceDestinatario)%%><%%PLINK(codiceDestinatario)%%><%%ADDNEW(codiceDestinatario)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="regimeFiscale" class="control-label col-lg-3" data-parent_link="view_parent_modal">Regime Fiscale</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(regimeFiscale)%%><%%PLINK(regimeFiscale)%%><%%ADDNEW(regimeFiscale)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="tipoCassa" class="control-label col-lg-3" data-parent_link="view_parent_modal">TipoCassa</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(tipoCassa)%%><%%PLINK(tipoCassa)%%><%%ADDNEW(tipoCassa)%%></div>
 					</div>
 				</div>
 
@@ -259,6 +275,7 @@
 				}
 			});
 
+			enforce_uniqueness('companies', 'companyCode');
 
 			/* load admin tools for admin user */
 			if(!add_new_mode){

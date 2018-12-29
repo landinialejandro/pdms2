@@ -407,6 +407,42 @@ codiceDestinatario_delete1Tip=["",spacer+"This option allows each member of the 
 codiceDestinatario_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Codice Destinatario' table."];
 codiceDestinatario_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Codice Destinatario' table."];
 
+// regimeFiscale table
+regimeFiscale_addTip=["",spacer+"This option allows all members of the group to add records to the 'RegimeFiscale' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+regimeFiscale_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'RegimeFiscale' table."];
+regimeFiscale_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'RegimeFiscale' table."];
+regimeFiscale_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'RegimeFiscale' table."];
+regimeFiscale_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'RegimeFiscale' table."];
+
+regimeFiscale_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'RegimeFiscale' table."];
+regimeFiscale_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'RegimeFiscale' table."];
+regimeFiscale_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'RegimeFiscale' table."];
+regimeFiscale_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'RegimeFiscale' table, regardless of their owner."];
+
+regimeFiscale_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'RegimeFiscale' table."];
+regimeFiscale_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'RegimeFiscale' table."];
+regimeFiscale_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'RegimeFiscale' table."];
+regimeFiscale_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'RegimeFiscale' table."];
+
+// tipoCassa table
+tipoCassa_addTip=["",spacer+"This option allows all members of the group to add records to the 'TipoCassa' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+tipoCassa_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'TipoCassa' table."];
+tipoCassa_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'TipoCassa' table."];
+tipoCassa_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'TipoCassa' table."];
+tipoCassa_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'TipoCassa' table."];
+
+tipoCassa_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'TipoCassa' table."];
+tipoCassa_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'TipoCassa' table."];
+tipoCassa_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'TipoCassa' table."];
+tipoCassa_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'TipoCassa' table, regardless of their owner."];
+
+tipoCassa_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'TipoCassa' table."];
+tipoCassa_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'TipoCassa' table."];
+tipoCassa_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'TipoCassa' table."];
+tipoCassa_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'TipoCassa' table."];
+
 /*
 	Style syntax:
 	-------------

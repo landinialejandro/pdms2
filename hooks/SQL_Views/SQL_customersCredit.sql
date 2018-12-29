@@ -10,6 +10,6 @@ select
     attributes.`value` as 'val_limit',
     attributes.id as 'attr_id'
 from companies 
-    left outer join attributes on attributes.companies = companies.id
+    left outer join attributes on attributes.company = companies.id
     left outer join kinds as `attr_kind` on `attr_kind`.`code` = attributes.attribute
 where `attr_kind`.`code` = 'CUST_CREDIT' and attributes.id is not null

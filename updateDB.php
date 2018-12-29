@@ -23,8 +23,8 @@
 		setupIndexes('firstCashNote', array('kind','order','company','customer','idBank'));
 		setupTable('vatRegister', "create table if not exists `vatRegister` (   `id` INT unsigned not null auto_increment , primary key (`id`), `idCompany` INT unsigned , `companyName` INT unsigned , `tax` VARCHAR(40) default '4%' , `month` VARCHAR(40) , `year` VARCHAR(40) default '2018' , `amount` DECIMAL(10,2) ) CHARSET utf8", $silent);
 		setupIndexes('vatRegister', array('idCompany'));
-		setupTable('companies', "create table if not exists `companies` (   `id` INT unsigned not null auto_increment , primary key (`id`), `kind` VARCHAR(40) not null , `companyCode` VARCHAR(255) , `companyName` VARCHAR(255) , `fiscalCode` VARCHAR(255) , `vat` VARCHAR(255) not null , `notes` TEXT , `codiceDestinatario` INT unsigned ) CHARSET utf8", $silent);
-		setupIndexes('companies', array('kind','codiceDestinatario'));
+		setupTable('companies', "create table if not exists `companies` (   `id` INT unsigned not null auto_increment , primary key (`id`), `kind` VARCHAR(40) not null , `companyCode` VARCHAR(255) , unique `companyCode_unique` (`companyCode`), `companyName` VARCHAR(255) , `fiscalCode` VARCHAR(255) , `vat` VARCHAR(255) not null , `notes` TEXT , `codiceDestinatario` VARCHAR(40) , `regimeFiscale` VARCHAR(40) , `tipoCassa` VARCHAR(40) ) CHARSET utf8", $silent);
+		setupIndexes('companies', array('kind','codiceDestinatario','regimeFiscale','tipoCassa'));
 		setupTable('contacts', "create table if not exists `contacts` (   `id` INT unsigned not null auto_increment , primary key (`id`), `kind` VARCHAR(40) , `titleCourtesy` VARCHAR(40) , `name` VARCHAR(255) , `lastName` VARCHAR(255) , `notes` TEXT , `title` VARCHAR(255) , `birthDate` DATE , `CodEORI` VARCHAR(40) ) CHARSET utf8", $silent);
 		setupIndexes('contacts', array('kind'));
 		setupTable('creditDocument', "create table if not exists `creditDocument` (   `id` INT unsigned not null auto_increment , primary key (`id`), `incomingTypeDoc` VARCHAR(255) , `customerID` VARCHAR(255) , `nrDoc` VARCHAR(255) , `dateIncomingNote` DATE , `customerFirm` VARCHAR(255) , `customerAddress` VARCHAR(255) , `customerPostCode` VARCHAR(255) , `customerTown` VARCHAR(255) ) CHARSET utf8", $silent);
@@ -35,7 +35,7 @@
 		setupTable('GPSTrackingSystem', "create table if not exists `GPSTrackingSystem` (   `id` INT unsigned not null auto_increment , primary key (`id`), `carTracked` VARCHAR(40) ) CHARSET utf8", $silent);
 		setupTable('kinds', "create table if not exists `kinds` (   `entity` BLOB not null , `code` VARCHAR(40) not null , primary key (`code`), `name` VARCHAR(255) not null , `value` TEXT , `descriptions` TEXT ) CHARSET utf8", $silent);
 		setupTable('Logs', "create table if not exists `Logs` (   `id` INT unsigned not null auto_increment , primary key (`id`), `ip` VARCHAR(16) , `ts` BIGINT , `details` TEXT ) CHARSET utf8", $silent);
-		setupTable('attributes', "create table if not exists `attributes` (   `id` INT unsigned not null auto_increment , primary key (`id`), `attribute` VARCHAR(40) , `value` TEXT , `contact` INT unsigned , `company` INT unsigned , `product` INT ) CHARSET utf8", $silent, array( "ALTER TABLE `attributes` CHANGE `companies` `company` INT unsigned ","ALTER TABLE `attributes` CHANGE `products` `product` INT "));
+		setupTable('attributes', "create table if not exists `attributes` (   `id` INT unsigned not null auto_increment , primary key (`id`), `attribute` VARCHAR(40) , `value` TEXT , `contact` INT unsigned , `company` INT unsigned , `product` INT ) CHARSET utf8", $silent);
 		setupIndexes('attributes', array('attribute','contact','company','product'));
 		setupTable('addresses', "create table if not exists `addresses` (   `id` INT unsigned not null auto_increment , primary key (`id`), `kind` VARCHAR(40) , `address` VARCHAR(255) , `houseNumber` VARCHAR(255) , `country` INT unsigned , `town` INT unsigned , `postalCode` INT unsigned , `district` INT unsigned , `contact` INT unsigned , `company` INT unsigned , `map` VARCHAR(40) , `default` INT default '0' , `ship` INT default '0' ) CHARSET utf8", $silent);
 		setupIndexes('addresses', array('kind','country','town','district','contact','company'));
@@ -47,7 +47,9 @@
 		setupIndexes('contacts_companies', array('contact','company'));
 		setupTable('attachments', "create table if not exists `attachments` (   `id` INT unsigned not null auto_increment , primary key (`id`), `name` VARCHAR(255) , `file` VARCHAR(255) , `contact` INT unsigned , `company` INT unsigned , `thumbUse` INT default '0' ) CHARSET utf8", $silent);
 		setupIndexes('attachments', array('contact','company'));
-		setupTable('codiceDestinatario', "create table if not exists `codiceDestinatario` (   `id` INT unsigned not null auto_increment , primary key (`id`), `code` VARCHAR(40) , `list` VARCHAR(40) ) CHARSET utf8", $silent);
+		setupTable('codiceDestinatario', "create table if not exists `codiceDestinatario` (   `code` VARCHAR(40) not null , primary key (`code`), `text` TEXT ) CHARSET utf8", $silent);
+		setupTable('regimeFiscale', "create table if not exists `regimeFiscale` (   `code` VARCHAR(40) not null , primary key (`code`), `text` TEXT ) CHARSET utf8", $silent);
+		setupTable('tipoCassa', "create table if not exists `tipoCassa` (   `code` VARCHAR(40) not null , primary key (`code`), `text` TEXT ) CHARSET utf8", $silent);
 
 
 		// save MD5

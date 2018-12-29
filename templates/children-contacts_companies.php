@@ -15,7 +15,7 @@
 			SortDirection: '<?php echo $parameters['SortDirection']; ?>',
 			AutoClose: <?php echo ($config['auto-close'] ? 'true' : 'false'); ?>
 		};
-                console.log(param);
+                //console.log(param);
 		var panelID = "panel_<?php echo "{$parameters['ChildTable']}-{$parameters['ChildLookupField']}"; ?>";
 		var mbWidth = window.innerWidth * 0.9;
 		var mbHeight = window.innerHeight * 0.8;

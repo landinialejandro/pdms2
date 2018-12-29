@@ -14,7 +14,7 @@ if(isset($_REQUEST['cmd']) && isset($_REQUEST['id'])){
         $data = dataBar($id);
     }
     if ($_REQUEST['cmd']==='commision'){
-        $where_id =" AND attributes.attribute = 'COMMISION' AND attributes.companies = {$id}";//change this to set select where
+        $where_id =" AND attributes.attribute = 'COMMISION' AND attributes.company = {$id}";//change this to set select where
         $data = getDataTable('attributes', $where_id);
     }
     echo json_encode($data, true);
