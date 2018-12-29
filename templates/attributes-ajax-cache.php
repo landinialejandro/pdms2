@@ -10,8 +10,8 @@
 		var data = {
 			attribute: <?php echo json_encode(array('id' => $rdata['attribute'], 'value' => $rdata['attribute'], 'text' => $jdata['attribute'])); ?>,
 			contact: <?php echo json_encode(array('id' => $rdata['contact'], 'value' => $rdata['contact'], 'text' => $jdata['contact'])); ?>,
-			companies: <?php echo json_encode(array('id' => $rdata['companies'], 'value' => $rdata['companies'], 'text' => $jdata['companies'])); ?>,
-			products: <?php echo json_encode(array('id' => $rdata['products'], 'value' => $rdata['products'], 'text' => $jdata['products'])); ?>
+			company: <?php echo json_encode(array('id' => $rdata['company'], 'value' => $rdata['company'], 'text' => $jdata['company'])); ?>,
+			product: <?php echo json_encode(array('id' => $rdata['product'], 'value' => $rdata['product'], 'text' => $jdata['product'])); ?>
 		};
 
 		/* initialize or continue using AppGini.cache for the current table */
@@ -35,19 +35,19 @@
 			return false;
 		});
 
-		/* saved value for companies */
+		/* saved value for company */
 		cache.addCheck(function(u, d){
 			if(u != 'ajax_combo.php') return false;
-			if(d.t == tn && d.f == 'companies' && d.id == data.companies.id)
-				return { results: [ data.companies ], more: false, elapsed: 0.01 };
+			if(d.t == tn && d.f == 'company' && d.id == data.company.id)
+				return { results: [ data.company ], more: false, elapsed: 0.01 };
 			return false;
 		});
 
-		/* saved value for products */
+		/* saved value for product */
 		cache.addCheck(function(u, d){
 			if(u != 'ajax_combo.php') return false;
-			if(d.t == tn && d.f == 'products' && d.id == data.products.id)
-				return { results: [ data.products ], more: false, elapsed: 0.01 };
+			if(d.t == tn && d.f == 'product' && d.id == data.product.id)
+				return { results: [ data.product ], more: false, elapsed: 0.01 };
 			return false;
 		});
 

@@ -1,24 +1,5 @@
 <?php
-$langDir = dirname(__FILE__);
-$default = "english";
 
-if(is_file("{$langDir}/lang/{$default}.php")){
-    include("{$langDir}/lang/{$default}.php");
-}else{
-    //not seting language file
-}
-if(is_file("{$langDir}/lang/adding.php")){
-    include("{$langDir}/lang/adding.php");//deafault language adding
-    if(is_file("{$langDir}/lang/adding_{$default}.php")){
-        include("{$langDir}/lang/adding_{$default}.php");//selectecd language adding
-    }
-    
-}else{
-    //not seting defauilt adding language file
-}
-
-
-function defaultLang(){
 	// IMPORTANT:
 	// ==========
 	// When translating, only translate the strings that are
@@ -332,4 +313,3 @@ function defaultLang(){
 	/* Added in AppGini 5.72 */
 	$Translation['hide all'] = 'Hide all';
 	$Translation['toggle'] = 'Toggle';
-}

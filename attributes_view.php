@@ -26,8 +26,8 @@
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Attribute */" => "attribute",
 		"`attributes`.`value`" => "value",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
-		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Companies */" => "companies",
-		"IF(    CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`id`), '') /* Products */" => "products"
+		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
+		"IF(    CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`id`), '') /* Product */" => "product"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -45,8 +45,8 @@
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Attribute */" => "attribute",
 		"`attributes`.`value`" => "value",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
-		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Companies */" => "companies",
-		"IF(    CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`id`), '') /* Products */" => "products"
+		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
+		"IF(    CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`id`), '') /* Product */" => "product"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -54,8 +54,8 @@
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Attribute */" => "Attribute",
 		"`attributes`.`value`" => "Value",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "Contact",
-		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Companies */" => "Companies",
-		"IF(    CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`id`), '') /* Products */" => "Products"
+		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "Company",
+		"IF(    CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`id`), '') /* Product */" => "Product"
 	);
 
 	// Fields that can be quick searched
@@ -64,14 +64,14 @@
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Attribute */" => "attribute",
 		"`attributes`.`value`" => "value",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
-		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Companies */" => "companies",
-		"IF(    CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`id`), '') /* Products */" => "products"
+		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
+		"IF(    CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`id`), '') /* Product */" => "product"
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'attribute' => 'Attribute', 'contact' => 'Contact', 'companies' => 'Companies', 'products' => 'Products');
+	$x->filterers = array(  'attribute' => 'Attribute', 'contact' => 'Contact', 'company' => 'Company', 'product' => 'Product');
 
-	$x->QueryFrom = "`attributes` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`attributes`.`attribute` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attributes`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attributes`.`companies` LEFT JOIN `products` as products1 ON `products1`.`id`=`attributes`.`products` ";
+	$x->QueryFrom = "`attributes` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`attributes`.`attribute` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attributes`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attributes`.`company` LEFT JOIN `products` as products1 ON `products1`.`id`=`attributes`.`product` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 

@@ -129,7 +129,7 @@ function products_delete($selected_id, $AllowDeleteOfParents=false, $skipChecks=
 	// child table: attributes
 	$res = sql("select `id` from `products` where `id`='$selected_id'", $eo);
 	$id = db_fetch_row($res);
-	$rires = sql("select count(1) from `attributes` where `products`='".addslashes($id[0])."'", $eo);
+	$rires = sql("select count(1) from `attributes` where `product`='".addslashes($id[0])."'", $eo);
 	$rirow = db_fetch_row($rires);
 	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
 		$RetMsg = $Translation["couldn't delete"];

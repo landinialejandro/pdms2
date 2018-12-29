@@ -460,7 +460,7 @@
 				'list_type' => 0,
 				'not_null' => false
 			),
-			'companies' => array(
+			'company' => array(
 				'parent_table' => 'companies',
 				'parent_pk_field' => 'id',
 				'parent_caption' => '`companies`.`id`',
@@ -471,7 +471,7 @@
 				'list_type' => 0,
 				'not_null' => false
 			),
-			'products' => array(
+			'product' => array(
 				'parent_table' => 'products',
 				'parent_pk_field' => 'id',
 				'parent_caption' => '`products`.`id`',

@@ -211,8 +211,8 @@
 			'attribute' => array('appgini' => 'VARCHAR(40) '),
 			'value' => array('appgini' => 'TEXT '),
 			'contact' => array('appgini' => 'INT unsigned '),
-			'companies' => array('appgini' => 'INT unsigned '),
-			'products' => array('appgini' => 'INT ')
+			'company' => array('appgini' => 'INT unsigned '),
+			'product' => array('appgini' => 'INT ')
 		),
 		'addresses' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),

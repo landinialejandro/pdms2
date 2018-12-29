@@ -19,10 +19,10 @@ function attributes_insert(){
 	$data['value'] = br2nl(makeSafe($_REQUEST['value']));
 	$data['contact'] = makeSafe($_REQUEST['contact']);
 		if($data['contact'] == empty_lookup_value){ $data['contact'] = ''; }
-	$data['companies'] = makeSafe($_REQUEST['companies']);
-		if($data['companies'] == empty_lookup_value){ $data['companies'] = ''; }
-	$data['products'] = makeSafe($_REQUEST['products']);
-		if($data['products'] == empty_lookup_value){ $data['products'] = ''; }
+	$data['company'] = makeSafe($_REQUEST['company']);
+		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
+	$data['product'] = makeSafe($_REQUEST['product']);
+		if($data['product'] == empty_lookup_value){ $data['product'] = ''; }
 
 	// hook: attributes_before_insert
 	if(function_exists('attributes_before_insert')){
@@ -45,14 +45,14 @@ function attributes_insert(){
 		sql("update `attributes` set `contact`='" . makeSafe($_REQUEST['filterer_contact']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
 	}
 
-	// automatic companies
-	if($_REQUEST['filterer_companies']){
-		sql("update `attributes` set `companies`='" . makeSafe($_REQUEST['filterer_companies']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
+	// automatic company
+	if($_REQUEST['filterer_company']){
+		sql("update `attributes` set `company`='" . makeSafe($_REQUEST['filterer_company']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
 	}
 
-	// automatic products
-	if($_REQUEST['filterer_products']){
-		sql("update `attributes` set `products`='" . makeSafe($_REQUEST['filterer_products']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
+	// automatic product
+	if($_REQUEST['filterer_product']){
+		sql("update `attributes` set `product`='" . makeSafe($_REQUEST['filterer_product']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
 	}
 
 	// hook: attributes_after_insert
@@ -124,10 +124,10 @@ function attributes_update($selected_id){
 	$data['value'] = br2nl(makeSafe($_REQUEST['value']));
 	$data['contact'] = makeSafe($_REQUEST['contact']);
 		if($data['contact'] == empty_lookup_value){ $data['contact'] = ''; }
-	$data['companies'] = makeSafe($_REQUEST['companies']);
-		if($data['companies'] == empty_lookup_value){ $data['companies'] = ''; }
-	$data['products'] = makeSafe($_REQUEST['products']);
-		if($data['products'] == empty_lookup_value){ $data['products'] = ''; }
+	$data['company'] = makeSafe($_REQUEST['company']);
+		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
+	$data['product'] = makeSafe($_REQUEST['product']);
+		if($data['product'] == empty_lookup_value){ $data['product'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: attributes_before_update
@@ -181,8 +181,8 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 
 	$filterer_attribute = thisOr(undo_magic_quotes($_REQUEST['filterer_attribute']), '');
 	$filterer_contact = thisOr(undo_magic_quotes($_REQUEST['filterer_contact']), '');
-	$filterer_companies = thisOr(undo_magic_quotes($_REQUEST['filterer_companies']), '');
-	$filterer_products = thisOr(undo_magic_quotes($_REQUEST['filterer_products']), '');
+	$filterer_company = thisOr(undo_magic_quotes($_REQUEST['filterer_company']), '');
+	$filterer_product = thisOr(undo_magic_quotes($_REQUEST['filterer_product']), '');
 
 	// populate filterers, starting from children to grand-parents
 
@@ -192,10 +192,10 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 	$combo_attribute = new DataCombo;
 	// combobox: contact
 	$combo_contact = new DataCombo;
-	// combobox: companies
-	$combo_companies = new DataCombo;
-	// combobox: products
-	$combo_products = new DataCombo;
+	// combobox: company
+	$combo_company = new DataCombo;
+	// combobox: product
+	$combo_product = new DataCombo;
 
 	if($selected_id){
 		// mm: check member permissions
@@ -228,22 +228,22 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$row = $hc->xss_clean($row); /* sanitize data */
 		$combo_attribute->SelectedData = $row['attribute'];
 		$combo_contact->SelectedData = $row['contact'];
-		$combo_companies->SelectedData = $row['companies'];
-		$combo_products->SelectedData = $row['products'];
+		$combo_company->SelectedData = $row['company'];
+		$combo_product->SelectedData = $row['product'];
 	}else{
 		$combo_attribute->SelectedData = $filterer_attribute;
 		$combo_contact->SelectedData = $filterer_contact;
-		$combo_companies->SelectedData = $filterer_companies;
-		$combo_products->SelectedData = $filterer_products;
+		$combo_company->SelectedData = $filterer_company;
+		$combo_product->SelectedData = $filterer_product;
 	}
 	$combo_attribute->HTML = '<span id="attribute-container' . $rnd1 . '"></span><input type="hidden" name="attribute" id="attribute' . $rnd1 . '" value="' . html_attr($combo_attribute->SelectedData) . '">';
 	$combo_attribute->MatchText = '<span id="attribute-container-readonly' . $rnd1 . '"></span><input type="hidden" name="attribute" id="attribute' . $rnd1 . '" value="' . html_attr($combo_attribute->SelectedData) . '">';
 	$combo_contact->HTML = '<span id="contact-container' . $rnd1 . '"></span><input type="hidden" name="contact" id="contact' . $rnd1 . '" value="' . html_attr($combo_contact->SelectedData) . '">';
 	$combo_contact->MatchText = '<span id="contact-container-readonly' . $rnd1 . '"></span><input type="hidden" name="contact" id="contact' . $rnd1 . '" value="' . html_attr($combo_contact->SelectedData) . '">';
-	$combo_companies->HTML = '<span id="companies-container' . $rnd1 . '"></span><input type="hidden" name="companies" id="companies' . $rnd1 . '" value="' . html_attr($combo_companies->SelectedData) . '">';
-	$combo_companies->MatchText = '<span id="companies-container-readonly' . $rnd1 . '"></span><input type="hidden" name="companies" id="companies' . $rnd1 . '" value="' . html_attr($combo_companies->SelectedData) . '">';
-	$combo_products->HTML = '<span id="products-container' . $rnd1 . '"></span><input type="hidden" name="products" id="products' . $rnd1 . '" value="' . html_attr($combo_products->SelectedData) . '">';
-	$combo_products->MatchText = '<span id="products-container-readonly' . $rnd1 . '"></span><input type="hidden" name="products" id="products' . $rnd1 . '" value="' . html_attr($combo_products->SelectedData) . '">';
+	$combo_company->HTML = '<span id="company-container' . $rnd1 . '"></span><input type="hidden" name="company" id="company' . $rnd1 . '" value="' . html_attr($combo_company->SelectedData) . '">';
+	$combo_company->MatchText = '<span id="company-container-readonly' . $rnd1 . '"></span><input type="hidden" name="company" id="company' . $rnd1 . '" value="' . html_attr($combo_company->SelectedData) . '">';
+	$combo_product->HTML = '<span id="product-container' . $rnd1 . '"></span><input type="hidden" name="product" id="product' . $rnd1 . '" value="' . html_attr($combo_product->SelectedData) . '">';
+	$combo_product->MatchText = '<span id="product-container-readonly' . $rnd1 . '"></span><input type="hidden" name="product" id="product' . $rnd1 . '" value="' . html_attr($combo_product->SelectedData) . '">';
 
 	ob_start();
 	?>
@@ -252,15 +252,15 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		// initial lookup values
 		AppGini.current_attribute__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['attribute'] : $filterer_attribute); ?>"};
 		AppGini.current_contact__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['contact'] : $filterer_contact); ?>"};
-		AppGini.current_companies__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['companies'] : $filterer_companies); ?>"};
-		AppGini.current_products__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['products'] : $filterer_products); ?>"};
+		AppGini.current_company__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['company'] : $filterer_company); ?>"};
+		AppGini.current_product__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['product'] : $filterer_product); ?>"};
 
 		jQuery(function() {
 			setTimeout(function(){
 				if(typeof(attribute_reload__RAND__) == 'function') attribute_reload__RAND__();
 				if(typeof(contact_reload__RAND__) == 'function') contact_reload__RAND__();
-				if(typeof(companies_reload__RAND__) == 'function') companies_reload__RAND__();
-				if(typeof(products_reload__RAND__) == 'function') products_reload__RAND__();
+				if(typeof(company_reload__RAND__) == 'function') company_reload__RAND__();
+				if(typeof(product_reload__RAND__) == 'function') product_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
 		});
 		function attribute_reload__RAND__(){
@@ -417,27 +417,27 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		<?php } ?>
 
 		}
-		function companies_reload__RAND__(){
+		function company_reload__RAND__(){
 		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
 
-			$j("#companies-container__RAND__").select2({
+			$j("#company-container__RAND__").select2({
 				/* initial default value */
 				initSelection: function(e, c){
 					$j.ajax({
 						url: 'ajax_combo.php',
 						dataType: 'json',
-						data: { id: AppGini.current_companies__RAND__.value, t: 'attributes', f: 'companies' },
+						data: { id: AppGini.current_company__RAND__.value, t: 'attributes', f: 'company' },
 						success: function(resp){
 							c({
 								id: resp.results[0].id,
 								text: resp.results[0].text
 							});
-							$j('[name="companies"]').val(resp.results[0].id);
-							$j('[id=companies-container-readonly__RAND__]').html('<span id="companies-match-text">' + resp.results[0].text + '</span>');
+							$j('[name="company"]').val(resp.results[0].id);
+							$j('[id=company-container-readonly__RAND__]').html('<span id="company-match-text">' + resp.results[0].text + '</span>');
 							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
 
 
-							if(typeof(companies_update_autofills__RAND__) == 'function') companies_update_autofills__RAND__();
+							if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
 						}
 					});
 				},
@@ -449,31 +449,31 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 					url: 'ajax_combo.php',
 					dataType: 'json',
 					cache: true,
-					data: function(term, page){ /* */ return { s: term, p: page, t: 'attributes', f: 'companies' }; },
+					data: function(term, page){ /* */ return { s: term, p: page, t: 'attributes', f: 'company' }; },
 					results: function(resp, page){ /* */ return resp; }
 				},
 				escapeMarkup: function(str){ /* */ return str; }
 			}).on('change', function(e){
-				AppGini.current_companies__RAND__.value = e.added.id;
-				AppGini.current_companies__RAND__.text = e.added.text;
-				$j('[name="companies"]').val(e.added.id);
+				AppGini.current_company__RAND__.value = e.added.id;
+				AppGini.current_company__RAND__.text = e.added.text;
+				$j('[name="company"]').val(e.added.id);
 				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
 
 
-				if(typeof(companies_update_autofills__RAND__) == 'function') companies_update_autofills__RAND__();
+				if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
 			});
 
-			if(!$j("#companies-container__RAND__").length){
+			if(!$j("#company-container__RAND__").length){
 				$j.ajax({
 					url: 'ajax_combo.php',
 					dataType: 'json',
-					data: { id: AppGini.current_companies__RAND__.value, t: 'attributes', f: 'companies' },
+					data: { id: AppGini.current_company__RAND__.value, t: 'attributes', f: 'company' },
 					success: function(resp){
-						$j('[name="companies"]').val(resp.results[0].id);
-						$j('[id=companies-container-readonly__RAND__]').html('<span id="companies-match-text">' + resp.results[0].text + '</span>');
+						$j('[name="company"]').val(resp.results[0].id);
+						$j('[id=company-container-readonly__RAND__]').html('<span id="company-match-text">' + resp.results[0].text + '</span>');
 						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
 
-						if(typeof(companies_update_autofills__RAND__) == 'function') companies_update_autofills__RAND__();
+						if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
 					}
 				});
 			}
@@ -483,38 +483,38 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 			$j.ajax({
 				url: 'ajax_combo.php',
 				dataType: 'json',
-				data: { id: AppGini.current_companies__RAND__.value, t: 'attributes', f: 'companies' },
+				data: { id: AppGini.current_company__RAND__.value, t: 'attributes', f: 'company' },
 				success: function(resp){
-					$j('[id=companies-container__RAND__], [id=companies-container-readonly__RAND__]').html('<span id="companies-match-text">' + resp.results[0].text + '</span>');
+					$j('[id=company-container__RAND__], [id=company-container-readonly__RAND__]').html('<span id="company-match-text">' + resp.results[0].text + '</span>');
 					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
 
-					if(typeof(companies_update_autofills__RAND__) == 'function') companies_update_autofills__RAND__();
+					if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
 				}
 			});
 		<?php } ?>
 
 		}
-		function products_reload__RAND__(){
+		function product_reload__RAND__(){
 		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
 
-			$j("#products-container__RAND__").select2({
+			$j("#product-container__RAND__").select2({
 				/* initial default value */
 				initSelection: function(e, c){
 					$j.ajax({
 						url: 'ajax_combo.php',
 						dataType: 'json',
-						data: { id: AppGini.current_products__RAND__.value, t: 'attributes', f: 'products' },
+						data: { id: AppGini.current_product__RAND__.value, t: 'attributes', f: 'product' },
 						success: function(resp){
 							c({
 								id: resp.results[0].id,
 								text: resp.results[0].text
 							});
-							$j('[name="products"]').val(resp.results[0].id);
-							$j('[id=products-container-readonly__RAND__]').html('<span id="products-match-text">' + resp.results[0].text + '</span>');
+							$j('[name="product"]').val(resp.results[0].id);
+							$j('[id=product-container-readonly__RAND__]').html('<span id="product-match-text">' + resp.results[0].text + '</span>');
 							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=products_view_parent]').hide(); }else{ $j('.btn[id=products_view_parent]').show(); }
 
 
-							if(typeof(products_update_autofills__RAND__) == 'function') products_update_autofills__RAND__();
+							if(typeof(product_update_autofills__RAND__) == 'function') product_update_autofills__RAND__();
 						}
 					});
 				},
@@ -526,31 +526,31 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 					url: 'ajax_combo.php',
 					dataType: 'json',
 					cache: true,
-					data: function(term, page){ /* */ return { s: term, p: page, t: 'attributes', f: 'products' }; },
+					data: function(term, page){ /* */ return { s: term, p: page, t: 'attributes', f: 'product' }; },
 					results: function(resp, page){ /* */ return resp; }
 				},
 				escapeMarkup: function(str){ /* */ return str; }
 			}).on('change', function(e){
-				AppGini.current_products__RAND__.value = e.added.id;
-				AppGini.current_products__RAND__.text = e.added.text;
-				$j('[name="products"]').val(e.added.id);
+				AppGini.current_product__RAND__.value = e.added.id;
+				AppGini.current_product__RAND__.text = e.added.text;
+				$j('[name="product"]').val(e.added.id);
 				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=products_view_parent]').hide(); }else{ $j('.btn[id=products_view_parent]').show(); }
 
 
-				if(typeof(products_update_autofills__RAND__) == 'function') products_update_autofills__RAND__();
+				if(typeof(product_update_autofills__RAND__) == 'function') product_update_autofills__RAND__();
 			});
 
-			if(!$j("#products-container__RAND__").length){
+			if(!$j("#product-container__RAND__").length){
 				$j.ajax({
 					url: 'ajax_combo.php',
 					dataType: 'json',
-					data: { id: AppGini.current_products__RAND__.value, t: 'attributes', f: 'products' },
+					data: { id: AppGini.current_product__RAND__.value, t: 'attributes', f: 'product' },
 					success: function(resp){
-						$j('[name="products"]').val(resp.results[0].id);
-						$j('[id=products-container-readonly__RAND__]').html('<span id="products-match-text">' + resp.results[0].text + '</span>');
+						$j('[name="product"]').val(resp.results[0].id);
+						$j('[id=product-container-readonly__RAND__]').html('<span id="product-match-text">' + resp.results[0].text + '</span>');
 						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=products_view_parent]').hide(); }else{ $j('.btn[id=products_view_parent]').show(); }
 
-						if(typeof(products_update_autofills__RAND__) == 'function') products_update_autofills__RAND__();
+						if(typeof(product_update_autofills__RAND__) == 'function') product_update_autofills__RAND__();
 					}
 				});
 			}
@@ -560,12 +560,12 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 			$j.ajax({
 				url: 'ajax_combo.php',
 				dataType: 'json',
-				data: { id: AppGini.current_products__RAND__.value, t: 'attributes', f: 'products' },
+				data: { id: AppGini.current_product__RAND__.value, t: 'attributes', f: 'product' },
 				success: function(resp){
-					$j('[id=products-container__RAND__], [id=products-container-readonly__RAND__]').html('<span id="products-match-text">' + resp.results[0].text + '</span>');
+					$j('[id=product-container__RAND__], [id=product-container-readonly__RAND__]').html('<span id="product-match-text">' + resp.results[0].text + '</span>');
 					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=products_view_parent]').hide(); }else{ $j('.btn[id=products_view_parent]').show(); }
 
-					if(typeof(products_update_autofills__RAND__) == 'function') products_update_autofills__RAND__();
+					if(typeof(product_update_autofills__RAND__) == 'function') product_update_autofills__RAND__();
 				}
 			});
 		<?php } ?>
@@ -647,15 +647,15 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 	$templateCode = str_replace('<%%COMBO(contact)%%>', $combo_contact->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(contact)%%>', $combo_contact->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(contact)%%>', urlencode($combo_contact->MatchText), $templateCode);
-	$templateCode = str_replace('<%%COMBO(companies)%%>', $combo_companies->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(companies)%%>', $combo_companies->MatchText, $templateCode);
-	$templateCode = str_replace('<%%URLCOMBOTEXT(companies)%%>', urlencode($combo_companies->MatchText), $templateCode);
-	$templateCode = str_replace('<%%COMBO(products)%%>', $combo_products->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(products)%%>', $combo_products->MatchText, $templateCode);
-	$templateCode = str_replace('<%%URLCOMBOTEXT(products)%%>', urlencode($combo_products->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(company)%%>', $combo_company->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(company)%%>', $combo_company->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(company)%%>', urlencode($combo_company->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(product)%%>', $combo_product->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(product)%%>', $combo_product->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(product)%%>', urlencode($combo_product->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'attribute' => array('kinds', 'Attribute'), 'contact' => array('contacts', 'Contact'), 'companies' => array('companies', 'Companies'), 'products' => array('products', 'Products'));
+	$lookup_fields = array(  'attribute' => array('kinds', 'Attribute'), 'contact' => array('contacts', 'Contact'), 'company' => array('companies', 'Company'), 'product' => array('products', 'Product'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -675,8 +675,8 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 	$templateCode = str_replace('<%%UPLOADFILE(attribute)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(value)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(contact)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(companies)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(products)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(company)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(product)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -695,12 +695,12 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(contact)%%>', safe_html($urow['contact']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(contact)%%>', html_attr($row['contact']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(contact)%%>', urlencode($urow['contact']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(companies)%%>', safe_html($urow['companies']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(companies)%%>', html_attr($row['companies']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(companies)%%>', urlencode($urow['companies']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(products)%%>', safe_html($urow['products']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(products)%%>', html_attr($row['products']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(products)%%>', urlencode($urow['products']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', safe_html($urow['company']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', html_attr($row['company']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode($urow['company']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(product)%%>', safe_html($urow['product']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(product)%%>', html_attr($row['product']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(product)%%>', urlencode($urow['product']), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -710,10 +710,10 @@ function attributes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$templateCode = str_replace('<%%URLVALUE(value)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(contact)%%>', ( $_REQUEST['FilterField'][1]=='4' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_contact->SelectedData : ''), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(contact)%%>', urlencode( $_REQUEST['FilterField'][1]=='4' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_contact->SelectedData : ''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(companies)%%>', ( $_REQUEST['FilterField'][1]=='5' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_companies->SelectedData : ''), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(companies)%%>', urlencode( $_REQUEST['FilterField'][1]=='5' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_companies->SelectedData : ''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(products)%%>', ( $_REQUEST['FilterField'][1]=='6' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_products->SelectedData : ''), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(products)%%>', urlencode( $_REQUEST['FilterField'][1]=='6' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_products->SelectedData : ''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(company)%%>', ( $_REQUEST['FilterField'][1]=='5' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_company->SelectedData : ''), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode( $_REQUEST['FilterField'][1]=='5' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_company->SelectedData : ''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(product)%%>', ( $_REQUEST['FilterField'][1]=='6' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_product->SelectedData : ''), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(product)%%>', urlencode( $_REQUEST['FilterField'][1]=='6' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_product->SelectedData : ''), $templateCode);
 	}
 
 	// process translations
