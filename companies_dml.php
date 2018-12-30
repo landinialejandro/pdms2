@@ -32,6 +32,8 @@ function companies_insert(){
 		if($data['regimeFiscale'] == empty_lookup_value){ $data['regimeFiscale'] = ''; }
 	$data['tipoCassa'] = makeSafe($_REQUEST['tipoCassa']);
 		if($data['tipoCassa'] == empty_lookup_value){ $data['tipoCassa'] = ''; }
+	$data['modalitaPagamento'] = makeSafe($_REQUEST['modalitaPagamento']);
+		if($data['modalitaPagamento'] == empty_lookup_value){ $data['modalitaPagamento'] = ''; }
 	if($data['kind']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Kind': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
@@ -50,7 +52,7 @@ function companies_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL'), $o);
+	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"companies_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -455,6 +457,8 @@ function companies_update($selected_id){
 		if($data['regimeFiscale'] == empty_lookup_value){ $data['regimeFiscale'] = ''; }
 	$data['tipoCassa'] = makeSafe($_REQUEST['tipoCassa']);
 		if($data['tipoCassa'] == empty_lookup_value){ $data['tipoCassa'] = ''; }
+	$data['modalitaPagamento'] = makeSafe($_REQUEST['modalitaPagamento']);
+		if($data['modalitaPagamento'] == empty_lookup_value){ $data['modalitaPagamento'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: companies_before_update
@@ -464,7 +468,7 @@ function companies_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="companies_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -510,6 +514,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$filterer_codiceDestinatario = thisOr(undo_magic_quotes($_REQUEST['filterer_codiceDestinatario']), '');
 	$filterer_regimeFiscale = thisOr(undo_magic_quotes($_REQUEST['filterer_regimeFiscale']), '');
 	$filterer_tipoCassa = thisOr(undo_magic_quotes($_REQUEST['filterer_tipoCassa']), '');
+	$filterer_modalitaPagamento = thisOr(undo_magic_quotes($_REQUEST['filterer_modalitaPagamento']), '');
 
 	// populate filterers, starting from children to grand-parents
 
@@ -523,6 +528,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$combo_regimeFiscale = new DataCombo;
 	// combobox: tipoCassa
 	$combo_tipoCassa = new DataCombo;
+	// combobox: modalitaPagamento
+	$combo_modalitaPagamento = new DataCombo;
 
 	if($selected_id){
 		// mm: check member permissions
@@ -557,11 +564,13 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$combo_codiceDestinatario->SelectedData = $row['codiceDestinatario'];
 		$combo_regimeFiscale->SelectedData = $row['regimeFiscale'];
 		$combo_tipoCassa->SelectedData = $row['tipoCassa'];
+		$combo_modalitaPagamento->SelectedData = $row['modalitaPagamento'];
 	}else{
 		$combo_kind->SelectedData = $filterer_kind;
 		$combo_codiceDestinatario->SelectedData = $filterer_codiceDestinatario;
 		$combo_regimeFiscale->SelectedData = $filterer_regimeFiscale;
 		$combo_tipoCassa->SelectedData = $filterer_tipoCassa;
+		$combo_modalitaPagamento->SelectedData = $filterer_modalitaPagamento;
 	}
 	$combo_kind->HTML = '<span id="kind-container' . $rnd1 . '"></span><input type="hidden" name="kind" id="kind' . $rnd1 . '" value="' . html_attr($combo_kind->SelectedData) . '">';
 	$combo_kind->MatchText = '<span id="kind-container-readonly' . $rnd1 . '"></span><input type="hidden" name="kind" id="kind' . $rnd1 . '" value="' . html_attr($combo_kind->SelectedData) . '">';
@@ -571,6 +580,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$combo_regimeFiscale->MatchText = '<span id="regimeFiscale-container-readonly' . $rnd1 . '"></span><input type="hidden" name="regimeFiscale" id="regimeFiscale' . $rnd1 . '" value="' . html_attr($combo_regimeFiscale->SelectedData) . '">';
 	$combo_tipoCassa->HTML = '<span id="tipoCassa-container' . $rnd1 . '"></span><input type="hidden" name="tipoCassa" id="tipoCassa' . $rnd1 . '" value="' . html_attr($combo_tipoCassa->SelectedData) . '">';
 	$combo_tipoCassa->MatchText = '<span id="tipoCassa-container-readonly' . $rnd1 . '"></span><input type="hidden" name="tipoCassa" id="tipoCassa' . $rnd1 . '" value="' . html_attr($combo_tipoCassa->SelectedData) . '">';
+	$combo_modalitaPagamento->HTML = '<span id="modalitaPagamento-container' . $rnd1 . '"></span><input type="hidden" name="modalitaPagamento" id="modalitaPagamento' . $rnd1 . '" value="' . html_attr($combo_modalitaPagamento->SelectedData) . '">';
+	$combo_modalitaPagamento->MatchText = '<span id="modalitaPagamento-container-readonly' . $rnd1 . '"></span><input type="hidden" name="modalitaPagamento" id="modalitaPagamento' . $rnd1 . '" value="' . html_attr($combo_modalitaPagamento->SelectedData) . '">';
 
 	ob_start();
 	?>
@@ -581,6 +592,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		AppGini.current_codiceDestinatario__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['codiceDestinatario'] : $filterer_codiceDestinatario); ?>"};
 		AppGini.current_regimeFiscale__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['regimeFiscale'] : $filterer_regimeFiscale); ?>"};
 		AppGini.current_tipoCassa__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['tipoCassa'] : $filterer_tipoCassa); ?>"};
+		AppGini.current_modalitaPagamento__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['modalitaPagamento'] : $filterer_modalitaPagamento); ?>"};
 
 		jQuery(function() {
 			setTimeout(function(){
@@ -588,6 +600,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				if(typeof(codiceDestinatario_reload__RAND__) == 'function') codiceDestinatario_reload__RAND__();
 				if(typeof(regimeFiscale_reload__RAND__) == 'function') regimeFiscale_reload__RAND__();
 				if(typeof(tipoCassa_reload__RAND__) == 'function') tipoCassa_reload__RAND__();
+				if(typeof(modalitaPagamento_reload__RAND__) == 'function') modalitaPagamento_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
 		});
 		function kind_reload__RAND__(){
@@ -684,7 +697,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 							});
 							$j('[name="codiceDestinatario"]').val(resp.results[0].id);
 							$j('[id=codiceDestinatario-container-readonly__RAND__]').html('<span id="codiceDestinatario-match-text">' + resp.results[0].text + '</span>');
-							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=codiceDestinatario_view_parent]').hide(); }else{ $j('.btn[id=codiceDestinatario_view_parent]').show(); }
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
 
 
 							if(typeof(codiceDestinatario_update_autofills__RAND__) == 'function') codiceDestinatario_update_autofills__RAND__();
@@ -707,7 +720,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				AppGini.current_codiceDestinatario__RAND__.value = e.added.id;
 				AppGini.current_codiceDestinatario__RAND__.text = e.added.text;
 				$j('[name="codiceDestinatario"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=codiceDestinatario_view_parent]').hide(); }else{ $j('.btn[id=codiceDestinatario_view_parent]').show(); }
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
 
 
 				if(typeof(codiceDestinatario_update_autofills__RAND__) == 'function') codiceDestinatario_update_autofills__RAND__();
@@ -721,7 +734,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 					success: function(resp){
 						$j('[name="codiceDestinatario"]').val(resp.results[0].id);
 						$j('[id=codiceDestinatario-container-readonly__RAND__]').html('<span id="codiceDestinatario-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=codiceDestinatario_view_parent]').hide(); }else{ $j('.btn[id=codiceDestinatario_view_parent]').show(); }
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
 
 						if(typeof(codiceDestinatario_update_autofills__RAND__) == 'function') codiceDestinatario_update_autofills__RAND__();
 					}
@@ -736,7 +749,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				data: { id: AppGini.current_codiceDestinatario__RAND__.value, t: 'companies', f: 'codiceDestinatario' },
 				success: function(resp){
 					$j('[id=codiceDestinatario-container__RAND__], [id=codiceDestinatario-container-readonly__RAND__]').html('<span id="codiceDestinatario-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=codiceDestinatario_view_parent]').hide(); }else{ $j('.btn[id=codiceDestinatario_view_parent]').show(); }
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
 
 					if(typeof(codiceDestinatario_update_autofills__RAND__) == 'function') codiceDestinatario_update_autofills__RAND__();
 				}
@@ -761,7 +774,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 							});
 							$j('[name="regimeFiscale"]').val(resp.results[0].id);
 							$j('[id=regimeFiscale-container-readonly__RAND__]').html('<span id="regimeFiscale-match-text">' + resp.results[0].text + '</span>');
-							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=regimeFiscale_view_parent]').hide(); }else{ $j('.btn[id=regimeFiscale_view_parent]').show(); }
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
 
 
 							if(typeof(regimeFiscale_update_autofills__RAND__) == 'function') regimeFiscale_update_autofills__RAND__();
@@ -784,7 +797,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				AppGini.current_regimeFiscale__RAND__.value = e.added.id;
 				AppGini.current_regimeFiscale__RAND__.text = e.added.text;
 				$j('[name="regimeFiscale"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=regimeFiscale_view_parent]').hide(); }else{ $j('.btn[id=regimeFiscale_view_parent]').show(); }
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
 
 
 				if(typeof(regimeFiscale_update_autofills__RAND__) == 'function') regimeFiscale_update_autofills__RAND__();
@@ -798,7 +811,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 					success: function(resp){
 						$j('[name="regimeFiscale"]').val(resp.results[0].id);
 						$j('[id=regimeFiscale-container-readonly__RAND__]').html('<span id="regimeFiscale-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=regimeFiscale_view_parent]').hide(); }else{ $j('.btn[id=regimeFiscale_view_parent]').show(); }
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
 
 						if(typeof(regimeFiscale_update_autofills__RAND__) == 'function') regimeFiscale_update_autofills__RAND__();
 					}
@@ -813,7 +826,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				data: { id: AppGini.current_regimeFiscale__RAND__.value, t: 'companies', f: 'regimeFiscale' },
 				success: function(resp){
 					$j('[id=regimeFiscale-container__RAND__], [id=regimeFiscale-container-readonly__RAND__]').html('<span id="regimeFiscale-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=regimeFiscale_view_parent]').hide(); }else{ $j('.btn[id=regimeFiscale_view_parent]').show(); }
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
 
 					if(typeof(regimeFiscale_update_autofills__RAND__) == 'function') regimeFiscale_update_autofills__RAND__();
 				}
@@ -838,7 +851,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 							});
 							$j('[name="tipoCassa"]').val(resp.results[0].id);
 							$j('[id=tipoCassa-container-readonly__RAND__]').html('<span id="tipoCassa-match-text">' + resp.results[0].text + '</span>');
-							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tipoCassa_view_parent]').hide(); }else{ $j('.btn[id=tipoCassa_view_parent]').show(); }
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
 
 
 							if(typeof(tipoCassa_update_autofills__RAND__) == 'function') tipoCassa_update_autofills__RAND__();
@@ -861,7 +874,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				AppGini.current_tipoCassa__RAND__.value = e.added.id;
 				AppGini.current_tipoCassa__RAND__.text = e.added.text;
 				$j('[name="tipoCassa"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tipoCassa_view_parent]').hide(); }else{ $j('.btn[id=tipoCassa_view_parent]').show(); }
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
 
 
 				if(typeof(tipoCassa_update_autofills__RAND__) == 'function') tipoCassa_update_autofills__RAND__();
@@ -875,7 +888,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 					success: function(resp){
 						$j('[name="tipoCassa"]').val(resp.results[0].id);
 						$j('[id=tipoCassa-container-readonly__RAND__]').html('<span id="tipoCassa-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tipoCassa_view_parent]').hide(); }else{ $j('.btn[id=tipoCassa_view_parent]').show(); }
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
 
 						if(typeof(tipoCassa_update_autofills__RAND__) == 'function') tipoCassa_update_autofills__RAND__();
 					}
@@ -890,9 +903,86 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				data: { id: AppGini.current_tipoCassa__RAND__.value, t: 'companies', f: 'tipoCassa' },
 				success: function(resp){
 					$j('[id=tipoCassa-container__RAND__], [id=tipoCassa-container-readonly__RAND__]').html('<span id="tipoCassa-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tipoCassa_view_parent]').hide(); }else{ $j('.btn[id=tipoCassa_view_parent]').show(); }
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
 
 					if(typeof(tipoCassa_update_autofills__RAND__) == 'function') tipoCassa_update_autofills__RAND__();
+				}
+			});
+		<?php } ?>
+
+		}
+		function modalitaPagamento_reload__RAND__(){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			$j("#modalitaPagamento-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					$j.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: AppGini.current_modalitaPagamento__RAND__.value, t: 'companies', f: 'modalitaPagamento' },
+						success: function(resp){
+							c({
+								id: resp.results[0].id,
+								text: resp.results[0].text
+							});
+							$j('[name="modalitaPagamento"]').val(resp.results[0].id);
+							$j('[id=modalitaPagamento-container-readonly__RAND__]').html('<span id="modalitaPagamento-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
+
+
+							if(typeof(modalitaPagamento_update_autofills__RAND__) == 'function') modalitaPagamento_update_autofills__RAND__();
+						}
+					});
+				},
+				width: '100%',
+				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 10,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ /* */ return { s: term, p: page, t: 'companies', f: 'modalitaPagamento' }; },
+					results: function(resp, page){ /* */ return resp; }
+				},
+				escapeMarkup: function(str){ /* */ return str; }
+			}).on('change', function(e){
+				AppGini.current_modalitaPagamento__RAND__.value = e.added.id;
+				AppGini.current_modalitaPagamento__RAND__.text = e.added.text;
+				$j('[name="modalitaPagamento"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
+
+
+				if(typeof(modalitaPagamento_update_autofills__RAND__) == 'function') modalitaPagamento_update_autofills__RAND__();
+			});
+
+			if(!$j("#modalitaPagamento-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: AppGini.current_modalitaPagamento__RAND__.value, t: 'companies', f: 'modalitaPagamento' },
+					success: function(resp){
+						$j('[name="modalitaPagamento"]').val(resp.results[0].id);
+						$j('[id=modalitaPagamento-container-readonly__RAND__]').html('<span id="modalitaPagamento-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
+
+						if(typeof(modalitaPagamento_update_autofills__RAND__) == 'function') modalitaPagamento_update_autofills__RAND__();
+					}
+				});
+			}
+
+		<?php }else{ ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: AppGini.current_modalitaPagamento__RAND__.value, t: 'companies', f: 'modalitaPagamento' },
+				success: function(resp){
+					$j('[id=modalitaPagamento-container__RAND__], [id=modalitaPagamento-container-readonly__RAND__]').html('<span id="modalitaPagamento-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
+
+					if(typeof(modalitaPagamento_update_autofills__RAND__) == 'function') modalitaPagamento_update_autofills__RAND__();
 				}
 			});
 		<?php } ?>
@@ -968,6 +1058,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$jsReadOnly .= "\tjQuery('#regimeFiscale_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#tipoCassa').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#tipoCassa_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+		$jsReadOnly .= "\tjQuery('#modalitaPagamento').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#modalitaPagamento_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -989,9 +1081,12 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%COMBO(tipoCassa)%%>', $combo_tipoCassa->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(tipoCassa)%%>', $combo_tipoCassa->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(tipoCassa)%%>', urlencode($combo_tipoCassa->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(modalitaPagamento)%%>', $combo_modalitaPagamento->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(modalitaPagamento)%%>', $combo_modalitaPagamento->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(modalitaPagamento)%%>', urlencode($combo_modalitaPagamento->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'kind' => array('kinds', 'Kind'), 'codiceDestinatario' => array('codiceDestinatario', 'Codice Destinatario'), 'regimeFiscale' => array('regimeFiscale', 'Regime Fiscale'), 'tipoCassa' => array('tipoCassa', 'TipoCassa'));
+	$lookup_fields = array(  'kind' => array('kinds', 'Kind'), 'codiceDestinatario' => array('kinds', 'Codice Destinatario'), 'regimeFiscale' => array('kinds', 'Regime Fiscale'), 'tipoCassa' => array('kinds', 'TipoCassa'), 'modalitaPagamento' => array('kinds', 'ModalitaPagamento'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -1017,6 +1112,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%UPLOADFILE(codiceDestinatario)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(regimeFiscale)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(tipoCassa)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(modalitaPagamento)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -1054,6 +1150,9 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(tipoCassa)%%>', safe_html($urow['tipoCassa']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(tipoCassa)%%>', html_attr($row['tipoCassa']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(tipoCassa)%%>', urlencode($urow['tipoCassa']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(modalitaPagamento)%%>', safe_html($urow['modalitaPagamento']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(modalitaPagamento)%%>', html_attr($row['modalitaPagamento']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(modalitaPagamento)%%>', urlencode($urow['modalitaPagamento']), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -1074,6 +1173,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$templateCode = str_replace('<%%URLVALUE(regimeFiscale)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(tipoCassa)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(tipoCassa)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(modalitaPagamento)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(modalitaPagamento)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

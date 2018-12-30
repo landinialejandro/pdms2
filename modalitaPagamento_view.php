@@ -6,11 +6,11 @@
 	include("$currDir/defaultLang.php");
 	include("$currDir/language.php");
 	include("$currDir/lib.php");
-	@include("$currDir/hooks/kinds.php");
-	include("$currDir/kinds_dml.php");
+	@include("$currDir/hooks/modalitaPagamento.php");
+	include("$currDir/modalitaPagamento_dml.php");
 
 	// mm: can the current member access this page?
-	$perm=getTablePermissions('kinds');
+	$perm=getTablePermissions('modalitaPagamento');
 	if(!$perm[0]){
 		echo error_message($Translation['tableAccessDenied'], false);
 		echo '<script>setTimeout("window.location=\'index.php?signOut=1\'", 2000);</script>';
@@ -18,55 +18,40 @@
 	}
 
 	$x = new DataList;
-	$x->TableName = "kinds";
+	$x->TableName = "modalitaPagamento";
 
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
-		"`kinds`.`entity`" => "entity",
-		"`kinds`.`code`" => "code",
-		"if(CHAR_LENGTH(`kinds`.`name`)>100, concat(left(`kinds`.`name`,100),' ...'), `kinds`.`name`)" => "name",
-		"`kinds`.`value`" => "value",
-		"`kinds`.`descriptions`" => "descriptions"
+		"`modalitaPagamento`.`code`" => "code",
+		"`modalitaPagamento`.`text`" => "text"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
 		1 => 1,
-		2 => 2,
-		3 => 3,
-		4 => 4,
-		5 => 5
+		2 => 2
 	);
 
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
-		"`kinds`.`entity`" => "entity",
-		"`kinds`.`code`" => "code",
-		"`kinds`.`name`" => "name",
-		"`kinds`.`value`" => "value",
-		"`kinds`.`descriptions`" => "descriptions"
+		"`modalitaPagamento`.`code`" => "code",
+		"`modalitaPagamento`.`text`" => "text"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
-		"`kinds`.`entity`" => "Entity",
-		"`kinds`.`code`" => "Code/prefix",
-		"`kinds`.`name`" => "Name",
-		"`kinds`.`value`" => "Value",
-		"`kinds`.`descriptions`" => "Descriptions"
+		"`modalitaPagamento`.`code`" => "Code",
+		"`modalitaPagamento`.`text`" => "Text"
 	);
 
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
-		"`kinds`.`entity`" => "entity",
-		"`kinds`.`code`" => "code",
-		"`kinds`.`name`" => "Name",
-		"`kinds`.`value`" => "value",
-		"`kinds`.`descriptions`" => "descriptions"
+		"`modalitaPagamento`.`code`" => "code",
+		"`modalitaPagamento`.`text`" => "text"
 	);
 
 	// Lookup fields that can be used as filterers
 	$x->filterers = array();
 
-	$x->QueryFrom = "`kinds` ";
+	$x->QueryFrom = "`modalitaPagamento` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -87,22 +72,22 @@
 	$x->RecordsPerPage = 10;
 	$x->QuickSearch = 1;
 	$x->QuickSearchText = $Translation["quick search"];
-	$x->ScriptFileName = "kinds_view.php";
-	$x->RedirectAfterInsert = "kinds_view.php";
-	$x->TableTitle = "Entities Kinds";
-	$x->TableIcon = "resources/table_icons/application_view_tile.png";
-	$x->PrimaryKey = "`kinds`.`code`";
+	$x->ScriptFileName = "modalitaPagamento_view.php";
+	$x->RedirectAfterInsert = "modalitaPagamento_view.php?SelectedID=#ID#";
+	$x->TableTitle = "ModalitaPagamento";
+	$x->TableIcon = "table.gif";
+	$x->PrimaryKey = "`modalitaPagamento`.`code`";
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150);
-	$x->ColCaption = array("Entity", "Code/prefix", "Name", "Value", "Descriptions");
-	$x->ColFieldName = array('entity', 'code', 'name', 'value', 'descriptions');
-	$x->ColNumber  = array(1, 2, 3, 4, 5);
+	$x->ColWidth   = array(  150, 150);
+	$x->ColCaption = array("Code", "Text");
+	$x->ColFieldName = array('code', 'text');
+	$x->ColNumber  = array(1, 2);
 
 	// template paths below are based on the app main directory
-	$x->Template = 'templates/kinds_templateTV.html';
-	$x->SelectedTemplate = 'templates/kinds_templateTVS.html';
-	$x->TemplateDV = 'templates/kinds_templateDV.html';
-	$x->TemplateDVP = 'templates/kinds_templateDVP.html';
+	$x->Template = 'templates/modalitaPagamento_templateTV.html';
+	$x->SelectedTemplate = 'templates/modalitaPagamento_templateTVS.html';
+	$x->TemplateDV = 'templates/modalitaPagamento_templateDV.html';
+	$x->TemplateDVP = 'templates/modalitaPagamento_templateDVP.html';
 
 	$x->ShowTableHeader = 1;
 	$x->TVClasses = "";
@@ -114,32 +99,32 @@
 	if(!in_array($DisplayRecords, array('user', 'group'))){ $DisplayRecords = 'all'; }
 	if($perm[2]==1 || ($perm[2]>1 && $DisplayRecords=='user' && !$_REQUEST['NoFilter_x'])){ // view owner only
 		$x->QueryFrom.=', membership_userrecords';
-		$x->QueryWhere="where `kinds`.`code`=membership_userrecords.pkValue and membership_userrecords.tableName='kinds' and lcase(membership_userrecords.memberID)='".getLoggedMemberID()."'";
+		$x->QueryWhere="where `modalitaPagamento`.`code`=membership_userrecords.pkValue and membership_userrecords.tableName='modalitaPagamento' and lcase(membership_userrecords.memberID)='".getLoggedMemberID()."'";
 	}elseif($perm[2]==2 || ($perm[2]>2 && $DisplayRecords=='group' && !$_REQUEST['NoFilter_x'])){ // view group only
 		$x->QueryFrom.=', membership_userrecords';
-		$x->QueryWhere="where `kinds`.`code`=membership_userrecords.pkValue and membership_userrecords.tableName='kinds' and membership_userrecords.groupID='".getLoggedGroupID()."'";
+		$x->QueryWhere="where `modalitaPagamento`.`code`=membership_userrecords.pkValue and membership_userrecords.tableName='modalitaPagamento' and membership_userrecords.groupID='".getLoggedGroupID()."'";
 	}elseif($perm[2]==3){ // view all
 		// no further action
 	}elseif($perm[2]==0){ // view none
 		$x->QueryFields = array("Not enough permissions" => "NEP");
-		$x->QueryFrom = '`kinds`';
+		$x->QueryFrom = '`modalitaPagamento`';
 		$x->QueryWhere = '';
 		$x->DefaultSortField = '';
 	}
-	// hook: kinds_init
+	// hook: modalitaPagamento_init
 	$render=TRUE;
-	if(function_exists('kinds_init')){
+	if(function_exists('modalitaPagamento_init')){
 		$args=array();
-		$render=kinds_init($x, getMemberInfo(), $args);
+		$render=modalitaPagamento_init($x, getMemberInfo(), $args);
 	}
 
 	if($render) $x->Render();
 
-	// hook: kinds_header
+	// hook: modalitaPagamento_header
 	$headerCode='';
-	if(function_exists('kinds_header')){
+	if(function_exists('modalitaPagamento_header')){
 		$args=array();
-		$headerCode=kinds_header($x->ContentType, getMemberInfo(), $args);
+		$headerCode=modalitaPagamento_header($x->ContentType, getMemberInfo(), $args);
 	}  
 	if(!$headerCode){
 		include_once("$currDir/header.php"); 
@@ -149,11 +134,11 @@
 	}
 
 	echo $x->HTML;
-	// hook: kinds_footer
+	// hook: modalitaPagamento_footer
 	$footerCode='';
-	if(function_exists('kinds_footer')){
+	if(function_exists('modalitaPagamento_footer')){
 		$args=array();
-		$footerCode=kinds_footer($x->ContentType, getMemberInfo(), $args);
+		$footerCode=modalitaPagamento_footer($x->ContentType, getMemberInfo(), $args);
 	}  
 	if(!$footerCode){
 		include_once("$currDir/footer.php"); 

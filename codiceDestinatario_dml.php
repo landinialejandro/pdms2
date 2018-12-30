@@ -75,25 +75,6 @@ function codiceDestinatario_delete($selected_id, $AllowDeleteOfParents=false, $s
 			return $Translation['Couldn\'t delete this record'];
 	}
 
-	// child table: companies
-	$res = sql("select `code` from `codiceDestinatario` where `code`='$selected_id'", $eo);
-	$code = db_fetch_row($res);
-	$rires = sql("select count(1) from `companies` where `codiceDestinatario`='".addslashes($code[0])."'", $eo);
-	$rirow = db_fetch_row($rires);
-	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
-		$RetMsg = $Translation["couldn't delete"];
-		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "companies", $RetMsg);
-		return $RetMsg;
-	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
-		$RetMsg = $Translation["confirm delete"];
-		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "companies", $RetMsg);
-		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='codiceDestinatario_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
-		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='codiceDestinatario_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
-		return $RetMsg;
-	}
-
 	sql("delete from `codiceDestinatario` where `code`='$selected_id'", $eo);
 
 	// hook: codiceDestinatario_after_delete

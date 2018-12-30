@@ -141,7 +141,8 @@
 			'notes' => array('appgini' => 'TEXT '),
 			'codiceDestinatario' => array('appgini' => 'VARCHAR(40) '),
 			'regimeFiscale' => array('appgini' => 'VARCHAR(40) '),
-			'tipoCassa' => array('appgini' => 'VARCHAR(40) ')
+			'tipoCassa' => array('appgini' => 'VARCHAR(40) '),
+			'modalitaPagamento' => array('appgini' => 'VARCHAR(40) ')
 		),
 		'contacts' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -268,6 +269,10 @@
 			'text' => array('appgini' => 'TEXT ')
 		),
 		'tipoCassa' => array(   
+			'code' => array('appgini' => 'VARCHAR(40) not null primary key '),
+			'text' => array('appgini' => 'TEXT ')
+		),
+		'modalitaPagamento' => array(   
 			'code' => array('appgini' => 'VARCHAR(40) not null primary key '),
 			'text' => array('appgini' => 'TEXT ')
 		)

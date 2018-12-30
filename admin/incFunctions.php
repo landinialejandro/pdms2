@@ -174,7 +174,7 @@
 					'Caption' => 'Entities Kinds',
 					'Description' => 'Config kind\'s name for Addreses, Phones, Companies, Mails, Orders, Products, Contacts...etc.',
 					'tableIcon' => 'resources/table_icons/application_view_tile.png',
-					'group' => $tg[4],
+					'group' => $tg[3],
 					'homepageShowCount' => 1
 				),
 				'Logs' => array(
@@ -246,6 +246,13 @@
 					'tableIcon' => 'table.gif',
 					'group' => $tg[3],
 					'homepageShowCount' => 1
+				),
+				'modalitaPagamento' => array(
+					'Caption' => 'ModalitaPagamento',
+					'Description' => '',
+					'tableIcon' => 'table.gif',
+					'group' => $tg[0],
+					'homepageShowCount' => 0
 				)
 		);
 
@@ -285,7 +292,8 @@
 				'attachments' => 'Attaches',
 				'codiceDestinatario' => 'Codice Destinatario',
 				'regimeFiscale' => 'RegimeFiscale',
-				'tipoCassa' => 'TipoCassa'
+				'tipoCassa' => 'TipoCassa',
+				'modalitaPagamento' => 'ModalitaPagamento'
 			);
 
 			return $arrTables;

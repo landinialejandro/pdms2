@@ -7,9 +7,6 @@
 	<!-- child links -->
 	<div class="row vspacer-md">
 		<div class="col-xs-12">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="companies_view.php?filterer_codiceDestinatario=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>" id="companies_link"><i class="glyphicon glyphicon-list-alt"></i> Companies</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="companies_view.php?filterer_codiceDestinatario=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>" id="xs_companies_link"><i class="glyphicon glyphicon-list-alt"></i> Companies</a>
-			<input type="hidden" id="companies_hclink" value="companies_view.php?filterer_codiceDestinatario=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -59,14 +56,6 @@
 	</div>
 
 
-	<!-- child records -->
-	<hr>
-	<div class="row">
-		<div class="col-lg-10 col-lg-offset-1">
-			<div id="codiceDestinatario-children" class="children-tabs"></div>
-		</div>
-	</div>
-
 </div><!-- /div class="panel-body" -->
 	<script>
 		$j(function() {
@@ -96,38 +85,6 @@
 
 			$j('a[href="<%%TRANSLATION(ImageFolder)%%>"]').click(function(){ /* */ return false; });
 
-			if(embedded_mode){
-				/* hide links to children tables in embedded mode */
-				$j('.detail_view a[id$=_link]').remove();
-
-				/* append embedded mode to all links */
-				var append_embedded = function(){
-					$j('a[href]:not([href^="#"]):not([href^="javascript"]):not([href$="Embedded=1"]):not([href*="link.php?t="]):not([href^="mailto:"])').each(
-						function(){
-							$j(this).attr('href', $j(this).attr('href') + '&Embedded=1');
-						}
-					);
-				}
-				setTimeout(append_embedded, 500);
-				setTimeout(append_embedded, 1500);
-				setTimeout(append_embedded, 2500);
-				setTimeout(append_embedded, 3500);
-			}
-
-			/* when no record is selected ('add new' mode) */
-			if(add_new_mode){
-				/* hide links to children tables */
-				$j('.detail_view a[id$=_link]').remove();
-			}else{
-				post(
-					'parent-children.php', {
-						ParentTable: 'codiceDestinatario',
-						SelectedID: '<%%VALUE(code)%%>',
-						Operation: 'show-children'
-					},
-					'codiceDestinatario-children'
-				);
-			}
 
 			if(!embedded_mode){
 				/* add a horizontal spacer to [add new parent] buttons that don't have a spacered element before them */

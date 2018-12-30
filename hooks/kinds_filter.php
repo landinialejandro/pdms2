@@ -28,7 +28,7 @@
 			</h1></div>
 
 		<?php
-				$options = array("Contacts","Companies","Addresses","Phones","Mails","Products","Documents","Attributes","Orders","Taxes");
+				$options = array("Contacts","Companies","Addresses","Phones","Mails","Products","Documents","Attributes","Orders","Taxes","CashNote","sdi-CodiceDestinatario","sdi-RegimeFiscale","sdi-TipoCassa","sdi-ModalitaPagamento","sdi-Natura");
 			
 				//convert options to select2 format
 				$optionsList = array();

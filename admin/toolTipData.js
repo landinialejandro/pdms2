@@ -443,6 +443,24 @@ tipoCassa_delete1Tip=["",spacer+"This option allows each member of the group to 
 tipoCassa_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'TipoCassa' table."];
 tipoCassa_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'TipoCassa' table."];
 
+// modalitaPagamento table
+modalitaPagamento_addTip=["",spacer+"This option allows all members of the group to add records to the 'ModalitaPagamento' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+modalitaPagamento_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'ModalitaPagamento' table."];
+modalitaPagamento_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'ModalitaPagamento' table."];
+modalitaPagamento_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'ModalitaPagamento' table."];
+modalitaPagamento_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'ModalitaPagamento' table."];
+
+modalitaPagamento_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'ModalitaPagamento' table."];
+modalitaPagamento_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'ModalitaPagamento' table."];
+modalitaPagamento_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'ModalitaPagamento' table."];
+modalitaPagamento_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'ModalitaPagamento' table, regardless of their owner."];
+
+modalitaPagamento_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'ModalitaPagamento' table."];
+modalitaPagamento_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'ModalitaPagamento' table."];
+modalitaPagamento_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'ModalitaPagamento' table."];
+modalitaPagamento_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'ModalitaPagamento' table."];
+
 /*
 	Style syntax:
 	-------------

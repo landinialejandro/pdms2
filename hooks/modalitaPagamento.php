@@ -1,16 +1,12 @@
 <?php
+	// For help on using hooks, please refer to https://bigprof.com/appgini/help/working-with-generated-web-database-application/hooks
 
-	function kinds_init(&$options, $memberInfo, &$args){
-		/* Inserted by Search Page Maker for AppGini on 2018-09-26 02:07:33 */
-		$options->FilterPage = 'hooks/kinds_filter.php';
-		/* End of Search Page Maker for AppGini code */
-
+	function modalitaPagamento_init(&$options, $memberInfo, &$args){
 
 		return TRUE;
 	}
 
-
-	function kinds_header($contentType, $memberInfo, &$args){
+	function modalitaPagamento_header($contentType, $memberInfo, &$args){
 		$header='';
 
 		switch($contentType){
@@ -42,13 +38,11 @@
 		return $header;
 	}
 
-
-	function kinds_footer($contentType, $memberInfo, &$args){
+	function modalitaPagamento_footer($contentType, $memberInfo, &$args){
 		$footer='';
 
 		switch($contentType){
 			case 'tableview':
-                                $footer = (include 'kinds_filter_tv.php');
 				$footer='';
 				break;
 
@@ -76,53 +70,44 @@
 		return $footer;
 	}
 
-
-	function kinds_before_insert(&$data, $memberInfo, &$args){
-
-		return TRUE;
-	}
-
-
-	function kinds_after_insert($data, $memberInfo, &$args){
+	function modalitaPagamento_before_insert(&$data, $memberInfo, &$args){
 
 		return TRUE;
 	}
 
-
-	function kinds_before_update(&$data, $memberInfo, &$args){
-
-		return TRUE;
-	}
-
-
-	function kinds_after_update($data, $memberInfo, &$args){
+	function modalitaPagamento_after_insert($data, $memberInfo, &$args){
 
 		return TRUE;
 	}
 
-
-	function kinds_before_delete($selectedID, &$skipChecks, $memberInfo, &$args){
+	function modalitaPagamento_before_update(&$data, $memberInfo, &$args){
 
 		return TRUE;
 	}
 
+	function modalitaPagamento_after_update($data, $memberInfo, &$args){
 
-	function kinds_after_delete($selectedID, $memberInfo, &$args){
+		return TRUE;
+	}
+
+	function modalitaPagamento_before_delete($selectedID, &$skipChecks, $memberInfo, &$args){
+
+		return TRUE;
+	}
+
+	function modalitaPagamento_after_delete($selectedID, $memberInfo, &$args){
 
 	}
 
-
-	function kinds_dv($selectedID, $memberInfo, &$html, &$args){
+	function modalitaPagamento_dv($selectedID, $memberInfo, &$html, &$args){
 
 	}
 
-
-	function kinds_csv($query, $memberInfo, &$args){
+	function modalitaPagamento_csv($query, $memberInfo, &$args){
 
 		return $query;
 	}
-
-	function kinds_batch_actions(&$args){
+	function modalitaPagamento_batch_actions(&$args){
 
 		return array();
 	}

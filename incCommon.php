@@ -58,7 +58,7 @@
 			'countries' => array('Countries', '', 'resources/table_icons/globe_model.png', 'Anagrafiche'),
 			'town' => array('Comuni italiani', 'Elenco dei comuni italiani con i relativi codici.', 'resources/table_icons/italy.png', 'Anagrafiche'),
 			'GPSTrackingSystem' => array('GPS Tracking System', 'Questa tabella, non disponibile al momento, serve per chi ha necessit&#224; di controllare i propri mezzi con un sistema di tracciamento GPS.<br>Si puo richiedere questa opzione a parte.', 'resources/table_icons/compass.png', 'Altro'),
-			'kinds' => array('Entities Kinds', 'Config kind\'s name for Addreses, Phones, Companies, Mails, Orders, Products, Contacts...etc.', 'resources/table_icons/application_view_tile.png', 'Altro'),
+			'kinds' => array('Entities Kinds', 'Config kind\'s name for Addreses, Phones, Companies, Mails, Orders, Products, Contacts...etc.', 'resources/table_icons/application_view_tile.png', 'Anagrafiche'),
 			'Logs' => array('Logs', 'Questa tabella serve a tener traccia dei tentativi di accesso che possono risultare dannosi, tracciando l\'IP di provenienza.', 'resources/table_icons/centroid.png', 'Altro'),
 			'attributes' => array('Attributes', '', 'resources/table_icons/application_form_add.png', 'hiddens'),
 			'addresses' => array('Addresses', '', 'resources/table_icons/mail_box.png', 'hiddens'),
@@ -68,7 +68,8 @@
 			'attachments' => array('Attaches', '', 'resources/table_icons/attach.png', 'hiddens'),
 			'codiceDestinatario' => array('Codice Destinatario', 'codice dell\'ufficio dell&#8217;amministrazione dello stato destinatario della fattura, definito dall\'amministrazione di appartenenza come riportato nella rubrica &#8220;Indice PA&#8221;.', 'table.gif', 'Anagrafiche'),
 			'regimeFiscale' => array('RegimeFiscale', '', 'table.gif', 'Anagrafiche'),
-			'tipoCassa' => array('TipoCassa', '', 'table.gif', 'Anagrafiche')
+			'tipoCassa' => array('TipoCassa', '', 'table.gif', 'Anagrafiche'),
+			'modalitaPagamento' => array('ModalitaPagamento', '', 'table.gif', 'Documenti')
 		);
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 
@@ -161,7 +162,7 @@
 			'products' => "`products`.`id` as 'id', `products`.`codebar` as 'codebar', `products`.`productCode` as 'productCode', `products`.`productName` as 'productName', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'tax', `products`.`increment` as 'increment', IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') as 'CategoryID', `products`.`UM` as 'UM', `products`.`tare` as 'tare', `products`.`QuantityPerUnit` as 'QuantityPerUnit', CONCAT('&euro;', FORMAT(`products`.`UnitPrice`, 2)) as 'UnitPrice', CONCAT('&euro;', FORMAT(`products`.`sellPrice`, 2)) as 'sellPrice', `products`.`UnitsInStock` as 'UnitsInStock', `products`.`UnitsOnOrder` as 'UnitsOnOrder', `products`.`ReorderLevel` as 'ReorderLevel', `products`.`balance` as 'balance', `products`.`Discontinued` as 'Discontinued', if(`products`.`manufactured_date`,date_format(`products`.`manufactured_date`,'%d/%m/%Y'),'') as 'manufactured_date', if(`products`.`expiry_date`,date_format(`products`.`expiry_date`,'%d/%m/%Y'),'') as 'expiry_date', `products`.`note` as 'note', if(`products`.`update_date`,date_format(`products`.`update_date`,'%d/%m/%Y %h:%i %p'),'') as 'update_date'",
 			'firstCashNote' => "`firstCashNote`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`orders1`.`multiOrder`) || CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `orders1`.`multiOrder`, ' - ', `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'order', if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'') as 'operationDate', IF(    CHAR_LENGTH(`companies2`.`companyCode`) || CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyCode`, ' - ', `companies2`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`companies3`.`companyCode`) || CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyCode`, ' - ', `companies3`.`companyName`), '') as 'customer', `firstCashNote`.`documentNumber` as 'documentNumber', `firstCashNote`.`causal` as 'causal', `firstCashNote`.`revenue` as 'revenue', `firstCashNote`.`outputs` as 'outputs', `firstCashNote`.`balance` as 'balance', IF(    CHAR_LENGTH(`companies4`.`companyName`), CONCAT_WS('',   `companies4`.`companyName`), '') as 'idBank', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'bank', `firstCashNote`.`note` as 'note', if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'') as 'paymentDeadLine', `firstCashNote`.`payed` as 'payed'",
 			'vatRegister' => "`vatRegister`.`id` as 'id', IF(    CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyCode`), '') as 'idCompany', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'companyName', `vatRegister`.`tax` as 'tax', `vatRegister`.`month` as 'month', `vatRegister`.`year` as 'year', `vatRegister`.`amount` as 'amount'",
-			'companies' => "`companies`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `companies`.`companyCode` as 'companyCode', `companies`.`companyName` as 'companyName', `companies`.`fiscalCode` as 'fiscalCode', `companies`.`vat` as 'vat', `companies`.`notes` as 'notes', IF(    CHAR_LENGTH(`codiceDestinatario1`.`code`) || CHAR_LENGTH(`codiceDestinatario1`.`text`), CONCAT_WS('',   `codiceDestinatario1`.`code`, ' - ', `codiceDestinatario1`.`text`), '') as 'codiceDestinatario', IF(    CHAR_LENGTH(`regimeFiscale1`.`code`) || CHAR_LENGTH(`regimeFiscale1`.`text`), CONCAT_WS('',   `regimeFiscale1`.`code`, ' - ', `regimeFiscale1`.`text`), '') as 'regimeFiscale', IF(    CHAR_LENGTH(`tipoCassa1`.`code`) || CHAR_LENGTH(`tipoCassa1`.`text`), CONCAT_WS('',   `tipoCassa1`.`code`, ' - ', `tipoCassa1`.`text`), '') as 'tipoCassa'",
+			'companies' => "`companies`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `companies`.`companyCode` as 'companyCode', `companies`.`companyName` as 'companyName', `companies`.`fiscalCode` as 'fiscalCode', `companies`.`vat` as 'vat', `companies`.`notes` as 'notes', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'codiceDestinatario', IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') as 'regimeFiscale', IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') as 'tipoCassa', IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') as 'modalitaPagamento'",
 			'contacts' => "`contacts`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `contacts`.`titleCourtesy` as 'titleCourtesy', `contacts`.`name` as 'name', `contacts`.`lastName` as 'lastName', `contacts`.`notes` as 'notes', `contacts`.`title` as 'title', if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'') as 'birthDate', `contacts`.`CodEORI` as 'CodEORI'",
 			'creditDocument' => "`creditDocument`.`id` as 'id', `creditDocument`.`incomingTypeDoc` as 'incomingTypeDoc', `creditDocument`.`customerID` as 'customerID', `creditDocument`.`nrDoc` as 'nrDoc', if(`creditDocument`.`dateIncomingNote`,date_format(`creditDocument`.`dateIncomingNote`,'%d/%m/%Y'),'') as 'dateIncomingNote', `creditDocument`.`customerFirm` as 'customerFirm', `creditDocument`.`customerAddress` as 'customerAddress', `creditDocument`.`customerPostCode` as 'customerPostCode', `creditDocument`.`customerTown` as 'customerTown'",
 			'electronicInvoice' => "`electronicInvoice`.`id` as 'id', `electronicInvoice`.`topic` as 'topic', `electronicInvoice`.`currency` as 'currency', `electronicInvoice`.`trasmissionFormat` as 'trasmissionFormat', `electronicInvoice`.`country` as 'country'",
@@ -178,7 +179,8 @@
 			'attachments' => "`attachments`.`id` as 'id', `attachments`.`name` as 'name', `attachments`.`file` as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `attachments`.`thumbUse` as 'thumbUse'",
 			'codiceDestinatario' => "`codiceDestinatario`.`code` as 'code', `codiceDestinatario`.`text` as 'text'",
 			'regimeFiscale' => "`regimeFiscale`.`code` as 'code', `regimeFiscale`.`text` as 'text'",
-			'tipoCassa' => "`tipoCassa`.`code` as 'code', `tipoCassa`.`text` as 'text'"
+			'tipoCassa' => "`tipoCassa`.`code` as 'code', `tipoCassa`.`text` as 'text'",
+			'modalitaPagamento' => "`modalitaPagamento`.`code` as 'code', `modalitaPagamento`.`text` as 'text'"
 		);
 
 		if(isset($sql_fields[$table_name])){
@@ -198,7 +200,7 @@
 			'products' => "`products` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`products`.`tax` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`products`.`CategoryID` ",
 			'firstCashNote' => "`firstCashNote` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`firstCashNote`.`kind` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders1`.`company` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`firstCashNote`.`company` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`firstCashNote`.`customer` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`firstCashNote`.`idBank` ",
 			'vatRegister' => "`vatRegister` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`vatRegister`.`idCompany` ",
-			'companies' => "`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `codiceDestinatario` as codiceDestinatario1 ON `codiceDestinatario1`.`code`=`companies`.`codiceDestinatario` LEFT JOIN `regimeFiscale` as regimeFiscale1 ON `regimeFiscale1`.`code`=`companies`.`regimeFiscale` LEFT JOIN `tipoCassa` as tipoCassa1 ON `tipoCassa1`.`code`=`companies`.`tipoCassa` ",
+			'companies' => "`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`companies`.`codiceDestinatario` LEFT JOIN `kinds` as kinds3 ON `kinds3`.`code`=`companies`.`regimeFiscale` LEFT JOIN `kinds` as kinds4 ON `kinds4`.`code`=`companies`.`tipoCassa` LEFT JOIN `kinds` as kinds5 ON `kinds5`.`code`=`companies`.`modalitaPagamento` ",
 			'contacts' => "`contacts` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`contacts`.`kind` ",
 			'creditDocument' => "`creditDocument` ",
 			'electronicInvoice' => "`electronicInvoice` ",
@@ -215,7 +217,8 @@
 			'attachments' => "`attachments` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attachments`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attachments`.`company` ",
 			'codiceDestinatario' => "`codiceDestinatario` ",
 			'regimeFiscale' => "`regimeFiscale` ",
-			'tipoCassa' => "`tipoCassa` "
+			'tipoCassa' => "`tipoCassa` ",
+			'modalitaPagamento' => "`modalitaPagamento` "
 		);
 
 		$pkey = array(   
@@ -242,7 +245,8 @@
 			'attachments' => 'id',
 			'codiceDestinatario' => 'code',
 			'regimeFiscale' => 'code',
-			'tipoCassa' => 'code'
+			'tipoCassa' => 'code',
+			'modalitaPagamento' => 'code'
 		);
 
 		if(isset($sql_from[$table_name])){
@@ -421,7 +425,8 @@
 				'notes' => '',
 				'codiceDestinatario' => '',
 				'regimeFiscale' => '',
-				'tipoCassa' => ''
+				'tipoCassa' => '',
+				'modalitaPagamento' => ''
 			),
 			'contacts' => array(
 				'id' => '',
@@ -548,6 +553,10 @@
 				'text' => ''
 			),
 			'tipoCassa' => array(
+				'code' => '',
+				'text' => ''
+			),
+			'modalitaPagamento' => array(
 				'code' => '',
 				'text' => ''
 			)
@@ -1273,7 +1282,7 @@
 		if(is_array($arrTables)){
 			foreach($arrTables as $tn => $tc){
 				/* ---- list of tables where hide link in nav menu is set ---- */
-				$tChkHL = array_search($tn, array('creditDocument'));
+				$tChkHL = array_search($tn, array('creditDocument','codiceDestinatario','regimeFiscale','tipoCassa','modalitaPagamento'));
 
 				/* ---- list of tables where filter first is set ---- */
 				$tChkFF = array_search($tn, array());

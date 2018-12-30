@@ -103,34 +103,37 @@ $invoice=<<<XML
         <!-- 1.1 -->
         <DatiTrasmissione>
             <IdTrasmittente>
-                <IdPaese>{$countryCode}</IdPaese> 
-                <IdCodice>{$company['vat']}</IdCodice> 
+                <IdPaese>{$countryCode}</IdPaese> <!-- obligatory -->
+                <IdCodice>{$company['vat']}</IdCodice> <!-- obligatory -->
             </IdTrasmittente>
-            <ProgressivoInvio>{$order['multiOrder']}</ProgressivoInvio> 
-            <FormatoTrasmissione>SDI10</FormatoTrasmissione> 
-            <CodiceDestinatario>{$codiceDestinatario}</CodiceDestinatario> 
-            <PECDestinatario>{$mails['mail']}</PECDestinatario> 
+            <ProgressivoInvio>{$order['multiOrder']}</ProgressivoInvio> <!-- obligatory -->
+            <FormatoTrasmissione>SDI11</FormatoTrasmissione> <!-- obligatory -->
+            <CodiceDestinatario>{$codiceDestinatario}</CodiceDestinatario> <!-- obligatory -->
+            <ContattiTrasmittente>
+                <Telefono></Telefono>
+                <Email>{$mails['mail']}</Email>
+            </ContattiTrasmittente>
         </DatiTrasmissione>
         <!-- 1.2 -->
         <CedentePrestatore>
             <DatiAnagrafici>
                 <IdFiscaleIVA>
-                    <IdPaese>{$countryCode}</IdPaese> 
-                    <IdCodice>{$company['vat']}</IdCodice> 
+                    <IdPaese>{$countryCode}</IdPaese> <!-- obligatory -->
+                    <IdCodice>{$company['vat']}</IdCodice> <!-- obligatory -->
                 </IdFiscaleIVA>
+                <CodiceFiscale>{$company['vat']}</CodiceFiscale> <!-- recomended -->
                 <Anagrafica>
-                    <Denominazione>{$company['companyName']}</Denominazione> 
+                    <Denominazione>{$company['companyName']}</Denominazione> <!-- obligatory --> 
                     <Nome>{$contact['name']}</Nome>
                     <Cognome>{$contact['lastName']}</Cognome>
                     <Titolo>{$contact['title']}</Titolo>
                     <codEORI>{$contact['CodEORI']}</codEORI>
                 </Anagrafica>
-                <RegimeFiscale>RF01</RegimeFiscale> 
                 <AlboProfessionale></AlboProfessionale>
                 <ProvinciaAlbo></ProvinciaAlbo>
                 <NumeroIscrizioneAlbo></NumeroIscrizioneAlbo>
                 <DataIscrizioneAlbo></DataIscrizioneAlbo>
-                <RegimeFiscale></RegimeFiscale>
+                <RegimeFiscale>{$company['regimeFiscale']}</RegimeFiscale> 
             </DatiAnagrafici>
             <Sede>
                 <Indirizzo>{$address['address']} {$address['houseNumber']}</Indirizzo> 
