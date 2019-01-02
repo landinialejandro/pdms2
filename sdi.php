@@ -33,11 +33,11 @@ if($kindOrder !== 'OUT'){
 }
 
 /* retrieve multycompany info */
-///////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $multyCompany_id=intval(sqlValue("select company from orders where id={$order_id}"));
 $where_id =" AND companies.id={$multyCompany_id}";//change this to set select where
 $company = getDataTable('companies',$where_id);
-///////////////////////////
+
 $where_id =" AND addresses.company = {$company['id']} AND addresses.default = 1";//change this to set select where
 $address = getDataTable('addresses',$where_id);
 if (!$address){
@@ -45,19 +45,21 @@ if (!$address){
 }
 $addressCountryId = sqlValue("select country from addresses where addresses.id = {$address['id']}");
 $countryCode = sqlValue("select code from countries where countries.id = {$addressCountryId} ");
-///////////////////////////
+
 $where_id =" AND mails.company = {$company['id']} AND mails.kind = 'WORK'";//change this to set select where
 $mails = getDataTable('mails',$where_id);
+
 $codiceDestinatarioId = intval(sqlValue("select codiceDestinatario from companies where companies.id = $multyCompany_id"));
 $codiceDestinatario = sqlValue("select code from codiceDestinatario where codiceDestinatario.id = $codiceDestinatarioId");
-///////////////////////////
+
 $defualtContactId = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$multyCompany_id} ORDER BY contacts_companies.default DESC LIMIT 1"));
 if (!$defualtContactId){
     exit(error_message('<h1>Contact company not setting</h1>', false));
 }
 $where_id = " AND  id = {$defualtContactId}";
 $contact = getDataTable("contacts", $where_id);
-///////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* retrieve customer info */
 ///////////////////////////
@@ -103,16 +105,17 @@ $invoice=<<<XML
         <!-- 1.1 -->
         <DatiTrasmissione>
             <IdTrasmittente>
-                <IdPaese>{$countryCode}</IdPaese> <!-- obligatory -->
-                <IdCodice>{$company['vat']}</IdCodice> <!-- obligatory -->
+                <IdPaese>{$countryCode}</IdPaese> <!-- SI, sempre -->
+                <IdCodice>{$company['vat']}</IdCodice> <!-- SI, sempre -->
             </IdTrasmittente>
-            <ProgressivoInvio>{$order['multiOrder']}</ProgressivoInvio> <!-- obligatory -->
-            <FormatoTrasmissione>SDI11</FormatoTrasmissione> <!-- obligatory -->
-            <CodiceDestinatario>{$codiceDestinatario}</CodiceDestinatario> <!-- obligatory -->
+            <ProgressivoInvio>{$order['multiOrder']}</ProgressivoInvio> <!-- SI, sempre -->
+            <FormatoTrasmissione>FPR12</FormatoTrasmissione> <!-- SI, sempre -->
+            <CodiceDestinatario>{$codiceDestinatario}</CodiceDestinatario> <!-- SI, sempre -->
             <ContattiTrasmittente>
-                <Telefono></Telefono>
-                <Email>{$mails['mail']}</Email>
+                <Telefono></Telefono> <!-- NO -->
+                <Email>{$mails['mail']}</Email> <!-- NO -->
             </ContattiTrasmittente>
+            <PECDestinatario>mailCliente@via.PEC</PECDestinatario> <!-- SI, ma solo se -->
         </DatiTrasmissione>
         <!-- 1.2 -->
         <CedentePrestatore>
@@ -121,37 +124,43 @@ $invoice=<<<XML
                     <IdPaese>{$countryCode}</IdPaese> <!-- obligatory -->
                     <IdCodice>{$company['vat']}</IdCodice> <!-- obligatory -->
                 </IdFiscaleIVA>
-                <CodiceFiscale>{$company['vat']}</CodiceFiscale> <!-- recomended -->
+                <CodiceFiscale>{$company['vat']}</CodiceFiscale> <!-- Consigliata -->
                 <Anagrafica>
-                    <Denominazione>{$company['companyName']}</Denominazione> <!-- obligatory --> 
-                    <Nome>{$contact['name']}</Nome>
-                    <Cognome>{$contact['lastName']}</Cognome>
-                    <Titolo>{$contact['title']}</Titolo>
-                    <codEORI>{$contact['CodEORI']}</codEORI>
+                    <Denominazione>{$company['companyName']}</Denominazione> <!-- SI, ma solo se --> 
+                    <Nome>{$contact['name']}</Nome> <!-- SI, ma solo se -->
+                    <Cognome>{$contact['lastName']}</Cognome> <!-- SI, ma solo se -->
+                    <Titolo>{$contact['title']}</Titolo> <!-- NO -->
+                    <codEORI>{$contact['CodEORI']}</codEORI> <!-- NO -->
                 </Anagrafica>
-                <AlboProfessionale></AlboProfessionale>
-                <ProvinciaAlbo></ProvinciaAlbo>
-                <NumeroIscrizioneAlbo></NumeroIscrizioneAlbo>
-                <DataIscrizioneAlbo></DataIscrizioneAlbo>
-                <RegimeFiscale>{$company['regimeFiscale']}</RegimeFiscale> 
+                <AlboProfessionale></AlboProfessionale> <!-- NO -->
+                <ProvinciaAlbo></ProvinciaAlbo> <!-- NO -->
+                <NumeroIscrizioneAlbo></NumeroIscrizioneAlbo> <!-- NO -->
+                <DataIscrizioneAlbo></DataIscrizioneAlbo> <!-- NO -->
+                <RegimeFiscale>{$company['regimeFiscale']}</RegimeFiscale> <!-- obligatory -->
             </DatiAnagrafici>
             <Sede>
-                <Indirizzo>{$address['address']} {$address['houseNumber']}</Indirizzo> 
-                <NumeroCivico></NumeroCivico>
-                <CAP>{$address['postalCode']}</CAP> 
-                <Comune>{$address['town']}</Comune> 
-                <Provincia>{$address['district']}</Provincia> 
-                <Nazione>{$address['country']}</Nazione> 
+                <Indirizzo>{$address['address']}</Indirizzo> <!-- obligatory -->
+                <NumeroCivico>{$address['houseNumber']}</NumeroCivico> <!-- SI, ma solo se -->
+                <CAP>{$address['postalCode']}</CAP> <!-- obligatory -->
+                <Comune>{$address['town']}</Comune> <!-- obligatory -->
+                <Provincia>{$address['district']}</Provincia> <!-- SI, ma solo se -->
+                <Nazione>{$address['country']}</Nazione> <!-- obligatory -->
             </Sede>
-            <StabileOrganizzazione>
-                <Indirizzo></Indirizzo> 
-                <NumeroCivico></NumeroCivico>
-                <CAP></CAP> 
-                <Comune></Comune> 
-                <Provincia></Provincia> 
-                <Nazione></Nazione> 
+            <StabileOrganizzazione> <!-- 1.2.3  il cedente/prestatore è un soggetto che non risiede in Italia ma che, in Italia,
+                                                dispone di una stabile organizzazione attraverso la quale svolge la propria
+                                                attività (cessioni di beni o prestazioni di servizi oggetto di fatturazione)
+                                    -->
+                <Indirizzo></Indirizzo> <!-- SI, ma solo se -->
+                <NumeroCivico></NumeroCivico><!-- SI, ma solo se -->
+                <CAP></CAP> <!-- SI, ma solo se -->
+                <Comune></Comune> <!-- SI, ma solo se -->
+                <Provincia></Provincia> <!-- SI, ma solo se -->
+                <Nazione></Nazione> <!-- SI, ma solo se -->
             </StabileOrganizzazione>
-            <IscrizioneREA>
+            <IscrizioneREA> <!-- 1.2.4  il cedente/prestatore è una società iscritta nel registro delle imprese e come
+                                        tale ha l’obbligo di indicare in tutti i documenti anche i dati relativi all’iscrizione
+                                        (art. 2250 codice civile)
+                            -->
                 <Ufficio></Ufficio> 
                 <NumeroREA></NumeroREA> 
                 <CapitaleSociale></CapitaleSociale> 
