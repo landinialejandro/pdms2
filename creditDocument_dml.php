@@ -355,8 +355,8 @@ function creditDocument_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(nrDoc)%%>', safe_html($urow['nrDoc']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(nrDoc)%%>', html_attr($row['nrDoc']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(nrDoc)%%>', urlencode($urow['nrDoc']), $templateCode);
-		$templateCode = str_replace('<%%VALUE(dateIncomingNote)%%>', @date('d/m/Y', @strtotime(html_attr($row['dateIncomingNote']))), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(dateIncomingNote)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['dateIncomingNote'])))), $templateCode);
+		$templateCode = str_replace('<%%VALUE(dateIncomingNote)%%>', @date('d.m.Y', @strtotime(html_attr($row['dateIncomingNote']))), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(dateIncomingNote)%%>', urlencode(@date('d.m.Y', @strtotime(html_attr($urow['dateIncomingNote'])))), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(customerFirm)%%>', safe_html($urow['customerFirm']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(customerFirm)%%>', html_attr($row['customerFirm']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(customerFirm)%%>', urlencode($urow['customerFirm']), $templateCode);

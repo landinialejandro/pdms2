@@ -49,8 +49,7 @@ $countryCode = sqlValue("select code from countries where countries.id = {$addre
 $where_id =" AND mails.company = {$company['id']} AND mails.kind = 'WORK'";//change this to set select where
 $mails = getDataTable('mails',$where_id);
 
-$codiceDestinatarioId = intval(sqlValue("select codiceDestinatario from companies where companies.id = $multyCompany_id"));
-$codiceDestinatario = sqlValue("select code from codiceDestinatario where codiceDestinatario.id = $codiceDestinatarioId");
+$codiceDestinatario = sqlValue("select codiceDestinatario from companies where companies.id = $multyCompany_id");
 
 $defualtContactId = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$multyCompany_id} ORDER BY contacts_companies.default DESC LIMIT 1"));
 if (!$defualtContactId){

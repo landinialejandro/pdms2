@@ -95,8 +95,10 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="regimeFiscale" class="control-label col-lg-3" data-parent_link="view_parent_modal">Regime Fiscale</label>
+					<label for="regimeFiscale" class="control-label col-lg-3" data-parent_link="view_parent_modal">Regime Fiscale <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#regimeFiscale-description"></i></label>
 					<div class="col-lg-9">
+						<span class="help-block collapse" id="regimeFiscale-description"><div class="alert alert-info">Regime Fiscale</div></span>
+
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(regimeFiscale)%%><%%PLINK(regimeFiscale)%%><%%ADDNEW(kinds)%%></div>
 					</div>
 				</div>
@@ -137,8 +139,8 @@
 				</div>
                                 <p></p>
 				<div class="btn-group-vertical" style="width: 100%;">
-                                    <button id="CUST_CREDIT" class="btn btn-info" onclick="setLimit(<%%VALUE(id)%%>,this)" type="button" >Set Credit Limit</button>
-                                    <button id="CUST_PAYMENT" class="btn btn-info" onclick="setLimit(<%%VALUE(id)%%>,this)" type="button" >Set Payment Limit</button>
+                                    <button id="CUST_CREDIT" class="btn btn-info" onclick="setLimit('<%%VALUE(id)%%>',this)" type="button" >Set Credit Limit</button>
+                                    <button id="CUST_PAYMENT" class="btn btn-info" onclick="setLimit('<%%VALUE(id)%%>',this)" type="button" >Set Payment Limit</button>
 			</div>
 		</div>
 	</div>

@@ -1352,7 +1352,7 @@ AppGini.mobileDevice = function(){ /* */
 AppGini.datetimeFormat = function(datetime){ /* */
 	if(undefined == datetime) datetime = 'd';
 
-	var dateFormat = 'DD/MM/YYYY';
+	var dateFormat = 'DD.MM.YYYY';
 	var timeFormat = 'hh:mm:ss A';
 
 	if(datetime.match(/(dt|td)/i)) return dateFormat + ' ' + timeFormat;

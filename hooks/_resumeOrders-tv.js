@@ -30,7 +30,7 @@ $j(function(){
         window.open('REP_printResumeDocument.php?OrderID=' + id);
         setTimeout(function(){
             location.reload();
-        },500)
+        },500);
     });
 });
 

@@ -700,10 +700,10 @@ function products_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 		$templateCode = str_replace('<%%VALUE(balance)%%>', safe_html($urow['balance']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(balance)%%>', urlencode($urow['balance']), $templateCode);
 		$templateCode = str_replace('<%%CHECKED(Discontinued)%%>', ($row['Discontinued'] ? "checked" : ""), $templateCode);
-		$templateCode = str_replace('<%%VALUE(manufactured_date)%%>', @date('d/m/Y', @strtotime(html_attr($row['manufactured_date']))), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(manufactured_date)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['manufactured_date'])))), $templateCode);
-		$templateCode = str_replace('<%%VALUE(expiry_date)%%>', @date('d/m/Y', @strtotime(html_attr($row['expiry_date']))), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(expiry_date)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['expiry_date'])))), $templateCode);
+		$templateCode = str_replace('<%%VALUE(manufactured_date)%%>', @date('d.m.Y', @strtotime(html_attr($row['manufactured_date']))), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(manufactured_date)%%>', urlencode(@date('d.m.Y', @strtotime(html_attr($urow['manufactured_date'])))), $templateCode);
+		$templateCode = str_replace('<%%VALUE(expiry_date)%%>', @date('d.m.Y', @strtotime(html_attr($row['expiry_date']))), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(expiry_date)%%>', urlencode(@date('d.m.Y', @strtotime(html_attr($urow['expiry_date'])))), $templateCode);
 		if($dvprint || (!$AllowUpdate && !$AllowInsert)){
 			$templateCode = str_replace('<%%VALUE(note)%%>', safe_html($urow['note']), $templateCode);
 		}else{

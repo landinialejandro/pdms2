@@ -590,8 +590,8 @@ function contacts_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $A
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(title)%%>', safe_html($urow['title']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(title)%%>', html_attr($row['title']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(title)%%>', urlencode($urow['title']), $templateCode);
-		$templateCode = str_replace('<%%VALUE(birthDate)%%>', @date('d/m/Y', @strtotime(html_attr($row['birthDate']))), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(birthDate)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['birthDate'])))), $templateCode);
+		$templateCode = str_replace('<%%VALUE(birthDate)%%>', @date('d.m.Y', @strtotime(html_attr($row['birthDate']))), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(birthDate)%%>', urlencode(@date('d.m.Y', @strtotime(html_attr($urow['birthDate'])))), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(CodEORI)%%>', safe_html($urow['CodEORI']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(CodEORI)%%>', html_attr($row['CodEORI']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(CodEORI)%%>', urlencode($urow['CodEORI']), $templateCode);

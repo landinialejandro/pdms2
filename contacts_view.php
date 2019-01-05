@@ -29,7 +29,7 @@
 		"if(CHAR_LENGTH(`contacts`.`lastName`)>100, concat(left(`contacts`.`lastName`,100),' ...'), `contacts`.`lastName`)" => "lastName",
 		"`contacts`.`notes`" => "notes",
 		"if(CHAR_LENGTH(`contacts`.`title`)>100, concat(left(`contacts`.`title`,100),' ...'), `contacts`.`title`)" => "title",
-		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'')" => "birthDate",
+		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d.%m.%Y'),'')" => "birthDate",
 		"`contacts`.`CodEORI`" => "CodEORI"
 	);
 	// mapping incoming sort by requests to actual query fields
@@ -54,7 +54,7 @@
 		"`contacts`.`lastName`" => "lastName",
 		"`contacts`.`notes`" => "notes",
 		"`contacts`.`title`" => "title",
-		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'')" => "birthDate",
+		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d.%m.%Y'),'')" => "birthDate",
 		"`contacts`.`CodEORI`" => "CodEORI"
 	);
 	// Fields that can be filtered
@@ -79,7 +79,7 @@
 		"`contacts`.`lastName`" => "LastName",
 		"`contacts`.`notes`" => "notes",
 		"`contacts`.`title`" => "Title",
-		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'')" => "birthDate",
+		"if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d.%m.%Y'),'')" => "birthDate",
 		"`contacts`.`CodEORI`" => "CodEORI"
 	);
 
