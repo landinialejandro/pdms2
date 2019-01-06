@@ -33,7 +33,7 @@
 	}
 
 	function isEmail($email){
-		if(preg_match('/^([*+!.&#$¦\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,45})$/i', $email)){
+		if(preg_match('/^([*+!.&#$ï¿½\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,45})$/i', $email)){
 			return $email;
 		}else{
 			return FALSE;
@@ -49,6 +49,10 @@
 
 	/* if config file already exists, no need to continue */
 	if(!$finish && detect_config(false)){
+		//add hook after finish setup
+		if (function_exists('updateSqlView')){
+			updateSqlViews();
+		}
 		@header('Location: index.php');
 		exit;
 	}

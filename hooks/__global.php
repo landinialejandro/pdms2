@@ -1,11 +1,7 @@
 <?php
 
 	function login_ok($memberInfo, &$args){
-            $dir = __DIR__."/SQL_Views";
-            $views = array_diff(scandir($dir), array('.', '..'));
-            foreach ($views as $sql){
-                        $res = sql(file_get_contents("$dir/$sql"),$eo);
-            }
+        updateSqlViews();
 		return '';
 	}
 
