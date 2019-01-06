@@ -38,37 +38,40 @@
 //		);
                 
                 $okName = makeSafe(sqlValue("SELECT name from kinds where code = 'OUT'"));
-                
-		$homeLinks[] = array(
-			'url' => 'orders_view.php?ok='.$okName,//Add a new order to mc(multicompany)1,ok order kind output, dk= document kind DDT in case 
-			'title' => 'Ordini Output', 
-			'description' => 'Ordini fatti dai clienti, con i nuovi ordini elencati per primi.
-                                            La cronologia degli ordini puo essere specificata utilizzando
-                                            un filtro con numerose opzioni di scelta.',
-			'groups' => array('*'), // groups allowed to see this link, use '*' if you want to show the link to all groups
-			'grid_column_classes' => 'col-lg-6', // optional CSS classes to apply to link block. See: http://getbootstrap.com/css/#grid
-			'panel_classes' => 'panel panel-warning', // optional CSS classes to apply to panel. See: http://getbootstrap.com/components/#panels
-			'link_classes' => 'btn btn-block  btn-warning', // optional CSS classes to apply to link. See: http://getbootstrap.com/css/#buttons
-			'icon' => 'resources/table_icons/cart_remove.png', // optional icon to use with the link
+        if ($okName){
+        $homeLinks[] = array(
+                'url' => 'orders_view.php?ok='.$okName,//Add a new order to mc(multicompany)1,ok order kind output, dk= document kind DDT in case 
+                'title' => $okName, 
+                'description' => 'Ordini fatti dai clienti, con i nuovi ordini elencati per primi.
+                La cronologia degli ordini puo essere specificata utilizzando
+                un filtro con numerose opzioni di scelta.',
+                'groups' => array('*'), // groups allowed to see this link, use '*' if you want to show the link to all groups
+                'grid_column_classes' => 'col-lg-6', // optional CSS classes to apply to link block. See: http://getbootstrap.com/css/#grid
+                'panel_classes' => 'panel panel-warning', // optional CSS classes to apply to panel. See: http://getbootstrap.com/components/#panels
+                'link_classes' => 'btn btn-block  btn-warning', // optional CSS classes to apply to link. See: http://getbootstrap.com/css/#buttons
+                'icon' => 'resources/table_icons/cart_remove.png', // optional icon to use with the link
+                'table_group' => 'Documenti' // optional name of the table group you wish to add the link to. If the table group name contains non-Latin characters, you should convert them to html entities.
+            );
+        }
+        $okName = makeSafe(sqlValue("SELECT name from kinds where code = 'IN'"));
+        if ($okName){
+            $homeLinks[] = array(
+                'url' => 'orders_view.php?ok='.$okName,//Add a new order to mc(multicompany)1,ok order kind output, dk= document kind DDT in case 
+                'title' => $okName, 
+                'description' => $okName,
+                'groups' => array('*'), // groups allowed to see this link, use '*' if you want to show the link to all groups
+                'grid_column_classes' => 'col-lg-6', // optional CSS classes to apply to link block. See: http://getbootstrap.com/css/#grid
+                'panel_classes' => 'panel panel-warning', // optional CSS classes to apply to panel. See: http://getbootstrap.com/components/#panels
+                'link_classes' => 'btn btn-block  btn-warning', // optional CSS classes to apply to link. See: http://getbootstrap.com/css/#buttons
+                'icon' => 'resources/table_icons/cart_put.png', // optional icon to use with the link
 			'table_group' => 'Documenti' // optional name of the table group you wish to add the link to. If the table group name contains non-Latin characters, you should convert them to html entities.
 		);
-                $okName = makeSafe(sqlValue("SELECT name from kinds where code = 'IN'"));
-		$homeLinks[] = array(
-			'url' => 'orders_view.php?ok='.$okName,//Add a new order to mc(multicompany)1,ok order kind output, dk= document kind DDT in case 
-			'title' => 'Ordini Input', 
-			'description' => 'Ordini Input',
-			'groups' => array('*'), // groups allowed to see this link, use '*' if you want to show the link to all groups
-			'grid_column_classes' => 'col-lg-6', // optional CSS classes to apply to link block. See: http://getbootstrap.com/css/#grid
-			'panel_classes' => 'panel panel-warning', // optional CSS classes to apply to panel. See: http://getbootstrap.com/components/#panels
-			'link_classes' => 'btn btn-block  btn-warning', // optional CSS classes to apply to link. See: http://getbootstrap.com/css/#buttons
-			'icon' => 'resources/table_icons/cart_put.png', // optional icon to use with the link
-			'table_group' => 'Documenti' // optional name of the table group you wish to add the link to. If the table group name contains non-Latin characters, you should convert them to html entities.
-		);
+        }
 		//get cdefault compnay A
                 $res = sql("SELECT id, companyName FROM `SQL_defaultsCompanies` WHERE `attribute` = 'DEF_A' AND `value` = 1 LIMIT 1;",$eo);
                 if (($def_a = db_fetch_assoc($res))) {
                     $homeLinks[] = array(
-                            'url' => 'orders_view.php?addNew_x=1&mc='. $def_a['id'] .'&ok=OUT&dk=DDT', 
+                        'url' => 'orders_view.php?addNew_x=1&mc='. $def_a['id'] .'&ok=OUT&dk=DDT', 
                             'title' => 'Azienda ' . $def_a['companyName'] . ' Add DDT Order', 
                             'description' => 'Add ddt order to my Azienda A (MyOneCompany). '
                         . 'You can change this Company from companies attributes',
