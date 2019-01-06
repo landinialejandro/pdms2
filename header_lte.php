@@ -12,27 +12,21 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<title>Pdms | <?php echo (isset($x->TableTitle) ? $x->TableTitle : ''); ?></title>
-		<link id="browser_favicon" rel="shortcut icon" href="<?php echo PREPEND_PATH; ?>resources/images/appgini-icon.png">
+		<link id="browser_favicon" rel="shortcut icon" href="<?php echo PREPEND_PATH; ?>images/favicon.ico">
 
+		<!-- LTE adding -->
 		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>LTE/dist/bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>LTE/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>LTE/Ionicons/css/ionicons.min.css">
+		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>LTE/dist/css/AdminLTE.css">
+		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>LTE/dist/css/skins/skin-blue.css">
+		<!-- \LTE adding -->
 		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>resources/lightbox/css/lightbox.css" media="screen">
 		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>resources/select2/select2.css" media="screen">
 		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>resources/timepicker/bootstrap-timepicker.min.css" media="screen">
 		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>resources/datepicker/css/datepicker.css" media="screen">
 		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>resources/bootstrap-datetimepicker/bootstrap-datetimepicker.css" media="screen">
 		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>dynamic.css.php">
-                <!-- LTE adding -->
-                    <!-- Font Awesome -->
-                    <link rel="stylesheet" href="LTE/font-awesome/css/font-awesome.min.css">
-                    <!-- Ionicons -->
-                    <link rel="stylesheet" href="LTE/Ionicons/css/ionicons.min.css">
-                    <!-- Theme style -->
-                    <link rel="stylesheet" href="LTE/dist/css/AdminLTE.css">
-                    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-                        page. However, you can choose any other skin. Make sure you
-                        apply the skin class to the body tag so the changes take effect. -->
-                    <link rel="stylesheet" href="LTE/dist/css/skins/skin-blue.css">
-                <!-- \LTE adding -->
 		<!--[if lt IE 9]>
 			<script src="<?php echo PREPEND_PATH; ?>resources/initializr/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 		<![endif]-->
