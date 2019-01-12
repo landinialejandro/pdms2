@@ -24,10 +24,25 @@
 
 	switch($mfk){
 
+		case 'country':
+			if(!$id){
+				?>
+				$j('#country_name<?php echo $rnd1; ?>').html('&nbsp;');
+				<?php
+				break;
+			}
+			$res = sql("SELECT `countries`.`id` as 'id', if(CHAR_LENGTH(`countries`.`country`)>100, concat(left(`countries`.`country`,100),' ...'), `countries`.`country`) as 'country', if(CHAR_LENGTH(`countries`.`code`)>50, concat(left(`countries`.`code`,50),' ...'), `countries`.`code`) as 'code', `countries`.`ISOcode` as 'ISOcode' FROM `countries`  WHERE `countries`.`id`='{$id}' limit 1", $eo);
+			$row = db_fetch_assoc($res);
+			?>
+			$j('#country_name<?php echo $rnd1; ?>').html('<?php echo addslashes(str_replace(array("\r", "\n"), '', nl2br($row['country']))); ?>&nbsp;');
+			<?php
+			break;
+
 		case 'town':
 			if(!$id){
 				?>
 				$j('#postalCode<?php echo $rnd1; ?>').html('&nbsp;');
+				$j('#district<?php echo $rnd1; ?>').html('&nbsp;');
 				<?php
 				break;
 			}
@@ -35,6 +50,7 @@
 			$row = db_fetch_assoc($res);
 			?>
 			$j('#postalCode<?php echo $rnd1; ?>').html('<?php echo addslashes(str_replace(array("\r", "\n"), '', nl2br($row['shipCode']))); ?>&nbsp;');
+			$j('#district<?php echo $rnd1; ?>').html('<?php echo addslashes(str_replace(array("\r", "\n"), '', nl2br($row['district']))); ?>&nbsp;');
 			<?php
 			break;
 

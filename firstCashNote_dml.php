@@ -860,8 +860,8 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(order)%%>', safe_html($urow['order']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(order)%%>', html_attr($row['order']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(order)%%>', urlencode($urow['order']), $templateCode);
-		$templateCode = str_replace('<%%VALUE(operationDate)%%>', @date('d.m.Y', @strtotime(html_attr($row['operationDate']))), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(operationDate)%%>', urlencode(@date('d.m.Y', @strtotime(html_attr($urow['operationDate'])))), $templateCode);
+		$templateCode = str_replace('<%%VALUE(operationDate)%%>', @date('d/m/Y', @strtotime(html_attr($row['operationDate']))), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(operationDate)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['operationDate'])))), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', safe_html($urow['company']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', html_attr($row['company']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode($urow['company']), $templateCode);
@@ -895,8 +895,8 @@ function firstCashNote_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 			$templateCode = str_replace('<%%VALUE(note)%%>', html_attr($row['note']), $templateCode);
 		}
 		$templateCode = str_replace('<%%URLVALUE(note)%%>', urlencode($urow['note']), $templateCode);
-		$templateCode = str_replace('<%%VALUE(paymentDeadLine)%%>', @date('d.m.Y', @strtotime(html_attr($row['paymentDeadLine']))), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(paymentDeadLine)%%>', urlencode(@date('d.m.Y', @strtotime(html_attr($urow['paymentDeadLine'])))), $templateCode);
+		$templateCode = str_replace('<%%VALUE(paymentDeadLine)%%>', @date('d/m/Y', @strtotime(html_attr($row['paymentDeadLine']))), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(paymentDeadLine)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['paymentDeadLine'])))), $templateCode);
 		$templateCode = str_replace('<%%CHECKED(payed)%%>', ($row['payed'] ? "checked" : ""), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);

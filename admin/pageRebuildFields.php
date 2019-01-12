@@ -142,7 +142,8 @@
 			'codiceDestinatario' => array('appgini' => 'VARCHAR(40) '),
 			'regimeFiscale' => array('appgini' => 'VARCHAR(40) '),
 			'tipoCassa' => array('appgini' => 'VARCHAR(40) '),
-			'modalitaPagamento' => array('appgini' => 'VARCHAR(40) ')
+			'modalitaPagamento' => array('appgini' => 'VARCHAR(40) '),
+			'RiferimentoAmministrazione' => array('appgini' => 'VARCHAR(40) ')
 		),
 		'contacts' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -223,6 +224,7 @@
 			'address' => array('appgini' => 'VARCHAR(255) '),
 			'houseNumber' => array('appgini' => 'VARCHAR(255) '),
 			'country' => array('appgini' => 'INT unsigned '),
+			'country_name' => array('appgini' => 'INT unsigned '),
 			'town' => array('appgini' => 'INT unsigned '),
 			'postalCode' => array('appgini' => 'INT unsigned '),
 			'district' => array('appgini' => 'INT unsigned '),

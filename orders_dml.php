@@ -1058,8 +1058,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	// code for template based detail view forms
 
 	// open the detail view template
-	$template_file = is_file("./{$TemplateDV}") ? "./{$TemplateDV}" : './templates/orders_templateDV.html';
-	$templateCode = @file_get_contents($template_file);
+	$templateCode = @file_get_contents('./templates/orders_templateDV.html');
 
 	// process form title
 	$templateCode = str_replace('<%%DETAIL_VIEW_TITLE%%>', 'Dettaglio ordini', $templateCode);
@@ -1247,12 +1246,12 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(employee)%%>', safe_html($urow['employee']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(employee)%%>', html_attr($row['employee']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(employee)%%>', urlencode($urow['employee']), $templateCode);
-		$templateCode = str_replace('<%%VALUE(date)%%>', @date('d.m.Y', @strtotime(html_attr($row['date']))), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(date)%%>', urlencode(@date('d.m.Y', @strtotime(html_attr($urow['date'])))), $templateCode);
-		$templateCode = str_replace('<%%VALUE(requiredDate)%%>', @date('d.m.Y', @strtotime(html_attr($row['requiredDate']))), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(requiredDate)%%>', urlencode(@date('d.m.Y', @strtotime(html_attr($urow['requiredDate'])))), $templateCode);
-		$templateCode = str_replace('<%%VALUE(shippedDate)%%>', @date('d.m.Y', @strtotime(html_attr($row['shippedDate']))), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(shippedDate)%%>', urlencode(@date('d.m.Y', @strtotime(html_attr($urow['shippedDate'])))), $templateCode);
+		$templateCode = str_replace('<%%VALUE(date)%%>', @date('d/m/Y', @strtotime(html_attr($row['date']))), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(date)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['date'])))), $templateCode);
+		$templateCode = str_replace('<%%VALUE(requiredDate)%%>', @date('d/m/Y', @strtotime(html_attr($row['requiredDate']))), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(requiredDate)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['requiredDate'])))), $templateCode);
+		$templateCode = str_replace('<%%VALUE(shippedDate)%%>', @date('d/m/Y', @strtotime(html_attr($row['shippedDate']))), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(shippedDate)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['shippedDate'])))), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(shipVia)%%>', safe_html($urow['shipVia']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(shipVia)%%>', html_attr($row['shipVia']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(shipVia)%%>', urlencode($urow['shipVia']), $templateCode);

@@ -1578,15 +1578,15 @@
 	function app_datetime_format($destination = 'php', $datetime = 'd'){
 		switch(strtolower($destination)){
 			case 'mysql':
-				$date = '%d.%m.%Y';
+				$date = '%d/%m/%Y';
 				$time = '%h:%i:%s %p';
 				break;
 			case 'moment':
-				$date = 'DD.MM.YYYY';
+				$date = 'DD/MM/YYYY';
 				$time = 'hh:mm:ss A';
 				break;
 			default: // php
-				$date = 'd.m.Y';
+				$date = 'd/m/Y';
 				$time = 'h:i:s A';
 		}
 

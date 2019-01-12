@@ -119,6 +119,16 @@
 					</div>
 				</div>
 
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="RiferimentoAmministrazione" class="control-label col-lg-3">Riferimento Amministrazione <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RiferimentoAmministrazione-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="RiferimentoAmministrazione-description"><div class="alert alert-info">Utilit&#224;: il campo &#232; stato previsto per immettere in fattura un valore, riferito al<br>cedente/prestatore, che possa in qualche modo agevolare il trattamento<br>automatico della fattura da parte di chi la riceve. Si pensi, solo a titolo di<br>esempio:<br>- al codice con il quale il cedente/prestatore &#232; &#8220;conosciuto&#8221; in una<br>anagrafica fornitori gestita dal soggetto destinatario della fattura;<br>- al codice di una voce presente nel sistema contabile del destinatario<br>della fattura utile per la registrazione automatica delle operazioni<br>riguardanti quel cedente/prestatore in contabilit&#224;;<br></div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="RiferimentoAmministrazione" id="RiferimentoAmministrazione" value="<%%VALUE(RiferimentoAmministrazione)%%>">
+					</div>
+				</div>
+
 			</fieldset>
 		</div>
 

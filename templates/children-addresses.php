@@ -96,44 +96,55 @@
 
 		<div class="table-responsive">
 			<table class="table table-striped table-hover table-condensed table-bordered">
-				<tbody>
-					<?php if(is_array($records)) {
-                                            foreach($records as $pkValue => $record){?>
+				<thead>
 					<tr>
-                                                <?php if(is_array($config['display-fields'])){?>
+						<?php if($config['open-detail-view-on-click']){ ?>
+							<th>&nbsp;</th>
+						<?php } ?>
+						<?php if(is_array($config['display-fields'])) foreach($config['display-fields'] as $fieldIndex => $fieldLabel){ ?>
+							<th 
+								<?php if($config['sortable-fields'][$fieldIndex]){ ?>
+									onclick="<?php echo $current_table; ?>GetChildrenRecordsList({
+										Verb: 'sort', 
+										SortBy: <?php echo $fieldIndex; ?>, 
+										SortDirection: '<?php echo ($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'asc' ? 'desc' : 'asc'); ?>'
+									});" 
+									style="cursor: pointer;" 
+								<?php } ?>
+								class="<?php echo "{$current_table}-{$config['display-field-names'][$fieldIndex]}"; ?>">
+								<?php echo $fieldLabel; ?>
+								<?php if($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'desc'){ ?>
+									<i class="glyphicon glyphicon-sort-by-attributes-alt text-warning"></i>
+								<?php }elseif($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'asc'){ ?>
+									<i class="glyphicon glyphicon-sort-by-attributes text-warning"></i>
+								<?php } ?>
+							</th>
+						<?php } ?>
+					</tr>
+				</thead>
+				<tbody>
+					<?php if(is_array($records)) foreach($records as $pkValue => $record){ ?>
+					<tr>
 						<?php if($config['open-detail-view-on-click']){ ?>
 							<?php if(stripos($_SERVER['HTTP_USER_AGENT'], 'msie ')){ ?>
-								<td class="text-center view-on-click"><a href="<?php echo $parameters['ChildTable']; ?>_view.php?SelectedID=<?php echo urlencode($record[$config['child-primary-key-index']]); ?>" target="_viewchild" class="h6"><i class="fa fa-pencil hspacer-md"></i></a></td>
+								<td class="text-center view-on-click"><a href="<?php echo $parameters['ChildTable']; ?>_view.php?SelectedID=<?php echo urlencode($record[$config['child-primary-key-index']]); ?>" target="_viewchild" class="h6"><i class="glyphicon glyphicon-new-window hspacer-md"></i></a></td>
 							<?php }else{ ?>
-								<td class="text-center view-on-click"><a href="#" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'open', ChildID: '<?php echo html_attr($record[$config['child-primary-key-index']]); ?>'}); return false;" class="h6"><i class="fa fa-pencil hspacer-md"></i></a></td>
+								<td class="text-center view-on-click"><a href="#" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'open', ChildID: '<?php echo html_attr($record[$config['child-primary-key-index']]); ?>'}); return false;" class="h6"><i class="glyphicon glyphicon-new-window hspacer-md"></i></a></td>
 							<?php } ?>
-                                                <?php } }?>
-                                            <td>
-                                                
-                                                <div id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}-" . html_attr($record[$config['child-primary-key-index']]); ?>" class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}"; ?>" style="margin-bottom: 0px;"><a onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'open', ChildID: '<?php echo html_attr($record[$config['child-primary-key-index']]); ?>'}); return false;" href="#" style="display: block; padding:0px;"><?php echo safe_html($record[1]); ?></a></div>
-                                                <div class="col-container">
-                                                    <div class="col col-md-6" style="padding-left: 0px;">
-                                                        <dl class="dl-horizontal" style="margin-left:2px !important;">
-                                                            <dt class="field-caption-tv"><?php echo $config['display-fields'][2]; ?></dt>
-                                                            <dd class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][2]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][2]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[2])." ". safe_html($record[3]); ?></dd>
-                                                            <dt class="field-caption-tv"><?php echo $config['display-fields'][5]; ?></dt>
-                                                            <dd class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][5]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][5]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[5])." ". safe_html($record[4]); ?></dd>
-                                                            <dt class="field-caption-tv"><?php echo $config['display-fields'][7]; ?></dt>
-                                                            <dd class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][7]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][7]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[7])." CP(". safe_html($record[6]).")"; ?></dd>
-                                                        </dl>
-                                                    </div>
-                                                    <div class="col col-md-6">
-                                                        <dl class="dl-horizontal" style="margin-left:2px !important;">
-                                                            <dt class="field-caption-tv <?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][11]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][11]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[11]); ?></dt>
-                                                            <dd> default address</dd>
-                                                            <dt class="field-caption-tv <?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[12]); ?></dt>
-                                                            <dd> ship address</dd>
-                                                        </dl>
-                                                    </div>
-                                                </div>
-                                            </td>
+						<?php } ?>
+
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[1]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][2]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][2]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[2]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][3]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][3]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[3]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][4]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][4]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[4]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][5]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][5]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[5]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][6]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][6]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[6]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][7]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][7]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[7]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][8]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][8]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[8]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][12]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[12]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][13]}"; ?> text-right" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][13]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[13]); ?></td>
 					</tr>
-                                                <?php } } ?>
+					<?php } ?>
 				</tbody>
 				<tfoot>
 					<tr>

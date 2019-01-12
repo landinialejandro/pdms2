@@ -34,6 +34,8 @@ function companies_insert(){
 		if($data['tipoCassa'] == empty_lookup_value){ $data['tipoCassa'] = ''; }
 	$data['modalitaPagamento'] = makeSafe($_REQUEST['modalitaPagamento']);
 		if($data['modalitaPagamento'] == empty_lookup_value){ $data['modalitaPagamento'] = ''; }
+	$data['RiferimentoAmministrazione'] = makeSafe($_REQUEST['RiferimentoAmministrazione']);
+		if($data['RiferimentoAmministrazione'] == empty_lookup_value){ $data['RiferimentoAmministrazione'] = ''; }
 	if($data['kind']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Kind': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
@@ -52,7 +54,7 @@ function companies_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL'), $o);
+	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"companies_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -459,6 +461,8 @@ function companies_update($selected_id){
 		if($data['tipoCassa'] == empty_lookup_value){ $data['tipoCassa'] = ''; }
 	$data['modalitaPagamento'] = makeSafe($_REQUEST['modalitaPagamento']);
 		if($data['modalitaPagamento'] == empty_lookup_value){ $data['modalitaPagamento'] = ''; }
+	$data['RiferimentoAmministrazione'] = makeSafe($_REQUEST['RiferimentoAmministrazione']);
+		if($data['RiferimentoAmministrazione'] == empty_lookup_value){ $data['RiferimentoAmministrazione'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: companies_before_update
@@ -468,7 +472,7 @@ function companies_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="companies_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -1060,6 +1064,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$jsReadOnly .= "\tjQuery('#tipoCassa_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#modalitaPagamento').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#modalitaPagamento_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+		$jsReadOnly .= "\tjQuery('#RiferimentoAmministrazione').replaceWith('<div class=\"form-control-static\" id=\"RiferimentoAmministrazione\">' + (jQuery('#RiferimentoAmministrazione').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -1113,6 +1118,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%UPLOADFILE(regimeFiscale)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(tipoCassa)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(modalitaPagamento)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(RiferimentoAmministrazione)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -1153,6 +1159,9 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(modalitaPagamento)%%>', safe_html($urow['modalitaPagamento']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(modalitaPagamento)%%>', html_attr($row['modalitaPagamento']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(modalitaPagamento)%%>', urlencode($urow['modalitaPagamento']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(RiferimentoAmministrazione)%%>', safe_html($urow['RiferimentoAmministrazione']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(RiferimentoAmministrazione)%%>', html_attr($row['RiferimentoAmministrazione']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(RiferimentoAmministrazione)%%>', urlencode($urow['RiferimentoAmministrazione']), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -1175,6 +1184,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$templateCode = str_replace('<%%URLVALUE(tipoCassa)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(modalitaPagamento)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(modalitaPagamento)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(RiferimentoAmministrazione)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(RiferimentoAmministrazione)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

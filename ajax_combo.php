@@ -189,18 +189,7 @@
 				'inherit_permissions' => false,
 				'list_type' => 0,
 				'not_null' => false
-			),
-                        'IDproduct_lookup' => array(
-                                'parent_table' => 'products',
-                                'parent_pk_field' => 'id',
-                                'parent_caption' => 'IF(CHAR_LENGTH(`products`.`codebar`) || CHAR_LENGTH(`products`.`productName`), CONCAT_WS(\'\', `products`.`codebar`, \' - \', `products`.`productName`), \'\')',
-                                'parent_from' => '`products`',
-                                'filterers' => array(),
-                                'custom_query' => '',
-                                'inherit_permissions' => true,
-                                'list_type' => 0,
-                                'not_null' => false
-                        )
+			)
 		),
 		'_resumeOrders' => array(   
 			'kind' => array(
@@ -529,6 +518,17 @@
 				'not_null' => false
 			),
 			'country' => array(
+				'parent_table' => 'countries',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`countries`.`code`',
+				'parent_from' => '`countries` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
+			'country_name' => array(
 				'parent_table' => 'countries',
 				'parent_pk_field' => 'id',
 				'parent_caption' => '`countries`.`country`',

@@ -22,11 +22,13 @@ function addresses_insert(){
 		if($data['houseNumber'] == empty_lookup_value){ $data['houseNumber'] = ''; }
 	$data['country'] = makeSafe($_REQUEST['country']);
 		if($data['country'] == empty_lookup_value){ $data['country'] = ''; }
+	$data['country_name'] = makeSafe($_REQUEST['country']);
+		if($data['country_name'] == empty_lookup_value){ $data['country_name'] = ''; }
 	$data['town'] = makeSafe($_REQUEST['town']);
 		if($data['town'] == empty_lookup_value){ $data['town'] = ''; }
 	$data['postalCode'] = makeSafe($_REQUEST['town']);
 		if($data['postalCode'] == empty_lookup_value){ $data['postalCode'] = ''; }
-	$data['district'] = makeSafe($_REQUEST['district']);
+	$data['district'] = makeSafe($_REQUEST['town']);
 		if($data['district'] == empty_lookup_value){ $data['district'] = ''; }
 	$data['contact'] = makeSafe($_REQUEST['contact']);
 		if($data['contact'] == empty_lookup_value){ $data['contact'] = ''; }
@@ -38,7 +40,6 @@ function addresses_insert(){
 		if($data['default'] == empty_lookup_value){ $data['default'] = ''; }
 	$data['ship'] = makeSafe($_REQUEST['ship']);
 		if($data['ship'] == empty_lookup_value){ $data['ship'] = ''; }
-	if($data['country'] == '') $data['country'] = "IT";
 
 	// hook: addresses_before_insert
 	if(function_exists('addresses_before_insert')){
@@ -47,7 +48,7 @@ function addresses_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `addresses` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `address`=' . (($data['address'] !== '' && $data['address'] !== NULL) ? "'{$data['address']}'" : 'NULL') . ', `houseNumber`=' . (($data['houseNumber'] !== '' && $data['houseNumber'] !== NULL) ? "'{$data['houseNumber']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `town`=' . (($data['town'] !== '' && $data['town'] !== NULL) ? "'{$data['town']}'" : 'NULL') . ', `postalCode`=' . (($data['postalCode'] !== '' && $data['postalCode'] !== NULL) ? "'{$data['postalCode']}'" : 'NULL') . ', `district`=' . (($data['district'] !== '' && $data['district'] !== NULL) ? "'{$data['district']}'" : 'NULL') . ', `map`=' . (($data['map'] !== '' && $data['map'] !== NULL) ? "'{$data['map']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL') . ', `ship`=' . (($data['ship'] !== '' && $data['ship'] !== NULL) ? "'{$data['ship']}'" : 'NULL'), $o);
+	sql('insert into `addresses` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `address`=' . (($data['address'] !== '' && $data['address'] !== NULL) ? "'{$data['address']}'" : 'NULL') . ', `houseNumber`=' . (($data['houseNumber'] !== '' && $data['houseNumber'] !== NULL) ? "'{$data['houseNumber']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `country_name`=' . (($data['country_name'] !== '' && $data['country_name'] !== NULL) ? "'{$data['country_name']}'" : 'NULL') . ', `town`=' . (($data['town'] !== '' && $data['town'] !== NULL) ? "'{$data['town']}'" : 'NULL') . ', `postalCode`=' . (($data['postalCode'] !== '' && $data['postalCode'] !== NULL) ? "'{$data['postalCode']}'" : 'NULL') . ', `district`=' . (($data['district'] !== '' && $data['district'] !== NULL) ? "'{$data['district']}'" : 'NULL') . ', `map`=' . (($data['map'] !== '' && $data['map'] !== NULL) ? "'{$data['map']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL') . ', `ship`=' . (($data['ship'] !== '' && $data['ship'] !== NULL) ? "'{$data['ship']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"addresses_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -138,11 +139,13 @@ function addresses_update($selected_id){
 		if($data['houseNumber'] == empty_lookup_value){ $data['houseNumber'] = ''; }
 	$data['country'] = makeSafe($_REQUEST['country']);
 		if($data['country'] == empty_lookup_value){ $data['country'] = ''; }
+	$data['country_name'] = makeSafe($_REQUEST['country']);
+		if($data['country_name'] == empty_lookup_value){ $data['country_name'] = ''; }
 	$data['town'] = makeSafe($_REQUEST['town']);
 		if($data['town'] == empty_lookup_value){ $data['town'] = ''; }
 	$data['postalCode'] = makeSafe($_REQUEST['town']);
 		if($data['postalCode'] == empty_lookup_value){ $data['postalCode'] = ''; }
-	$data['district'] = makeSafe($_REQUEST['district']);
+	$data['district'] = makeSafe($_REQUEST['town']);
 		if($data['district'] == empty_lookup_value){ $data['district'] = ''; }
 	$data['contact'] = makeSafe($_REQUEST['contact']);
 		if($data['contact'] == empty_lookup_value){ $data['contact'] = ''; }
@@ -163,7 +166,7 @@ function addresses_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `addresses` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `address`=' . (($data['address'] !== '' && $data['address'] !== NULL) ? "'{$data['address']}'" : 'NULL') . ', `houseNumber`=' . (($data['houseNumber'] !== '' && $data['houseNumber'] !== NULL) ? "'{$data['houseNumber']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `town`=' . (($data['town'] !== '' && $data['town'] !== NULL) ? "'{$data['town']}'" : 'NULL') . ', `postalCode`=' . (($data['postalCode'] !== '' && $data['postalCode'] !== NULL) ? "'{$data['postalCode']}'" : 'NULL') . ', `district`=' . (($data['district'] !== '' && $data['district'] !== NULL) ? "'{$data['district']}'" : 'NULL') . ', `map`=' . (($data['map'] !== '' && $data['map'] !== NULL) ? "'{$data['map']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL') . ', `ship`=' . (($data['ship'] !== '' && $data['ship'] !== NULL) ? "'{$data['ship']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `addresses` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `address`=' . (($data['address'] !== '' && $data['address'] !== NULL) ? "'{$data['address']}'" : 'NULL') . ', `houseNumber`=' . (($data['houseNumber'] !== '' && $data['houseNumber'] !== NULL) ? "'{$data['houseNumber']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `country_name`=' . (($data['country_name'] !== '' && $data['country_name'] !== NULL) ? "'{$data['country_name']}'" : 'NULL') . ', `town`=' . (($data['town'] !== '' && $data['town'] !== NULL) ? "'{$data['town']}'" : 'NULL') . ', `postalCode`=' . (($data['postalCode'] !== '' && $data['postalCode'] !== NULL) ? "'{$data['postalCode']}'" : 'NULL') . ', `district`=' . (($data['district'] !== '' && $data['district'] !== NULL) ? "'{$data['district']}'" : 'NULL') . ', `map`=' . (($data['map'] !== '' && $data['map'] !== NULL) ? "'{$data['map']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL') . ', `ship`=' . (($data['ship'] !== '' && $data['ship'] !== NULL) ? "'{$data['ship']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="addresses_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -208,7 +211,6 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$filterer_kind = thisOr(undo_magic_quotes($_REQUEST['filterer_kind']), '');
 	$filterer_country = thisOr(undo_magic_quotes($_REQUEST['filterer_country']), '');
 	$filterer_town = thisOr(undo_magic_quotes($_REQUEST['filterer_town']), '');
-	$filterer_district = thisOr(undo_magic_quotes($_REQUEST['filterer_district']), '');
 	$filterer_contact = thisOr(undo_magic_quotes($_REQUEST['filterer_contact']), '');
 	$filterer_company = thisOr(undo_magic_quotes($_REQUEST['filterer_company']), '');
 
@@ -223,8 +225,6 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$combo_country = new DataCombo;
 	// combobox: town, filterable by: country
 	$combo_town = new DataCombo;
-	// combobox: district
-	$combo_district = new DataCombo;
 	// combobox: contact
 	$combo_contact = new DataCombo;
 	// combobox: company
@@ -262,14 +262,12 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$combo_kind->SelectedData = $row['kind'];
 		$combo_country->SelectedData = $row['country'];
 		$combo_town->SelectedData = $row['town'];
-		$combo_district->SelectedData = $row['district'];
 		$combo_contact->SelectedData = $row['contact'];
 		$combo_company->SelectedData = $row['company'];
 	}else{
 		$combo_kind->SelectedData = $filterer_kind;
 		$combo_country->SelectedData = $filterer_country;
 		$combo_town->SelectedData = $filterer_town;
-		$combo_district->SelectedData = $filterer_district;
 		$combo_contact->SelectedData = $filterer_contact;
 		$combo_company->SelectedData = $filterer_company;
 	}
@@ -279,8 +277,6 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$combo_country->MatchText = '<span id="country-container-readonly' . $rnd1 . '"></span><input type="hidden" name="country" id="country' . $rnd1 . '" value="' . html_attr($combo_country->SelectedData) . '">';
 	$combo_town->HTML = '<span id="town-container' . $rnd1 . '"></span><input type="hidden" name="town" id="town' . $rnd1 . '" value="' . html_attr($combo_town->SelectedData) . '">';
 	$combo_town->MatchText = '<span id="town-container-readonly' . $rnd1 . '"></span><input type="hidden" name="town" id="town' . $rnd1 . '" value="' . html_attr($combo_town->SelectedData) . '">';
-	$combo_district->HTML = '<span id="district-container' . $rnd1 . '"></span><input type="hidden" name="district" id="district' . $rnd1 . '" value="' . html_attr($combo_district->SelectedData) . '">';
-	$combo_district->MatchText = '<span id="district-container-readonly' . $rnd1 . '"></span><input type="hidden" name="district" id="district' . $rnd1 . '" value="' . html_attr($combo_district->SelectedData) . '">';
 	$combo_contact->HTML = '<span id="contact-container' . $rnd1 . '"></span><input type="hidden" name="contact" id="contact' . $rnd1 . '" value="' . html_attr($combo_contact->SelectedData) . '">';
 	$combo_contact->MatchText = '<span id="contact-container-readonly' . $rnd1 . '"></span><input type="hidden" name="contact" id="contact' . $rnd1 . '" value="' . html_attr($combo_contact->SelectedData) . '">';
 	$combo_company->HTML = '<span id="company-container' . $rnd1 . '"></span><input type="hidden" name="company" id="company' . $rnd1 . '" value="' . html_attr($combo_company->SelectedData) . '">';
@@ -292,9 +288,8 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	<script>
 		// initial lookup values
 		AppGini.current_kind__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['kind'] : $filterer_kind); ?>"};
-		AppGini.current_country__RAND__ = { text: "<?php echo ($selected_id ? '' : 'IT'); ?>", value: "<?php echo addslashes($selected_id ? $urow['country'] : $filterer_country); ?>"};
+		AppGini.current_country__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['country'] : $filterer_country); ?>"};
 		AppGini.current_town__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['town'] : $filterer_town); ?>"};
-		AppGini.current_district__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['district'] : $filterer_district); ?>"};
 		AppGini.current_contact__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['contact'] : $filterer_contact); ?>"};
 		AppGini.current_company__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['company'] : $filterer_company); ?>"};
 
@@ -303,7 +298,6 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				if(typeof(kind_reload__RAND__) == 'function') kind_reload__RAND__();
 				if(typeof(country_reload__RAND__) == 'function') country_reload__RAND__();
 				<?php echo (!$AllowUpdate || $dvprint ? 'if(typeof(town_reload__RAND__) == \'function\') town_reload__RAND__(AppGini.current_country__RAND__.value);' : ''); ?>
-				if(typeof(district_reload__RAND__) == 'function') district_reload__RAND__();
 				if(typeof(contact_reload__RAND__) == 'function') contact_reload__RAND__();
 				if(typeof(company_reload__RAND__) == 'function') company_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
@@ -394,12 +388,7 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 					$j.ajax({
 						url: 'ajax_combo.php',
 						dataType: 'json',
-						<?php if(!$selected_id && !$filterer_country){ ?>
-							data: { text: 'IT', t: 'addresses', f: 'country' },
-						<?php }else{ ?>
-							data: { id: AppGini.current_country__RAND__.value, t: 'addresses', f: 'country' },
-						<?php } ?>
-
+						data: { id: AppGini.current_country__RAND__.value, t: 'addresses', f: 'country' },
 						success: function(resp){
 							c({
 								id: resp.results[0].id,
@@ -541,83 +530,6 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=town_view_parent]').hide(); }else{ $j('.btn[id=town_view_parent]').show(); }
 
 					if(typeof(town_update_autofills__RAND__) == 'function') town_update_autofills__RAND__();
-				}
-			});
-		<?php } ?>
-
-		}
-		function district_reload__RAND__(){
-		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
-
-			$j("#district-container__RAND__").select2({
-				/* initial default value */
-				initSelection: function(e, c){
-					$j.ajax({
-						url: 'ajax_combo.php',
-						dataType: 'json',
-						data: { id: AppGini.current_district__RAND__.value, t: 'addresses', f: 'district' },
-						success: function(resp){
-							c({
-								id: resp.results[0].id,
-								text: resp.results[0].text
-							});
-							$j('[name="district"]').val(resp.results[0].id);
-							$j('[id=district-container-readonly__RAND__]').html('<span id="district-match-text">' + resp.results[0].text + '</span>');
-							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=town_view_parent]').hide(); }else{ $j('.btn[id=town_view_parent]').show(); }
-
-
-							if(typeof(district_update_autofills__RAND__) == 'function') district_update_autofills__RAND__();
-						}
-					});
-				},
-				width: '100%',
-				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
-				minimumResultsForSearch: 10,
-				loadMorePadding: 200,
-				ajax: {
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					cache: true,
-					data: function(term, page){ /* */ return { s: term, p: page, t: 'addresses', f: 'district' }; },
-					results: function(resp, page){ /* */ return resp; }
-				},
-				escapeMarkup: function(str){ /* */ return str; }
-			}).on('change', function(e){
-				AppGini.current_district__RAND__.value = e.added.id;
-				AppGini.current_district__RAND__.text = e.added.text;
-				$j('[name="district"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=town_view_parent]').hide(); }else{ $j('.btn[id=town_view_parent]').show(); }
-
-
-				if(typeof(district_update_autofills__RAND__) == 'function') district_update_autofills__RAND__();
-			});
-
-			if(!$j("#district-container__RAND__").length){
-				$j.ajax({
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					data: { id: AppGini.current_district__RAND__.value, t: 'addresses', f: 'district' },
-					success: function(resp){
-						$j('[name="district"]').val(resp.results[0].id);
-						$j('[id=district-container-readonly__RAND__]').html('<span id="district-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=town_view_parent]').hide(); }else{ $j('.btn[id=town_view_parent]').show(); }
-
-						if(typeof(district_update_autofills__RAND__) == 'function') district_update_autofills__RAND__();
-					}
-				});
-			}
-
-		<?php }else{ ?>
-
-			$j.ajax({
-				url: 'ajax_combo.php',
-				dataType: 'json',
-				data: { id: AppGini.current_district__RAND__.value, t: 'addresses', f: 'district' },
-				success: function(resp){
-					$j('[id=district-container__RAND__], [id=district-container-readonly__RAND__]').html('<span id="district-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=town_view_parent]').hide(); }else{ $j('.btn[id=town_view_parent]').show(); }
-
-					if(typeof(district_update_autofills__RAND__) == 'function') district_update_autofills__RAND__();
 				}
 			});
 		<?php } ?>
@@ -843,8 +755,6 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$jsReadOnly .= "\tjQuery('#country_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#town').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#town_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
-		$jsReadOnly .= "\tjQuery('#district').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#district_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#map').replaceWith('');\n";
 		$jsReadOnly .= "\tjQuery('#map, #map-edit-link').hide();\n";
 		$jsReadOnly .= "\tjQuery('#default').prop('disabled', true);\n";
@@ -867,9 +777,6 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%COMBO(town)%%>', $combo_town->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(town)%%>', $combo_town->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(town)%%>', urlencode($combo_town->MatchText), $templateCode);
-	$templateCode = str_replace('<%%COMBO(district)%%>', $combo_district->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(district)%%>', $combo_district->MatchText, $templateCode);
-	$templateCode = str_replace('<%%URLCOMBOTEXT(district)%%>', urlencode($combo_district->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(contact)%%>', $combo_contact->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(contact)%%>', $combo_contact->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(contact)%%>', urlencode($combo_contact->MatchText), $templateCode);
@@ -878,7 +785,7 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%URLCOMBOTEXT(company)%%>', urlencode($combo_company->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'kind' => array('kinds', 'Kind'), 'country' => array('countries', 'Country'), 'town' => array('town', 'Town'), 'district' => array('town', 'District'), 'contact' => array('contacts', 'Contact'), 'company' => array('companies', 'Company'));
+	$lookup_fields = array(  'kind' => array('kinds', 'Kind'), 'country' => array('countries', 'Country Code'), 'town' => array('town', 'Town'), 'contact' => array('contacts', 'Contact'), 'company' => array('companies', 'Company'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -900,7 +807,6 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%UPLOADFILE(houseNumber)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(country)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(town)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(district)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(contact)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(company)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(map)%%>', '', $templateCode);
@@ -927,9 +833,6 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(town)%%>', safe_html($urow['town']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(town)%%>', html_attr($row['town']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(town)%%>', urlencode($urow['town']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(district)%%>', safe_html($urow['district']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(district)%%>', html_attr($row['district']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(district)%%>', urlencode($urow['district']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(contact)%%>', safe_html($urow['contact']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(contact)%%>', html_attr($row['contact']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(contact)%%>', urlencode($urow['contact']), $templateCode);
@@ -951,16 +854,14 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$templateCode = str_replace('<%%URLVALUE(address)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(houseNumber)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(houseNumber)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(country)%%>', 'IT', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(country)%%>', urlencode('IT'), $templateCode);
+		$templateCode = str_replace('<%%VALUE(country)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(country)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(town)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(town)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(district)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(district)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(contact)%%>', ( $_REQUEST['FilterField'][1]=='9' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_contact->SelectedData : ''), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(contact)%%>', urlencode( $_REQUEST['FilterField'][1]=='9' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_contact->SelectedData : ''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(company)%%>', ( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_company->SelectedData : ''), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_company->SelectedData : ''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(contact)%%>', ( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_contact->SelectedData : ''), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(contact)%%>', urlencode( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_contact->SelectedData : ''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(company)%%>', ( $_REQUEST['FilterField'][1]=='11' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_company->SelectedData : ''), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode( $_REQUEST['FilterField'][1]=='11' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_company->SelectedData : ''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(map)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(map)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%GOOGLEMAP(map)%%>', '', $templateCode);
@@ -999,6 +900,19 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	// ajaxed auto-fill fields
 	$templateCode .= '<script>';
 	$templateCode .= '$j(function() {';
+
+	$templateCode .= "\tcountry_update_autofills$rnd1 = function(){\n";
+	$templateCode .= "\t\t\$j.ajax({\n";
+	if($dvprint){
+		$templateCode .= "\t\t\turl: 'addresses_autofill.php?rnd1=$rnd1&mfk=country&id=' + encodeURIComponent('".addslashes($row['country'])."'),\n";
+		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET'\n";
+	}else{
+		$templateCode .= "\t\t\turl: 'addresses_autofill.php?rnd1=$rnd1&mfk=country&id=' + encodeURIComponent(AppGini.current_country{$rnd1}.value),\n";
+		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET', beforeSend: function(){ /* */ \$j('#country$rnd1').prop('disabled', true); \$j('#countryLoading').html('<img src=loading.gif align=top>'); }, complete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#country$rnd1').prop('disabled', false); " : "\$j('#country$rnd1').prop('disabled', true); ")."\$j('#countryLoading').html('');}\n";
+	}
+	$templateCode.="\t\t});\n";
+	$templateCode.="\t};\n";
+	if(!$dvprint) $templateCode.="\tif(\$j('#country_caption').length) \$j('#country_caption').click(function(){ /* */ country_update_autofills$rnd1(); });\n";
 
 	$templateCode .= "\ttown_update_autofills$rnd1 = function(){\n";
 	$templateCode .= "\t\t\$j.ajax({\n";

@@ -26,10 +26,11 @@
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
 		"if(CHAR_LENGTH(`addresses`.`address`)>100, concat(left(`addresses`.`address`,100),' ...'), `addresses`.`address`)" => "address",
 		"if(CHAR_LENGTH(`addresses`.`houseNumber`)>100, concat(left(`addresses`.`houseNumber`,100),' ...'), `addresses`.`houseNumber`)" => "houseNumber",
-		"IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') /* Country */" => "country",
+		"IF(    CHAR_LENGTH(`countries1`.`code`), CONCAT_WS('',   `countries1`.`code`), '') /* Country Code */" => "country",
+		"IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') /* Country Name */" => "country_name",
 		"IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') /* Town */" => "town",
 		"IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') /* PostalCode */" => "postalCode",
-		"IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') /* District */" => "district",
+		"IF(    CHAR_LENGTH(`town1`.`district`), CONCAT_WS('',   `town1`.`district`), '') /* District */" => "district",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
 		"`addresses`.`map`" => "map",
@@ -42,15 +43,16 @@
 		2 => '`kinds1`.`name`',
 		3 => 3,
 		4 => 4,
-		5 => '`countries1`.`country`',
-		6 => '`town1`.`town`',
-		7 => '`town1`.`shipCode`',
-		8 => '`town2`.`district`',
-		9 => '`contacts1`.`id`',
-		10 => '`companies1`.`id`',
-		11 => 11,
-		12 => '`addresses`.`default`',
-		13 => '`addresses`.`ship`'
+		5 => '`countries1`.`code`',
+		6 => '`countries1`.`country`',
+		7 => '`town1`.`town`',
+		8 => '`town1`.`shipCode`',
+		9 => '`town1`.`district`',
+		10 => '`contacts1`.`id`',
+		11 => '`companies1`.`id`',
+		12 => 12,
+		13 => '`addresses`.`default`',
+		14 => '`addresses`.`ship`'
 	);
 
 	// Fields that can be displayed in the csv file
@@ -59,10 +61,11 @@
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
 		"`addresses`.`address`" => "address",
 		"`addresses`.`houseNumber`" => "houseNumber",
-		"IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') /* Country */" => "country",
+		"IF(    CHAR_LENGTH(`countries1`.`code`), CONCAT_WS('',   `countries1`.`code`), '') /* Country Code */" => "country",
+		"IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') /* Country Name */" => "country_name",
 		"IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') /* Town */" => "town",
 		"IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') /* PostalCode */" => "postalCode",
-		"IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') /* District */" => "district",
+		"IF(    CHAR_LENGTH(`town1`.`district`), CONCAT_WS('',   `town1`.`district`), '') /* District */" => "district",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
 		"`addresses`.`map`" => "map",
@@ -75,10 +78,11 @@
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "Kind",
 		"`addresses`.`address`" => "Address",
 		"`addresses`.`houseNumber`" => "HouseNumber",
-		"IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') /* Country */" => "Country",
+		"IF(    CHAR_LENGTH(`countries1`.`code`), CONCAT_WS('',   `countries1`.`code`), '') /* Country Code */" => "Country Code",
+		"IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') /* Country Name */" => "Country Name",
 		"IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') /* Town */" => "Town",
 		"IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') /* PostalCode */" => "PostalCode",
-		"IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') /* District */" => "District",
+		"IF(    CHAR_LENGTH(`town1`.`district`), CONCAT_WS('',   `town1`.`district`), '') /* District */" => "District",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "Contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "Company",
 		"`addresses`.`map`" => "Map",
@@ -92,10 +96,11 @@
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
 		"`addresses`.`address`" => "Address",
 		"`addresses`.`houseNumber`" => "HouseNumber",
-		"IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') /* Country */" => "country",
+		"IF(    CHAR_LENGTH(`countries1`.`code`), CONCAT_WS('',   `countries1`.`code`), '') /* Country Code */" => "country",
+		"IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') /* Country Name */" => "country_name",
 		"IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') /* Town */" => "town",
 		"IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') /* PostalCode */" => "postalCode",
-		"IF(    CHAR_LENGTH(`town2`.`district`), CONCAT_WS('',   `town2`.`district`), '') /* District */" => "district",
+		"IF(    CHAR_LENGTH(`town1`.`district`), CONCAT_WS('',   `town1`.`district`), '') /* District */" => "district",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
 		"`addresses`.`map`" => "map",
@@ -104,9 +109,9 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'kind' => 'Kind', 'country' => 'Country', 'town' => 'Town', 'district' => 'District', 'contact' => 'Contact', 'company' => 'Company');
+	$x->filterers = array(  'kind' => 'Kind', 'country' => 'Country Code', 'town' => 'Town', 'contact' => 'Contact', 'company' => 'Company');
 
-	$x->QueryFrom = "`addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `town` as town2 ON `town2`.`id`=`addresses`.`district` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` ";
+	$x->QueryFrom = "`addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -133,10 +138,10 @@
 	$x->TableIcon = "resources/table_icons/mail_box.png";
 	$x->PrimaryKey = "`addresses`.`id`";
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Kind", "Address", "HouseNumber", "Country", "Town", "PostalCode", "District", "Default", "Ship");
-	$x->ColFieldName = array('kind', 'address', 'houseNumber', 'country', 'town', 'postalCode', 'district', 'default', 'ship');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 12, 13);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Kind", "Address", "HouseNumber", "Country Code", "Country Name", "Town", "PostalCode", "District", "Default", "Ship");
+	$x->ColFieldName = array('kind', 'address', 'houseNumber', 'country', 'country_name', 'town', 'postalCode', 'district', 'default', 'ship');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 13, 14);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/addresses_templateTV.html';

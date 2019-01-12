@@ -32,25 +32,28 @@ if($kindOrder !== 'OUT'){
     exit(error_message('<h1>order not valid</h1>' . $order['kind'], false));
 }
 
-/* retrieve multycompany info */
+/* retrieve multycompany info <CedentePrestatore> */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $multyCompany_id=intval(sqlValue("select company from orders where id={$order_id}"));
 $where_id =" AND companies.id={$multyCompany_id}";//change this to set select where
 $company = getDataTable('companies',$where_id);
 
-$where_id =" AND addresses.company = {$company['id']} AND addresses.default = 1";//change this to set select where
-$address = getDataTable('addresses',$where_id);
-if (!$address){
-    exit(error_message('<h1>Adrress order not valid</h1>', false));
-}
-$addressCountryId = sqlValue("select country from addresses where addresses.id = {$address['id']}");
-$countryCode = sqlValue("select code from countries where countries.id = {$addressCountryId} ");
+//default address or firs address found
+$table_fields = get_sql_fields('addresses');
+$table_from=get_sql_from('addresses');
+$res= sql("SELECT {$table_fields} FROM {$table_from} AND `addresses`.`company` = {$multyCompany_id} ORDER BY `addresses`.`default` DESC LIMIT 1",$eo);
 
+if (!($address = db_fetch_assoc($res))) {
+    exit(error_message('<h1>Adrress company not valid</h1>', false));
+}
+
+//default mail or first mail found
 $where_id =" AND mails.company = {$company['id']} AND mails.kind = 'WORK'";//change this to set select where
 $mails = getDataTable('mails',$where_id);
 
 $codiceDestinatario = sqlValue("select codiceDestinatario from companies where companies.id = $multyCompany_id");
 
+//default contact info or first mail found
 $defualtContactId = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$multyCompany_id} ORDER BY contacts_companies.default DESC LIMIT 1"));
 if (!$defualtContactId){
     exit(error_message('<h1>Contact company not setting</h1>', false));
@@ -98,13 +101,13 @@ $invoice=<<<XML
     xmlns:ds="http://www.w3.org/2000/09/xmldsig#" 
     xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd"
+    xsi:schemaLocation="http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd"
 >
     <FatturaElettronicaHeader>
         <!-- 1.1 -->
         <DatiTrasmissione>
             <IdTrasmittente>
-                <IdPaese>{$countryCode}</IdPaese> <!-- SI, sempre -->
+                <IdPaese>{$address['country']}</IdPaese> <!-- SI, sempre -->
                 <IdCodice>{$company['vat']}</IdCodice> <!-- SI, sempre -->
             </IdTrasmittente>
             <ProgressivoInvio>{$order['multiOrder']}</ProgressivoInvio> <!-- SI, sempre -->
@@ -120,7 +123,7 @@ $invoice=<<<XML
         <CedentePrestatore>
             <DatiAnagrafici>
                 <IdFiscaleIVA>
-                    <IdPaese>{$countryCode}</IdPaese> <!-- obligatory -->
+                    <IdPaese>{$address['country']}</IdPaese> <!-- obligatory -->
                     <IdCodice>{$company['vat']}</IdCodice> <!-- obligatory -->
                 </IdFiscaleIVA>
                 <CodiceFiscale>{$company['vat']}</CodiceFiscale> <!-- Consigliata -->
@@ -160,18 +163,18 @@ $invoice=<<<XML
                                         tale ha l’obbligo di indicare in tutti i documenti anche i dati relativi all’iscrizione
                                         (art. 2250 codice civile)
                             -->
-                <Ufficio></Ufficio> 
-                <NumeroREA></NumeroREA> 
-                <CapitaleSociale></CapitaleSociale> 
-                <SocioUnico></SocioUnico> 
-                <StatoLiquidazione></StatoLiquidazione> 
+                <Ufficio></Ufficio> <!-- SI, ma solo se -->
+                <NumeroREA></NumeroREA> <!-- SI, ma solo se -->
+                <CapitaleSociale></CapitaleSociale> <!-- SI, ma solo se -->
+                <SocioUnico></SocioUnico> <!-- SI, ma solo se -->
+                <StatoLiquidazione></StatoLiquidazione> <!-- SI, ma solo se -->
             </IscrizioneREA> 
             <Contatti>
-                <Telefono></Telefono> 
-                <Fax></Fax> 
-                <Email></Email> 
+                <Telefono></Telefono> <!-- NO -->
+                <Fax></Fax> <!-- NO -->
+                <Email></Email> <!-- NO -->
             </Contatti> 
-            <RiferimentoAmministrazione></RiferimentoAmministrazione> 
+            <RiferimentoAmministrazione></RiferimentoAmministrazione> <!-- obligatory -->
         </CedentePrestatore>
         <!-- 1.3 -->
         <RappresentanteFiscale>

@@ -32,7 +32,8 @@
 		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Codice Destinatario */" => "codiceDestinatario",
 		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* Regime Fiscale */" => "regimeFiscale",
 		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* TipoCassa */" => "tipoCassa",
-		"IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento"
+		"IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento",
+		"`companies`.`RiferimentoAmministrazione`" => "RiferimentoAmministrazione"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -46,7 +47,8 @@
 		8 => 8,
 		9 => 9,
 		10 => 10,
-		11 => 11
+		11 => 11,
+		12 => 12
 	);
 
 	// Fields that can be displayed in the csv file
@@ -61,7 +63,8 @@
 		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Codice Destinatario */" => "codiceDestinatario",
 		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* Regime Fiscale */" => "regimeFiscale",
 		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* TipoCassa */" => "tipoCassa",
-		"IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento"
+		"IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento",
+		"`companies`.`RiferimentoAmministrazione`" => "RiferimentoAmministrazione"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -75,7 +78,8 @@
 		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Codice Destinatario */" => "Codice Destinatario",
 		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* Regime Fiscale */" => "Regime Fiscale",
 		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* TipoCassa */" => "TipoCassa",
-		"IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') /* ModalitaPagamento */" => "ModalitaPagamento"
+		"IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') /* ModalitaPagamento */" => "ModalitaPagamento",
+		"`companies`.`RiferimentoAmministrazione`" => "Riferimento Amministrazione"
 	);
 
 	// Fields that can be quick searched
@@ -90,7 +94,8 @@
 		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Codice Destinatario */" => "codiceDestinatario",
 		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* Regime Fiscale */" => "regimeFiscale",
 		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* TipoCassa */" => "tipoCassa",
-		"IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento"
+		"IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento",
+		"`companies`.`RiferimentoAmministrazione`" => "RiferimentoAmministrazione"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -125,10 +130,10 @@
 	$x->DefaultSortField = '4';
 	$x->DefaultSortDirection = 'asc';
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Kind", "CompanyCode", "CompanyName", "FiscalCode", "Vat", "Notes", "Codice Destinatario", "Regime Fiscale", "TipoCassa", "ModalitaPagamento");
-	$x->ColFieldName = array('kind', 'companyCode', 'companyName', 'fiscalCode', 'vat', 'notes', 'codiceDestinatario', 'regimeFiscale', 'tipoCassa', 'modalitaPagamento');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Kind", "CompanyCode", "CompanyName", "FiscalCode", "Vat", "Notes", "Codice Destinatario", "Regime Fiscale", "TipoCassa", "ModalitaPagamento", "Riferimento Amministrazione");
+	$x->ColFieldName = array('kind', 'companyCode', 'companyName', 'fiscalCode', 'vat', 'notes', 'codiceDestinatario', 'regimeFiscale', 'tipoCassa', 'modalitaPagamento', 'RiferimentoAmministrazione');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/companies_templateTV.html';

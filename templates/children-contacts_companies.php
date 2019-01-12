@@ -15,7 +15,6 @@
 			SortDirection: '<?php echo $parameters['SortDirection']; ?>',
 			AutoClose: <?php echo ($config['auto-close'] ? 'true' : 'false'); ?>
 		};
-                //console.log(param);
 		var panelID = "panel_<?php echo "{$parameters['ChildTable']}-{$parameters['ChildLookupField']}"; ?>";
 		var mbWidth = window.innerWidth * 0.9;
 		var mbHeight = window.innerHeight * 0.8;
@@ -50,7 +49,7 @@
 				}, panelID, undefined, 'pc-loading');
 				break;
 			case 'new': /* new record */
-				var url = $j('#' + param.ChildTable + '_hclink').val() + '&addNew_x=1&Embedded=1' + (param.AutoClose ? '&AutoClose=1&Parent=<?php echo $parameters['ChildLookupField']; ?>' : '');
+				var url = $j('#' + param.ChildTable + '_hclink').val() + '&addNew_x=1&Embedded=1' + (param.AutoClose ? '&AutoClose=1' : '');
 				modal_window({
 					url: url,
 					close: function(){ /* */ <?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'reload' }); },
@@ -87,12 +86,9 @@
 
 		<?php if($config['display-add-new']){ ?>
 			<?php if(stripos($_SERVER['HTTP_USER_AGENT'], 'msie ')){ ?>
-				<a href="<?php echo $parameters['ChildTable']; ?>_view.php?filterer_<?php echo $parameters['ChildLookupField']; ?>=<?php echo urlencode($parameters['SelectedID']).'&Parent='.$parameters['ChildLookupField']; ?>'; ?>&addNew_x=1" target="_viewchild" class="btn btn-success hspacer-sm vspacer-md"><i class="glyphicon glyphicon-plus-sign"></i> <?php echo html_attr($Translation['Add New']); ?></a>
+				<a href="<?php echo $parameters['ChildTable']; ?>_view.php?filterer_<?php echo $parameters['ChildLookupField']; ?>=<?php echo urlencode($parameters['SelectedID']); ?>&addNew_x=1" target="_viewchild" class="btn btn-success hspacer-sm vspacer-md"><i class="glyphicon glyphicon-plus-sign"></i> <?php echo html_attr($Translation['Add New']); ?></a>
 			<?php }else{ ?>
-				<a href="#" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'new' }); return false;" class="btn btn-success hspacer-sm vspacer-md">
-                                    <i class="glyphicon glyphicon-plus-sign"></i> 
-                                    <?php echo html_attr($Translation['Add New']); ?>
-                                </a>
+				<a href="#" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'new' }); return false;" class="btn btn-success hspacer-sm vspacer-md"><i class="glyphicon glyphicon-plus-sign"></i> <?php echo html_attr($Translation['Add New']); ?></a>
 			<?php } ?>
 		<?php } ?>
 		<?php if($config['display-refresh']){ ?><a href="#" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'reload' }); return false;" class="btn btn-default hspacer-sm vspacer-md"><i class="glyphicon glyphicon-refresh"></i></a><?php } ?>
@@ -105,17 +101,29 @@
 						<?php if($config['open-detail-view-on-click']){ ?>
 							<th>&nbsp;</th>
 						<?php } ?>
-							<?php if ($parameters['ChildLookupField'] ==="company"){ ?>
-                                                            <th>Contacts in Company</th>
-                                                        <?php } ?>
-							<?php if ($parameters['ChildLookupField'] ==="contact"){ ?>
-                                                            <th>Companies in Contact</th>
-                                                        <?php } ?>
-                                                        <th>Default</th>
+						<?php if(is_array($config['display-fields'])) foreach($config['display-fields'] as $fieldIndex => $fieldLabel){ ?>
+							<th 
+								<?php if($config['sortable-fields'][$fieldIndex]){ ?>
+									onclick="<?php echo $current_table; ?>GetChildrenRecordsList({
+										Verb: 'sort', 
+										SortBy: <?php echo $fieldIndex; ?>, 
+										SortDirection: '<?php echo ($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'asc' ? 'desc' : 'asc'); ?>'
+									});" 
+									style="cursor: pointer;" 
+								<?php } ?>
+								class="<?php echo "{$current_table}-{$config['display-field-names'][$fieldIndex]}"; ?>">
+								<?php echo $fieldLabel; ?>
+								<?php if($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'desc'){ ?>
+									<i class="glyphicon glyphicon-sort-by-attributes-alt text-warning"></i>
+								<?php }elseif($parameters['SortBy'] == $fieldIndex && $parameters['SortDirection'] == 'asc'){ ?>
+									<i class="glyphicon glyphicon-sort-by-attributes text-warning"></i>
+								<?php } ?>
+							</th>
+						<?php } ?>
 					</tr>
 				</thead>
 				<tbody>
-					<?php if(is_array($records)){ foreach($records as $pkValue => $record){ ?>
+					<?php if(is_array($records)) foreach($records as $pkValue => $record){ ?>
 					<tr>
 						<?php if($config['open-detail-view-on-click']){ ?>
 							<?php if(stripos($_SERVER['HTTP_USER_AGENT'], 'msie ')){ ?>
@@ -124,21 +132,12 @@
 								<td class="text-center view-on-click"><a href="#" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'open', ChildID: '<?php echo html_attr($record[$config['child-primary-key-index']]); ?>'}); return false;" class="h6"><i class="glyphicon glyphicon-new-window hspacer-md"></i></a></td>
 							<?php } ?>
 						<?php } ?>
-                                                <?php if ($parameters['ChildLookupField'] ==="company"){ ?>
-                                                    <td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}-" . html_attr($record[$config['child-primary-key-index']]); ?>">
-                                                        <?php echo safe_html($record[1]); ?>
-                                                        <div  id="<?php echo "contactCard-"."{$parameters['ChildTable']}-{$config['display-field-names'][1]}-" . html_attr($record[$config['child-primary-key-index']]); ?>" myId ="<?php echo html_attr($record[$config['child-primary-key-index']]); ?>" class=""></div>
-                                                    </td>
-						<?php } ?>
-                                                <?php if ($parameters['ChildLookupField'] ==="contact"){ ?>
-                                                    <td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][2]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][2]}-" . html_attr($record[$config['child-primary-key-index']]); ?>">
-                                                        <?php echo safe_html($record[2]); ?>
-                                                        <div  id="<?php echo "companyCard-"."{$parameters['ChildTable']}-{$config['display-field-names'][2]}-" . html_attr($record[$config['child-primary-key-index']]); ?>" myId ="<?php echo html_attr($record[$config['child-primary-key-index']]); ?>" class=""></div>
-                                                    </td>
-						<?php } ?>
+
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][1]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[1]); ?></td>
+						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][2]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][2]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[2]); ?></td>
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][3]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][3]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[3]); ?></td>
 					</tr>
-                                        <?php }} ?>
+					<?php } ?>
 				</tbody>
 				<tfoot>
 					<tr>
@@ -169,23 +168,4 @@
 	</div>
 	<div class="col-xs-1 md-hidden lg-hidden"></div>
 </div>
-<script>
-    $j(function(){ /* */ $j('img[src^="thumbnail.php?i=&"').parent().hide(); });
-    setTimeout(function(){
-            refreshCards();
-        },1000);
-    function refreshCards(){
-        $j('.contacts_companies-company').each(function(index){
-            var elementId = this.id;
-            if (elementId){
-                showCardsTV('company','companyCard-'+elementId,'companyCard');
-            }
-        });
-        $j('.contacts_companies-contact').each(function(){
-        var elementId = this.id;
-            if (elementId){
-                showCardsTV('contact','contactCard-'+elementId,'contactCard');
-            }
-        });
-    }
-</script>
+<script>$j(function(){ /* */ $j('img[src^="thumbnail.php?i=&"').parent().hide(); });</script>

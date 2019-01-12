@@ -39,10 +39,10 @@
 		"`products`.`ReorderLevel`" => "ReorderLevel",
 		"`products`.`balance`" => "balance",
 		"concat('<i class=\"glyphicon glyphicon-', if(`products`.`Discontinued`, 'check', 'unchecked'), '\"></i>')" => "Discontinued",
-		"if(`products`.`manufactured_date`,date_format(`products`.`manufactured_date`,'%d.%m.%Y'),'')" => "manufactured_date",
-		"if(`products`.`expiry_date`,date_format(`products`.`expiry_date`,'%d.%m.%Y'),'')" => "expiry_date",
+		"if(`products`.`manufactured_date`,date_format(`products`.`manufactured_date`,'%d/%m/%Y'),'')" => "manufactured_date",
+		"if(`products`.`expiry_date`,date_format(`products`.`expiry_date`,'%d/%m/%Y'),'')" => "expiry_date",
 		"`products`.`note`" => "note",
-		"if(`products`.`update_date`,date_format(`products`.`update_date`,'%d.%m.%Y %h:%i %p'),'')" => "update_date"
+		"if(`products`.`update_date`,date_format(`products`.`update_date`,'%d/%m/%Y %h:%i %p'),'')" => "update_date"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -88,10 +88,10 @@
 		"`products`.`ReorderLevel`" => "ReorderLevel",
 		"`products`.`balance`" => "balance",
 		"`products`.`Discontinued`" => "Discontinued",
-		"if(`products`.`manufactured_date`,date_format(`products`.`manufactured_date`,'%d.%m.%Y'),'')" => "manufactured_date",
-		"if(`products`.`expiry_date`,date_format(`products`.`expiry_date`,'%d.%m.%Y'),'')" => "expiry_date",
+		"if(`products`.`manufactured_date`,date_format(`products`.`manufactured_date`,'%d/%m/%Y'),'')" => "manufactured_date",
+		"if(`products`.`expiry_date`,date_format(`products`.`expiry_date`,'%d/%m/%Y'),'')" => "expiry_date",
 		"`products`.`note`" => "note",
-		"if(`products`.`update_date`,date_format(`products`.`update_date`,'%d.%m.%Y %h:%i %p'),'')" => "update_date"
+		"if(`products`.`update_date`,date_format(`products`.`update_date`,'%d/%m/%Y %h:%i %p'),'')" => "update_date"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -137,10 +137,10 @@
 		"`products`.`ReorderLevel`" => "ReorderLevel",
 		"`products`.`balance`" => "balance",
 		"concat('<i class=\"glyphicon glyphicon-', if(`products`.`Discontinued`, 'check', 'unchecked'), '\"></i>')" => "Discontinued",
-		"if(`products`.`manufactured_date`,date_format(`products`.`manufactured_date`,'%d.%m.%Y'),'')" => "manufactured_date",
-		"if(`products`.`expiry_date`,date_format(`products`.`expiry_date`,'%d.%m.%Y'),'')" => "expiry_date",
+		"if(`products`.`manufactured_date`,date_format(`products`.`manufactured_date`,'%d/%m/%Y'),'')" => "manufactured_date",
+		"if(`products`.`expiry_date`,date_format(`products`.`expiry_date`,'%d/%m/%Y'),'')" => "expiry_date",
 		"`products`.`note`" => "note",
-		"if(`products`.`update_date`,date_format(`products`.`update_date`,'%d.%m.%Y %h:%i %p'),'')" => "update_date"
+		"if(`products`.`update_date`,date_format(`products`.`update_date`,'%d/%m/%Y %h:%i %p'),'')" => "update_date"
 	);
 
 	// Lookup fields that can be used as filterers

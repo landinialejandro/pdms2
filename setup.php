@@ -33,7 +33,7 @@
 	}
 
 	function isEmail($email){
-		if(preg_match('/^([*+!.&#$ï¿½\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,45})$/i', $email)){
+		if(preg_match('/^([*+!.&#$¦\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,45})$/i', $email)){
 			return $email;
 		}else{
 			return FALSE;
@@ -49,10 +49,6 @@
 
 	/* if config file already exists, no need to continue */
 	if(!$finish && detect_config(false)){
-		//add hook after finish setup
-		if (function_exists('updateSqlView')){
-			updateSqlViews();
-		}
 		@header('Location: index.php');
 		exit;
 	}
@@ -164,9 +160,9 @@
 				'custom2' => 'Address',
 				'custom3' => 'City',
 				'custom4' => 'State',
-				'MySQLDateFormat' => '%d.%m.%Y',
-				'PHPDateFormat' => 'j.n.Y',
-				'PHPDateTimeFormat' => 'd.m.Y, h:i a',
+				'MySQLDateFormat' => '%d/%m/%Y',
+				'PHPDateFormat' => 'j/n/Y',
+				'PHPDateTimeFormat' => 'd/m/Y, h:i a',
 				'senderName' => 'Membership management',
 				'senderEmail' => $email,
 				'approvalSubject' => 'Your membership is now approved',
