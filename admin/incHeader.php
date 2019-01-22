@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if(function_exists('set_headers')) { set_headers(); } ?><!DOCTYPE html>
 <?php if(!defined('PREPEND_PATH')) define('PREPEND_PATH', '../'); ?>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -261,8 +261,8 @@
 		<!-- /tool tips support -->
 
 <?php
-	if(!strstr($_SERVER['PHP_SELF'], 'pageSettings.php') && $adminConfig['adminPassword'] == md5('admin')){
-		$noSignup=TRUE;
+	if(!strstr($_SERVER['PHP_SELF'], 'pageSettings.php') && password_match('admin', $adminConfig['adminPassword'])) {
+		$noSignup = true;
 		?>
 		<div class="alert alert-danger">
 			<p><strong><?php echo $Translation["attention"] ; ?></strong></p>

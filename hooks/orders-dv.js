@@ -143,9 +143,11 @@ function validateKind(){
         $j('#multiOrder').removeAttr('readonly');
         $j('#kind-container').select2("readonly",true);
         $j('#supplier-container').select2("readonly",false);
+        $j('label[for="customer"]').parent().hide();
     }else if (k === 'OUT') {
         $j('#multiOrder').attr('readonly','true');
         $j('#kind-container').select2("readonly",true);
+        $j('label[for="supplier"]').parent().hide();
         ret=false;
     }
     return ret;

@@ -307,6 +307,10 @@ function companies_validateData(){
 	if($j('#kind').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Kind", close: function(){ /* */ $j('[name=kind]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	/* Field vat can't be empty */
 	if($j('#vat').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Vat", close: function(){ /* */ $j('[name=vat]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	/* Field FormatoTrasmissione can't be empty */
+	if(!$j('[name=FormatoTrasmissione]:checked').length){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Formato Trasmissione", close: function(){ /* */ $j('[name=FormatoTrasmissione]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	/* Checkbox field RIT_soggettoRitenuta can't be empty */
+	if($j('#RIT_soggettoRitenuta').prop('checked') == false){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> RIT soggettoRitenuta", close: function(){ /* */ $j('[name=RIT_soggettoRitenuta]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	return true;
 }
 function contacts_validateData(){
@@ -353,6 +357,18 @@ function attributes_validateData(){
 }
 function addresses_validateData(){
 	$j('.has-error').removeClass('has-error');
+	/* Field address can't be empty */
+	if($j('#address').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Address", close: function(){ /* */ $j('[name=address]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	/* Field houseNumber can't be empty */
+	if($j('#houseNumber').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> HouseNumber", close: function(){ /* */ $j('[name=houseNumber]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	/* Field country can't be empty */
+	if($j('#country').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Country Code", close: function(){ /* */ $j('[name=country]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	/* Field town can't be empty */
+	if($j('#town').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Town", close: function(){ /* */ $j('[name=town]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	/* Field postalCode can't be empty */
+	if($j('#postalCode').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> PostalCode", close: function(){ /* */ $j('[name=postalCode]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	/* Field district can't be empty */
+	if($j('#district').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> District", close: function(){ /* */ $j('[name=district]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	return true;
 }
 function phones_validateData(){
@@ -430,7 +446,7 @@ function post2(url, params, notify, disable, loading, redirectOnSuccess){
 				if($(notify) != undefined) $(notify).removeClassName('Error').appear().update(resp.responseText);
 
 				/* in case no errors returned, */
-				if(!resp.responseText.match(/<?php echo $Translation['error:']; ?>/)){
+				if(!resp.responseText.match(/<?php echo preg_quote($Translation['error:']); ?>/)){
 					/* redirect to provided url */
 					if(redirectOnSuccess != undefined){
 						window.location=redirectOnSuccess;
@@ -763,7 +779,7 @@ function mass_change_owner(t, ids){
 		jQuery('[id=new_owner_for_selected_records]').select2({
 			width: '100%',
 			formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
-			minimumResultsForSearch: 10,
+			minimumResultsForSearch: 5,
 			loadMorePadding: 200,
 			escapeMarkup: function(m){ /* */ return m; },
 			ajax: {
@@ -860,27 +876,27 @@ function enforce_uniqueness(table, field){
 
 /* persist expanded/collapsed chidren in DVP */
 function persist_expanded_child(id){
-	var expand_these = Cookies.getJSON('PDMS.dvp_expand');
+	var expand_these = JSON.parse(localStorage.getItem('PDMS.dvp_expand'));
 	if(expand_these == undefined) expand_these = [];
 
 	if($j('[id=' + id + ']').hasClass('active')){
 		if(expand_these.indexOf(id) < 0){
 			// expanded button and not persisting in cookie? save it!
 			expand_these.push(id);
-			Cookies.set('PDMS.dvp_expand', expand_these, { expires: 30 });
+			localStorage.setItem('PDMS.dvp_expand', JSON.stringify(expand_these));
 		}
 	}else{
 		if(expand_these.indexOf(id) >= 0){
 			// collapsed button and persisting in cookie? remove it!
 			expand_these.splice(expand_these.indexOf(id), 1);
-			Cookies.set('PDMS.dvp_expand', expand_these, { expires: 30 });
+			localStorage.setItem('PDMS.dvp_expand', JSON.stringify(expand_these));
 		}
 	}
 }
 
 /* apply expanded/collapsed status to children in DVP */
 function apply_persisting_children(){
-	var expand_these = Cookies.getJSON('PDMS.dvp_expand');
+	var expand_these = JSON.parse(localStorage.getItem('PDMS.dvp_expand'));
 	if(expand_these == undefined) return;
 
 	expand_these.each(function(id){
@@ -1366,3 +1382,36 @@ AppGini.hideViewParentLinks = function() {
 		$j(this).parents('.form-group').find('.view_parent').hide();
 	});
 };
+
+AppGini.filterURIComponents = function(filterIndex, andOr, fieldIndex, operator, value) {
+	filterIndex = parseInt(filterIndex); if(isNaN(filterIndex)) return '';
+	if(filterIndex < 1 || filterIndex > 60) return '';
+
+	andOr = andOr.toLowerCase();
+	if(andOr != 'or') andOr = 'and';
+
+	fieldIndex = parseInt(fieldIndex); if(isNaN(fieldIndex)) return '';
+	if(fieldIndex < 1 || fieldIndex > 1000) return '';
+
+	if(![
+		'equal-to',
+		'not-equal-to',
+		'greater-than',
+		'greater-than-or-equal-to',
+		'less-than',
+		'less-than-or-equal-to',
+		'like',
+		'not-like',
+		'is-empty',
+		'is-not-empty'
+	].indexOf(operator)) operator = 'like';
+
+	if(undefined == value) value = '';
+
+	return '' +
+		encodeURIComponent('FilterAnd[' + filterIndex + ']') + '=' + andOr + '&' +
+		encodeURIComponent('FilterField[' + filterIndex + ']') + '=' + fieldIndex + '&' +
+		encodeURIComponent('FilterOperator[' + filterIndex + ']') + '=' + operator + '&' +
+		encodeURIComponent('FilterValue[' + filterIndex + ']') + '=' + encodeURIComponent(value);
+}
+

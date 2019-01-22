@@ -49,7 +49,7 @@
 
 		$new_admin_config = '';
 		foreach($config_array['adminConfig'] as $admin_var => $admin_val){
-			$new_admin_config .= "\t\t'" . addslashes($admin_var) . "' => \"" . str_replace(array("\n", "\r", '"'), array('\n', '\r', '\"'), $admin_val) . "\",\n";
+			$new_admin_config .= "\t\t'" . addslashes($admin_var) . "' => \"" . str_replace(array("\n", "\r", '"', '$'), array('\n', '\r', '\"', '\$'), $admin_val) . "\",\n";
 		}
 		$new_admin_config = substr($new_admin_config, 0, -2) . "\n";
 
@@ -131,5 +131,60 @@
 		}
 
 		return (isset($config[$var]) && $config[$var] ? $config[$var] : $default_config[$var]);
+	}
+
+	/* 
+		handling password hashing in old PHP versions
+			to hash a password, store the return val of 
+				password_hash($pass, PASSWORD_DEFAULT) 
+
+			to verify:
+				if(!password_match($pass, $hash)) { no_match_code_here }
+
+			to migrate old hashes:
+				password_harden($user, $pass, $hash);
+	*/
+	if(!defined('PASSWORD_DEFAULT')) {
+		define('PASSWORD_DEFAULT', 1);
+	}
+
+	if (!function_exists('password_hash')) {
+		function password_hash($password, $algo, $options = array()) {
+			return md5($password);
+		}
+	}
+
+	if (!function_exists('password_verify')) {
+		function password_verify($password, $hash) {
+			return (md5($password) == $hash);
+		}
+	}
+
+	/**
+	 *  @brief check if given password matches given hash, preserving backward compatibility with MD5
+	 *  
+	 *  @param [in] $password Description for $password
+	 *  @param [in] $hash Description for $hash
+	 *  @return Boolean indicating match or no match
+	 */
+	function password_match($password, $hash) {
+		if(strlen($hash) == 32) return (md5($password) == $hash);
+		return password_verify($password, $hash);
+	}
+
+	/**
+	 *  @brief Migrate MD5 pass hashes to BCrypt if supported
+	 *  
+	 *  @param [in] $user username to migrate
+	 *  @param [in] $pass current password
+	 *  @param [in] $hash stored hash of password
+	 */
+	function password_harden($user, $pass, $hash) {
+		/* continue only if PHP 5.5+ and hash is 32 chars (md5) */
+		if(version_compare(PHP_VERSION, '5.5.0') == -1 || strlen($hash) > 32) return;
+
+		$new_hash = password_hash($pass, PASSWORD_DEFAULT);
+		$suser = makeSafe($user, false);
+		sql("update `membership_users` set `passMD5`='{$new_hash}' where `memberID`='{$suser}'", $eo);
 	}
 

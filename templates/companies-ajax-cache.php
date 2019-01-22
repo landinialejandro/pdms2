@@ -9,6 +9,7 @@
 		/* data for selected record, or defaults if none is selected */
 		var data = {
 			kind: <?php echo json_encode(array('id' => $rdata['kind'], 'value' => $rdata['kind'], 'text' => $jdata['kind'])); ?>,
+			kind_code: <?php echo json_encode($jdata['kind_code']); ?>,
 			codiceDestinatario: <?php echo json_encode(array('id' => $rdata['codiceDestinatario'], 'value' => $rdata['codiceDestinatario'], 'text' => $jdata['codiceDestinatario'])); ?>,
 			regimeFiscale: <?php echo json_encode(array('id' => $rdata['regimeFiscale'], 'value' => $rdata['regimeFiscale'], 'text' => $jdata['regimeFiscale'])); ?>,
 			tipoCassa: <?php echo json_encode(array('id' => $rdata['tipoCassa'], 'value' => $rdata['tipoCassa'], 'text' => $jdata['tipoCassa'])); ?>,
@@ -25,6 +26,20 @@
 			if(u != 'ajax_combo.php') return false;
 			if(d.t == tn && d.f == 'kind' && d.id == data.kind.id)
 				return { results: [ data.kind ], more: false, elapsed: 0.01 };
+			return false;
+		});
+
+		/* saved value for kind autofills */
+		cache.addCheck(function(u, d){
+			if(u != tn + '_autofill.php') return false;
+
+			for(var rnd in d) if(rnd.match(/^rnd/)) break;
+
+			if(d.mfk == 'kind' && d.id == data.kind.id){
+				$j('#kind_code' + d[rnd]).html(data.kind_code);
+				return true;
+			}
+
 			return false;
 		});
 

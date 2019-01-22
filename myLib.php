@@ -14,14 +14,26 @@
  * db_fetch from data result
 */
 
-function getDataTable($table_name,$where_id, $debug =FALSE){
+function getDataTable($table_name,$where_id = "", $debug =FALSE){
     // the $where_id need to be likle the next line
-    // $where_id =" AND attributes.attribute = {$id}";//change this to set select where
+    // $where_id ="AND attributes.attribute = {$id}";//change this to set select where
     $table_from = get_sql_from($table_name);
     $table_fields = get_sql_fields($table_name);
+    $where_id = "" ? "" : " ".$where_id;
     $sql="SELECT {$table_fields} FROM {$table_from}" . $where_id;
     if ($debug){
-        echo "<br>".$sql;
+        echo "<br>".$sql."<br>";
+    }
+    $res = sql($sql, $eo);
+    return db_fetch_assoc($res);
+}
+function getDataTable_Value($table_name, $where_id = "", $debug =FALSE){
+    // the $where_id need to be likle the next line
+    // $where_id ="AND attributes.attribute = {$id}";//change this to set select where
+    $where_id = "" ? "" : " where 1=1 ".$where_id;
+    $sql="SELECT * FROM {$table_name}" . $where_id;
+    if ($debug){
+        printf( "<br>".$sql."<br>");
     }
     $res = sql($sql, $eo);
     return db_fetch_assoc($res);

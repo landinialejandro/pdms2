@@ -58,20 +58,34 @@
 		$newPassword=$_POST['newPassword'];
 
 		/* validate password */
-		if(md5($oldPassword) != sqlValue("SELECT `passMD5` FROM `membership_users` WHERE memberID='{$mi['username']}'")){
+		$hash = sqlValue("SELECT `passMD5` FROM `membership_users` WHERE memberID='{$mi['username']}'");
+		if(!password_match($oldPassword, $hash)) {
 			echo "{$Translation['error:']} {$Translation['Wrong password']}";
-			echo "<script>$$('label[for=\"old-password\"]')[0].pulsate({ pulses: 10, duration: 4 }); $('old-password').activate();</script>";
+			?>
+			<script>
+				$j(function() {
+					$j('#old-password').focus();
+				})
+			</script>
+			<?php
 			exit;
 		}
 		if(strlen($newPassword) < 4){
 			echo "{$Translation['error:']} {$Translation['password invalid']}";
-			echo "<script>$$('label[for=\"new-password\"]')[0].pulsate({ pulses: 10, duration: 4 }); $('new-password').activate();</script>";
+			?>
+			<script>
+				$j(function() {
+					$j('#new-password').focus();
+				})
+			</script>
+			<?php
+
 			exit;      
 		}
 
 		/* update password */
 		$updateDT = date($adminConfig['PHPDateTimeFormat']);
-		sql("UPDATE `membership_users` set `passMD5`='".md5($newPassword)."', `comments`=CONCAT_WS('\\n', comments, 'member changed his password on $updateDT from IP address {$mi[IP]}') WHERE memberID='{$mi['username']}'", $eo);
+		sql("UPDATE `membership_users` set `passMD5`='" . password_hash($newPassword, PASSWORD_DEFAULT) . "', `comments`=CONCAT_WS('\\n', comments, 'member changed his password on $updateDT from IP address {$mi[IP]}') WHERE memberID='{$mi['username']}'", $eo);
 
 		// hook: member_activity
 		if(function_exists('member_activity')){
@@ -98,14 +112,14 @@
 	/* the profile page view */
 	include_once("$currDir/header.php"); ?>
 
-	<div class="row">
-                <div class="page-header">
-                    <h1><?php echo sprintf($Translation['Hello user'], $mi['username']); ?></h1>
-                </div>
-                <div id="notify" class="alert alert-success" style="display: none;"></div>
-                <div id="loader" style="display: none;"><i class="glyphicon glyphicon-refresh"></i> <?php echo $Translation['Loading ...']; ?></div>
+	<div class="page-header">
+		<h1><?php echo sprintf($Translation['Hello user'], $mi['username']); ?></h1>
+	</div>
+	<div id="notify" class="alert alert-success" style="display: none;"></div>
+	<div id="loader" style="display: none;"><i class="glyphicon glyphicon-refresh"></i> <?php echo $Translation['Loading ...']; ?></div>
 
-                <?php echo csrf_token(); ?>
+	<?php echo csrf_token(); ?>
+	<div class="row">
 
 		<div class="col-md-6">
 
@@ -195,9 +209,6 @@
 		</div>
 
 		<div class="col-md-6">
-                <?php /* Inserted by Membership Profile Image on 2018-06-10 06:46:44 */ ?>
-		<?php echo file_get_contents('hooks/mpi_template.html');?>
-		<?php /* End of Membership Profile Image code */ ?>
 
 			<!-- group and IP address -->
 			<div class="panel panel-info">

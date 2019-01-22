@@ -35,14 +35,14 @@
 	function isEmail($email){
 		if(preg_match('/^([*+!.&#$¦\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,45})$/i', $email)){
 			return $email;
-		}else{
-			return FALSE;
 		}
+
+		return false;
 	}
 
 	function setup_allowed_username($username){
 		$username = trim(strtolower($username));
-		if(!preg_match('/^[a-z0-9][a-z0-9 _.@]{3,19}$/', $username) || preg_match('/(@@|  |\.\.|___)/', $username)) return false;
+		if(!preg_match('/^[a-z0-9][a-z0-9 _.@]{3,100}$/', $username) || preg_match('/(@@|  |\.\.|___)/', $username)) return false;
 		return $username;
 	}
 
@@ -148,7 +148,7 @@
 
 			'adminConfig' => array(
 				'adminUsername' => $username,
-				'adminPassword' => md5($password),
+				'adminPassword' => password_hash($password, PASSWORD_DEFAULT),
 				'notifyAdminNewMembers' => false,
 				'defaultSignUp' => 1,
 				'anonymousGroup' => 'anonymous',

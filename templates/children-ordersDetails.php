@@ -24,7 +24,7 @@
 
 		switch(command.Verb){
 			case 'sort': /* order by given field index in 'SortBy' */
-				post("hooks/myParent-children.php", {
+				post("parent-children.php", {
 					ChildTable: param.ChildTable,
 					ChildLookupField: param.ChildLookupField,
 					SelectedID: param.SelectedID,
@@ -39,7 +39,7 @@
 				else if(command.Page.toLowerCase() == 'previous'){ command.Page = param.Page - 1; }
 
 				if(command.Page < 1 || command.Page > <?php echo ceil($totalMatches / $config['records-per-page']); ?>){ return; }
-				post("hooks/myParent-children.php", {
+				post("parent-children.php", {
 					ChildTable: param.ChildTable,
 					ChildLookupField: param.ChildLookupField,
 					SelectedID: param.SelectedID,
@@ -50,7 +50,12 @@
 				}, panelID, undefined, 'pc-loading');
 				break;
 			case 'new': /* new record */
-				var url = $j('#' + param.ChildTable + '_hclink').val() + '&addNew_x=1&Embedded=1' + (param.AutoClose ? '&AutoClose=1' : '');
+				var parentId = $j('[name=SelectedID]').val();
+				var url = param.ChildTable + '_view.php?' + 
+					'filterer_' + param.ChildLookupField + '=' + encodeURIComponent(parentId) +
+					'&addNew_x=1' + 
+					'&Embedded=1' + 
+					(param.AutoClose ? '&AutoClose=1' : '');
 				modal_window({
 					url: url,
 					close: function(){ /* */ <?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'reload' }); },
@@ -68,8 +73,7 @@
 				});
 				break;
 			case 'reload': /* just a way of refreshing children, retaining sorting and pagination & without reloading the whole page */
-                        console.log("<?php echo $curDir; ?>")
-                                post("hooks/myParent-children.php", {
+				post("parent-children.php", {
 					ChildTable: param.ChildTable,
 					ChildLookupField: param.ChildLookupField,
 					SelectedID: param.SelectedID,
@@ -103,8 +107,7 @@
 						<?php if($config['open-detail-view-on-click']){ ?>
 							<th>&nbsp;</th>
 						<?php } ?>
-						<?php if(is_array($config['display-fields'])) {
-                                                    foreach($config['display-fields'] as $fieldIndex => $fieldLabel){ ?>
+						<?php if(is_array($config['display-fields'])) foreach($config['display-fields'] as $fieldIndex => $fieldLabel){ ?>
 							<th 
 								<?php if($config['sortable-fields'][$fieldIndex]){ ?>
 									onclick="<?php echo $current_table; ?>GetChildrenRecordsList({
@@ -122,13 +125,11 @@
 									<i class="glyphicon glyphicon-sort-by-attributes text-warning"></i>
 								<?php } ?>
 							</th>
-                                                <?php }} ?>
+						<?php } ?>
 					</tr>
 				</thead>
 				<tbody>
-					<?php if(is_array($records)){
-                                            
-                                            foreach($records as $pkValue => $record){ ?>
+					<?php if(is_array($records)) foreach($records as $pkValue => $record){ ?>
 					<tr>
 						<?php if($config['open-detail-view-on-click']){ ?>
 							<?php if(stripos($_SERVER['HTTP_USER_AGENT'], 'msie ')){ ?>
@@ -158,7 +159,7 @@
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][25]}"; ?> text-center" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][25]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[25]); ?></td>
 						<td class="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][26]}"; ?>" id="<?php echo "{$parameters['ChildTable']}-{$config['display-field-names'][26]}-" . html_attr($record[$config['child-primary-key-index']]); ?>"><?php echo safe_html($record[26]); ?></td>
 					</tr>
-					<?php } } ?>
+					<?php } ?>
 				</tbody>
 				<tfoot>
 					<tr>

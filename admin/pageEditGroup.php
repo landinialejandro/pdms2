@@ -40,7 +40,7 @@ if($_POST['saveChanges'] != ''){
 	if($_POST['groupID'] == ''){ // new group
 		// make sure group name is unique
 		if(sqlValue("select count(1) from membership_groups where name='{$name}'")){
-			echo "<div class=\"alert alert-danger\">{$Translation["group exists error"]}</div>";
+			echo "<div class=\"alert alert-danger\">{$Translation['group exists error']}</div>";
 			include("{$currDir}/incFooter.php");
 		}
 
@@ -62,7 +62,7 @@ if($_POST['saveChanges'] != ''){
 
 		// make sure group name is unique
 		if(sqlValue("select count(1) from membership_groups where name='{$name}' and groupID!='{$groupID}'")){
-			echo "<div class=\"alert alert-danger\">{$Translation["group exists error"]}</div>";
+			echo "<div class=\"alert alert-danger\">{$Translation['group exists error']}</div>";
 			include("{$currDir}/incFooter.php");
 		}
 
@@ -116,7 +116,7 @@ if($groupID != ''){
 		}
 	} else {
 		// no such group exists
-		echo "<div class=\"alert alert-danger\">{$Translation["group not found error"]}</div>";
+		echo "<div class=\"alert alert-danger\">{$Translation['group not found error']}</div>";
 		$groupID = 0;
 	}
 }

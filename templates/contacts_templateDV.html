@@ -190,7 +190,7 @@
 				$j('.detail_view a[id$=_link]').remove();
 			}else{
 				post(
-					'./hooks/myParent-children.php', {
+					'parent-children.php', {
 						ParentTable: 'contacts',
 						SelectedID: '<%%VALUE(id)%%>',
 						Operation: 'show-children'

@@ -41,7 +41,7 @@
 
 		$adminPassword = $post['adminPassword'];
 		if($adminPassword != '' && $adminPassword == $post['confirmPassword']){
-			$adminPassword = md5($adminPassword);
+			$adminPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
 		}elseif($adminPassword != '' && $adminPassword != $post['confirmPassword']){
 			$errors[] = $Translation['admin password mismatch'];
 		}else{

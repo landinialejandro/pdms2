@@ -39,7 +39,15 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Kind<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(kind)%%><%%PLINK(kind)%%><%%ADDNEW(kinds)%%></div>
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(kind)%%><%%PLINK(kind)%%><%%ADDNEW(kinds)%%><span id="kindLoading"></span></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="kind_code" class="control-label col-lg-3">Kind code</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" id="kind_code"></div>
 					</div>
 				</div>
 
@@ -87,7 +95,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="codiceDestinatario" class="control-label col-lg-3" data-parent_link="view_parent_modal">Codice Destinatario <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#codiceDestinatario-description"></i></label>
 					<div class="col-lg-9">
-						<span class="help-block collapse" id="codiceDestinatario-description"><div class="alert alert-info">codice dell'ufficio dell&#8217;amministrazione dello stato destinatario della fattura, definito dall'amministrazione di appartenenza come riportato nella rubrica &#8220;Indice PA&#8221;.</div></span>
+						<span class="help-block collapse" id="codiceDestinatario-description"><div class="alert alert-info">        Criteri di valorizzazione: occorre distinguere il tipo di destinatario;<br>        se la fattura &#232; destinata ad una pubblica amministrazione, il campo deve<br>        contenere il codice di 6 caratteri, presente su IndicePA tra le informazioni<br>        relative al servizio di fatturazione elettronica, associato all&#8217;ufficio che,<br>        all&#8217;interno dell&#8217;amministrazione destinataria, svolge la funzione di ricezione<br>        (ed eventualmente lavorazione) della fattura; in alternativa, &#232; possibile<br>        valorizzare il campo con il codice Ufficio &#8220;centrale&#8221; o con il valore di default<br>        &#8220;999999&#8221;, quando ricorrono le condizioni previste dalle disposizioni della<br>        circolare interpretativa del Ministero dell&#8217;Economia e delle Finanze n.1 del<br>        31 marzo 2014;<br>       <br>     *  se la fattura &#232; destinata ad un soggetto privato, il campo deve contenere il<br>        codice di 7 caratteri che il Sistema di Interscambio ha attribuito a chi, in<br>        qualit&#224; di titolare di un canale di trasmissione diverso dalla PEC abilitato a<br>        ricevere fatture elettroniche, ne abbia fatto richiesta attraverso l&#8217;apposita<br>        funzionalit&#224; presente sul sito www.fatturapa.gov.it; se la fattura deve<br>        essere recapitata ad un soggetto che intende ricevere le fatture<br>        elettroniche attraverso il canale PEC, il campo deve essere valorizzato con<br>        sette zeri (&#8220;0000000&#8221;) e deve essere valorizzato il campo PECDestinatario<br>        (1.1.6).</div></span>
 
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(codiceDestinatario)%%><%%PLINK(codiceDestinatario)%%><%%ADDNEW(kinds)%%></div>
 					</div>
@@ -97,7 +105,7 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="regimeFiscale" class="control-label col-lg-3" data-parent_link="view_parent_modal">Regime Fiscale <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#regimeFiscale-description"></i></label>
 					<div class="col-lg-9">
-						<span class="help-block collapse" id="regimeFiscale-description"><div class="alert alert-info">Regime Fiscale</div></span>
+						<span class="help-block collapse" id="regimeFiscale-description"><div class="alert alert-info">Utilit&#224;: il regime fiscale rappresenta una informazione indispensabile per<br>il calcolo della base imponibile.<br>Criteri di valorizzazione: il campo deve contenere uno dei codici previsti<br>nella lista valori associata; il codice identifica, sulla base del settore<br>commerciale o della situazione reddituale, il regime fiscale in cui opera il<br>cedente/prestatore.</div></span>
 
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(regimeFiscale)%%><%%PLINK(regimeFiscale)%%><%%ADDNEW(kinds)%%></div>
 					</div>
@@ -129,6 +137,109 @@
 					</div>
 				</div>
 
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="FormatoTrasmissione" class="control-label col-lg-3">Formato Trasmissione<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#FormatoTrasmissione-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="FormatoTrasmissione-description"><div class="alert alert-info">valore fisso pari a &#8220;FPA12&#8221;, se &#232;  una pubblica amministrazione, oppure &#8220;FPR12&#8221;, se &#232; un privato.</div></span>
+
+						<%%COMBO(FormatoTrasmissione)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="REA_Ufficio" class="control-label col-lg-3">REA Ufficio <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_Ufficio-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="REA_Ufficio-description"><div class="alert alert-info">Utilit&#224;: &#232; un dato previsto dalla normativa (art. 2250 codice civile) in<br>materia di obblighi di pubblicit&#224; delle societ&#224;.<br>Criteri di valorizzazione: il campo deve contenere la sigla della provincia<br>dell&#8217;ufficio del registro delle imprese presso il quale &#232; iscritto e registrato<br>il cedente/prestatore.</div></span>
+
+						<input maxlength="2" type="text" class="form-control" name="REA_Ufficio" id="REA_Ufficio" value="<%%VALUE(REA_Ufficio)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="REA_NumeroREA" class="control-label col-lg-3">Numero REA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_NumeroREA-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="REA_NumeroREA-description"><div class="alert alert-info">Utilit&#224;: &#232; un dato previsto dalla normativa (art. 2250 codice civile) in<br>materia di obblighi di pubblicit&#224; delle societ&#224;.<br>Criteri di valorizzazione: il campo deve contenere il numero con il quale<br>il cedente/prestatore risulta registrato presso il registro delle imprese.</div></span>
+
+						<input maxlength="20" type="text" class="form-control" name="REA_NumeroREA" id="REA_NumeroREA" value="<%%VALUE(REA_NumeroREA)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="REA_CapitaleSociale" class="control-label col-lg-3">Capitale Sociale <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_CapitaleSociale-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="REA_CapitaleSociale-description"><div class="alert alert-info">Utilit&#224;: &#232; un dato previsto dalla normativa (art. 2250 codice civile) in<br>materia di obblighi di pubblicit&#224; delle societ&#224;.<br>Criteri di valorizzazione: il campo deve contenere l&#8217;importo del capitale<br>sociale effettivamente versato come risultante dall&#8217;ultimo bilancio; &#232;<br>previsto un valore numerico composto da un intero e da due decimali; i<br>decimali, separati dall&#8217;intero con il carattere punto (&#8220;.&#8221;), vanno sempre<br>indicati anche se pari a zero (es.: 28000000.00).
+</div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="REA_CapitaleSociale" id="REA_CapitaleSociale" value="<%%VALUE(REA_CapitaleSociale)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="REA_SocioUnico" class="control-label col-lg-3">REA SocioUnico <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_SocioUnico-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="REA_SocioUnico-description"><div class="alert alert-info">Utilit&#224;: &#232; un dato previsto dalla normativa (art. 2250 codice civile) in<br>materia di obblighi di pubblicit&#224; delle societ&#224;.<br>Criteri di valorizzazione: il campo deve contenere il valore &#8220;SU&#8221;, nel caso<br>di socio unico, oppure &#8220;SM&#8221; nel caso di societ&#224; pluripersonale.
+</div></span>
+
+						<%%COMBO(REA_SocioUnico)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="REA_StatoLiquidazione" class="control-label col-lg-3">StatoLiquidazione <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_StatoLiquidazione-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="REA_StatoLiquidazione-description"><div class="alert alert-info">Utilit&#224;: &#232; un dato previsto dalla normativa (art. 2250 codice civile) in<br>materia di obblighi di pubblicit&#224; delle societ&#224;.<br>Criteri di valorizzazione: il campo deve contenere il valore &#8220;LS&#8221;, nel caso<br>di societ&#224; in stato di liquidazione, oppure &#8220;LN&#8221; nel caso di societ&#224; non in<br>liquidazione.</div></span>
+
+						<%%COMBO(REA_StatoLiquidazione)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<div class="col-lg-offset-3 col-lg-9">
+						<div class="checkbox"><label for="RIT_soggettoRitenuta"><input type="checkbox" name="RIT_soggettoRitenuta" id="RIT_soggettoRitenuta" value="1" <%%CHECKED(RIT_soggettoRitenuta)%%>> RIT soggettoRitenuta<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="RIT_tipoRitenuta" class="control-label col-lg-3">RIT tipoRitenuta <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_tipoRitenuta-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="RIT_tipoRitenuta-description"><div class="alert alert-info">Utilit&#224;: serve per identificare la tipologia di ritenuta indicata in fattura.<br>Criteri di valorizzazione: il campo assume il valore &#8220;RT01&#8221; per<br>persone fisiche, &#8220;RT02&#8221; per persone giuridiche.
+</div></span>
+
+						<%%COMBO(RIT_tipoRitenuta)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="RIT_AliquotaRitenuta" class="control-label col-lg-3">RIT AliquotaRitenuta <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_AliquotaRitenuta-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="RIT_AliquotaRitenuta-description"><div class="alert alert-info">Utilit&#224;: serve per dare evidenza del valore percentuale della ritenuta.<br>Criteri di valorizzazione: assume i valori previsti dalla normativa<br>fiscale. I decimali, separati dall&#8217;intero con il carattere punto (&#8220;.&#8221;),<br>vanno sempre indicati anche se pari a zero (es.: 4.00).
+</div></span>
+
+						<input maxlength="13" type="text" class="form-control" name="RIT_AliquotaRitenuta" id="RIT_AliquotaRitenuta" value="<%%VALUE(RIT_AliquotaRitenuta)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="RIT_CausalePagamento" class="control-label col-lg-3">RIT CausalePagamento <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_CausalePagamento-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="RIT_CausalePagamento-description"><div class="alert alert-info">Utilit&#224;: serve per dare evidenza della causale del pagamento.<br>Criteri di valorizzazione: deve essere valorizzato con una codifica tra<br>quelle previste come causali di pagamento sul Modello 770S.
+</div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="RIT_CausalePagamento" id="RIT_CausalePagamento" value="<%%VALUE(RIT_CausalePagamento)%%>">
+					</div>
+				</div>
+
 			</fieldset>
 		</div>
 
@@ -151,9 +262,9 @@
 				<div class="btn-group-vertical" style="width: 100%;">
                                     <button id="CUST_CREDIT" class="btn btn-info" onclick="setLimit('<%%VALUE(id)%%>',this)" type="button" >Set Credit Limit</button>
                                     <button id="CUST_PAYMENT" class="btn btn-info" onclick="setLimit('<%%VALUE(id)%%>',this)" type="button" >Set Payment Limit</button>
-			</div>
-		</div>
-	</div>
+                                </div>
+                        </div>
+                </div>
 	</div>
 
 
@@ -226,7 +337,7 @@
 				$j('.detail_view a[id$=_link]').remove();
 			}else{
 				post(
-					'./hooks/myParent-children.php', {
+					'parent-children.php', {
 						ParentTable: 'companies',
 						SelectedID: '<%%VALUE(id)%%>',
 						Operation: 'show-children'

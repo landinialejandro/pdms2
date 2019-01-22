@@ -8,7 +8,7 @@
 		logInMember() -- checks POST login. If not valid, redirects to index.php, else returns TRUE
 		getTablePermissions($tn) -- returns an array of permissions allowed for logged member to given table (allowAccess, allowInsert, allowView, allowEdit, allowDelete) -- allowAccess is set to true if any access level is allowed
 		get_sql_fields($tn) -- returns the SELECT part of the table view query
-		get_sql_from($tn[, true]) -- returns the FROM part of the table view query, with full joins, optionally skipping permissions if true passed as 2nd param.
+		get_sql_from($tn[, true, [, false]]) -- returns the FROM part of the table view query, with full joins (unless third paramaeter is set to true), optionally skipping permissions if true passed as 2nd param.
 		get_joined_record($table, $id[, true]) -- returns assoc array of record values for given PK value of given table, with full joins, optionally skipping permissions if true passed as 3rd param.
 		get_defaults($table) -- returns assoc array of table fields as array keys and default values (or empty), excluding automatic values as array values
 		htmlUserBar() -- returns html code for displaying user login status to be used on top of pages.
@@ -162,7 +162,7 @@
 			'products' => "`products`.`id` as 'id', `products`.`codebar` as 'codebar', `products`.`productCode` as 'productCode', `products`.`productName` as 'productName', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'tax', `products`.`increment` as 'increment', IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') as 'CategoryID', `products`.`UM` as 'UM', `products`.`tare` as 'tare', `products`.`QuantityPerUnit` as 'QuantityPerUnit', CONCAT('&euro;', FORMAT(`products`.`UnitPrice`, 2)) as 'UnitPrice', CONCAT('&euro;', FORMAT(`products`.`sellPrice`, 2)) as 'sellPrice', `products`.`UnitsInStock` as 'UnitsInStock', `products`.`UnitsOnOrder` as 'UnitsOnOrder', `products`.`ReorderLevel` as 'ReorderLevel', `products`.`balance` as 'balance', `products`.`Discontinued` as 'Discontinued', if(`products`.`manufactured_date`,date_format(`products`.`manufactured_date`,'%d/%m/%Y'),'') as 'manufactured_date', if(`products`.`expiry_date`,date_format(`products`.`expiry_date`,'%d/%m/%Y'),'') as 'expiry_date', `products`.`note` as 'note', if(`products`.`update_date`,date_format(`products`.`update_date`,'%d/%m/%Y %h:%i %p'),'') as 'update_date'",
 			'firstCashNote' => "`firstCashNote`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`orders1`.`multiOrder`) || CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `orders1`.`multiOrder`, ' - ', `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'order', if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'') as 'operationDate', IF(    CHAR_LENGTH(`companies2`.`companyCode`) || CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyCode`, ' - ', `companies2`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`companies3`.`companyCode`) || CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyCode`, ' - ', `companies3`.`companyName`), '') as 'customer', `firstCashNote`.`documentNumber` as 'documentNumber', `firstCashNote`.`causal` as 'causal', `firstCashNote`.`revenue` as 'revenue', `firstCashNote`.`outputs` as 'outputs', `firstCashNote`.`balance` as 'balance', IF(    CHAR_LENGTH(`companies4`.`companyName`), CONCAT_WS('',   `companies4`.`companyName`), '') as 'idBank', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'bank', `firstCashNote`.`note` as 'note', if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'') as 'paymentDeadLine', `firstCashNote`.`payed` as 'payed'",
 			'vatRegister' => "`vatRegister`.`id` as 'id', IF(    CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyCode`), '') as 'idCompany', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'companyName', `vatRegister`.`tax` as 'tax', `vatRegister`.`month` as 'month', `vatRegister`.`year` as 'year', `vatRegister`.`amount` as 'amount'",
-			'companies' => "`companies`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `companies`.`companyCode` as 'companyCode', `companies`.`companyName` as 'companyName', `companies`.`fiscalCode` as 'fiscalCode', `companies`.`vat` as 'vat', `companies`.`notes` as 'notes', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'codiceDestinatario', IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') as 'regimeFiscale', IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') as 'tipoCassa', IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') as 'modalitaPagamento', `companies`.`RiferimentoAmministrazione` as 'RiferimentoAmministrazione'",
+			'companies' => "`companies`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') as 'kind_code', `companies`.`companyCode` as 'companyCode', `companies`.`companyName` as 'companyName', `companies`.`fiscalCode` as 'fiscalCode', `companies`.`vat` as 'vat', `companies`.`notes` as 'notes', IF(    CHAR_LENGTH(`kinds2`.`code`), CONCAT_WS('',   `kinds2`.`code`), '') as 'codiceDestinatario', IF(    CHAR_LENGTH(`kinds3`.`code`), CONCAT_WS('',   `kinds3`.`code`), '') as 'regimeFiscale', IF(    CHAR_LENGTH(`kinds4`.`code`), CONCAT_WS('',   `kinds4`.`code`), '') as 'tipoCassa', IF(    CHAR_LENGTH(`kinds5`.`code`), CONCAT_WS('',   `kinds5`.`code`), '') as 'modalitaPagamento', `companies`.`RiferimentoAmministrazione` as 'RiferimentoAmministrazione', `companies`.`FormatoTrasmissione` as 'FormatoTrasmissione', `companies`.`REA_Ufficio` as 'REA_Ufficio', `companies`.`REA_NumeroREA` as 'REA_NumeroREA', `companies`.`REA_CapitaleSociale` as 'REA_CapitaleSociale', `companies`.`REA_SocioUnico` as 'REA_SocioUnico', `companies`.`REA_StatoLiquidazione` as 'REA_StatoLiquidazione', `companies`.`RIT_soggettoRitenuta` as 'RIT_soggettoRitenuta', `companies`.`RIT_tipoRitenuta` as 'RIT_tipoRitenuta', `companies`.`RIT_AliquotaRitenuta` as 'RIT_AliquotaRitenuta', `companies`.`RIT_CausalePagamento` as 'RIT_CausalePagamento'",
 			'contacts' => "`contacts`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `contacts`.`titleCourtesy` as 'titleCourtesy', `contacts`.`name` as 'name', `contacts`.`lastName` as 'lastName', `contacts`.`notes` as 'notes', `contacts`.`title` as 'title', if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'') as 'birthDate', `contacts`.`CodEORI` as 'CodEORI'",
 			'creditDocument' => "`creditDocument`.`id` as 'id', `creditDocument`.`incomingTypeDoc` as 'incomingTypeDoc', `creditDocument`.`customerID` as 'customerID', `creditDocument`.`nrDoc` as 'nrDoc', if(`creditDocument`.`dateIncomingNote`,date_format(`creditDocument`.`dateIncomingNote`,'%d/%m/%Y'),'') as 'dateIncomingNote', `creditDocument`.`customerFirm` as 'customerFirm', `creditDocument`.`customerAddress` as 'customerAddress', `creditDocument`.`customerPostCode` as 'customerPostCode', `creditDocument`.`customerTown` as 'customerTown'",
 			'electronicInvoice' => "`electronicInvoice`.`id` as 'id', `electronicInvoice`.`topic` as 'topic', `electronicInvoice`.`currency` as 'currency', `electronicInvoice`.`trasmissionFormat` as 'trasmissionFormat', `electronicInvoice`.`country` as 'country'",
@@ -192,7 +192,7 @@
 
 	#########################################################
 
-	function get_sql_from($table_name, $skip_permissions = false){
+	function get_sql_from($table_name, $skip_permissions = false, $skip_joins = false) {
 		$sql_from = array(   
 			'orders' => "`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`supplier` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`orders`.`employee` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`orders`.`shipVia` ",
 			'ordersDetails' => "`ordersDetails` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`ordersDetails`.`order` LEFT JOIN `products` as products1 ON `products1`.`id`=`ordersDetails`.`productCode` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`ordersDetails`.`section` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders1`.`kind` ",
@@ -249,24 +249,25 @@
 			'modalitaPagamento' => 'code'
 		);
 
-		if(isset($sql_from[$table_name])){
-			if($skip_permissions) return $sql_from[$table_name];
+		if(!isset($sql_from[$table_name])) return false;
 
-			// mm: build the query based on current member's permissions
-			$perm = getTablePermissions($table_name);
-			if($perm[2] == 1){ // view owner only
-				$sql_from[$table_name] .= ", membership_userrecords WHERE `{$table_name}`.`{$pkey[$table_name]}`=membership_userrecords.pkValue and membership_userrecords.tableName='{$table_name}' and lcase(membership_userrecords.memberID)='" . getLoggedMemberID() . "'";
-			}elseif($perm[2] == 2){ // view group only
-				$sql_from[$table_name] .= ", membership_userrecords WHERE `{$table_name}`.`{$pkey[$table_name]}`=membership_userrecords.pkValue and membership_userrecords.tableName='{$table_name}' and membership_userrecords.groupID='" . getLoggedGroupID() . "'";
-			}elseif($perm[2] == 3){ // view all
-				$sql_from[$table_name] .= ' WHERE 1=1';
-			}else{ // view none
-				return false;
-			}
-			return $sql_from[$table_name];
+		$from = ($skip_joins ? "`{$table_name}`" : $sql_from[$table_name]);
+
+		if($skip_permissions) return $from . ' WHERE 1=1';
+
+		// mm: build the query based on current member's permissions
+		$perm = getTablePermissions($table_name);
+		if($perm[2] == 1){ // view owner only
+			$from .= ", membership_userrecords WHERE `{$table_name}`.`{$pkey[$table_name]}`=membership_userrecords.pkValue and membership_userrecords.tableName='{$table_name}' and lcase(membership_userrecords.memberID)='" . getLoggedMemberID() . "'";
+		}elseif($perm[2] == 2){ // view group only
+			$from .= ", membership_userrecords WHERE `{$table_name}`.`{$pkey[$table_name]}`=membership_userrecords.pkValue and membership_userrecords.tableName='{$table_name}' and membership_userrecords.groupID='" . getLoggedGroupID() . "'";
+		}elseif($perm[2] == 3){ // view all
+			$from .= ' WHERE 1=1';
+		}else{ // view none
+			return false;
 		}
 
-		return false;
+		return $from;
 	}
 
 	#########################################################
@@ -418,6 +419,7 @@
 			'companies' => array(
 				'id' => '',
 				'kind' => '',
+				'kind_code' => '',
 				'companyCode' => '',
 				'companyName' => '',
 				'fiscalCode' => '',
@@ -427,7 +429,17 @@
 				'regimeFiscale' => '',
 				'tipoCassa' => '',
 				'modalitaPagamento' => '',
-				'RiferimentoAmministrazione' => ''
+				'RiferimentoAmministrazione' => '',
+				'FormatoTrasmissione' => 'FPR12',
+				'REA_Ufficio' => '',
+				'REA_NumeroREA' => '',
+				'REA_CapitaleSociale' => '',
+				'REA_SocioUnico' => 'SU',
+				'REA_StatoLiquidazione' => 'LN',
+				'RIT_soggettoRitenuta' => '0',
+				'RIT_tipoRitenuta' => 'RT02',
+				'RIT_AliquotaRitenuta' => '',
+				'RIT_CausalePagamento' => ''
 			),
 			'contacts' => array(
 				'id' => '',
@@ -574,16 +586,21 @@
 		if($_POST['signIn'] != ''){
 			if($_POST['username'] != '' && $_POST['password'] != ''){
 				$username = makeSafe(strtolower($_POST['username']));
-				$password = md5($_POST['password']);
+				$hash = sqlValue("select passMD5 from membership_users where lcase(memberID)='{$username}' and isApproved=1 and isBanned=0");
+				$password = $_POST['password'];
 
-				if(sqlValue("select count(1) from membership_users where lcase(memberID)='$username' and passMD5='$password' and isApproved=1 and isBanned=0")==1){
-					$_SESSION['memberID']=$username;
-					$_SESSION['memberGroupID']=sqlValue("select groupID from membership_users where lcase(memberID)='$username'");
-					if($_POST['rememberMe']==1){
-						@setcookie('PDMS_rememberMe', md5($username.$password), time()+86400*30);
+				if(password_match($password, $hash)) {
+					$_SESSION['memberID'] = $username;
+					$_SESSION['memberGroupID'] = sqlValue("SELECT `groupID` FROM `membership_users` WHERE LCASE(`memberID`)='{$username}'");
+
+					if($_POST['rememberMe'] == 1){
+						RememberMe::login($username);
 					}else{
-						@setcookie('PDMS_rememberMe', '', time()-86400*30);
+						RememberMe::delete();
 					}
+
+					// harden user's password hash
+					password_harden($username, $password, $hash);
 
 					// hook: login_ok
 					if(function_exists('login_ok')){
@@ -611,12 +628,13 @@
 			if(!headers_sent()) header('HTTP/1.0 403 Forbidden');
 			redirect("index.php?loginFailed=1");
 			exit;
-		}elseif((!$_SESSION['memberID'] || $_SESSION['memberID']==$adminConfig['anonymousMember']) && $_COOKIE['PDMS_rememberMe']!=''){
-			$chk=makeSafe($_COOKIE['PDMS_rememberMe']);
-			if($username=sqlValue("select memberID from membership_users where convert(md5(concat(memberID, passMD5)), char)='$chk' and isBanned=0")){
-				$_SESSION['memberID']=$username;
-				$_SESSION['memberGroupID']=sqlValue("select groupID from membership_users where lcase(memberID)='$username'");
-			}
+		}
+
+		/* check if a rememberMe cookie exists and sign in user if so */
+		if(RememberMe::check()) {
+			$username = makeSafe(strtolower(RememberMe::user()));
+			$_SESSION['memberID'] = $username;
+			$_SESSION['memberGroupID'] = sqlValue("SELECT `groupID` FROM `membership_users` WHERE LCASE(`memberID`)='{$username}'");
 		}
 	}
 

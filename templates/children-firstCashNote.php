@@ -23,7 +23,7 @@
 
 		switch(command.Verb){
 			case 'sort': /* order by given field index in 'SortBy' */
-				post("./hooks/myParent-children.php", {
+				post("parent-children.php", {
 					ChildTable: param.ChildTable,
 					ChildLookupField: param.ChildLookupField,
 					SelectedID: param.SelectedID,
@@ -38,7 +38,7 @@
 				else if(command.Page.toLowerCase() == 'previous'){ command.Page = param.Page - 1; }
 
 				if(command.Page < 1 || command.Page > <?php echo ceil($totalMatches / $config['records-per-page']); ?>){ return; }
-				post("./hooks/myParent-children.php", {
+				post("parent-children.php", {
 					ChildTable: param.ChildTable,
 					ChildLookupField: param.ChildLookupField,
 					SelectedID: param.SelectedID,
@@ -49,8 +49,12 @@
 				}, panelID, undefined, 'pc-loading');
 				break;
 			case 'new': /* new record */
-				var url = $j('#' + param.ChildTable + '_hclink').val() + '&addNew_x=1&Embedded=1' + (param.AutoClose ? '&AutoClose=1' : '');
-//                                console.log(param);
+				var parentId = $j('[name=SelectedID]').val();
+				var url = param.ChildTable + '_view.php?' + 
+					'filterer_' + param.ChildLookupField + '=' + encodeURIComponent(parentId) +
+					'&addNew_x=1' + 
+					'&Embedded=1' + 
+					(param.AutoClose ? '&AutoClose=1' : '');
 				modal_window({
 					url: url,
 					close: function(){ /* */ <?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'reload' }); },

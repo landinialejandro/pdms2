@@ -27,6 +27,12 @@
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Kind code</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="kind_code<%%RND1%%>"></span></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
 			<label class="col-xs-3 control-label">CompanyCode</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%VALUE(companyCode)%%></div>
@@ -84,6 +90,66 @@
 			<label class="col-xs-3 control-label">Riferimento Amministrazione</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%VALUE(RiferimentoAmministrazione)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Formato Trasmissione</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(FormatoTrasmissione)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">REA Ufficio</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(REA_Ufficio)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Numero REA</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(REA_NumeroREA)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Capitale Sociale</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(REA_CapitaleSociale)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">REA SocioUnico</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(REA_SocioUnico)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">StatoLiquidazione</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(REA_StatoLiquidazione)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">RIT soggettoRitenuta</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><input type="checkbox" name="RIT_soggettoRitenuta" id="RIT_soggettoRitenuta" value="1" <%%CHECKED(RIT_soggettoRitenuta)%%> readonly></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">RIT tipoRitenuta</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(RIT_tipoRitenuta)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">RIT AliquotaRitenuta</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(RIT_AliquotaRitenuta)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">RIT CausalePagamento</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(RIT_CausalePagamento)%%></div>
 			</div>
 		</div>
 	</fieldset>
