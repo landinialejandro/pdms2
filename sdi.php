@@ -761,36 +761,168 @@ $body = $xml_invoice->FatturaElettronicaBody;
     //2.1 DatiGenerali
         //2.1.1
         $DatiGeneraliDocumento = $body->DatiGenerali->DatiGeneraliDocumento;
+            //2.1.1.1
             $DatiGeneraliDocumento->addChild("TipoDocumento",$order_values['typeDoc']);
+            //2.1.1.2
             $DatiGeneraliDocumento->addChild("Divisa","EUR");
+            //2.1.1.3
             $DatiGeneraliDocumento->addChild("Data",$order['date']);
+            //2.1.1.4
             $DatiGeneraliDocumento->addChild("Numero",$order['multiOrder']);
+            //2.1.1.5
             $DD_DatiRitenuta = $DatiGeneraliDocumento->addChild('DatiRitenuta');
+                //2.1.1.5.1
                 $DD_DatiRitenuta->addchild("TipoRitenuta");
+                //2.1.1.5.2
                 $DD_DatiRitenuta->addchild("ImportoRitenuta");
+                //2.1.1.5.3
                 $DD_DatiRitenuta->addchild("AliquotaRitenuta");
+                //2.1.1.5.4
                 $DD_DatiRitenuta->addchild("CausalePagamento");
+            //2.1.1.6
             $DD_DatiBollo = $DatiGeneraliDocumento->addChild('DatiBollo');
+                //2.1.1.6.1
                 $DD_DatiBollo->addChild("NumeroBollo");
+                //2.1.1.6.2
                 $DD_DatiBollo->addChild("ImportoBollo");
+            //2.1.1.7
             $DD_DatiCassaPrevidenziale = $DatiGeneraliDocumento->addChild('DatiCassaPrevidenziale');
+                //2.1.1.7.1
                 $DD_DatiCassaPrevidenziale->addChild("TipoCassa");
+                //2.1.1.7.2
                 $DD_DatiCassaPrevidenziale->addChild("AlCassa");
+                //2.1.1.7.3
                 $DD_DatiCassaPrevidenziale->addChild("ImportoContributoCassa");
+                //2.1.1.7.4
                 $DD_DatiCassaPrevidenziale->addChild("ImponibileCassa");
+                //2.1.1.7.5
                 $DD_DatiCassaPrevidenziale->addChild("AliquotaIVA");
+                //2.1.1.7.6
                 $DD_DatiCassaPrevidenziale->addChild("Ritenuta");
+                //2.1.1.7.7
                 $DD_DatiCassaPrevidenziale->addChild("Natura");
+                //2.1.1.7.8
                 $DD_DatiCassaPrevidenziale->addChild("RiferimentoAmministrazione");
+            //2.1.1.8
             $DD_ScontoMaggiorazione = $DatiGeneraliDocumento->addChild("ScontoMaggiorazione");
+                //2.1.1.8.1
                 $DD_ScontoMaggiorazione->addChild("Tipo");
+                //2.1.1.8.2
                 $DD_ScontoMaggiorazione->addChild("Percentuale");
+                //2.1.1.8.3
                 $DD_ScontoMaggiorazione->addChild("Importo");
+            //2.1.1.9
             $DatiGeneraliDocumento->addChild("ImportoTotaleDocumento");
+            //2.1.1.10
             $DatiGeneraliDocumento->addChild("Arrotondamento");
+            //2.1.1.11
             $DatiGeneraliDocumento->addChild("Causale");
+            //2.1.1.12
             $DatiGeneraliDocumento->addChild("Art73");
+        //2.1.2
         $DatiOrdineAcquisto = $body->DatiGenerali->DatiOrdineAcquisto;
+            //2.1.2.1
+            $DatiOrdineAcquisto->addChild("RiferimentoNumeroLinea");
+            //2.1.2.2
+            $DatiOrdineAcquisto->addChild("IdDocumento");
+            //2.1.2.3
+            $DatiOrdineAcquisto->addChild("Data");
+            //2.1.2.4
+            $DatiOrdineAcquisto->addChild("NumItem");
+            //2.1.2.5
+            $DatiOrdineAcquisto->addChild("CodiceCommessaConvenzione");
+            //2.1.2.6
+            $DatiOrdineAcquisto->addChild("CodiceCUP");
+            //2.1.2.7
+            $DatiOrdineAcquisto->addChild("CodiceCIG");
+        //2.1.3
+        $body->DatiGenerali->addChild("DatiContratto","");
+        //2.1.4
+        $body->DatiGenerali->addChild("DatiConvenzione","");
+        //2.1.5
+        $body->DatiGenerali->addChild("DatiRicezione","");
+        //2.1.6
+        $body->DatiGenerali->addChild("DatiFattureCollegate","");
+        //2.1.7
+        $datiSAL = $body->DatiGenerali->addChild("DatiSAL");
+            //2.1.7.1
+            $datiSAL->addChild("RiferimentoFase","");
+        //2.1.8
+        $datiDDT = $body->DatiGenerali->addChild("DatiDDT");
+            //2.1.8.1
+            $datiDDT->addChild("NumeroDDT");
+            //2.1.8.2
+            $datiDDT->addChild("DataDDT");
+            //2.1.8.3
+            $datiDDT->addChild("RiferimentoNumeroLinea");
+        //2.1.9
+        $datiTrasporto = $body->DatiGenerali->addChild("DatiTrasporto");
+            //2.1.9.1
+            $DatiAnagraficiVettore = $datiTrasporto->addChild("DatiAnagraficiVettore");
+                //2.1.9.1.1
+                $DAV_IdFiscaleIVA = $DatiAnagraficiVettore->addChild("IdFiscaleIVA");
+                    //2.1.9.1.1.1
+                    $DAV_IdFiscaleIVA->addChild("","");
+                    //2.1.9.1.1.2
+                    $DAV_IdFiscaleIVA->addChild("","");
+                //2.1.9.1.2
+                $DatiAnagraficiVettore->addChild("CodiceFiscale","");
+                //2.1.9.1.3
+                $DAV_Anagrafica = $DatiAnagraficiVettore->addChild("Anagrafica");
+                    //2.1.9.1.3.1
+                    $DAV_Anagrafica->addChiild("Denominazione","");
+                    //2.1.9.1.3.2
+                    $DAV_Anagrafica->addChiild("Nome","");
+                    //2.1.9.1.3.3
+                    $DAV_Anagrafica->addChiild("Cognome","");
+                    //2.1.9.1.3.4
+                    $DAV_Anagrafica->addChiild("Titolo","");
+                    //2.1.9.1.3.5
+                    $DAV_Anagrafica->addChiild("CodEORI","");
+                //2.1.9.1.4
+                $DatiAnagraficiVettore->addChild("NumeroLicenzaGuida","");
+            //2.1.9.2
+            $datiTrasporto->addChild("MezzoTrasporto","");
+            //2.1.9.3
+            $datiTrasporto->addChild("CausaleTrasporto","");
+            //2.1.9.4
+            $datiTrasporto->addChild("NumeroColli","");
+            //2.1.9.5
+            $datiTrasporto->addChild("Descrizione","");
+            //2.1.9.6
+            $datiTrasporto->addChild("UnitaMisuraPeso","");
+            //2.1.9.7
+            $datiTrasporto->addChild("PesoLordo","");
+            //2.1.9.8
+            $datiTrasporto->addChild("PesoNetto","");
+            //2.1.9.9
+            $datiTrasporto->addChild("DataOraRitiro","");
+            //2.1.9.10
+            $datiTrasporto->addChild("DataInizioTrasporto","");
+            //2.1.9.11
+            $datiTrasporto->addChild("TipoResa","");
+            //2.1.9.12
+            $IndirizzoResa = $datiTrasporto->addChild("IndirizzoResa");
+                //2.1.9.12.1
+                $IndirizzoResa->addDhild("Indirizzo","");
+                //2.1.9.12.2
+                $IndirizzoResa->addDhild("NumeroCivico>","");
+                //2.1.9.12.3
+                $IndirizzoResa->addDhild("CAP","");
+                //2.1.9.12.4
+                $IndirizzoResa->addDhild("Comune","");
+                //2.1.9.12.5
+                $IndirizzoResa->addDhild("Provincia","");
+                //2.1.9.12.6
+                $IndirizzoResa->addDhild("Nazione","");
+            //2.1.9.13
+            $datiTrasporto->addChild("DataOraConsegna","");
+        //2.1.10
+        $FatturaPrincipale = $body->DatiGenerali->addChild("FatturaPrincipale");
+            //2.1.10.1
+            $FatturaPrincipale->addChild("NumeroFatturaPrincipale","");
+            //2.1.10.2
+            $FatturaPrincipale->addChild("DataFatturaPrincipale","");
             
 //2.2 
 $DatiBeniServizi = $body->DatiBeniServizi;
@@ -809,50 +941,148 @@ foreach($items as $i => $item){
     $product = getDataTable("products", $where_id);
     $categoryId = sqlValue("select products.CategoryID from products where products.id = {$product['id']}");
     $categoryData = getKindsData($categoryId);
-    
+    //2.2.1
     $DettaglioLinee = $DatiBeniServizi->addChild("DettaglioLinee");
+        //2.2.1.1
         $DettaglioLinee->addChild("NumeroLinea",$i+1);
+        //2.2.1.2
         $DettaglioLinee->addChild("TipoCessionePrestazione",$item['Discount']? "SC" : "");
+        //2.2.1.3
         $CodiceArticolo = $DettaglioLinee->addChild("CodiceArticolo");//two childs
+            //2.2.1.3.1
             $CodiceArticolo->addChild("CodiceTipo",$categoryData['code']);
+            //2.2.1.3.2
             $CodiceArticolo->addChild("CodiceValore",$item['productCode']);
-        
+        //2.2.1.4
         $DettaglioLinee->addChild("Descrizione",$product['productName']);
+        //2.2.1.5
         $DettaglioLinee->addChild("Quantita",$item['QuantityReal']);
+        //2.2.1.6
         $DettaglioLinee->addChild("UnitaMisura",$product['UM']);
+        //2.2.1.7
         $DettaglioLinee->addChild("DataInizioPeriodo","");
+        //2.2.1.8
         $DettaglioLinee->addChild("DataFinePeriodo","");
+        //2.2.1.9
         $DettaglioLinee->addChild("PrezzoUnitario",number_format($item['UnitPriceValue'] , 2));
+        //2.2.1.10
         $ScontoMaggiorazione = $DettaglioLinee->addChild("ScontoMaggiorazione");//tree childs
+            //2.2.1.10.1
             $ScontoMaggiorazione->addChild("Tipo",$item['Discount']? "SC" : "");
+            //2.2.1.10.2
             $ScontoMaggiorazione->addChild("Percentuale",number_format($item['Discount'] , 2));
+            //2.2.1.10.3
             $ScontoMaggiorazione->addChild("Importo",number_format($item['SubtotalValue']*$item['Discount']/100 , 2));
-            
+        //2.2.1.11
         $DettaglioLinee->addChild("PrezzoTotale",number_format($item['SubtotalValue'] , 2));
+        //2.2.1.12
         $DettaglioLinee->addChild("AliquotaIVA",number_format($item['taxesValue'] , 2));
+        //2.2.1.13
         $DettaglioLinee->addChild("Ritenuta","");
+        //2.2.1.14
         $DettaglioLinee->addChild("Natura","");
+        //2.2.1.15
         $DettaglioLinee->addChild("RiferimentoAmministrazione","");
+        //2.2.1.16
         $AltriDatiGestionali = $DettaglioLinee->addChild("AltriDatiGestionali");//four childs
+            //2.2.1.16.1
             $ScontoMaggiorazione->addChild("TipoDato","");
+            //2.2.1.16.2
             $ScontoMaggiorazione->addChild("RiferimentoTesto","");
+            //2.2.1.16.3
             $ScontoMaggiorazione->addChild("RiferimentoNumero","");
+            //2.2.1.16.4
             $ScontoMaggiorazione->addChild("RiferimentoData","");
         
     $inponibiliTotale = $inponibiliTotale + $item['SubtotalValue'];
     $taxesTotales = $taxesTotales + $item['taxesValue'];
 }
 ///////////////////////////
-
+    //2.2.2
     $DatiRiepilogo = $DatiBeniServizi->addChild("DatiRiepilogo");
+        //2.2.2.1
         $DatiRiepilogo->addChild("AliquotaIVA","4.00");
+        //2.2.2.2
         $DatiRiepilogo->addChild("Natura","");
+        //2.2.2.3
         $DatiRiepilogo->addChild("SpeseAccessorie","");
+        //2.2.2.4
         $DatiRiepilogo->addChild("Arrotondamento","");
+        //2.2.2.5
         $DatiRiepilogo->addChild("ImponibileImporto",number_format($inponibiliTotale , 2));
+        //2.2.2.6
         $DatiRiepilogo->addChild("Imposta",number_format($taxesTotales , 2));
+        //2.2.2.7
         $DatiRiepilogo->addChild("EsigibilitaIVA","D");
+        //2.2.2.8
         $DatiRiepilogo->addChild("RiferimentoNormativo","");
+
+  //2.3
+  $datiVeicoli = $body->DatiGenerali->addChild("DatiVeicoli");
+    //2.3.1
+    $datiVeicoli->addChild("Data","");
+    //2.3-2
+    $datiVeicoli->addChild("TotalePercorso","");
+  //2.4
+  $datiPagamento = $body->DatiGenerali->addChild("DatiPagamento");
+    //2.4.1
+    $datiPagamento->addChild("CondizioniPagamento","");
+    //2.4.2
+    $DettaglioPagamento = $datiPagamento->addChild("DettaglioPagamento");
+        //2.4.2.1
+        $DettaglioPagamento->addChild("Beneficiario","");
+        //2.4.2.2
+        $DettaglioPagamento->addChild("ModalitaPagamento","");
+        //2.4.2.3
+        $DettaglioPagamento->addChild("DataRiferimentoTerminiPagamento","");
+        //2.4.2.4
+        $DettaglioPagamento->addChild("GiorniTerminiPagamento","");
+        //2.4.2.5
+        $DettaglioPagamento->addChild("DataScadenzaPagamento","");
+        //2.4.2.6
+        $DettaglioPagamento->addChild("ImportoPagamento","");
+        //2.4.2.7
+        $DettaglioPagamento->addChild("CodUfficioPostale","");
+        //2.4.2.8
+        $DettaglioPagamento->addChild("CognomeQuietanzante","");
+        //2.4.2.9
+        $DettaglioPagamento->addChild("NomeQuietanzante","");
+        //2.4.2.10
+        $DettaglioPagamento->addChild("CFQuietanzante","");
+        //2.4.2.11
+        $DettaglioPagamento->addChild("TitoloQuietanzante","");
+        //2.4.2.12
+        $DettaglioPagamento->addChild("IstitutoFinanziario","");
+        //2.4.2.13
+        $DettaglioPagamento->addChild("IBAN","");
+        //2.4.2.14
+        $DettaglioPagamento->addChild("ABI","");
+        //2.4.2.15
+        $DettaglioPagamento->addChild("CAB","");
+        //2.4.2.16
+        $DettaglioPagamento->addChild("BIC","");
+        //2.4.2.17
+        $DettaglioPagamento->addChild("ScontoPagamentoAnticipato","");
+        //2.4.2.18
+        $DettaglioPagamento->addChild("DataLimitePagamentoAnticipato","");
+        //2.4.2.19
+        $DettaglioPagamento->addChild("PenalitaPagamentiRitardati","");
+        //2.4.2.20
+        $DettaglioPagamento->addChild("DataDecorrenzaPenale","");
+        //2.4.2.21
+        $DettaglioPagamento->addChild("CodicePagamento","");
+  //2.5
+  $allegati = $body->DatiGenerali->addChild("Allegati");
+      //2.5.1
+    $allegati->addChild("NomeAttachment","");
+      //2.5.2
+    $allegati->addChild("AlgoritmoCompressione","");
+      //2.5.3
+    $allegati->addChild("FormatoAttachment","");
+      //2.5.4
+    $allegati->addChild("DescrizioneAttachment","");
+      //2.5.5
+    $allegati->addChild("Attachment","");
     
 //saving generated xml file
 $xml_file = $xml_invoice->asXML('xmlFiles/users.xml');
