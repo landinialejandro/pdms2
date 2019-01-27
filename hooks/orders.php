@@ -140,40 +140,42 @@
 
 	function orders_dv($selectedID, $memberInfo, &$html, &$args){
             if (isset($_REQUEST['addNew_x'])){
-
                 if (isset($_REQUEST['ok']) || (isset($_REQUEST['FilterValue']) && isset($_REQUEST['FilterField']))){
                     if (isset($_REQUEST['ok'])){
-                       $ok_id = makeSafe($_REQUEST['ok']);
-                       $ok_text = sqlValue("select name from kinds where code = '{$ok_id}'");
+                        $orderKind = getKindsData(makeSafe($_REQUEST['ok']));
+                        //    $ok_id = makeSafe($_REQUEST['ok']);
+                        //    $ok_text = sqlValue("select name from kinds where code = '{$ok_id}'");
                     }
                     if (isset($_REQUEST['FilterValue'])){
-                        $ok_text = makeSafe($_REQUEST['FilterValue'][1]);
-                        $ok_id = sqlValue("select code from kinds where name = '{$ok_text}'");
+                        $orderKind = getKindsData("", makeSafe($_REQUEST['FilterValue'][1]));
+                        // $ok_text = makeSafe($_REQUEST['FilterValue'][1]);
+                        // $ok_id = sqlValue("select code from kinds where name = '{$ok_text}'");
                     }
                 }
 
                 if (isset($_REQUEST['mc']) && isset($_REQUEST['dk'])){
                     $mc_id = intval(makeSafe($_REQUEST['mc']));
-                    $mc_name = sqlValue("select companyName from companies where id = {$mc_id}");
-                    $mc_code = sqlValue("select companyCode from companies where id = {$mc_id}");
-                    $mc_text = $mc_code . " - " . $mc_name;
-                    $dk_id = makeSafe($_REQUEST['dk']);
-                    $dk_name = kindName($dk_id);
-                    $dk_text = $dk_id . " - " . $dk_name;
+                    $mc = getDataTable_Values('companies',"AND companies.id = {$mc_id}");
+                    // $mc_name = sqlValue("select companyName from companies where id = {$mc_id}");
+                    // $mc_code = sqlValue("select companyCode from companies where id = {$mc_id}");
+                    $mc_text = $mc['companyCode'] . " - " . $mc['companyName'];
+                    // $dk_id = makeSafe($_REQUEST['dk']);
+                    $documentKind = getKindsData(makeSafe($_REQUEST['dk']));
+                    // $dk_text = $dk_id . " - " . $dk['name'];
                 }
                 ob_start();
                 ?>
                     <!-- insert HTML code-->
-                    <?php echo title_tv($ok_text,"?ok=$ok_text");?>
+                    <?php echo title_tv($orderKind['name'],"?ok={$orderKind['name']}"); ?>
                     <script>
                      function autoSet(){
                          setTimeout(function(){
                              $j('#s2id_company-container').select2("data", {id: "<?php echo $mc_id; ?>", text: "<?php echo $mc_text; ?>"});
                              $j('#company').val("<?php echo $mc_id; ?>");
-                             $j('#s2id_typeDoc-container').select2("data", {id: "<?php echo $dk_id; ?>", text: "<?php echo $dk_text; ?>"});
-                             $j('#typeDoc').val("<?php echo $dk_id; ?>");
-                             $j('#s2id_kind-container').select2("data", {id: "<?php echo $ok_id; ?>", text: "<?php echo $ok_text; ?>"});
-                             $j('#kind').val("<?php echo $ok_id; ?>");
+                             $j('#s2id_typeDoc-container').select2("data", {id: "<?php echo $documentKind['code']; ?>", text: "<?php echo $documentKind['name']; ?>"});
+                             $j('#typeDoc').val("<?php echo  $documentKind['code']; ?>");
+                             $j('#s2id_kind-container').select2("data", {id: "<?php echo $orderKind['code']; ?>", text: "<?php echo $orderKind['name']; ?>"});
+                             $j('#kind').val("<?php echo $orderKind['code']; ?>");
                              orderNumber();
                          },1000);
                      }  
@@ -200,11 +202,13 @@
             if(!function_exists('firstCashNote_update')){
                 include ("$currDir/../firstCashNote_dml.php");
             }
-            $res = sql("select * from firstCashNote where firstCashNote.`order` = '{$data['id']}' order by id asc limit 1;",$eo);
-            $fc = db_fetch_assoc($res);
-            $fc['order']=$data['id'];
-            $descKind=kindName($data['kind']);
-            $fc['causal']= ( $descKind ? $descKind : $data['kind']);
+            $where_id = "AND  firstCashNote.order = '{$data['id']}' order by id asc limit 1;";
+            $fc = getDataTable_Values('firstCashNote', $where_id );
+            // $res = sql("select * from firstCashNote where firstCashNote.`order` = '{$data['id']}' order by id asc limit 1;",$eo);
+            // $fc = db_fetch_assoc($res);
+            $fc['order'] = $data['id'];
+            $dk_name = getKindsData($data['kind']);
+            $fc['causal'] = ( $dk_name ? $dk_name['name'] : $data['kind']);
             
             if($data['kind'] === 'IN'){
                 $fc['outputs']=$data['orderTotal'];

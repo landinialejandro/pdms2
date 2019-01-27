@@ -14,12 +14,12 @@
  * db_fetch from data result
 */
 
-function getDataTable($table_name,$where_id = "", $debug =FALSE){
+function getDataTable($table_name, $where_id = "", $debug =FALSE){
     // the $where_id need to be likle the next line
     // $where_id ="AND attributes.attribute = {$id}";//change this to set select where
     $table_from = get_sql_from($table_name);
     $table_fields = get_sql_fields($table_name);
-    $where_id = "" ? "" : " ".$where_id;
+    $where_id = "" ? "" : " " . $where_id;
     $sql="SELECT {$table_fields} FROM {$table_from}" . $where_id;
     if ($debug){
         echo "<br>".$sql."<br>";
@@ -27,11 +27,12 @@ function getDataTable($table_name,$where_id = "", $debug =FALSE){
     $res = sql($sql, $eo);
     return db_fetch_assoc($res);
 }
-function getDataTable_Value($table_name, $where_id = "", $debug =FALSE){
+
+function getDataTable_Values($table_name, $where_id = "", $debug =FALSE){
     // the $where_id need to be likle the next line
     // $where_id ="AND attributes.attribute = {$id}";//change this to set select where
-    $where_id = "" ? "" : " where 1=1 ".$where_id;
-    $sql="SELECT * FROM {$table_name}" . $where_id;
+    $where_id = "" ? "" : " where 1=1 " . $where_id;
+    $sql = "SELECT * FROM {$table_name}" . $where_id;
     if ($debug){
         printf( "<br>".$sql."<br>");
     }
@@ -40,12 +41,14 @@ function getDataTable_Value($table_name, $where_id = "", $debug =FALSE){
 }
 
 function getLimitsCompany($id, $code){
-    /* return json limit credit*/
-    $res = sql("select * from SQL_customersLimits where cust_id = '$id' and attr_code = '$code' LIMIT 1;",$eo);
-    if(!($row = db_fetch_array($res))){
-        $row[]="";
+    /* return limit credit*/
+    // $res = sql("select * from SQL_customersLimits where cust_id = '$id' and attr_code = '$code' LIMIT 1;",$eo);
+    $where_id = "AND  cust_id = '$id' AND attr_code = '$code' LIMIT 1;";
+    $res = getDataTable_Values('SQL_customersLimits', $where_id);
+    if(!$res){
+        $res[] = "";
     }
-    return $row;
+    return $res;
 }
 
 function getPurchasesCompany($id){ //customers
@@ -87,15 +90,15 @@ function dataBar($id){
     return $ret;
 }
 
-function kindName($code){
-    return makeSafe(sqlValue("select name from kinds where code = '{$code}'"));
-}
+function getKindsData($code = "", $name = ""){
+    
+    $code = "" ? "" : " AND kinds.code = '{$code}'";
+    $name = "" ? "" : " AND kinds.name = '{$name}'";
+    $where_id = $code . $name;//change this to set select where
 
-function getKindsData($id){
-    $where_id =" AND kinds.code = '{$id}'";//change this to set select where
-    $kind = getDataTable('kinds', $where_id);
+    $res = getDataTable('kinds', $where_id);
 
-    $result = json_decode($attr['value']);
+    $result = json_decode($res['value']);
 
     if (json_last_error() === JSON_ERROR_NONE) {
         // JSON is valid
@@ -105,6 +108,7 @@ function getKindsData($id){
 }
 
 function getTotCol($parameters,$fieldToSUM){
+    //return tot value
     $sumQuery="select sum(`".$parameters['ChildTable']."`.`". $fieldToSUM ."`) from ".$parameters['ChildTable']." where `". $parameters['ChildLookupField']."` = '". $parameters['SelectedID']. "'";
     $res= sqlValue($sumQuery);
     return $res;

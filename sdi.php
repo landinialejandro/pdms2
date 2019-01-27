@@ -20,7 +20,7 @@ if(!$order_id) {exit(error_message('Invalid order ID!', false));}
 ///////////////////////////
 $where_id ="AND orders.id = {$order_id}";//change this to set select where
 $order = getDataTable('orders',$where_id);
-$order_values = getDataTable_Value('orders',$where_id);
+$order_values = s('orders',$where_id);
 if(!$order['multiOrder']){
     exit(error_message('<h1>order number not valid</h1>' . $order['kind'], false));
 }
@@ -124,7 +124,7 @@ if($order_values['kind'] !== 'OUT'){
 if ($order_values['customer']){
     $where_id="AND companies.id = {$order_values['customer']}";
     $customer = getDataTable('companies',$where_id);
-    $customer_values = getDataTable_Value("companies", $where_id);
+    $customer_values = getDataTable_Values("companies", $where_id);
     
     //Client address
     $where_id ="AND addresses.company = {$customer['id']} ORDER BY addresses.default DESC LIMIT 1;";//change this to set select where
@@ -178,281 +178,29 @@ $invoice_=<<<XML
     xsi:schemaLocation="http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd"
 >
     <FatturaElettronicaHeader>
-        <!-- 1.1 -->
-        <DatiTrasmissione>
-        </DatiTrasmissione>
-        <!-- 1.2 -->
-        <CedentePrestatore>
-            <DatiAnagrafici>
-                <IdFiscaleIVA>
-                    <IdPaese>{$address['country']}</IdPaese> <!-- obligatory -->
-                    <IdCodice>{$company['vat']}</IdCodice> <!-- obligatory -->
-                </IdFiscaleIVA>
-                <CodiceFiscale>{$company['vat']}</CodiceFiscale> <!-- Consigliata -->
-                <Anagrafica>
-                    <Denominazione>{$company['companyName']}</Denominazione> <!-- SI, ma solo se --> 
-                    <Nome>{$contact['name']}</Nome> <!-- SI, ma solo se -->
-                    <Cognome>{$contact['lastName']}</Cognome> <!-- SI, ma solo se -->
-                    <Titolo>{$contact['title']}</Titolo> <!-- NO -->
-                    <codEORI>{$contact['CodEORI']}</codEORI> <!-- NO -->
-                </Anagrafica>
-                <AlboProfessionale></AlboProfessionale> <!-- NO -->
-                <ProvinciaAlbo></ProvinciaAlbo> <!-- NO -->
-                <NumeroIscrizioneAlbo></NumeroIscrizioneAlbo> <!-- NO -->
-                <DataIscrizioneAlbo></DataIscrizioneAlbo> <!-- NO -->
-                <RegimeFiscale>{$company['regimeFiscale']}</RegimeFiscale> <!-- obligatory -->
-            </DatiAnagrafici>
-            <Sede>
-                <Indirizzo>{$address['address']}</Indirizzo> <!-- obligatory -->
-                <NumeroCivico>{$address['houseNumber']}</NumeroCivico> <!-- SI, ma solo se -->
-                <CAP>{$address['postalCode']}</CAP> <!-- obligatory -->
-                <Comune>{$address['town']}</Comune> <!-- obligatory -->
-                <Provincia>{$address['district']}</Provincia> <!-- SI, ma solo se -->
-                <Nazione>{$address['country']}</Nazione> <!-- obligatory -->
-            </Sede>
-            <StabileOrganizzazione> <!-- 1.2.3  il cedente/prestatore è un soggetto che non risiede in Italia ma che, in Italia,
-                                                dispone di una stabile organizzazione attraverso la quale svolge la propria
-                                                attività (cessioni di beni o prestazioni di servizi oggetto di fatturazione)
-                                    -->
-                <Indirizzo></Indirizzo> <!-- SI, ma solo se -->
-                <NumeroCivico></NumeroCivico><!-- SI, ma solo se -->
-                <CAP></CAP> <!-- SI, ma solo se -->
-                <Comune></Comune> <!-- SI, ma solo se -->
-                <Provincia></Provincia> <!-- SI, ma solo se -->
-                <Nazione></Nazione> <!-- SI, ma solo se -->
-            </StabileOrganizzazione>
-            <IscrizioneREA> <!-- 1.2.4  il cedente/prestatore è una società iscritta nel registro delle imprese e come
-                                        tale ha l’obbligo di indicare in tutti i documenti anche i dati relativi all’iscrizione
-                                        (art. 2250 codice civile)
-                            -->
-                <Ufficio></Ufficio> <!-- SI, ma solo se -->
-                <NumeroREA></NumeroREA> <!-- SI, ma solo se -->
-                <CapitaleSociale></CapitaleSociale> <!-- SI, ma solo se -->
-                <SocioUnico></SocioUnico> <!-- SI, ma solo se -->
-                <StatoLiquidazione></StatoLiquidazione> <!-- SI, ma solo se -->
-            </IscrizioneREA> 
-            <Contatti>
-                <Telefono></Telefono> <!-- NO -->
-                <Fax></Fax> <!-- NO -->
-                <Email></Email> <!-- NO -->
-            </Contatti> 
-            <RiferimentoAmministrazione></RiferimentoAmministrazione> <!-- obligatory -->
-        </CedentePrestatore>
-        <!-- 1.3 -->
-        <RappresentanteFiscale>
-            <DatiAnagrafici>
-                <IdFiscaleIVA>
-                    <IdPaese></IdPaese> 
-                    <IdCodice></IdCodice> 
-                </IdFiscaleIVA> 
-                <Anagrafica>
-                    <Denominazione></Denominazione> 
-                    <Nome></Nome> 
-                    <Cognome></Cognome> 
-                    <Titolo></Titolo> 
-                    <CodEORI></CodEORI> 
-                </Anagrafica> 
-            </DatiAnagrafici> 
-        </RappresentanteFiscale>
-        <!-- 1.4 -->
-        <CessionarioCommittente> 
-            <DatiAnagrafici>
-                <IdFiscaleIVA>
-                    <IdPaese></IdPaese> 
-                    <IdCodice></IdCodice> 
-                </IdFiscaleIVA> 
-                <CodiceFiscale>{$customer['vat']}</CodiceFiscale> 
-                <Anagrafica>
-                    <Denominazione>{$customer['companyName']}</Denominazione> 
-                    <Nome></Nome> 
-                    <Cognome></Cognome> 
-                    <Titolo></Titolo> 
-                    <CodEORI></CodEORI> 
-                </Anagrafica>
-            </DatiAnagrafici>
-            <Sede>
-                <Indirizzo>{$addressCustomer['address']} {$addressCustomer['houseNumber']}</Indirizzo> 
-                <NumeroCivico></NumeroCivico>
-                <CAP>{$addressCustomer['postalCode']}</CAP> 
-                <Comune>{$addressCustomer['town']}</Comune> 
-                <Provincia>{$addressCustomer['district']}</Provincia> 
-                <Nazione>{$addressCustomer['country']}</Nazione> 
-            </Sede>
-        </CessionarioCommittente>
-        <!-- 1.5 -->
-        <TerzoIntermediarioOSoggettoEmittente>
-            <DatiAnagrafici>
-                <IdFiscaleIVA>
-                    <IdPaese></IdPaese> 
-                    <IdCodice></IdCodice> 
-                </IdFiscaleIVA> 
-                <CodiceFiscale></CodiceFiscale> 
-                <Anagrafica>
-                    <Denominazione></Denominazione> 
-                    <Nome></Nome> 
-                    <Cognome></Cognome> 
-                    <Titolo></Titolo> 
-                    <CodEORI></CodEORI> 
-                </Anagrafica>
-            </DatiAnagrafici>
-        </TerzoIntermediarioOSoggettoEmittente>
-        <!-- 1.6 -->
-        <SoggettoEmittente></SoggettoEmittente> 
     </FatturaElettronicaHeader>
     <FatturaElettronicaBody>
         <!-- 2.1 -->
         <DatiGenerali>
-            <DatiGeneraliDocumento>
-                <TipoDocumento>TD01</TipoDocumento> 
-                <Divisa>EUR</Divisa> 
-                <Data>{$order['sellDate']}</Data> 
-                <Numero>{$order['multiOrder']}</Numero> 
-                <DatiRitenuta>
-                    <TipoRitenuta></TipoRitenuta> 
-                    <ImportoRitenuta></ImportoRitenuta> 
-                    <AliquotaRitenuta></AliquotaRitenuta> 
-                    <CausalePagamento></CausalePagamento> 
-                </DatiRitenuta> 
-                <DatiBollo>
-                    <NumeroBollo></NumeroBollo> 
-                    <ImportoBollo></ImportoBollo> 
-                </DatiBollo> 
-                <DatiCassaPrevidenziale>
-                    <TipoCassa></TipoCassa> 
-                    <AlCassa></AlCassa> 
-                    <ImportoContributoCassa></ImportoContributoCassa> 
-                    <ImponibileCassa></ImponibileCassa> 
-                    <AliquotaIVA></AliquotaIVA> 
-                    <Ritenuta></Ritenuta> 
-                    <Natura></Natura> 
-                    <RiferimentoAmministrazione></RiferimentoAmministrazione> 
-                </DatiCassaPrevidenziale> 
-                <ScontoMaggiorazione>
-                    <Tipo></Tipo> 
-                    <Percentuale></Percentuale> 
-                    <Importo></Importo> 
-                </ScontoMaggiorazione> 
-                <ImportoTotaleDocumento></ImportoTotaleDocumento> 
-                <Arrotondamento></Arrotondamento> 
-                <Causale>LA FATTURA FA RIFERIMENTO AD UNA OPERAZIONE</Causale> 
-                <Art73></Art73> 
-            </DatiGeneraliDocumento>
-            <DatiOrdineAcquisto>
-                <RiferimentoNumeroLinea>1</RiferimentoNumeroLinea> 
-                <IdDocumento>66685</IdDocumento> 
-                <Data></Data> 
-                <NumItem>1</NumItem> 
-                <CodiceCommessaConvenzione></CodiceCommessaConvenzione> 
-                <CodiceCUP></CodiceCUP> 
-            </DatiOrdineAcquisto>
-            <DatiContratto></DatiContratto> 
-            <DatiConvenzione></DatiConvenzione> 
-            <DatiRicezione></DatiRicezione> 
-            <DatiFattureCollegate></DatiFattureCollegate> 
-            <DatiSAL>
-                <RiferimentoFase></RiferimentoFase> 
-            </DatiSAL> 
-            <DatiDDT>
-                <NumeroDDT></NumeroDDT> 
-                <DataDDT></DataDDT> 
-                <RiferimentoNumeroLinea></RiferimentoNumeroLinea> 
-            </DatiDDT> 
-            <DatiTrasporto>
-                <DatiAnagraficiVettore>
-                    <IdFiscaleIVA>
-                        <IdPaese>IT</IdPaese> 
-                        <IdCodice>24681012141</IdCodice> 
-                    </IdFiscaleIVA>
-                    <Anagrafica>
-                        <Denominazione>{$shipper['companyName']}</Denominazione> 
-                        <Nome></Nome> 
-                        <Cognome></Cognome> 
-                        <Titolo></Titolo> 
-                    </Anagrafica>
-                    <NumeroLicenzaGuida></NumeroLicenzaGuida>
-                </DatiAnagraficiVettore>
-                <MezzoTrasporto></MezzoTrasporto>
-                <CausaleTrasporto></CausaleTrasporto>
-                <NumeroColli></NumeroColli>
-                <Descrizione></Descrizione>
-                <UnitaMisuraPeso></UnitaMisuraPeso>
-                <PesoLordo></PesoLordo>
-                <PesoNetto></PesoNetto>
-                <DataOraRitiro></DataOraRitiro>
-                <DataInizioTrasporto></DataInizioTrasporto>
-                <TipoResa></TipoResa>
-                <IndirizzoResa>
-                    <Indirizzo></Indirizzo> 
-                    <NumeroCivico></NumeroCivico>
-                    <CAP></CAP> 
-                    <Comune></Comune> 
-                    <Provincia></Provincia> 
-                    <Nazione></Nazione> 
-                </IndirizzoResa>
-                <DataOraConsegna>{$order['consigneeHour']}</DataOraConsegna> 
-            </DatiTrasporto>
-            <NormaDiRiferimento></NormaDiRiferimento> 
-            <FatturaPrincipale>
-                <NumeroFatturaPrincipale></NumeroFatturaPrincipale> 
-                <DataFatturaPrincipale></DataFatturaPrincipale> 
-            </FatturaPrincipale> 
         </DatiGenerali>
         <!-- 2.2 -->
         <DatiBeniServizi>
         </DatiBeniServizi>
-        <!-- 2.3 -->
-        <DatiVeicoli>
-            <Data></Data> 
-            <TotalePercorso></TotalePercorso> 
-        </DatiVeicoli> 
-        <!-- 2.4 -->
-        <DatiPagamento>
-            <CondizioniPagamento>TP01</CondizioniPagamento> 
-            <DettaglioPagamento>
-                <Beneficiario></Beneficiario> 
-                <ModalitaPagamento>MP01</ModalitaPagamento> 
-                <DataRiferimentoTerminiPagamento></DataRiferimentoTerminiPagamento> 
-                <GiorniTerminiPagamento></GiorniTerminiPagamento> 
-                <DataScadenzaPagamento>2015-01-30</DataScadenzaPagamento> 
-                <ImportoPagamento>30.50</ImportoPagamento> 
-                <CodUfficioPostale></CodUfficioPostale> 
-                <CognomeQuietanzante></CognomeQuietanzante> 
-                <NomeQuietanzante></NomeQuietanzante> 
-                <CFQuietanzante></CFQuietanzante> 
-                <TitoloQuietanzante></TitoloQuietanzante> 
-                <IstitutoFinanziario></IstitutoFinanziario> 
-                <IBAN></IBAN> 
-                <ABI></ABI> 
-                <CAB></CAB> 
-                <BIC></BIC> 
-                <ScontoPagamentoAnticipato></ScontoPagamentoAnticipato> 
-                <DataLimitePagamentoAnticipato></DataLimitePagamentoAnticipato> 
-                <PenalitaPagamentiRitardati></PenalitaPagamentiRitardati> 
-                <DataDecorrenzaPenale></DataDecorrenzaPenale> 
-                <CodicePagamento></CodicePagamento> 
-            </DettaglioPagamento>
-        </DatiPagamento>
-        <!-- 2.5 -->
-        <Allegati>
-            <NomeAttachment></NomeAttachment> 
-            <AlgoritmoCompressione></AlgoritmoCompressione> 
-            <FormatoAttachment></FormatoAttachment> 
-            <DescrizioneAttachment></DescrizioneAttachment> 
-            <Attachment></Attachment> 
-        </Allegati> 
     </FatturaElettronicaBody>
 </p:FatturaElettronica>
         
 XML;
-$dir = __DIR__."/xmlFiles";
-//$invoice = file_get_contents("$dir/_baseProforma.xml");
+// create xml from file
+// $dir = __DIR__."/xmlFiles";
+// $xml_invoice = simplexml_load_file("$dir/_baseProforma.xml");
+
 //creating object of SimpleXMLElement
-//$xml_invoice = new SimpleXMLElement($invoice);
- $xml_invoice = simplexml_load_file("$dir/_baseProforma.xml");
+$xml_invoice = new SimpleXMLElement($invoice);
+
 //1
 $header = $xml_invoice->FatturaElettronicaHeader;
     //1.1
-    $DatiTrasmissione = $xml_invoice->FatturaElettronicaHeader->DatiTrasmissione;
+    $DatiTrasmissione = $xml_invoice->FatturaElettronicaHeader->addChild("DatiTrasmissione");
         //1.1.1
         $IdTrasmittente = $DatiTrasmissione->addChild("IdTrasmittente");
             //1.1.1.1 obligatory
@@ -507,7 +255,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
         }
 
     //1.2
-    $CedentePrestatore = $xml_invoice->FatturaElettronicaHeader->CedentePrestatore;
+    $CedentePrestatore = $xml_invoice->FatturaElettronicaHeader->addChild("CedentePrestatore");
         //1.2.1
         $CP_DatiAnagrafici = $CedentePrestatore->addChild("DatiAnagrafici");
             //1.2.1.1
@@ -648,7 +396,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
                 $DatiAnagrafici_Anagrafica->addChild("CodEORI",$contact['CodEORI']);
      */
     //1.4
-    $CessionarioCommittente = $xml_invoice->FatturaElettronicaHeader->CessionarioCommittente;
+    $CessionarioCommittente = $xml_invoice->FatturaElettronicaHeader->addChild("CessionarioCommittente");
         //1.4.1
         $CC_DatiAnagrafici = $CessionarioCommittente->addChild("DatiAnagrafici");
             //1.4.1.1
@@ -760,7 +508,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
 $body = $xml_invoice->FatturaElettronicaBody;      
     //2.1 DatiGenerali
         //2.1.1
-        $DatiGeneraliDocumento = $body->DatiGenerali->DatiGeneraliDocumento;
+        $DatiGeneraliDocumento = $body->DatiGenerali->addChild("DatiGeneraliDocumento");
             //2.1.1.1
             $DatiGeneraliDocumento->addChild("TipoDocumento",$order_values['typeDoc']);
             //2.1.1.2
@@ -820,7 +568,7 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.1.1.12
             $DatiGeneraliDocumento->addChild("Art73");
         //2.1.2
-        $DatiOrdineAcquisto = $body->DatiGenerali->DatiOrdineAcquisto;
+        $DatiOrdineAcquisto = $body->DatiGenerali->addChild("DatiOrdineAcquisto");
             //2.1.2.1
             $DatiOrdineAcquisto->addChild("RiferimentoNumeroLinea");
             //2.1.2.2
@@ -916,7 +664,7 @@ $body = $xml_invoice->FatturaElettronicaBody;
                 //2.1.9.12.6
                 $IndirizzoResa->addDhild("Nazione","");
             //2.1.9.13
-            $datiTrasporto->addChild("DataOraConsegna","");
+            $datiTrasporto->addChild("DataOraConsegna",$order['consigneeHour']);
         //2.1.10
         $FatturaPrincipale = $body->DatiGenerali->addChild("FatturaPrincipale");
             //2.1.10.1
@@ -924,165 +672,165 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.1.10.2
             $FatturaPrincipale->addChild("DataFatturaPrincipale","");
             
-//2.2 
-$DatiBeniServizi = $body->DatiBeniServizi;
+    //2.2 
+    $DatiBeniServizi = $body->DatiBeniServizi;
 
-/* retrieve order items */
-///////////////////////////
-$item_fields = get_sql_fields('ordersDetails');
-$item_from = get_sql_from('ordersDetails');
-$items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
-foreach($items as $i => $item){
-    $productId = intval(sqlValue("select ordersDetails.productCode from ordersDetails where ordersDetails.id = {$item['id']} "));
-    if (!$productId){
-        echo '<div class="alert alert-danger alert-dismissible"><h1>product id not valid: '. $productId.'/'.$item['id'].'</h1></div>';
+    /* retrieve order items */
+    ///////////////////////////
+    $item_fields = get_sql_fields('ordersDetails');
+    $item_from = get_sql_from('ordersDetails');
+    $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
+    foreach($items as $i => $item){
+        $productId = intval(sqlValue("select ordersDetails.productCode from ordersDetails where ordersDetails.id = {$item['id']} "));
+        if (!$productId){
+            echo '<div class="alert alert-danger alert-dismissible"><h1>product id not valid: '. $productId.'/'.$item['id'].'</h1></div>';
+        }
+        $where_id = "AND products.id = $productId";
+        $product = getDataTable("products", $where_id);
+        $categoryId = sqlValue("select products.CategoryID from products where products.id = {$product['id']}");
+        $categoryData = getKindsData($categoryId );
+        //2.2.1
+        $DettaglioLinee = $DatiBeniServizi->addChild("DettaglioLinee");
+            //2.2.1.1
+            $DettaglioLinee->addChild("NumeroLinea",$i+1);
+            //2.2.1.2
+            $DettaglioLinee->addChild("TipoCessionePrestazione",$item['Discount']? "SC" : "");
+            //2.2.1.3
+            $CodiceArticolo = $DettaglioLinee->addChild("CodiceArticolo");//two childs
+                //2.2.1.3.1
+                $CodiceArticolo->addChild("CodiceTipo",$categoryData['code']);
+                //2.2.1.3.2
+                $CodiceArticolo->addChild("CodiceValore",$item['productCode']);
+            //2.2.1.4
+            $DettaglioLinee->addChild("Descrizione",$product['productName']);
+            //2.2.1.5
+            $DettaglioLinee->addChild("Quantita",$item['QuantityReal']);
+            //2.2.1.6
+            $DettaglioLinee->addChild("UnitaMisura",$product['UM']);
+            //2.2.1.7
+            $DettaglioLinee->addChild("DataInizioPeriodo","");
+            //2.2.1.8
+            $DettaglioLinee->addChild("DataFinePeriodo","");
+            //2.2.1.9
+            $DettaglioLinee->addChild("PrezzoUnitario",number_format($item['UnitPriceValue'] , 2));
+            //2.2.1.10
+            $ScontoMaggiorazione = $DettaglioLinee->addChild("ScontoMaggiorazione");//tree childs
+                //2.2.1.10.1
+                $ScontoMaggiorazione->addChild("Tipo",$item['Discount']? "SC" : "");
+                //2.2.1.10.2
+                $ScontoMaggiorazione->addChild("Percentuale",number_format($item['Discount'] , 2));
+                //2.2.1.10.3
+                $ScontoMaggiorazione->addChild("Importo",number_format($item['SubtotalValue']*$item['Discount']/100 , 2));
+            //2.2.1.11
+            $DettaglioLinee->addChild("PrezzoTotale",number_format($item['SubtotalValue'] , 2));
+            //2.2.1.12
+            $DettaglioLinee->addChild("AliquotaIVA",number_format($item['taxesValue'] , 2));
+            //2.2.1.13
+            $DettaglioLinee->addChild("Ritenuta","");
+            //2.2.1.14
+            $DettaglioLinee->addChild("Natura","");
+            //2.2.1.15
+            $DettaglioLinee->addChild("RiferimentoAmministrazione","");
+            //2.2.1.16
+            $AltriDatiGestionali = $DettaglioLinee->addChild("AltriDatiGestionali");//four childs
+                //2.2.1.16.1
+                $ScontoMaggiorazione->addChild("TipoDato","");
+                //2.2.1.16.2
+                $ScontoMaggiorazione->addChild("RiferimentoTesto","");
+                //2.2.1.16.3
+                $ScontoMaggiorazione->addChild("RiferimentoNumero","");
+                //2.2.1.16.4
+                $ScontoMaggiorazione->addChild("RiferimentoData","");
+            
+        $inponibiliTotale = $inponibiliTotale + $item['SubtotalValue'];
+        $taxesTotales = $taxesTotales + $item['taxesValue'];
     }
-    $where_id = "AND products.id = $productId";
-    $product = getDataTable("products", $where_id);
-    $categoryId = sqlValue("select products.CategoryID from products where products.id = {$product['id']}");
-    $categoryData = getKindsData($categoryId);
-    //2.2.1
-    $DettaglioLinee = $DatiBeniServizi->addChild("DettaglioLinee");
-        //2.2.1.1
-        $DettaglioLinee->addChild("NumeroLinea",$i+1);
-        //2.2.1.2
-        $DettaglioLinee->addChild("TipoCessionePrestazione",$item['Discount']? "SC" : "");
-        //2.2.1.3
-        $CodiceArticolo = $DettaglioLinee->addChild("CodiceArticolo");//two childs
-            //2.2.1.3.1
-            $CodiceArticolo->addChild("CodiceTipo",$categoryData['code']);
-            //2.2.1.3.2
-            $CodiceArticolo->addChild("CodiceValore",$item['productCode']);
-        //2.2.1.4
-        $DettaglioLinee->addChild("Descrizione",$product['productName']);
-        //2.2.1.5
-        $DettaglioLinee->addChild("Quantita",$item['QuantityReal']);
-        //2.2.1.6
-        $DettaglioLinee->addChild("UnitaMisura",$product['UM']);
-        //2.2.1.7
-        $DettaglioLinee->addChild("DataInizioPeriodo","");
-        //2.2.1.8
-        $DettaglioLinee->addChild("DataFinePeriodo","");
-        //2.2.1.9
-        $DettaglioLinee->addChild("PrezzoUnitario",number_format($item['UnitPriceValue'] , 2));
-        //2.2.1.10
-        $ScontoMaggiorazione = $DettaglioLinee->addChild("ScontoMaggiorazione");//tree childs
-            //2.2.1.10.1
-            $ScontoMaggiorazione->addChild("Tipo",$item['Discount']? "SC" : "");
-            //2.2.1.10.2
-            $ScontoMaggiorazione->addChild("Percentuale",number_format($item['Discount'] , 2));
-            //2.2.1.10.3
-            $ScontoMaggiorazione->addChild("Importo",number_format($item['SubtotalValue']*$item['Discount']/100 , 2));
-        //2.2.1.11
-        $DettaglioLinee->addChild("PrezzoTotale",number_format($item['SubtotalValue'] , 2));
-        //2.2.1.12
-        $DettaglioLinee->addChild("AliquotaIVA",number_format($item['taxesValue'] , 2));
-        //2.2.1.13
-        $DettaglioLinee->addChild("Ritenuta","");
-        //2.2.1.14
-        $DettaglioLinee->addChild("Natura","");
-        //2.2.1.15
-        $DettaglioLinee->addChild("RiferimentoAmministrazione","");
-        //2.2.1.16
-        $AltriDatiGestionali = $DettaglioLinee->addChild("AltriDatiGestionali");//four childs
-            //2.2.1.16.1
-            $ScontoMaggiorazione->addChild("TipoDato","");
-            //2.2.1.16.2
-            $ScontoMaggiorazione->addChild("RiferimentoTesto","");
-            //2.2.1.16.3
-            $ScontoMaggiorazione->addChild("RiferimentoNumero","");
-            //2.2.1.16.4
-            $ScontoMaggiorazione->addChild("RiferimentoData","");
-        
-    $inponibiliTotale = $inponibiliTotale + $item['SubtotalValue'];
-    $taxesTotales = $taxesTotales + $item['taxesValue'];
-}
-///////////////////////////
-    //2.2.2
-    $DatiRiepilogo = $DatiBeniServizi->addChild("DatiRiepilogo");
-        //2.2.2.1
-        $DatiRiepilogo->addChild("AliquotaIVA","4.00");
-        //2.2.2.2
-        $DatiRiepilogo->addChild("Natura","");
-        //2.2.2.3
-        $DatiRiepilogo->addChild("SpeseAccessorie","");
-        //2.2.2.4
-        $DatiRiepilogo->addChild("Arrotondamento","");
-        //2.2.2.5
-        $DatiRiepilogo->addChild("ImponibileImporto",number_format($inponibiliTotale , 2));
-        //2.2.2.6
-        $DatiRiepilogo->addChild("Imposta",number_format($taxesTotales , 2));
-        //2.2.2.7
-        $DatiRiepilogo->addChild("EsigibilitaIVA","D");
-        //2.2.2.8
-        $DatiRiepilogo->addChild("RiferimentoNormativo","");
+    ///////////////////////////
+        //2.2.2
+        $DatiRiepilogo = $DatiBeniServizi->addChild("DatiRiepilogo");
+            //2.2.2.1
+            $DatiRiepilogo->addChild("AliquotaIVA","4.00");
+            //2.2.2.2
+            $DatiRiepilogo->addChild("Natura","");
+            //2.2.2.3
+            $DatiRiepilogo->addChild("SpeseAccessorie","");
+            //2.2.2.4
+            $DatiRiepilogo->addChild("Arrotondamento","");
+            //2.2.2.5
+            $DatiRiepilogo->addChild("ImponibileImporto",number_format($inponibiliTotale , 2));
+            //2.2.2.6
+            $DatiRiepilogo->addChild("Imposta",number_format($taxesTotales , 2));
+            //2.2.2.7
+            $DatiRiepilogo->addChild("EsigibilitaIVA","D");
+            //2.2.2.8
+            $DatiRiepilogo->addChild("RiferimentoNormativo","");
 
-  //2.3
-  $datiVeicoli = $body->DatiGenerali->addChild("DatiVeicoli");
-    //2.3.1
-    $datiVeicoli->addChild("Data","");
-    //2.3-2
-    $datiVeicoli->addChild("TotalePercorso","");
-  //2.4
-  $datiPagamento = $body->DatiGenerali->addChild("DatiPagamento");
-    //2.4.1
-    $datiPagamento->addChild("CondizioniPagamento","");
-    //2.4.2
-    $DettaglioPagamento = $datiPagamento->addChild("DettaglioPagamento");
-        //2.4.2.1
-        $DettaglioPagamento->addChild("Beneficiario","");
-        //2.4.2.2
-        $DettaglioPagamento->addChild("ModalitaPagamento","");
-        //2.4.2.3
-        $DettaglioPagamento->addChild("DataRiferimentoTerminiPagamento","");
-        //2.4.2.4
-        $DettaglioPagamento->addChild("GiorniTerminiPagamento","");
-        //2.4.2.5
-        $DettaglioPagamento->addChild("DataScadenzaPagamento","");
-        //2.4.2.6
-        $DettaglioPagamento->addChild("ImportoPagamento","");
-        //2.4.2.7
-        $DettaglioPagamento->addChild("CodUfficioPostale","");
-        //2.4.2.8
-        $DettaglioPagamento->addChild("CognomeQuietanzante","");
-        //2.4.2.9
-        $DettaglioPagamento->addChild("NomeQuietanzante","");
-        //2.4.2.10
-        $DettaglioPagamento->addChild("CFQuietanzante","");
-        //2.4.2.11
-        $DettaglioPagamento->addChild("TitoloQuietanzante","");
-        //2.4.2.12
-        $DettaglioPagamento->addChild("IstitutoFinanziario","");
-        //2.4.2.13
-        $DettaglioPagamento->addChild("IBAN","");
-        //2.4.2.14
-        $DettaglioPagamento->addChild("ABI","");
-        //2.4.2.15
-        $DettaglioPagamento->addChild("CAB","");
-        //2.4.2.16
-        $DettaglioPagamento->addChild("BIC","");
-        //2.4.2.17
-        $DettaglioPagamento->addChild("ScontoPagamentoAnticipato","");
-        //2.4.2.18
-        $DettaglioPagamento->addChild("DataLimitePagamentoAnticipato","");
-        //2.4.2.19
-        $DettaglioPagamento->addChild("PenalitaPagamentiRitardati","");
-        //2.4.2.20
-        $DettaglioPagamento->addChild("DataDecorrenzaPenale","");
-        //2.4.2.21
-        $DettaglioPagamento->addChild("CodicePagamento","");
-  //2.5
-  $allegati = $body->DatiGenerali->addChild("Allegati");
-      //2.5.1
-    $allegati->addChild("NomeAttachment","");
-      //2.5.2
-    $allegati->addChild("AlgoritmoCompressione","");
-      //2.5.3
-    $allegati->addChild("FormatoAttachment","");
-      //2.5.4
-    $allegati->addChild("DescrizioneAttachment","");
-      //2.5.5
-    $allegati->addChild("Attachment","");
+    //2.3
+    $datiVeicoli = $body->DatiGenerali->addChild("DatiVeicoli");
+        //2.3.1
+        $datiVeicoli->addChild("Data","");
+        //2.3-2
+        $datiVeicoli->addChild("TotalePercorso","");
+    //2.4
+    $datiPagamento = $body->DatiGenerali->addChild("DatiPagamento");
+        //2.4.1
+        $datiPagamento->addChild("CondizioniPagamento","");
+        //2.4.2
+        $DettaglioPagamento = $datiPagamento->addChild("DettaglioPagamento");
+            //2.4.2.1
+            $DettaglioPagamento->addChild("Beneficiario","");
+            //2.4.2.2
+            $DettaglioPagamento->addChild("ModalitaPagamento","");
+            //2.4.2.3
+            $DettaglioPagamento->addChild("DataRiferimentoTerminiPagamento","");
+            //2.4.2.4
+            $DettaglioPagamento->addChild("GiorniTerminiPagamento","");
+            //2.4.2.5
+            $DettaglioPagamento->addChild("DataScadenzaPagamento","");
+            //2.4.2.6
+            $DettaglioPagamento->addChild("ImportoPagamento","");
+            //2.4.2.7
+            $DettaglioPagamento->addChild("CodUfficioPostale","");
+            //2.4.2.8
+            $DettaglioPagamento->addChild("CognomeQuietanzante","");
+            //2.4.2.9
+            $DettaglioPagamento->addChild("NomeQuietanzante","");
+            //2.4.2.10
+            $DettaglioPagamento->addChild("CFQuietanzante","");
+            //2.4.2.11
+            $DettaglioPagamento->addChild("TitoloQuietanzante","");
+            //2.4.2.12
+            $DettaglioPagamento->addChild("IstitutoFinanziario","");
+            //2.4.2.13
+            $DettaglioPagamento->addChild("IBAN","");
+            //2.4.2.14
+            $DettaglioPagamento->addChild("ABI","");
+            //2.4.2.15
+            $DettaglioPagamento->addChild("CAB","");
+            //2.4.2.16
+            $DettaglioPagamento->addChild("BIC","");
+            //2.4.2.17
+            $DettaglioPagamento->addChild("ScontoPagamentoAnticipato","");
+            //2.4.2.18
+            $DettaglioPagamento->addChild("DataLimitePagamentoAnticipato","");
+            //2.4.2.19
+            $DettaglioPagamento->addChild("PenalitaPagamentiRitardati","");
+            //2.4.2.20
+            $DettaglioPagamento->addChild("DataDecorrenzaPenale","");
+            //2.4.2.21
+            $DettaglioPagamento->addChild("CodicePagamento","");
+    //2.5
+    $allegati = $body->DatiGenerali->addChild("Allegati");
+            //2.5.1
+        $allegati->addChild("NomeAttachment","");
+            //2.5.2
+        $allegati->addChild("AlgoritmoCompressione","");
+            //2.5.3
+        $allegati->addChild("FormatoAttachment","");
+            //2.5.4
+        $allegati->addChild("DescrizioneAttachment","");
+            //2.5.5
+        $allegati->addChild("Attachment","");
     
 //saving generated xml file
 $xml_file = $xml_invoice->asXML('xmlFiles/users.xml');

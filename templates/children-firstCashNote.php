@@ -156,7 +156,6 @@
 					<!-- Code add by Ale -->
 
 					<?php } 
-                                        }
                                             //calcula el total
                                             $totA = number_format(getTotCol($parameters,'revenue'),2);
                                             $totB = number_format(getTotCol($parameters,'outputs'),2);
