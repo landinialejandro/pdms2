@@ -92,8 +92,12 @@ function dataBar($id){
 
 function getKindsData($code = "", $name = ""){
     
-    $code = "" ? "" : " AND kinds.code = '{$code}'";
-    $name = "" ? "" : " AND kinds.name = '{$name}'";
+    if($code){
+        $code = " AND kinds.code = '{$code}'";
+    }
+    if($name){
+        $name = " AND kinds.name = '{$name}'";
+    }
     $where_id = $code . $name;//change this to set select where
 
     $res = getDataTable('kinds', $where_id);
@@ -102,9 +106,9 @@ function getKindsData($code = "", $name = ""){
 
     if (json_last_error() === JSON_ERROR_NONE) {
         // JSON is valid
-        $kind[]=$result;
+        $res[]=$result;
     }
-    return $kind;
+    return $res;
 }
 
 function getTotCol($parameters,$fieldToSUM){

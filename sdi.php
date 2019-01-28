@@ -20,7 +20,7 @@ if(!$order_id) {exit(error_message('Invalid order ID!', false));}
 ///////////////////////////
 $where_id ="AND orders.id = {$order_id}";//change this to set select where
 $order = getDataTable('orders',$where_id);
-$order_values = s('orders',$where_id);
+$order_values = getDataTable_Values('orders',$where_id);
 if(!$order['multiOrder']){
     exit(error_message('<h1>order number not valid</h1>' . $order['kind'], false));
 }
@@ -38,7 +38,7 @@ if($order_values['kind'] !== 'OUT'){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $where_id ="AND companies.id={$order_values['company']}";//change this to set select where
         $company = getDataTable('companies',$where_id);
-        $company_values = getDataTable_Value('companies', $where_id);
+        $company_values = getDataTable_Values('companies', $where_id);
             //error control
             if(!$company['vat']){
                 exit(error_message('<h1>vat not valid in company data</h1>', false));
@@ -168,7 +168,7 @@ if ($order_values['shipVia']){
 }
 
 
-$invoice_=<<<XML
+$invoice=<<<XML
 <?xml version="1.0" encoding="UTF-8" ?> 
 <p:FatturaElettronica 
     versione="FPR12" 
@@ -610,23 +610,23 @@ $body = $xml_invoice->FatturaElettronicaBody;
                 //2.1.9.1.1
                 $DAV_IdFiscaleIVA = $DatiAnagraficiVettore->addChild("IdFiscaleIVA");
                     //2.1.9.1.1.1
-                    $DAV_IdFiscaleIVA->addChild("","");
+                    $DAV_IdFiscaleIVA->addChild("IdPaese","");
                     //2.1.9.1.1.2
-                    $DAV_IdFiscaleIVA->addChild("","");
+                    $DAV_IdFiscaleIVA->addChild("IdCodice","");
                 //2.1.9.1.2
                 $DatiAnagraficiVettore->addChild("CodiceFiscale","");
                 //2.1.9.1.3
                 $DAV_Anagrafica = $DatiAnagraficiVettore->addChild("Anagrafica");
                     //2.1.9.1.3.1
-                    $DAV_Anagrafica->addChiild("Denominazione","");
+                    $DAV_Anagrafica->addChild("Denominazione","");
                     //2.1.9.1.3.2
-                    $DAV_Anagrafica->addChiild("Nome","");
+                    $DAV_Anagrafica->addChild("Nome","");
                     //2.1.9.1.3.3
-                    $DAV_Anagrafica->addChiild("Cognome","");
+                    $DAV_Anagrafica->addChild("Cognome","");
                     //2.1.9.1.3.4
-                    $DAV_Anagrafica->addChiild("Titolo","");
+                    $DAV_Anagrafica->addChild("Titolo","");
                     //2.1.9.1.3.5
-                    $DAV_Anagrafica->addChiild("CodEORI","");
+                    $DAV_Anagrafica->addChild("CodEORI","");
                 //2.1.9.1.4
                 $DatiAnagraficiVettore->addChild("NumeroLicenzaGuida","");
             //2.1.9.2
@@ -652,17 +652,17 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.1.9.12
             $IndirizzoResa = $datiTrasporto->addChild("IndirizzoResa");
                 //2.1.9.12.1
-                $IndirizzoResa->addDhild("Indirizzo","");
+                $IndirizzoResa->addChild("Indirizzo","");
                 //2.1.9.12.2
-                $IndirizzoResa->addDhild("NumeroCivico>","");
+                $IndirizzoResa->addChild("NumeroCivico","");
                 //2.1.9.12.3
-                $IndirizzoResa->addDhild("CAP","");
+                $IndirizzoResa->addChild("CAP","");
                 //2.1.9.12.4
-                $IndirizzoResa->addDhild("Comune","");
+                $IndirizzoResa->addChild("Comune","");
                 //2.1.9.12.5
-                $IndirizzoResa->addDhild("Provincia","");
+                $IndirizzoResa->addChild("Provincia","");
                 //2.1.9.12.6
-                $IndirizzoResa->addDhild("Nazione","");
+                $IndirizzoResa->addChild("Nazione","");
             //2.1.9.13
             $datiTrasporto->addChild("DataOraConsegna",$order['consigneeHour']);
         //2.1.10
