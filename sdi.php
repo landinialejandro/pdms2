@@ -846,13 +846,13 @@ $body = $xml_invoice->FatturaElettronicaBody;
  * Remove empty (no children) and blank (no text) XML element nodes, but not an empty root element (/child::*).
  * This does not work recursively; meaning after empty child elements are removed, parents are not reexamined.
  */
-while ($reomved > 0){
-    $remove=0;
+do {
+    $removed = false;
     foreach( $xml_invoice->xpath('/child::*//*[not(*) and not(text()[normalize-space()])]') as $emptyElement ) {
         unset( $emptyElement[0] );
-        $remove ++;
+        $removed = true;
     }
-}  
+} while ($removed) ;
 
 
 //saving generated xml file
