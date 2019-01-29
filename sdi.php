@@ -520,19 +520,22 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.1.1.5
             $DD_DatiRitenuta = $DatiGeneraliDocumento->addChild('DatiRitenuta');
                 //2.1.1.5.1
-                $DD_DatiRitenuta->addchild("TipoRitenuta");
+                $DD_DatiRitenuta->addchild("TipoRitenuta","");
                 //2.1.1.5.2
-                $DD_DatiRitenuta->addchild("ImportoRitenuta");
+                $DD_DatiRitenuta->addchild("ImportoRitenuta","");
                 //2.1.1.5.3
-                $DD_DatiRitenuta->addchild("AliquotaRitenuta");
+                $DD_DatiRitenuta->addchild("AliquotaRitenuta","");
                 //2.1.1.5.4
-                $DD_DatiRitenuta->addchild("CausalePagamento");
+                $DD_DatiRitenuta->addchild("CausalePagamento","");
+            /* not enabled yet
             //2.1.1.6
             $DD_DatiBollo = $DatiGeneraliDocumento->addChild('DatiBollo');
                 //2.1.1.6.1
                 $DD_DatiBollo->addChild("NumeroBollo");
                 //2.1.1.6.2
                 $DD_DatiBollo->addChild("ImportoBollo");
+            */
+            /*not enabled yet
             //2.1.1.7
             $DD_DatiCassaPrevidenziale = $DatiGeneraliDocumento->addChild('DatiCassaPrevidenziale');
                 //2.1.1.7.1
@@ -551,38 +554,39 @@ $body = $xml_invoice->FatturaElettronicaBody;
                 $DD_DatiCassaPrevidenziale->addChild("Natura");
                 //2.1.1.7.8
                 $DD_DatiCassaPrevidenziale->addChild("RiferimentoAmministrazione");
+            */
             //2.1.1.8
             $DD_ScontoMaggiorazione = $DatiGeneraliDocumento->addChild("ScontoMaggiorazione");
                 //2.1.1.8.1
-                $DD_ScontoMaggiorazione->addChild("Tipo");
+                $DD_ScontoMaggiorazione->addChild("Tipo","");
                 //2.1.1.8.2
-                $DD_ScontoMaggiorazione->addChild("Percentuale");
+                $DD_ScontoMaggiorazione->addChild("Percentuale","");
                 //2.1.1.8.3
-                $DD_ScontoMaggiorazione->addChild("Importo");
+                $DD_ScontoMaggiorazione->addChild("Importo","");
             //2.1.1.9
-            $DatiGeneraliDocumento->addChild("ImportoTotaleDocumento");
+            $DatiGeneraliDocumento->addChild("ImportoTotaleDocumento","");
             //2.1.1.10
-            $DatiGeneraliDocumento->addChild("Arrotondamento");
+            $DatiGeneraliDocumento->addChild("Arrotondamento","");
             //2.1.1.11
-            $DatiGeneraliDocumento->addChild("Causale");
+            $DatiGeneraliDocumento->addChild("Causale","");
             //2.1.1.12
-            $DatiGeneraliDocumento->addChild("Art73");
+            $DatiGeneraliDocumento->addChild("Art73","");
         //2.1.2
         $DatiOrdineAcquisto = $body->DatiGenerali->addChild("DatiOrdineAcquisto");
             //2.1.2.1
-            $DatiOrdineAcquisto->addChild("RiferimentoNumeroLinea");
+            $DatiOrdineAcquisto->addChild("RiferimentoNumeroLinea","");
             //2.1.2.2
-            $DatiOrdineAcquisto->addChild("IdDocumento");
+            $DatiOrdineAcquisto->addChild("IdDocumento","");
             //2.1.2.3
-            $DatiOrdineAcquisto->addChild("Data");
+            $DatiOrdineAcquisto->addChild("Data","");
             //2.1.2.4
-            $DatiOrdineAcquisto->addChild("NumItem");
+            $DatiOrdineAcquisto->addChild("NumItem","");
             //2.1.2.5
-            $DatiOrdineAcquisto->addChild("CodiceCommessaConvenzione");
+            $DatiOrdineAcquisto->addChild("CodiceCommessaConvenzione","");
             //2.1.2.6
-            $DatiOrdineAcquisto->addChild("CodiceCUP");
+            $DatiOrdineAcquisto->addChild("CodiceCUP","");
             //2.1.2.7
-            $DatiOrdineAcquisto->addChild("CodiceCIG");
+            $DatiOrdineAcquisto->addChild("CodiceCIG","");
         //2.1.3
         $body->DatiGenerali->addChild("DatiContratto","");
         //2.1.4
@@ -598,11 +602,11 @@ $body = $xml_invoice->FatturaElettronicaBody;
         //2.1.8
         $datiDDT = $body->DatiGenerali->addChild("DatiDDT");
             //2.1.8.1
-            $datiDDT->addChild("NumeroDDT");
+            $datiDDT->addChild("NumeroDDT","");
             //2.1.8.2
-            $datiDDT->addChild("DataDDT");
+            $datiDDT->addChild("DataDDT","");
             //2.1.8.3
-            $datiDDT->addChild("RiferimentoNumeroLinea");
+            $datiDDT->addChild("RiferimentoNumeroLinea","");
         //2.1.9
         $datiTrasporto = $body->DatiGenerali->addChild("DatiTrasporto");
             //2.1.9.1
@@ -832,6 +836,11 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.5.5
         $allegati->addChild("Attachment","");
     
+//remove empty nodes
+foreach( $xml_invoice->query('//*[not(node())]') as $node ) {
+    $node->parentNode->removeChild($node);
+}
+
 //saving generated xml file
 $xml_file = $xml_invoice->asXML('xmlFiles/users.xml');
 
