@@ -190,9 +190,6 @@ $invoice=<<<XML
 </p:FatturaElettronica>
         
 XML;
-// create xml from file
-// $dir = __DIR__."/xmlFiles";
-// $xml_invoice = simplexml_load_file("$dir/_baseProforma.xml");
 
 //creating object of SimpleXMLElement
 $xml_invoice = new SimpleXMLElement($invoice);
@@ -269,36 +266,23 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.2.1.3
             $CP_Anagrafica = $CP_DatiAnagrafici->addChild("Anagrafica");
                 //1.2.1.3.1
-                if($company['companyName']){
-                    $CP_Anagrafica->addChild("Denominazione",$company['companyName']);
-                }
+                $CP_Anagrafica->addChild("Denominazione",$company['companyName']);
                 //1.2.1.3.2
-                if($contact['name']){
-                    $CP_Anagrafica->addChild("Nome",$contact['name']);
-                }
+                $CP_Anagrafica->addChild("Nome",$contact['name']);
                 //1.2.1.3.3
-                if($contact['lastName']){
-                    $CP_Anagrafica->addChild("Cognome",$contact['lastName']);
-                }
+                $CP_Anagrafica->addChild("Cognome",$contact['lastName']);
                 //1.2.1.3.4
-                if ($contact['title']){
-                    $CP_Anagrafica->addChild("Titolo",$contact['title']);
-                }
+                $CP_Anagrafica->addChild("Titolo",$contact['title']);
                 //1.2.1.3.5
-                if ($contact['CodEORI']){
-                    $CP_Anagrafica->addChild("codEORI",$contact['CodEORI']);
-                }
-                /*
-                 * not enabled yet
+                $CP_Anagrafica->addChild("codEORI",$contact['CodEORI']);
             //1.2.1.4
-            $CP_DatiAnagrafici->addChild("AlboProfessionale");
+            $CP_DatiAnagrafici->addChild("AlboProfessionale","");
             //1.2.1.5
-            $CP_DatiAnagrafici->addChild("ProvinciaAlbo");
+            $CP_DatiAnagrafici->addChild("ProvinciaAlbo","");
             //1.2.1.6
-            $CP_DatiAnagrafici->addChild("NumeroIscrizioneAlbo");
+            $CP_DatiAnagrafici->addChild("NumeroIscrizioneAlbo","");
             //1.2.1.7
-            $CP_DatiAnagrafici->addChild("DataIscrizioneAlbo");
-                 */
+            $CP_DatiAnagrafici->addChild("DataIscrizioneAlbo","");
             //1.2.1.8 obligatory
             $CP_DatiAnagrafici->addChild("RegimeFiscale",$company['regimeFiscale']);
         //1.2.2 Sede
@@ -321,6 +305,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
              *  il cedente/prestatore è un soggetto che non risiede in Italia ma che, in Italia,
                 dispone di una stabile organizzazione attraverso la quale svolge la propria
                 attività (cessioni di beni o prestazioni di servizi oggetto di fatturazione)
+                */
         $CP_StabileOrganizzazione =$xml_invoice->FatturaElettronicaHeader->CedentePrestatore->StabileOrganizzazione;
              //1.2.3.1  
             $CP_StabileOrganizzazione->addChild("Indirizzo",$address['address']);
@@ -334,7 +319,6 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             $CP_StabileOrganizzazione->addChild("Provincia",$address['district']);
             //1.2.3.6  
             $CP_StabileOrganizzazione->addChild("Nazione",$address['country']);
-             */
         //1.2.4 IscrizioneREA
         if ($company['REA_NumeroREA']){
             /*solo se
@@ -358,25 +342,19 @@ $header = $xml_invoice->FatturaElettronicaHeader;
         if($phone['phoneNumber'] || $fax['phoneNumber'] || $mail['mail']){
             $CP_Contatti =  $CedentePrestatore->addChild("Contatti");
                 //1.2.5.1
-                if($phone['phoneNumber']){
-                    $CP_Contatti->addChild("Telefono",$phone['phoneNumber']);
-                }
+                $CP_Contatti->addChild("Telefono",$phone['phoneNumber']);
                 //1.2.5.2
-                if($fax['phoneNumber']){
-                    $CP_Contatti->addChild("Fax",$fax['phoneNomber']);
-                }
+                $CP_Contatti->addChild("Fax",$fax['phoneNomber']);
                 //1.2.5.3
-                if($mail['mail']){
-                    $CP_Contatti->addChild("Email",$mail['mail']);
-                }
+                $CP_Contatti->addChild("Email",$mail['mail']);
         }
         //1.2.6 obligatory
         $CedentePrestatore->addChild("RiferimentoAmministrazione",$company['RiferimentoAmministrazione']);
-    //1.3 RappresentanteFiscale
-    /* not enabled yet
-     * il cedente/prestatore si configura come soggetto non residente che effettua nel
+    // 1.3 RappresentanteFiscale 
+    /* il cedente/prestatore si configura come soggetto non residente che effettua nel
         territorio dello stato italiano operazioni rilevanti ai fini IVA e che si avvale, in Italia,
         di un rappresentante fiscale
+        */
     $RappresentanteFiscale = $header->addChild("RappresentanteFiscale");
         //1.3.1
         $RP_DatiAnagrafici = $RappresentanteFiscale->addChild("DatiAnagrafici");
@@ -394,7 +372,6 @@ $header = $xml_invoice->FatturaElettronicaHeader;
                 $DatiAnagrafici_Anagrafica->addChild("Cognome",$contact['lastName']);
                 $DatiAnagrafici_Anagrafica->addChild("Titolo",$contact['title']);
                 $DatiAnagrafici_Anagrafica->addChild("CodEORI",$contact['CodEORI']);
-     */
     //1.4
     $CessionarioCommittente = $xml_invoice->FatturaElettronicaHeader->addChild("CessionarioCommittente");
         //1.4.1
@@ -434,10 +411,11 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.2.6
             $CC_Sede->addChild("Nazione",$addressCustomer['country']);
         //1.4.3 StabileOrganizzazione
-        /* not enabled yet
+        /*
          * il cessionario/committente è un soggetto che non risiede in Italia ma che, in
             Italia, dispone di una stabile organizzazione attraverso la quale svolge la
             propria attività oggetto di fatturazione
+            */
         $CC_StabileOrganizzazione = $CessionarioCommittentes->addChild("StabileOrganizzazione");
             //1.4.2.1
             $CC_StabileOrganizzazione->addChild("Indirizzo",$addressCustomer['address']);
@@ -451,12 +429,12 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             $CC_StabileOrganizzazione->addChild("Provincia",$addressCustomer['district']);
             //1.4.2.6
             $CC_StabileOrganizzazione->addChild("Nazione",$addressCustomer['country']);
-         */
         //1.4.4 RappresentanteFiscale
-        /*  not enabled yet
+        /*  
          * il cessionario/committentee si configura come soggetto non residente che effettua
             nel territorio dello stato italiano operazioni rilevanti ai fini IVA e che si avvale, in
             Italia, di un rappresentante fiscale
+            */
         $CC_RappresentanteFiscale = $CessionarioCommittentes->addChild("RappresentanteFiscale");
             //1.4.4.1
             $CC_RappresentanteFiscale_IdFiscaleIVA = $CC_RappresentanteFiscale->addChild("IdFiscaleIVA");
@@ -469,15 +447,13 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.4.3
             $CC_RappresentanteFiscale->addChild("Nome",$contactCustomer['name']);
             //1.4.4.4
-            $CC_RappresentanteFiscale->addChild("Cognome",$contactCustomer['lastName']);
-         */
         
     //1.5 TerzoIntermediarioOSoggettoEmittente
-    /*not enabled yet
+    /*
      * l’impegno di emettere fattura elettronica per conto del cedente/prestatore è
         assunto da un terzo sulla base di un accordo preventivo; il cedente/prestatore
         rimane responsabile dell’adempimento fiscale
-            
+            */
     $TerzoIntermediarioOSoggettoEmittente = $header->addChild("TerzoIntermediarioOSoggettoEmittente");
         //1.5.1
         $TS_DatiAnagrafici = $CessionarioCommittente->addChild("DatiAnagrafici");
@@ -501,7 +477,6 @@ $header = $xml_invoice->FatturaElettronicaHeader;
                 $TS_DatiAnagrafici_Anagrafica->addChild("Titolo",$contactCustomer['title']);
                 //1.5.1.3.5
                 $TS_DatiAnagrafici_Anagrafica->addChild("CodEORI",$contactCustomer['codEORI']);
-     */
     //1.6 SoggettoEmittente  indicare “CC” se la fattura è stata compilata da parte del cessionario/committente, “TZ” se è stata compilata da un soggetto terzo.
     $header->addChild("SoggettoEmittente","CC");
 //2
@@ -527,34 +502,30 @@ $body = $xml_invoice->FatturaElettronicaBody;
                 $DD_DatiRitenuta->addchild("AliquotaRitenuta","");
                 //2.1.1.5.4
                 $DD_DatiRitenuta->addchild("CausalePagamento","");
-            /* not enabled yet
             //2.1.1.6
             $DD_DatiBollo = $DatiGeneraliDocumento->addChild('DatiBollo');
                 //2.1.1.6.1
-                $DD_DatiBollo->addChild("NumeroBollo");
+                $DD_DatiBollo->addChild("NumeroBollo","");
                 //2.1.1.6.2
-                $DD_DatiBollo->addChild("ImportoBollo");
-            */
-            /*not enabled yet
+                $DD_DatiBollo->addChild("ImportoBollo","");
             //2.1.1.7
             $DD_DatiCassaPrevidenziale = $DatiGeneraliDocumento->addChild('DatiCassaPrevidenziale');
                 //2.1.1.7.1
-                $DD_DatiCassaPrevidenziale->addChild("TipoCassa");
+                $DD_DatiCassaPrevidenziale->addChild("TipoCassa","");
                 //2.1.1.7.2
-                $DD_DatiCassaPrevidenziale->addChild("AlCassa");
+                $DD_DatiCassaPrevidenziale->addChild("AlCassa","");
                 //2.1.1.7.3
-                $DD_DatiCassaPrevidenziale->addChild("ImportoContributoCassa");
+                $DD_DatiCassaPrevidenziale->addChild("ImportoContributoCassa","");
                 //2.1.1.7.4
-                $DD_DatiCassaPrevidenziale->addChild("ImponibileCassa");
+                $DD_DatiCassaPrevidenziale->addChild("ImponibileCassa","");
                 //2.1.1.7.5
-                $DD_DatiCassaPrevidenziale->addChild("AliquotaIVA");
+                $DD_DatiCassaPrevidenziale->addChild("AliquotaIVA","");
                 //2.1.1.7.6
-                $DD_DatiCassaPrevidenziale->addChild("Ritenuta");
+                $DD_DatiCassaPrevidenziale->addChild("Ritenuta","");
                 //2.1.1.7.7
-                $DD_DatiCassaPrevidenziale->addChild("Natura");
+                $DD_DatiCassaPrevidenziale->addChild("Natura","");
                 //2.1.1.7.8
-                $DD_DatiCassaPrevidenziale->addChild("RiferimentoAmministrazione");
-            */
+                $DD_DatiCassaPrevidenziale->addChild("RiferimentoAmministrazione","");
             //2.1.1.8
             $DD_ScontoMaggiorazione = $DatiGeneraliDocumento->addChild("ScontoMaggiorazione");
                 //2.1.1.8.1
@@ -836,23 +807,16 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.5.5
         $allegati->addChild("Attachment","");
     
-// //remove empty nodes
-// $res = $xml_invoice->xpath();
-// foreach( $res->query('//*[not(node())]') as $node ) {
-//     $node->parentNode->removeChild($node);
-// }
-
 /*
  * Remove empty (no children) and blank (no text) XML element nodes, but not an empty root element (/child::*).
- * This does not work recursively; meaning after empty child elements are removed, parents are not reexamined.
  */
-while ($reomved > 0){
-    $remove=0;
+do {
+    $removed = false;
     foreach( $xml_invoice->xpath('/child::*//*[not(*) and not(text()[normalize-space()])]') as $emptyElement ) {
         unset( $emptyElement[0] );
-        $remove ++;
+        $removed = true;
     }
-}  
+} while ($removed) ;
 
 
 //saving generated xml file
