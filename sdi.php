@@ -836,10 +836,20 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.5.5
         $allegati->addChild("Attachment","");
     
-//remove empty nodes
-foreach( $xml_invoice->query('//*[not(node())]') as $node ) {
-    $node->parentNode->removeChild($node);
+// //remove empty nodes
+// $res = $xml_invoice->xpath();
+// foreach( $res->query('//*[not(node())]') as $node ) {
+//     $node->parentNode->removeChild($node);
+// }
+
+/*
+ * Remove empty (no children) and blank (no text) XML element nodes, but not an empty root element (/child::*).
+ * This does not work recursively; meaning after empty child elements are removed, parents are not reexamined.
+ */
+foreach( $xml_invoice->xpath('/child::*//*[not(*) and not(text()[normalize-space()])]') as $emptyElement ) {
+    unset( $emptyElement[0] );
 }
+
 
 //saving generated xml file
 $xml_file = $xml_invoice->asXML('xmlFiles/users.xml');
