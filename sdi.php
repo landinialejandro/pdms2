@@ -818,9 +818,10 @@ do {
     }
 } while ($removed) ;
 
+$xml_fileName = $company['vat'] . "_DF_" . $order['multiOrder'];
 
 //saving generated xml file
-$xml_file = $xml_invoice->asXML('xmlFiles/users.xml');
+$xml_file = $xml_invoice->asXML("xmlFiles/$xml_fileName.xml");
 
 //success and error message based on xml creation
 if($xml_file){
