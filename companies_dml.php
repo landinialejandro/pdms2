@@ -75,8 +75,23 @@ function companies_insert(){
 		exit;
 	}
 	if($data['REA_SocioUnico'] == '') $data['REA_SocioUnico'] = "SU";
+	if($data['REA_SocioUnico']== ''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'REA SocioUnico': " . $Translation['field not null'] . '<br><br>';
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
 	if($data['REA_StatoLiquidazione'] == '') $data['REA_StatoLiquidazione'] = "LN";
+	if($data['REA_StatoLiquidazione']== ''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'StatoLiquidazione': " . $Translation['field not null'] . '<br><br>';
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
 	if($data['RIT_tipoRitenuta'] == '') $data['RIT_tipoRitenuta'] = "RT02";
+	if($data['RIT_tipoRitenuta']== ''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'RIT tipoRitenuta': " . $Translation['field not null'] . '<br><br>';
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
 
 	// hook: companies_before_insert
 	if(function_exists('companies_before_insert')){
@@ -511,12 +526,27 @@ function companies_update($selected_id){
 		if($data['REA_CapitaleSociale'] == empty_lookup_value){ $data['REA_CapitaleSociale'] = ''; }
 	$data['REA_SocioUnico'] = makeSafe($_REQUEST['REA_SocioUnico']);
 		if($data['REA_SocioUnico'] == empty_lookup_value){ $data['REA_SocioUnico'] = ''; }
+	if($data['REA_SocioUnico']==''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'REA SocioUnico': {$Translation['field not null']}<br><br>";
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
 	$data['REA_StatoLiquidazione'] = makeSafe($_REQUEST['REA_StatoLiquidazione']);
 		if($data['REA_StatoLiquidazione'] == empty_lookup_value){ $data['REA_StatoLiquidazione'] = ''; }
+	if($data['REA_StatoLiquidazione']==''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'StatoLiquidazione': {$Translation['field not null']}<br><br>";
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
 	$data['RIT_soggettoRitenuta'] = makeSafe($_REQUEST['RIT_soggettoRitenuta']);
 		if($data['RIT_soggettoRitenuta'] == empty_lookup_value){ $data['RIT_soggettoRitenuta'] = ''; }
 	$data['RIT_tipoRitenuta'] = makeSafe($_REQUEST['RIT_tipoRitenuta']);
 		if($data['RIT_tipoRitenuta'] == empty_lookup_value){ $data['RIT_tipoRitenuta'] = ''; }
+	if($data['RIT_tipoRitenuta']==''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'RIT tipoRitenuta': {$Translation['field not null']}<br><br>";
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
 	$data['RIT_AliquotaRitenuta'] = makeSafe($_REQUEST['RIT_AliquotaRitenuta']);
 		if($data['RIT_AliquotaRitenuta'] == empty_lookup_value){ $data['RIT_AliquotaRitenuta'] = ''; }
 	$data['RIT_CausalePagamento'] = makeSafe($_REQUEST['RIT_CausalePagamento']);
@@ -623,6 +653,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$combo_REA_SocioUnico->ListData = $combo_REA_SocioUnico->ListItem;
 	}
 	$combo_REA_SocioUnico->SelectName = 'REA_SocioUnico';
+	$combo_REA_SocioUnico->AllowNull = false;
 	// combobox: REA_StatoLiquidazione
 	$combo_REA_StatoLiquidazione = new Combo;
 	$combo_REA_StatoLiquidazione->ListType = 2;
@@ -638,6 +669,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$combo_REA_StatoLiquidazione->ListData = $combo_REA_StatoLiquidazione->ListItem;
 	}
 	$combo_REA_StatoLiquidazione->SelectName = 'REA_StatoLiquidazione';
+	$combo_REA_StatoLiquidazione->AllowNull = false;
 	// combobox: RIT_tipoRitenuta
 	$combo_RIT_tipoRitenuta = new Combo;
 	$combo_RIT_tipoRitenuta->ListType = 2;
@@ -653,6 +685,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$combo_RIT_tipoRitenuta->ListData = $combo_RIT_tipoRitenuta->ListItem;
 	}
 	$combo_RIT_tipoRitenuta->SelectName = 'RIT_tipoRitenuta';
+	$combo_RIT_tipoRitenuta->AllowNull = false;
 
 	if($selected_id){
 		// mm: check member permissions

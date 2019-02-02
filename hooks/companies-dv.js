@@ -1,12 +1,5 @@
+/* global $j */
 
-
-$j(document).ready(function(){
-    if(is_add_new()){
-        $j('#CUST_CREDIT').hide();
-        $j('#CUST_PAYMENT').hide();
-    }
-    
-})
 
 function setLimit(id,button){
     var code = button.id;
@@ -22,9 +15,9 @@ function setLimit(id,button){
                 var data = $j.parseJSON(msg);
                 if (data.attr_id){
                     //children-attributes.php
-                    attributesCompaniesGetRecords({ Verb: 'open', ChildID: data.attr_id, select: true}); 
+                    attributesCompanyGetRecords({ Verb: 'open', ChildID: data.attr_id, select: true}); 
                 }else{
-                    attributesCompaniesGetRecords({ Verb: 'new', select: true, code:code }); 
+                    attributesCompanyGetRecords({ Verb: 'new', select: true, code:code }); 
                 }
                 return false;
             });

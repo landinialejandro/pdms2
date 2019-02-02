@@ -122,6 +122,7 @@
 
 
 	function companies_dv($selectedID, $memberInfo, &$html, &$args){
+            
             if (isset($_REQUEST['addNew_x'])){
                 if (isset($_REQUEST['ck']) || (isset($_REQUEST['FilterValue']) && isset($_REQUEST['FilterField']))){
                     if (isset($_REQUEST['ok'])){
@@ -144,16 +145,38 @@
                              $j('#kind').val("<?php echo $ck_id; ?>");
                              orderNumber();
                          },1000);
-                     })  
+                     });  
                     </script>
                 <?php
                 $html_code = ob_get_contents();
                 ob_end_clean();
                 $html= $html . $html_code;
             }
+            // add actions buttons
+            if(!function_exists('mkbuttons')){
+                    include'_mkbuttons.php';
+                }
+            $buttons = [];
+            
+            $buttons['settings']['CUST_CREDIT']['name'] = 'Set Credit Limit';
+            $buttons['settings']['CUST_CREDIT']['insert'] = false;
+            $buttons['settings']['CUST_CREDIT']['update'] = true;
+            $buttons['settings']['CUST_CREDIT']['style'] = 'info';
+            $buttons['settings']['CUST_CREDIT']['icon'] = 'fa fa-arrows-h';
+            $buttons['settings']['CUST_CREDIT']['onclick'] = 'script|setLimit(' . $selectedID . ',this)';
+            $buttons['settings']['CUST_CREDIT']['confirm'] = '';
 
+            $buttons['settings']['CUST_PAYMENT']['name'] = 'Set Payment Limit';
+            $buttons['settings']['CUST_PAYMENT']['insert'] = false;
+            $buttons['settings']['CUST_PAYMENT']['update'] = true;
+            $buttons['settings']['CUST_PAYMENT']['style'] = 'info';
+            $buttons['settings']['CUST_PAYMENT']['icon'] = 'fa fa-calendar';
+            $buttons['settings']['CUST_PAYMENT']['onclick'] = 'script|setLimit(' . $selectedID . ',this)';
+            $buttons['settings']['CUST_PAYMENT']['confirm'] = '';
+            
+            $html .= mkbuttons('companies', $selectedID, $buttons);
+            
 	}
-
 
 	function companies_csv($query, $memberInfo, &$args){
 

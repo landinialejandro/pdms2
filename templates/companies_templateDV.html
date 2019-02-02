@@ -180,7 +180,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="REA_SocioUnico" class="control-label col-lg-3">REA SocioUnico <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_SocioUnico-description"></i></label>
+					<label for="REA_SocioUnico" class="control-label col-lg-3">REA SocioUnico<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_SocioUnico-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="REA_SocioUnico-description"><div class="alert alert-info">Utilit&#224;: &#232; un dato previsto dalla normativa (art. 2250 codice civile) in<br>materia di obblighi di pubblicit&#224; delle societ&#224;.<br>Criteri di valorizzazione: il campo deve contenere il valore &#8220;SU&#8221;, nel caso<br>di socio unico, oppure &#8220;SM&#8221; nel caso di societ&#224; pluripersonale.
 </div></span>
@@ -191,7 +191,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="REA_StatoLiquidazione" class="control-label col-lg-3">StatoLiquidazione <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_StatoLiquidazione-description"></i></label>
+					<label for="REA_StatoLiquidazione" class="control-label col-lg-3">StatoLiquidazione<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_StatoLiquidazione-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="REA_StatoLiquidazione-description"><div class="alert alert-info">Utilit&#224;: &#232; un dato previsto dalla normativa (art. 2250 codice civile) in<br>materia di obblighi di pubblicit&#224; delle societ&#224;.<br>Criteri di valorizzazione: il campo deve contenere il valore &#8220;LS&#8221;, nel caso<br>di societ&#224; in stato di liquidazione, oppure &#8220;LN&#8221; nel caso di societ&#224; non in<br>liquidazione.</div></span>
 
@@ -209,7 +209,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="RIT_tipoRitenuta" class="control-label col-lg-3">RIT tipoRitenuta <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_tipoRitenuta-description"></i></label>
+					<label for="RIT_tipoRitenuta" class="control-label col-lg-3">RIT tipoRitenuta<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_tipoRitenuta-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="RIT_tipoRitenuta-description"><div class="alert alert-info">Utilit&#224;: serve per identificare la tipologia di ritenuta indicata in fattura.<br>Criteri di valorizzazione: il campo assume il valore &#8220;RT01&#8221; per<br>persone fisiche, &#8220;RT02&#8221; per persone giuridiche.
 </div></span>
@@ -258,11 +258,6 @@
 				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
 					<%%INSERT_BUTTON%%>
 				</div>
-                                <p></p>
-				<div class="btn-group-vertical" style="width: 100%;">
-                                    <button id="CUST_CREDIT" class="btn btn-info" onclick="setLimit('<%%VALUE(id)%%>',this)" type="button" >Set Credit Limit</button>
-                                    <button id="CUST_PAYMENT" class="btn btn-info" onclick="setLimit('<%%VALUE(id)%%>',this)" type="button" >Set Payment Limit</button>
-                                </div>
                         </div>
                 </div>
 	</div>

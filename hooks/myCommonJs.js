@@ -15,7 +15,7 @@ function show_error(field, campo, msg){
 function show_warning(field, campo, msg){
 	modal_window({
 		message: '<div class="alert alert-warning">' + msg + '</div>',
-		title: 'Atencion en ' + campo,
+		title: 'Atención en ' + campo,
 		close: function(){
 			$j('#' + field).parents('.form-group').addClass('has-error');
 			$j('#' + field).focus();
@@ -99,8 +99,7 @@ function ajaxCard(id,cmd,dest){
         })
         .done(function (msg) {
             //function at response
-            $j("#" + dest).html(msg);
-            $j("#" + dest).show();
+            $j("#" + dest).html(msg).show();
         });
     }
 }

@@ -149,10 +149,10 @@
 			'REA_Ufficio' => array('appgini' => 'VARCHAR(2) null '),
 			'REA_NumeroREA' => array('appgini' => 'VARCHAR(20) null '),
 			'REA_CapitaleSociale' => array('appgini' => 'VARCHAR(40) null '),
-			'REA_SocioUnico' => array('appgini' => 'VARCHAR(2) null default \'SU\' '),
-			'REA_StatoLiquidazione' => array('appgini' => 'VARCHAR(2) null default \'LN\' '),
+			'REA_SocioUnico' => array('appgini' => 'VARCHAR(2) not null default \'SU\' '),
+			'REA_StatoLiquidazione' => array('appgini' => 'VARCHAR(2) not null default \'LN\' '),
 			'RIT_soggettoRitenuta' => array('appgini' => 'VARCHAR(40) null default \'0\' '),
-			'RIT_tipoRitenuta' => array('appgini' => 'VARCHAR(40) null default \'RT02\' '),
+			'RIT_tipoRitenuta' => array('appgini' => 'VARCHAR(40) not null default \'RT02\' '),
 			'RIT_AliquotaRitenuta' => array('appgini' => 'DECIMAL(10,2) null '),
 			'RIT_CausalePagamento' => array('appgini' => 'VARCHAR(40) null ')
 		),

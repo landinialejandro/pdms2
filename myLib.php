@@ -1,5 +1,8 @@
 <?php
 
+$currDir = dirname(__FILE__);
+include("$currDir/hooks/_mk/_mkbuttons.php");
+
 /**
  * This hook function is called when get a row from a table. 
  * 
