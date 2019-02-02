@@ -306,7 +306,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
                 dispone di una stabile organizzazione attraverso la quale svolge la propria
                 attività (cessioni di beni o prestazioni di servizi oggetto di fatturazione)
                 */
-        $CP_StabileOrganizzazione =$xml_invoice->FatturaElettronicaHeader->CedentePrestatore->StabileOrganizzazione;
+        $CP_StabileOrganizzazione =$xml_invoice->FatturaElettronicaHeader->addchild("CedentePrestatore")->addChild("StabileOrganizzazione");
              //1.2.3.1  
             $CP_StabileOrganizzazione->addChild("Indirizzo",$address['address']);
             //1.2.3.2  
@@ -416,7 +416,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             Italia, dispone di una stabile organizzazione attraverso la quale svolge la
             propria attività oggetto di fatturazione
             */
-        $CC_StabileOrganizzazione = $CessionarioCommittentes->addChild("StabileOrganizzazione");
+        $CC_StabileOrganizzazione = $CessionarioCommittente->addChild("StabileOrganizzazione");
             //1.4.2.1
             $CC_StabileOrganizzazione->addChild("Indirizzo",$addressCustomer['address']);
             //1.4.2.2
@@ -435,7 +435,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             nel territorio dello stato italiano operazioni rilevanti ai fini IVA e che si avvale, in
             Italia, di un rappresentante fiscale
             */
-        $CC_RappresentanteFiscale = $CessionarioCommittentes->addChild("RappresentanteFiscale");
+        $CC_RappresentanteFiscale = $CessionarioCommittente->addChild("RappresentanteFiscale");
             //1.4.4.1
             $CC_RappresentanteFiscale_IdFiscaleIVA = $CC_RappresentanteFiscale->addChild("IdFiscaleIVA");
                 //1.4.4.1.1
