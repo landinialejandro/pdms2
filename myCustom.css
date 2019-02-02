@@ -7,3 +7,11 @@
     background-size: cover;
     z-index: 800;
   }
+  
+label[for='id']{
+    display: none;
+}
+
+label[for='id'] + div {
+    display: none;
+}
