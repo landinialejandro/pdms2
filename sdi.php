@@ -818,7 +818,7 @@ do {
     }
 } while ($removed) ;
 
-$xml_fileName = $company['vat'] . "_DF_" . $order['multiOrder'];
+$xml_fileName = $address['country'] . $company['vat'] . "_FPR" . $order['multiOrder'];
 
 //saving generated xml file
 $xml_file = $xml_invoice->asXML("xmlFiles/$xml_fileName.xml");
@@ -829,7 +829,7 @@ if($xml_file){
                 XML file have been generated successfully.
             </h1></div>';
     echo $msg;
-    $link = "<script>window.open('xmlFiles/users.xml')</script>";
+    $link = "<script>window.open('xmlFiles/$xml_fileName.xml')</script>";
     echo $link;
     
 }else{

@@ -309,8 +309,6 @@ function companies_validateData(){
 	if($j('#vat').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Vat", close: function(){ /* */ $j('[name=vat]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	/* Field FormatoTrasmissione can't be empty */
 	if(!$j('[name=FormatoTrasmissione]:checked').length){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Formato Trasmissione", close: function(){ /* */ $j('[name=FormatoTrasmissione]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	/* Checkbox field RIT_soggettoRitenuta can't be empty */
-	if($j('#RIT_soggettoRitenuta').prop('checked') == false){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> RIT soggettoRitenuta", close: function(){ /* */ $j('[name=RIT_soggettoRitenuta]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	return true;
 }
 function contacts_validateData(){

@@ -76,11 +76,6 @@ function companies_insert(){
 	}
 	if($data['REA_SocioUnico'] == '') $data['REA_SocioUnico'] = "SU";
 	if($data['REA_StatoLiquidazione'] == '') $data['REA_StatoLiquidazione'] = "LN";
-	if($data['RIT_soggettoRitenuta']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'RIT soggettoRitenuta': " . $Translation['field not null'] . '<br><br>';
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 	if($data['RIT_tipoRitenuta'] == '') $data['RIT_tipoRitenuta'] = "RT02";
 
 	// hook: companies_before_insert
@@ -520,11 +515,6 @@ function companies_update($selected_id){
 		if($data['REA_StatoLiquidazione'] == empty_lookup_value){ $data['REA_StatoLiquidazione'] = ''; }
 	$data['RIT_soggettoRitenuta'] = makeSafe($_REQUEST['RIT_soggettoRitenuta']);
 		if($data['RIT_soggettoRitenuta'] == empty_lookup_value){ $data['RIT_soggettoRitenuta'] = ''; }
-	if($data['RIT_soggettoRitenuta']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'RIT soggettoRitenuta': {$Translation['field not null']}<br><br>";
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 	$data['RIT_tipoRitenuta'] = makeSafe($_REQUEST['RIT_tipoRitenuta']);
 		if($data['RIT_tipoRitenuta'] == empty_lookup_value){ $data['RIT_tipoRitenuta'] = ''; }
 	$data['RIT_AliquotaRitenuta'] = makeSafe($_REQUEST['RIT_AliquotaRitenuta']);
