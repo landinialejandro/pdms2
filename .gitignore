@@ -1,10 +1,10 @@
 config.php
 setup.md5
-images/
+images/*.json
+images/*.jpg
 .vscode/
 PDFfolder/
 vendor/
 plugins/
-xmlFiles/
 nbproject/
-images/mpi.json
+xmlFiles/

@@ -63,28 +63,27 @@
                         ?>
 
 			<?php if(class_exists('Notification')) echo Notification::placeholder(); ?>
-
-			<!-- process notifications -->
-			<?php $notification_margin = ($_REQUEST['Embedded'] ? '15px 0px' : '-15px 0 -45px'); ?>
-			<div style="height: 60px; margin: <?php echo $notification_margin; ?>;">
-				<?php if(function_exists('showNotifications')) echo showNotifications(); ?>
-			</div>
-
+			
 			<?php if(!defined('APPGINI_SETUP') && is_file(dirname(__FILE__) . '/hooks/header-extras.php')){ include(dirname(__FILE__).'/hooks/header-extras.php'); } ?>
 			<?php if($_REQUEST['Embedded']){ ?>
 				<?php return; ?>
-			<?php } ?>
-                    
-                        <?php include('header_lte_main.php'); ?>
-                    <!-- Content Wrapper. Contains page content -->
-                    <div class="content-wrapper">
-                      <!-- Content Header (Page header) -->
+				<?php } ?>
+				
+				<?php include('header_lte_main.php'); ?>
+				<!-- Content Wrapper. Contains page content -->
+				<div class="content-wrapper">
+					<!-- Content Header (Page header) -->
                       <section class="content-header">
                           
-                        <section class="content container-fluid">
-
-                        <?php if(isset($_GET['loginFailed']) || isset($_GET['signIn'])){return;} ?>
-                    
-                        <!-- Left side column. contains the logo and sidebar -->
-                        <?php include ('header_lte_leftSideMenu.php') ?>
-
+						  <section class="content container-fluid">
+							  
+							  <?php if(isset($_GET['loginFailed']) || isset($_GET['signIn'])){return;} ?>
+							  
+							  <!-- Left side column. contains the logo and sidebar -->
+							  <?php include ('header_lte_leftSideMenu.php') ?>
+							  
+							  <!-- process notifications -->
+							  <?php $notification_margin = ($_REQUEST['Embedded'] ? '15px 0px' : '-15px 0 -45px'); ?>
+							  <div style="height: 60px; margin: <?php echo $notification_margin; ?>;">
+								  <?php if(function_exists('showNotifications')) echo showNotifications(); ?>
+							  </div>
