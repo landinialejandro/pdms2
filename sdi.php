@@ -170,13 +170,10 @@ if ($order_values['shipVia']){
 
 $invoice=<<<XML
 <?xml version="1.0" encoding="UTF-8" ?> 
-<p:FatturaElettronica 
-    versione="FPR12" 
-    xmlns:ds="http://www.w3.org/2000/09/xmldsig#" 
-    xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd"
->
+<p:FatturaElettronica versione="FPR12" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" 
+xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd">
     <FatturaElettronicaHeader>
     </FatturaElettronicaHeader>
     <FatturaElettronicaBody>
@@ -233,7 +230,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             sette zeri (“0000000”) e deve essere valorizzato il campo PECDestinatario
             (1.1.6).
          */
-        $DatiTrasmissione->addChild("CodiceDestinatario",$company['codiceDestinatario']);
+        $DatiTrasmissione->addChild("CodiceDestinatario",$company_values['codiceDestinatario']);
         //1.1.5
         if ($phone['phoneNumber'] || $mail['mail']){
             $ContattiTrasmittente = $DatiTrasmissione->addChild("ContattiTrasmittente");
@@ -268,13 +265,13 @@ $header = $xml_invoice->FatturaElettronicaHeader;
                 //1.2.1.3.1
                 $CP_Anagrafica->addChild("Denominazione",$company['companyName']);
                 //1.2.1.3.2
-                $CP_Anagrafica->addChild("Nome",$contact['name']);
-                //1.2.1.3.3
-                $CP_Anagrafica->addChild("Cognome",$contact['lastName']);
-                //1.2.1.3.4
-                $CP_Anagrafica->addChild("Titolo",$contact['title']);
-                //1.2.1.3.5
-                $CP_Anagrafica->addChild("codEORI",$contact['CodEORI']);
+//                $CP_Anagrafica->addChild("Nome",$contact['name']);
+//                //1.2.1.3.3
+//                $CP_Anagrafica->addChild("Cognome",$contact['lastName']);
+//                //1.2.1.3.4
+//                $CP_Anagrafica->addChild("Titolo",$contact['title']);
+//                //1.2.1.3.5
+//                $CP_Anagrafica->addChild("codEORI",$contact['CodEORI']);
             //1.2.1.4
             $CP_DatiAnagrafici->addChild("AlboProfessionale","");
             //1.2.1.5
@@ -284,7 +281,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.2.1.7
             $CP_DatiAnagrafici->addChild("DataIscrizioneAlbo","");
             //1.2.1.8 obligatory
-            $CP_DatiAnagrafici->addChild("RegimeFiscale",$company['regimeFiscale']);
+            $CP_DatiAnagrafici->addChild("RegimeFiscale",$company_values['regimeFiscale']);
         //1.2.2 Sede
         $CP_Sede = $CedentePrestatore->addChild("Sede");
             //1.2.2.1  
@@ -320,24 +317,22 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.2.3.6  
             $CP_StabileOrganizzazione->addChild("Nazione",$address['country']);
         //1.2.4 IscrizioneREA
-        if ($company['REA_NumeroREA']){
-            /*solo se
-             *  il cedente/prestatore è una società iscritta nel registro delle imprese e come
-                tale ha l’obbligo di indicare in tutti i documenti anche i dati relativi all’iscrizione
-                (art. 2250 codice civile)
-             */
-            $CP_IscrizioneREA = $CedentePrestatore->addChild("IscrizioneREA");
-                //1.2.4.1
-                $CP_IscrizioneREA->addChild("Ufficio",$company['REA_Ufficio']);
-                //1.2.4.2
-                $CP_IscrizioneREA->addChild("NumeroREA",$company['REA_NumeroREA']);
-                //1.2.4.3
-                $CP_IscrizioneREA->addChild("CapitaleSociale",$company['REA_CapitaleSociale']);
-                //1.2.4.4
-                $CP_IscrizioneREA->addChild("SocioUnico",$company['REA_SocioUnico']);
-                //1.2.4.5
-                $CP_IscrizioneREA->addChild("StatoLiquidazione",$company['REA_StatoLiquidazione']);
-        }    
+        /*solo se
+         *  il cedente/prestatore è una società iscritta nel registro delle imprese e come
+            tale ha l’obbligo di indicare in tutti i documenti anche i dati relativi all’iscrizione
+            (art. 2250 codice civile)
+         */
+        $CP_IscrizioneREA = $CedentePrestatore->addChild("IscrizioneREA");
+            //1.2.4.1
+            $CP_IscrizioneREA->addChild("Ufficio",$company['REA_Ufficio']);
+            //1.2.4.2
+            $CP_IscrizioneREA->addChild("NumeroREA",$company['REA_NumeroREA']);
+            //1.2.4.3
+            $CP_IscrizioneREA->addChild("CapitaleSociale",$company['REA_CapitaleSociale']);
+            //1.2.4.4
+            $CP_IscrizioneREA->addChild("SocioUnico",$company['REA_SocioUnico']);
+            //1.2.4.5
+            $CP_IscrizioneREA->addChild("StatoLiquidazione",$company['REA_StatoLiquidazione']);
         //1.2.5
         if($phone['phoneNumber'] || $fax['phoneNumber'] || $mail['mail']){
             $CP_Contatti =  $CedentePrestatore->addChild("Contatti");
@@ -368,10 +363,10 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             $DatiAnagrafici_Anagrafica = $RP_DatiAnagrafici->addChild("Anagrafica");
                 //1.3.1.2
                 $DatiAnagrafici_Anagrafica->addChild("Denominazione",$company['companyName']);
-                $DatiAnagrafici_Anagrafica->addChild("Nome",$contact['name']);
-                $DatiAnagrafici_Anagrafica->addChild("Cognome",$contact['lastName']);
-                $DatiAnagrafici_Anagrafica->addChild("Titolo",$contact['title']);
-                $DatiAnagrafici_Anagrafica->addChild("CodEORI",$contact['CodEORI']);
+//                $DatiAnagrafici_Anagrafica->addChild("Nome",$contact['name']);
+//                $DatiAnagrafici_Anagrafica->addChild("Cognome",$contact['lastName']);
+//                $DatiAnagrafici_Anagrafica->addChild("Titolo",$contact['title']);
+//                $DatiAnagrafici_Anagrafica->addChild("CodEORI",$contact['CodEORI']);
     //1.4
     $CessionarioCommittente = $xml_invoice->FatturaElettronicaHeader->addChild("CessionarioCommittente");
         //1.4.1
@@ -389,13 +384,13 @@ $header = $xml_invoice->FatturaElettronicaHeader;
                 //1.4.1.3.1
                 $CC_DatiAnagrafici_Anagrafica->addChild("Denominazione",$customer['companyName']);
                 //1.4.1.3.2
-                $CC_DatiAnagrafici_Anagrafica->addChild("Nome",$contactCustomer['name']);
-                //1.4.1.3.3
-                $CC_DatiAnagrafici_Anagrafica->addChild("Cognome",$contactCustomer['lastName']);
-                //1.4.1.3.4
-                $CC_DatiAnagrafici_Anagrafica->addChild("Titolo",$contactCustomer['title']);
-                //1.4.1.3.5
-                $CC_DatiAnagrafici_Anagrafica->addChild("CodEORI",$contactCustomer['codEORI']);
+//                $CC_DatiAnagrafici_Anagrafica->addChild("Nome",$contactCustomer['name']);
+//                //1.4.1.3.3
+//                $CC_DatiAnagrafici_Anagrafica->addChild("Cognome",$contactCustomer['lastName']);
+//                //1.4.1.3.4
+//                $CC_DatiAnagrafici_Anagrafica->addChild("Titolo",$contactCustomer['title']);
+//                //1.4.1.3.5
+//                $CC_DatiAnagrafici_Anagrafica->addChild("CodEORI",$contactCustomer['codEORI']);
         //1.4.2
         $CC_Sede = $CessionarioCommittente->addChild("Sede");
             //1.4.2.1
@@ -469,14 +464,14 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             $TS_DatiAnagrafici_Anagrafica = $TS_DatiAnagrafici->addChild("Anagrafica");
                 //1.5.1.3.1
                 $TS_DatiAnagrafici_Anagrafica->addChild("Denominazione",$customer['companyName']);
-                //1.5.1.3.2
-                $TS_DatiAnagrafici_Anagrafica->addChild("Nome",$contactCustomer['name']);
-                //1.5.1.3.3
-                $TS_DatiAnagrafici_Anagrafica->addChild("Cognome",$contactCustomer['lastName']);
-                //1.5.1.3.4
-                $TS_DatiAnagrafici_Anagrafica->addChild("Titolo",$contactCustomer['title']);
-                //1.5.1.3.5
-                $TS_DatiAnagrafici_Anagrafica->addChild("CodEORI",$contactCustomer['codEORI']);
+//                //1.5.1.3.2
+//                $TS_DatiAnagrafici_Anagrafica->addChild("Nome",$contactCustomer['name']);
+//                //1.5.1.3.3
+//                $TS_DatiAnagrafici_Anagrafica->addChild("Cognome",$contactCustomer['lastName']);
+//                //1.5.1.3.4
+//                $TS_DatiAnagrafici_Anagrafica->addChild("Titolo",$contactCustomer['title']);
+//                //1.5.1.3.5
+//                $TS_DatiAnagrafici_Anagrafica->addChild("CodEORI",$contactCustomer['codEORI']);
     //1.6 SoggettoEmittente  indicare “CC” se la fattura è stata compilata da parte del cessionario/committente, “TZ” se è stata compilata da un soggetto terzo.
     $header->addChild("SoggettoEmittente","CC");
 //2
@@ -594,14 +589,14 @@ $body = $xml_invoice->FatturaElettronicaBody;
                 $DAV_Anagrafica = $DatiAnagraficiVettore->addChild("Anagrafica");
                     //2.1.9.1.3.1
                     $DAV_Anagrafica->addChild("Denominazione","");
-                    //2.1.9.1.3.2
-                    $DAV_Anagrafica->addChild("Nome","");
-                    //2.1.9.1.3.3
-                    $DAV_Anagrafica->addChild("Cognome","");
-                    //2.1.9.1.3.4
-                    $DAV_Anagrafica->addChild("Titolo","");
-                    //2.1.9.1.3.5
-                    $DAV_Anagrafica->addChild("CodEORI","");
+//                    //2.1.9.1.3.2
+//                    $DAV_Anagrafica->addChild("Nome","");
+//                    //2.1.9.1.3.3
+//                    $DAV_Anagrafica->addChild("Cognome","");
+//                    //2.1.9.1.3.4
+//                    $DAV_Anagrafica->addChild("Titolo","");
+//                    //2.1.9.1.3.5
+//                    $DAV_Anagrafica->addChild("CodEORI","");
                 //2.1.9.1.4
                 $DatiAnagraficiVettore->addChild("NumeroLicenzaGuida","");
             //2.1.9.2
