@@ -2,27 +2,31 @@
 
 $j(function(){
     readOnlySlects();
+
+    $auto = $j(".hidden-automatic");
+    $manual = $j(".hidden-manual");
+
     if(!is_add_new()){
         //updating mode
         setTimeout(function(){
             var Data = $j('#order-container').select2("data");
             var id = parseInt(Data.id) || 0;
             if(!id){
-                $j(".hidden-automatic").show();
-                $j(".hidden-manual").hide();
+                $auto.show();
+                $manual.hide();
             }
             refreshCards();
         },800);
     }else{
         //new mode
         if (typeof AUTOMATICDV !== 'undefined' && AUTOMATICDV ){
-            $j(".hidden-automatic").hide();
-            $j(".hidden-manual").show();
+            $auto.hide();
+            $manual.show();
         }else{
             setTimeout(function(){$j('#s2id_order-container').select2('readonly',false);},1000)
             //manual add new
-            $j(".hidden-automatic").show();
-            $j(".hidden-manual").hide();
+            $auto.show();
+            $manual.hide();
         }
     }
     $j('#idBank-container').change(function(){

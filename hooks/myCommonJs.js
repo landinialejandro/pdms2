@@ -76,26 +76,26 @@ function getNumbers(inputString){
     return results;
 }
 
-function showCard(field, dest, cmd){
+function showCard(field, dest, url){
     //field = field to get the ID from
     //dest = ID where to put the html result
-    //cmd = comand for ajax and ajax file name
+    //url = url&cmd for ajax
     var Data = $j('#' + field + '-container').select2("data");
     var id = parseInt(Data.id) || 0;
     if (id < 1){
         id = parseInt($j('#' + field).val());
     }
-    ajaxCard(id,cmd,dest);
+    ajaxCard(id,url,dest);
 }
 
-function ajaxCard(id,cmd,dest){
+function ajaxCard(id,url,dest){
     if (id >0){
         $j.ajax({
             method: 'post', //post, get
             dataType: 'html', //json,text,html
-            url: 'hooks/' + cmd + '.php',
+            url: 'hooks/' + url + '.php',
             cache: 'false',
-            data: {id: id, cmd: cmd}
+            data: {id: id, cmd: url}
         })
         .done(function (msg) {
             //function at response
@@ -104,10 +104,10 @@ function ajaxCard(id,cmd,dest){
     }
 }
 
-function showCardsTV(field, dest, cmd){
+function showCardsTV(field, dest, url){
     //field = field to get the ID from
     //dest = ID where to put the html result
-    //cmd = comand for ajax and ajax file name
+    //url = url&cmd for ajax
     var id = parseInt($j('#' + dest ).attr('myId')) || 0;//este id es el id del registro
     if (id >0){
         $j.ajax({
@@ -120,7 +120,7 @@ function showCardsTV(field, dest, cmd){
         .done(function (msg) {
             //function at response
             var data = $j.parseJSON(msg);
-            ajaxCard(data[`${field}`],cmd,dest);
+            ajaxCard( data[`${field}`], url, dest );
         });
     }
 }
