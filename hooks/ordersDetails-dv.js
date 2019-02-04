@@ -10,22 +10,14 @@
 //          *
 //
 var TAXVALUE;
-$j(document).ready(function(){
+
+$j(function(){
     if(!is_add_new()){
         setTimeout(function(){
             refreshCards();
         },1000);
     }
     addWarningBtn('UnitPrice','The sell price from product is distinct, click me to fix. Or check producto sell Price.');
-});
-
-function calc(){
-    changeSubtotal();
-    changeImposta();
-    ChangeLineTotal();
-}
-
-$j(function(){
     $j('#productCode-container').change(function(){
         refreshCards();
     });
@@ -45,6 +37,12 @@ $j(function(){
         calc();
     });
 });
+
+function calc(){
+    changeSubtotal();
+    changeImposta();
+    ChangeLineTotal();
+}
 
 function getSellPrice(){
     //from product table

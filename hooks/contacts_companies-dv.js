@@ -1,6 +1,6 @@
 /* global $j */
 
-$j(document).ready(function(){
+$j(function(){
     setTimeout(function(){
         if (typeof PARENTDV !== 'undefined'){
             $j('.hide-'+PARENTDV).hide();

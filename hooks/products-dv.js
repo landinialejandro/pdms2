@@ -11,41 +11,9 @@ var MANUAL_UPDATE = false;
 var INCLUDE_TAX = false; // change to TRUE if tax include in sell price
 var FIRST_TIME = true;
 
-$j(document).ready(function(){
+$j(function(){
     $j('#id').parent().parent().hide();
     addWarningBtn('sellPrice');
-});
-
-function SaleVal(){
-    var cost = parseFloat($j('#UnitPrice').val()).toFixed(2);
-    var increment = parseFloat($j('#increment').val()).toFixed(2) || 0;
-    var sell = cost / (1-(increment/100));
-    
-    var tax = 0;
-    if (INCLUDE_TAX){
-        var code = $j('#tax-container').select2('data');
-        code = code.id;
-        $j.ajax({
-            method: 'post', //post, get
-            dataType: 'text', //json,text,html
-            url: 'hooks/kinds_AJX.php',
-            cache: 'false',
-            data: {id: code, cmd: 'getValue'}
-        })
-                .done(function (msg) {
-                    //function at response
-                    tax = parseFloat(msg);
-                    tax = (sell * tax)/100;
-                    sell = sell + tax;
-                    return sell.toFixed(2);
-                });
-                
-        tax = parseInt($j('#tax_value').text()).toFixed(2) || 0;
-    }
-    return sell.toFixed(2);
-};
-
-$j(function(){
     $j('#update, #insert').click(function(){
         var sell = parseFloat($j('#sellPrice').val()).toFixed(2) || 0;
         if (sell !== SaleVal() && sell >0){
@@ -87,6 +55,35 @@ $j(function(){
         FIRST_TIME = false;
     });
 });
+
+function SaleVal(){
+    var cost = parseFloat($j('#UnitPrice').val()).toFixed(2);
+    var increment = parseFloat($j('#increment').val()).toFixed(2) || 0;
+    var sell = cost / (1-(increment/100));
+    
+    var tax = 0;
+    if (INCLUDE_TAX){
+        var code = $j('#tax-container').select2('data');
+        code = code.id;
+        $j.ajax({
+            method: 'post', //post, get
+            dataType: 'text', //json,text,html
+            url: 'hooks/kinds_AJX.php',
+            cache: 'false',
+            data: {id: code, cmd: 'getValue'}
+        })
+                .done(function (msg) {
+                    //function at response
+                    tax = parseFloat(msg);
+                    tax = (sell * tax)/100;
+                    sell = sell + tax;
+                    return sell.toFixed(2);
+                });
+                
+        tax = parseInt($j('#tax_value').text()).toFixed(2) || 0;
+    }
+    return sell.toFixed(2);
+};
 
 function changeSaleValue(){
     $j('#sellPrice').val(SaleVal());

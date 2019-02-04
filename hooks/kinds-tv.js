@@ -9,9 +9,8 @@
 // revision:
 //          *
 //
-$j(document).ready(function(){
-        $j("#kinds-search").insertAfter("#top_buttons");
-        $j("#kinds-search").show();
+$j(function(){
+        $j("#kinds-search").insertAfter("#top_buttons").show();
 });
 
 

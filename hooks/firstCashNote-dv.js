@@ -1,7 +1,6 @@
 /* global $j, autoSet, AUTOMATICDV */
 
-
-$j(document).ready(function(){
+$j(function(){
     readOnlySlects();
     if(!is_add_new()){
         //updating mode
@@ -26,19 +25,6 @@ $j(document).ready(function(){
             $j(".hidden-manual").hide();
         }
     }
-});
-
-function readOnlySlects(){
-    setTimeout(function(){
-            $j('#s2id_order-container').select2('readonly',true);
-            if(!is_add_new()){
-                $j('#s2id_kind-container').select2('readonly',true);
-            }
-    },800)
-}
-
-
-$j(function(){
     $j('#idBank-container').change(function(){
         showCard('idBank','idBankCompanyCard','companyCard');
     });
@@ -53,6 +39,15 @@ $j(function(){
     });
     
 });
+
+function readOnlySlects(){
+    setTimeout(function(){
+            $j('#s2id_order-container').select2('readonly',true);
+            if(!is_add_new()){
+                $j('#s2id_kind-container').select2('readonly',true);
+            }
+    },800)
+}
 
 function refreshCards(){
     showCard('idBank','idBankCompanyCard','companyCard');

@@ -10,7 +10,7 @@
 //          *
 //
 
-$j(document).ready(function(){
+$j(function(){
     $j('#multiOrder').attr('readonly','true');
     if(!is_add_new()){
         setTimeout(function(){
@@ -28,9 +28,6 @@ $j(document).ready(function(){
     },1100);
     addWarningBtn('commisionRate');
     addWarningBtn('commisionFee');
-});
-
-$j(function(){
     $j('#company-container').change(function(){
         showCard('company','myCompanyCard','companyCard');
         orderNumber();

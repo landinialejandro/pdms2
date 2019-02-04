@@ -9,7 +9,7 @@
 // revision:
 //          *
 //
-$j(document).ready(function(){
+$j(function(){
     if(!is_add_new()){
         $j('#code').attr('readonly','true');
     }

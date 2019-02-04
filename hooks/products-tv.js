@@ -10,7 +10,7 @@
 // revision:
 //          *
 //
-$j(document).ready(function(){
+$j(function(){
 	$j('td.products-Discontinued').each(function(){
 	  if($j(this).children().children().hasClass('glyphicon-check')){
 		$j(this).parent().addClass('danger');
