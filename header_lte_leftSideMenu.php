@@ -30,13 +30,23 @@
                                   }
 
                                   $i = 0; 
-
+                                    $ico_menu = '{
+                                        "Documenti":"fa fa-table",
+                                        "Catalogo":"fa fa-gift",
+                                        "Prima Nota":"fa fa-pencil-square-o",
+                                        "Anagrafiche":"fa fa-cog",
+                                        "Altro":"fa fa-plus",
+                                        "hiddens":"fa fa-eye-slash"
+                                    }';
+                                    $json = json_decode($ico_menu,true);
+                                    $ico = "fa fa-table"; //default ico
+                                    // $ico = $json['ico'] ? $json['ico'] : $ico ;
                                   foreach ($groups as $lte_group => $lte_tables) {
                                       if (($lte_group !== 'hiddens' || $memberInfo['admin']) ){ // new fucntionality if table group named hiddens dont show in other users
                                         if (count($lte_tables)){
                                         ?>
                                               <li class="treeview <?php echo ($lte_group === $current_group ? 'active' : '');?>">
-                                                <a href="#"><i class="fa fa-table"></i> <span><?php echo $lte_group; ?></span>
+                                                <a href="#"><i class="<?php echo $json[$lte_group] ? $json[$lte_group] : $ico; ?>"></i> <span><?php echo $lte_group; ?></span>
                                                     <span class="pull-right-container">
                                                     <i class="fa fa-angle-left pull-right"></i>
                                                     </span>

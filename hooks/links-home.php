@@ -106,16 +106,15 @@
                 
                         
 function getEntitiesKind($entity, &$homeLinks, $tn){
-    //get entities company kinds
-    $kEntities = sql("select code, name from kinds where `kinds`.`entity` LIKE '%{$entity}%'",$eo);
+    //get entities from entity kinds
+    $kEntities = sql("select code, name, value from kinds where `kinds`.`entity` LIKE '%{$entity}%'",$eo);
 
-    foreach($kEntities as $i => $kEntity){
-        $kValues=sqlValue("select value from kinds where code = '{$kEntity['code']}' ");
-        $json = json_decode($kValues,true);
-        $ico="lightning.png";
-        if (json_last_error() === JSON_ERROR_NONE) {
+    foreach($kEntities as $kEntity){
+        $json = json_decode($kEntity['value'],true);
+        $ico = "lightning.png"; //default ico
+        if (json_last_error() == JSON_ERROR_NONE) {
             // JSON is valid
-            $ico = $json['ico'];
+            $ico = $json['ico'] ? $json['ico'] : $ico ;
         }
         $homeLinks[] = array(
                 'url' => "{$tn}_view.php?ck={$kEntity['name']}",//Add a new order to mc(multicompany)1,ok order kind output, dk= document kind DDT in this case 

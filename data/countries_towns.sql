@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `fruttitaliacom_alejandro`
+-- Database: `pdms2`
 --
 
 -- --------------------------------------------------------
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 -- Struttura della tabella `countries`
 --
 
-CREATE TABLE `countries` (
+CREATE TABLE IF NOT EXISTS `countries` (
   `id` int(10) UNSIGNED NOT NULL,
   `country` varchar(255) DEFAULT NULL,
   `code` varchar(100) DEFAULT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `countries` (
 -- Dump dei dati per la tabella `countries`
 --
 
-INSERT INTO `countries` (`id`, `country`, `code`, `ISOcode`) VALUES
+INSERT IGNORE INTO `countries` (`id`, `country`, `code`, `ISOcode`) VALUES
 (250, 'Afghanistan', 'AF', NULL),
 (251, 'Albania', 'AL', NULL),
 (252, 'Algeria', 'DZ', NULL),
@@ -286,7 +286,7 @@ INSERT INTO `countries` (`id`, `country`, `code`, `ISOcode`) VALUES
 -- Struttura della tabella `town`
 --
 
-CREATE TABLE `town` (
+CREATE TABLE IF NOT EXISTS `town` (
   `id` int(10) UNSIGNED NOT NULL,
   `country` int(10) UNSIGNED DEFAULT NULL,
   `idIstat` varchar(255) DEFAULT NULL,
@@ -304,7 +304,7 @@ CREATE TABLE `town` (
 -- Dump dei dati per la tabella `town`
 --
 
-INSERT INTO `town` (`id`, `country`, `idIstat`, `town`, `district`, `region`, `prefix`, `shipCode`, `fiscCode`, `inhabitants`, `link`) VALUES
+INSERT IGNORE INTO `town` (`id`, `country`, `idIstat`, `town`, `district`, `region`, `prefix`, `shipCode`, `fiscCode`, `inhabitants`, `link`) VALUES
 (1, 362, NULL, 'Metaponto', 'Matera', 'Matera', NULL, '75012', NULL, NULL, NULL),
 (2, 362, NULL, 'MILANO', 'MI', 'Lombardia', NULL, NULL, NULL, NULL, NULL),
 (3, 362, '097001', 'Abbadia Lariana', 'LC', 'LOM', '0341', '23821', 'A005', '3305', 'http://www.comuni-italiani.it/097/001/'),
@@ -8277,31 +8277,20 @@ INSERT INTO `town` (`id`, `country`, `idIstat`, `town`, `district`, `region`, `p
 -- Indici per le tabelle `countries`
 --
 ALTER TABLE `countries`
+  DROP PRIMARY KEY;
+ALTER TABLE `countries`
   ADD PRIMARY KEY (`id`);
-
+COMMIT;
 --
 -- Indici per le tabelle `town`
 --
 ALTER TABLE `town`
+  DROP PRIMARY KEY,
+  DROP KEY `country`;
+
+ALTER TABLE `town`
   ADD PRIMARY KEY (`id`),
   ADD KEY `country` (`country`);
-
---
--- AUTO_INCREMENT per le tabelle scaricate
---
-
---
--- AUTO_INCREMENT per la tabella `countries`
---
-ALTER TABLE `countries`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=489;
-
---
--- AUTO_INCREMENT per la tabella `town`
---
-ALTER TABLE `town`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7946;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

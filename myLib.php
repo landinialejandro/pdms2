@@ -122,7 +122,15 @@ function getTotCol($parameters,$fieldToSUM){
 }
 
 function updateSqlViews(){
-    $dir = __DIR__."/SQL_Views";
+    $dir = dirname(__FILE__) . "/hooks/SQL_Views";
+    $views = array_diff(scandir($dir), array('.', '..'));
+    foreach ($views as $sql){
+        $res = sql(file_get_contents("$dir/$sql"),$eo);
+    }
+}
+
+function importData(){
+    $dir = dirname(__FILE__) . "/data";
     $views = array_diff(scandir($dir), array('.', '..'));
     foreach ($views as $sql){
         $res = sql(file_get_contents("$dir/$sql"),$eo);
