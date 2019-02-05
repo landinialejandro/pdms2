@@ -23,19 +23,19 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
 		"`companies`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
-		"IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') /* Kind code */" => "kind_code",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo */" => "kind",
 		"if(CHAR_LENGTH(`companies`.`companyCode`)>100, concat(left(`companies`.`companyCode`,100),' ...'), `companies`.`companyCode`)" => "companyCode",
 		"if(CHAR_LENGTH(`companies`.`companyName`)>100, concat(left(`companies`.`companyName`,100),' ...'), `companies`.`companyName`)" => "companyName",
+		"`companies`.`personaFisica`" => "personaFisica",
 		"if(CHAR_LENGTH(`companies`.`fiscalCode`)>100, concat(left(`companies`.`fiscalCode`,100),' ...'), `companies`.`fiscalCode`)" => "fiscalCode",
 		"if(CHAR_LENGTH(`companies`.`vat`)>100, concat(left(`companies`.`vat`,100),' ...'), `companies`.`vat`)" => "vat",
 		"`companies`.`notes`" => "notes",
 		"`companies`.`codiceDestinatario`" => "codiceDestinatario",
 		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Regime Fiscale */" => "regimeFiscale",
-		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* TipoCassa */" => "tipoCassa",
-		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento",
+		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* Tipo Cassa */" => "tipoCassa",
+		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* Modalita Pagamento */" => "modalitaPagamento",
 		"`companies`.`RiferimentoAmministrazione`" => "RiferimentoAmministrazione",
-		"`companies`.`FormatoTrasmissione`" => "FormatoTrasmissione",
+		"IF(    CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`name`), '') /* Destinatario */" => "FormatoTrasmissione",
 		"`companies`.`REA_Ufficio`" => "REA_Ufficio",
 		"`companies`.`REA_NumeroREA`" => "REA_NumeroREA",
 		"`companies`.`REA_CapitaleSociale`" => "REA_CapitaleSociale",
@@ -50,7 +50,7 @@
 	$x->SortFields = array(   
 		1 => '`companies`.`id`',
 		2 => '`kinds1`.`name`',
-		3 => '`kinds1`.`code`',
+		3 => 3,
 		4 => 4,
 		5 => 5,
 		6 => 6,
@@ -61,7 +61,7 @@
 		11 => 11,
 		12 => 12,
 		13 => 13,
-		14 => 14,
+		14 => '`kinds5`.`name`',
 		15 => 15,
 		16 => 16,
 		17 => 17,
@@ -76,19 +76,19 @@
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
 		"`companies`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
-		"IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') /* Kind code */" => "kind_code",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo */" => "kind",
 		"`companies`.`companyCode`" => "companyCode",
 		"`companies`.`companyName`" => "companyName",
+		"`companies`.`personaFisica`" => "personaFisica",
 		"`companies`.`fiscalCode`" => "fiscalCode",
 		"`companies`.`vat`" => "vat",
 		"`companies`.`notes`" => "notes",
 		"`companies`.`codiceDestinatario`" => "codiceDestinatario",
 		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Regime Fiscale */" => "regimeFiscale",
-		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* TipoCassa */" => "tipoCassa",
-		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento",
+		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* Tipo Cassa */" => "tipoCassa",
+		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* Modalita Pagamento */" => "modalitaPagamento",
 		"`companies`.`RiferimentoAmministrazione`" => "RiferimentoAmministrazione",
-		"`companies`.`FormatoTrasmissione`" => "FormatoTrasmissione",
+		"IF(    CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`name`), '') /* Destinatario */" => "FormatoTrasmissione",
 		"`companies`.`REA_Ufficio`" => "REA_Ufficio",
 		"`companies`.`REA_NumeroREA`" => "REA_NumeroREA",
 		"`companies`.`REA_CapitaleSociale`" => "REA_CapitaleSociale",
@@ -102,46 +102,46 @@
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
 		"`companies`.`id`" => "ID",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "Kind",
-		"IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') /* Kind code */" => "Kind code",
-		"`companies`.`companyCode`" => "CompanyCode",
-		"`companies`.`companyName`" => "CompanyName",
-		"`companies`.`fiscalCode`" => "FiscalCode",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo */" => "Tipo",
+		"`companies`.`companyCode`" => "Codice",
+		"`companies`.`companyName`" => "Ragione Sociale",
+		"`companies`.`personaFisica`" => "Persona Fisica",
+		"`companies`.`fiscalCode`" => "Codice Fiscale",
 		"`companies`.`vat`" => "Vat",
 		"`companies`.`notes`" => "Notes",
 		"`companies`.`codiceDestinatario`" => "Codice Destinatario",
 		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Regime Fiscale */" => "Regime Fiscale",
-		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* TipoCassa */" => "TipoCassa",
-		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* ModalitaPagamento */" => "ModalitaPagamento",
+		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* Tipo Cassa */" => "Tipo Cassa",
+		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* Modalita Pagamento */" => "Modalita Pagamento",
 		"`companies`.`RiferimentoAmministrazione`" => "Riferimento Amministrazione",
-		"`companies`.`FormatoTrasmissione`" => "Formato Trasmissione",
+		"IF(    CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`name`), '') /* Destinatario */" => "Destinatario",
 		"`companies`.`REA_Ufficio`" => "REA Ufficio",
 		"`companies`.`REA_NumeroREA`" => "Numero REA",
 		"`companies`.`REA_CapitaleSociale`" => "Capitale Sociale",
 		"`companies`.`REA_SocioUnico`" => "REA SocioUnico",
 		"`companies`.`REA_StatoLiquidazione`" => "StatoLiquidazione",
-		"`companies`.`RIT_soggettoRitenuta`" => "RIT soggettoRitenuta",
-		"`companies`.`RIT_tipoRitenuta`" => "RIT tipoRitenuta",
-		"`companies`.`RIT_AliquotaRitenuta`" => "RIT AliquotaRitenuta",
-		"`companies`.`RIT_CausalePagamento`" => "RIT CausalePagamento"
+		"`companies`.`RIT_soggettoRitenuta`" => "RIT soggetto Ritenuta",
+		"`companies`.`RIT_tipoRitenuta`" => "RIT tipo Ritenuta",
+		"`companies`.`RIT_AliquotaRitenuta`" => "RIT Aliquota Ritenuta",
+		"`companies`.`RIT_CausalePagamento`" => "RIT Causale Pagamento"
 	);
 
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
 		"`companies`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
-		"IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') /* Kind code */" => "kind_code",
-		"`companies`.`companyCode`" => "CompanyCode",
-		"`companies`.`companyName`" => "CompanyName",
-		"`companies`.`fiscalCode`" => "FiscalCode",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo */" => "kind",
+		"`companies`.`companyCode`" => "Codice",
+		"`companies`.`companyName`" => "Ragione Sociale",
+		"`companies`.`personaFisica`" => "personaFisica",
+		"`companies`.`fiscalCode`" => "Codice Fiscale",
 		"`companies`.`vat`" => "Vat",
 		"`companies`.`notes`" => "notes",
 		"`companies`.`codiceDestinatario`" => "codiceDestinatario",
 		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Regime Fiscale */" => "regimeFiscale",
-		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* TipoCassa */" => "tipoCassa",
-		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento",
+		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* Tipo Cassa */" => "tipoCassa",
+		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* Modalita Pagamento */" => "modalitaPagamento",
 		"`companies`.`RiferimentoAmministrazione`" => "RiferimentoAmministrazione",
-		"`companies`.`FormatoTrasmissione`" => "FormatoTrasmissione",
+		"IF(    CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`name`), '') /* Destinatario */" => "FormatoTrasmissione",
 		"`companies`.`REA_Ufficio`" => "REA_Ufficio",
 		"`companies`.`REA_NumeroREA`" => "REA_NumeroREA",
 		"`companies`.`REA_CapitaleSociale`" => "REA_CapitaleSociale",
@@ -154,9 +154,9 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'kind' => 'Kind', 'regimeFiscale' => 'Regime Fiscale', 'tipoCassa' => 'TipoCassa', 'modalitaPagamento' => 'ModalitaPagamento');
+	$x->filterers = array(  'kind' => 'Tipo', 'regimeFiscale' => 'Regime Fiscale', 'tipoCassa' => 'Tipo Cassa', 'modalitaPagamento' => 'Modalita Pagamento', 'FormatoTrasmissione' => 'Destinatario');
 
-	$x->QueryFrom = "`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`companies`.`regimeFiscale` LEFT JOIN `kinds` as kinds3 ON `kinds3`.`code`=`companies`.`tipoCassa` LEFT JOIN `kinds` as kinds4 ON `kinds4`.`code`=`companies`.`modalitaPagamento` ";
+	$x->QueryFrom = "`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`companies`.`regimeFiscale` LEFT JOIN `kinds` as kinds3 ON `kinds3`.`code`=`companies`.`tipoCassa` LEFT JOIN `kinds` as kinds4 ON `kinds4`.`code`=`companies`.`modalitaPagamento` LEFT JOIN `kinds` as kinds5 ON `kinds5`.`code`=`companies`.`FormatoTrasmissione` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -179,16 +179,16 @@
 	$x->QuickSearchText = $Translation["quick search"];
 	$x->ScriptFileName = "companies_view.php";
 	$x->RedirectAfterInsert = "companies_view.php?SelectedID=#ID#";
-	$x->TableTitle = "Companies";
+	$x->TableTitle = "Aziende";
 	$x->TableIcon = "resources/table_icons/factory.png";
 	$x->PrimaryKey = "`companies`.`id`";
-	$x->DefaultSortField = '5';
+	$x->DefaultSortField = '4';
 	$x->DefaultSortDirection = 'asc';
 
 	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Kind", "CompanyCode", "CompanyName", "FiscalCode", "Vat", "Notes", "RIT soggettoRitenuta", "RIT AliquotaRitenuta");
+	$x->ColCaption = array("Tipo", "Codice", "Ragione Sociale", "Codice Fiscale", "Vat", "Notes", "RIT soggetto Ritenuta", "RIT Aliquota Ritenuta");
 	$x->ColFieldName = array('kind', 'companyCode', 'companyName', 'fiscalCode', 'vat', 'notes', 'RIT_soggettoRitenuta', 'RIT_AliquotaRitenuta');
-	$x->ColNumber  = array(2, 4, 5, 6, 7, 8, 20, 22);
+	$x->ColNumber  = array(2, 3, 4, 6, 7, 8, 20, 22);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/companies_templateTV.html';

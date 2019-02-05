@@ -9,10 +9,10 @@
 		/* data for selected record, or defaults if none is selected */
 		var data = {
 			kind: <?php echo json_encode(array('id' => $rdata['kind'], 'value' => $rdata['kind'], 'text' => $jdata['kind'])); ?>,
-			kind_code: <?php echo json_encode($jdata['kind_code']); ?>,
 			regimeFiscale: <?php echo json_encode(array('id' => $rdata['regimeFiscale'], 'value' => $rdata['regimeFiscale'], 'text' => $jdata['regimeFiscale'])); ?>,
 			tipoCassa: <?php echo json_encode(array('id' => $rdata['tipoCassa'], 'value' => $rdata['tipoCassa'], 'text' => $jdata['tipoCassa'])); ?>,
-			modalitaPagamento: <?php echo json_encode(array('id' => $rdata['modalitaPagamento'], 'value' => $rdata['modalitaPagamento'], 'text' => $jdata['modalitaPagamento'])); ?>
+			modalitaPagamento: <?php echo json_encode(array('id' => $rdata['modalitaPagamento'], 'value' => $rdata['modalitaPagamento'], 'text' => $jdata['modalitaPagamento'])); ?>,
+			FormatoTrasmissione: <?php echo json_encode(array('id' => $rdata['FormatoTrasmissione'], 'value' => $rdata['FormatoTrasmissione'], 'text' => $jdata['FormatoTrasmissione'])); ?>
 		};
 
 		/* initialize or continue using AppGini.cache for the current table */
@@ -25,20 +25,6 @@
 			if(u != 'ajax_combo.php') return false;
 			if(d.t == tn && d.f == 'kind' && d.id == data.kind.id)
 				return { results: [ data.kind ], more: false, elapsed: 0.01 };
-			return false;
-		});
-
-		/* saved value for kind autofills */
-		cache.addCheck(function(u, d){
-			if(u != tn + '_autofill.php') return false;
-
-			for(var rnd in d) if(rnd.match(/^rnd/)) break;
-
-			if(d.mfk == 'kind' && d.id == data.kind.id){
-				$j('#kind_code' + d[rnd]).html(data.kind_code);
-				return true;
-			}
-
 			return false;
 		});
 
@@ -63,6 +49,14 @@
 			if(u != 'ajax_combo.php') return false;
 			if(d.t == tn && d.f == 'modalitaPagamento' && d.id == data.modalitaPagamento.id)
 				return { results: [ data.modalitaPagamento ], more: false, elapsed: 0.01 };
+			return false;
+		});
+
+		/* saved value for FormatoTrasmissione */
+		cache.addCheck(function(u, d){
+			if(u != 'ajax_combo.php') return false;
+			if(d.t == tn && d.f == 'FormatoTrasmissione' && d.id == data.FormatoTrasmissione.id)
+				return { results: [ data.FormatoTrasmissione ], more: false, elapsed: 0.01 };
 			return false;
 		});
 

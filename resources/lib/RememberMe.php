@@ -8,7 +8,12 @@
 		/**
 		 *  Number of seconds for 'rememberme' session expiry
 		 */
-		private static $_expiry = 2592000; // 30 days * 68400 seconds per day
+		private static $_expiry = 2592000; // 30 days * 86400 seconds per day
+		
+		/**
+		 *  Number of seconds for token to be considered 'fresh' and needs no renewal
+		 */
+		private static $_renewal_window = 5;
 		
 		/**
 		 *  If logging is enabled, all method calls in this class will be logged to RememberMe.log
@@ -49,7 +54,7 @@
 						false alarms. Thus, we won't renew the token for those requests which are
 						determined by ::_exception_request().
 					*/
-					if(!self::_exception_request()) {
+					if(!self::_exception_request($session)) {
 						$session['token'] = self::_random();
 						self::_update($session);
 						self::_cookie(self::_to_string($session));
@@ -122,9 +127,12 @@
 			self::_cookie('');
 		}
 		
-		private static function _exception_request() {
+		private static function _exception_request($session) {
 			/* see the comment in ::check() */
-			return is_ajax() || in_array(basename($_SERVER['PHP_SELF']), self::$_exception_requests);
+			return 
+				is_ajax() || 
+				in_array(basename($_SERVER['PHP_SELF']), self::$_exception_requests) ||
+				self::_fresh_token($session);
 		}
 
 		private static function _active_user($user) {
@@ -158,6 +166,30 @@
 			return true;
 		}
 		
+		/**
+		 *  @return boolean indicating if session token is fresh (generated less than _renewal_window seconds ago) or not.
+		 */
+		private static function _fresh_token($session) {
+			self::_log('RememberMe::_fresh_token(' . json_encode($session) . ')');
+
+			if(!self::_validate_session($session)) return false;
+
+			$session = array_map('makeSafe', $session);
+			$expiry_ts = sqlValue("
+				SELECT `expiry_ts` FROM `membership_usersessions` WHERE
+					`memberID`='{$session['user']}' AND
+					`token`='{$session['token']}' AND
+					`agent`='{$session['agent']}'
+			");
+			if(!$expiry_ts) return false;
+
+			$ts = time();
+			$creation_ts = $expiry_ts - self::$_expiry;
+			$fresh_ts = $creation_ts + self::$_renewal_window;
+
+			return ($ts <= $fresh_ts);
+		}
+
 		private static function _find($session) {
 			self::_log('RememberMe::_find(' . json_encode($session) . ')');
 			// returns: 1 if valid, 0 if not found, -1 if invalid token

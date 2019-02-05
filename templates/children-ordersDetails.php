@@ -3,7 +3,6 @@
 <?php
 	$cleaner = new CI_Input();
 	$cleaner->charset = datalist_db_encoding;
-        $curDir = __DIR__;
 ?>
 <script>
 	<?php echo $current_table; ?>GetChildrenRecordsList = function(command){

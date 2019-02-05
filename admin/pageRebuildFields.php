@@ -134,9 +134,9 @@
 		'companies' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'kind' => array('appgini' => 'VARCHAR(40) not null '),
-			'kind_code' => array('appgini' => 'VARCHAR(40) null '),
 			'companyCode' => array('appgini' => 'VARCHAR(255) null unique '),
 			'companyName' => array('appgini' => 'VARCHAR(255) null '),
+			'personaFisica' => array('appgini' => 'VARCHAR(40) not null default \'No\' '),
 			'fiscalCode' => array('appgini' => 'VARCHAR(255) null '),
 			'vat' => array('appgini' => 'VARCHAR(255) not null '),
 			'notes' => array('appgini' => 'TEXT null '),

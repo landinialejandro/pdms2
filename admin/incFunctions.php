@@ -137,7 +137,7 @@
 					'homepageShowCount' => 1
 				),
 				'companies' => array(
-					'Caption' => 'Companies',
+					'Caption' => 'Aziende',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/factory.png',
 					'group' => $tg[3],
@@ -290,7 +290,7 @@
 				'products' => 'Articoli Magazzino',
 				'firstCashNote' => 'Prima Nota',
 				'vatRegister' => 'Registro Corrispettivi',
-				'companies' => 'Companies',
+				'companies' => 'Aziende',
 				'contacts' => 'Contacts',
 				'creditDocument' => 'Nota Credito',
 				'electronicInvoice' => 'ElectronicInvoice',

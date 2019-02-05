@@ -16,19 +16,20 @@ function companies_insert(){
 
 	$data['kind'] = makeSafe($_REQUEST['kind']);
 		if($data['kind'] == empty_lookup_value){ $data['kind'] = ''; }
-	$data['kind_code'] = makeSafe($_REQUEST['kind']);
-		if($data['kind_code'] == empty_lookup_value){ $data['kind_code'] = ''; }
 	$data['companyCode'] = makeSafe($_REQUEST['companyCode']);
 		if($data['companyCode'] == empty_lookup_value){ $data['companyCode'] = ''; }
 	$data['companyName'] = makeSafe($_REQUEST['companyName']);
 		if($data['companyName'] == empty_lookup_value){ $data['companyName'] = ''; }
+	$data['personaFisica'] = makeSafe($_REQUEST['personaFisica']);
+		if($data['personaFisica'] == empty_lookup_value){ $data['personaFisica'] = ''; }
 	$data['fiscalCode'] = makeSafe($_REQUEST['fiscalCode']);
 		if($data['fiscalCode'] == empty_lookup_value){ $data['fiscalCode'] = ''; }
 	$data['vat'] = makeSafe($_REQUEST['vat']);
 		if($data['vat'] == empty_lookup_value){ $data['vat'] = ''; }
 	$data['notes'] = makeSafe($_REQUEST['notes']);
 		if($data['notes'] == empty_lookup_value){ $data['notes'] = ''; }
-	$data['codiceDestinatario'] = br2nl(makeSafe($_REQUEST['codiceDestinatario']));
+	$data['codiceDestinatario'] = makeSafe($_REQUEST['codiceDestinatario']);
+		if($data['codiceDestinatario'] == empty_lookup_value){ $data['codiceDestinatario'] = ''; }
 	$data['regimeFiscale'] = makeSafe($_REQUEST['regimeFiscale']);
 		if($data['regimeFiscale'] == empty_lookup_value){ $data['regimeFiscale'] = ''; }
 	$data['tipoCassa'] = makeSafe($_REQUEST['tipoCassa']);
@@ -58,7 +59,13 @@ function companies_insert(){
 	$data['RIT_CausalePagamento'] = makeSafe($_REQUEST['RIT_CausalePagamento']);
 		if($data['RIT_CausalePagamento'] == empty_lookup_value){ $data['RIT_CausalePagamento'] = ''; }
 	if($data['kind']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Kind': " . $Translation['field not null'] . '<br><br>';
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Tipo': " . $Translation['field not null'] . '<br><br>';
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
+	if($data['personaFisica'] == '') $data['personaFisica'] = "No";
+	if($data['personaFisica']== ''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Persona Fisica': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -69,7 +76,7 @@ function companies_insert(){
 	}
 	if($data['FormatoTrasmissione'] == '') $data['FormatoTrasmissione'] = "FPR12";
 	if($data['FormatoTrasmissione']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Formato Trasmissione': " . $Translation['field not null'] . '<br><br>';
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Destinatario': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -87,7 +94,7 @@ function companies_insert(){
 	}
 	if($data['RIT_tipoRitenuta'] == '') $data['RIT_tipoRitenuta'] = "RT02";
 	if($data['RIT_tipoRitenuta']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'RIT tipoRitenuta': " . $Translation['field not null'] . '<br><br>';
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'RIT tipo Ritenuta': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -99,7 +106,7 @@ function companies_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `kind_code`=' . (($data['kind_code'] !== '' && $data['kind_code'] !== NULL) ? "'{$data['kind_code']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `REA_Ufficio`=' . (($data['REA_Ufficio'] !== '' && $data['REA_Ufficio'] !== NULL) ? "'{$data['REA_Ufficio']}'" : 'NULL') . ', `REA_NumeroREA`=' . (($data['REA_NumeroREA'] !== '' && $data['REA_NumeroREA'] !== NULL) ? "'{$data['REA_NumeroREA']}'" : 'NULL') . ', `REA_CapitaleSociale`=' . (($data['REA_CapitaleSociale'] !== '' && $data['REA_CapitaleSociale'] !== NULL) ? "'{$data['REA_CapitaleSociale']}'" : 'NULL') . ', `REA_SocioUnico`=' . (($data['REA_SocioUnico'] !== '' && $data['REA_SocioUnico'] !== NULL) ? "'{$data['REA_SocioUnico']}'" : 'NULL') . ', `REA_StatoLiquidazione`=' . (($data['REA_StatoLiquidazione'] !== '' && $data['REA_StatoLiquidazione'] !== NULL) ? "'{$data['REA_StatoLiquidazione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL'), $o);
+	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `REA_Ufficio`=' . (($data['REA_Ufficio'] !== '' && $data['REA_Ufficio'] !== NULL) ? "'{$data['REA_Ufficio']}'" : 'NULL') . ', `REA_NumeroREA`=' . (($data['REA_NumeroREA'] !== '' && $data['REA_NumeroREA'] !== NULL) ? "'{$data['REA_NumeroREA']}'" : 'NULL') . ', `REA_CapitaleSociale`=' . (($data['REA_CapitaleSociale'] !== '' && $data['REA_CapitaleSociale'] !== NULL) ? "'{$data['REA_CapitaleSociale']}'" : 'NULL') . ', `REA_SocioUnico`=' . (($data['REA_SocioUnico'] !== '' && $data['REA_SocioUnico'] !== NULL) ? "'{$data['REA_SocioUnico']}'" : 'NULL') . ', `REA_StatoLiquidazione`=' . (($data['REA_StatoLiquidazione'] !== '' && $data['REA_StatoLiquidazione'] !== NULL) ? "'{$data['REA_StatoLiquidazione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"companies_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -479,16 +486,21 @@ function companies_update($selected_id){
 	$data['kind'] = makeSafe($_REQUEST['kind']);
 		if($data['kind'] == empty_lookup_value){ $data['kind'] = ''; }
 	if($data['kind']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Kind': {$Translation['field not null']}<br><br>";
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Tipo': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	$data['kind_code'] = makeSafe($_REQUEST['kind']);
-		if($data['kind_code'] == empty_lookup_value){ $data['kind_code'] = ''; }
 	$data['companyCode'] = makeSafe($_REQUEST['companyCode']);
 		if($data['companyCode'] == empty_lookup_value){ $data['companyCode'] = ''; }
 	$data['companyName'] = makeSafe($_REQUEST['companyName']);
 		if($data['companyName'] == empty_lookup_value){ $data['companyName'] = ''; }
+	$data['personaFisica'] = makeSafe($_REQUEST['personaFisica']);
+		if($data['personaFisica'] == empty_lookup_value){ $data['personaFisica'] = ''; }
+	if($data['personaFisica']==''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Persona Fisica': {$Translation['field not null']}<br><br>";
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
 	$data['fiscalCode'] = makeSafe($_REQUEST['fiscalCode']);
 		if($data['fiscalCode'] == empty_lookup_value){ $data['fiscalCode'] = ''; }
 	$data['vat'] = makeSafe($_REQUEST['vat']);
@@ -500,7 +512,8 @@ function companies_update($selected_id){
 	}
 	$data['notes'] = makeSafe($_REQUEST['notes']);
 		if($data['notes'] == empty_lookup_value){ $data['notes'] = ''; }
-	$data['codiceDestinatario'] = br2nl(makeSafe($_REQUEST['codiceDestinatario']));
+	$data['codiceDestinatario'] = makeSafe($_REQUEST['codiceDestinatario']);
+		if($data['codiceDestinatario'] == empty_lookup_value){ $data['codiceDestinatario'] = ''; }
 	$data['regimeFiscale'] = makeSafe($_REQUEST['regimeFiscale']);
 		if($data['regimeFiscale'] == empty_lookup_value){ $data['regimeFiscale'] = ''; }
 	$data['tipoCassa'] = makeSafe($_REQUEST['tipoCassa']);
@@ -512,7 +525,7 @@ function companies_update($selected_id){
 	$data['FormatoTrasmissione'] = makeSafe($_REQUEST['FormatoTrasmissione']);
 		if($data['FormatoTrasmissione'] == empty_lookup_value){ $data['FormatoTrasmissione'] = ''; }
 	if($data['FormatoTrasmissione']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Formato Trasmissione': {$Translation['field not null']}<br><br>";
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Destinatario': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -541,7 +554,7 @@ function companies_update($selected_id){
 	$data['RIT_tipoRitenuta'] = makeSafe($_REQUEST['RIT_tipoRitenuta']);
 		if($data['RIT_tipoRitenuta'] == empty_lookup_value){ $data['RIT_tipoRitenuta'] = ''; }
 	if($data['RIT_tipoRitenuta']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'RIT tipoRitenuta': {$Translation['field not null']}<br><br>";
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'RIT tipo Ritenuta': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -558,7 +571,7 @@ function companies_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `kind_code`=' . (($data['kind_code'] !== '' && $data['kind_code'] !== NULL) ? "'{$data['kind_code']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `REA_Ufficio`=' . (($data['REA_Ufficio'] !== '' && $data['REA_Ufficio'] !== NULL) ? "'{$data['REA_Ufficio']}'" : 'NULL') . ', `REA_NumeroREA`=' . (($data['REA_NumeroREA'] !== '' && $data['REA_NumeroREA'] !== NULL) ? "'{$data['REA_NumeroREA']}'" : 'NULL') . ', `REA_CapitaleSociale`=' . (($data['REA_CapitaleSociale'] !== '' && $data['REA_CapitaleSociale'] !== NULL) ? "'{$data['REA_CapitaleSociale']}'" : 'NULL') . ', `REA_SocioUnico`=' . (($data['REA_SocioUnico'] !== '' && $data['REA_SocioUnico'] !== NULL) ? "'{$data['REA_SocioUnico']}'" : 'NULL') . ', `REA_StatoLiquidazione`=' . (($data['REA_StatoLiquidazione'] !== '' && $data['REA_StatoLiquidazione'] !== NULL) ? "'{$data['REA_StatoLiquidazione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `REA_Ufficio`=' . (($data['REA_Ufficio'] !== '' && $data['REA_Ufficio'] !== NULL) ? "'{$data['REA_Ufficio']}'" : 'NULL') . ', `REA_NumeroREA`=' . (($data['REA_NumeroREA'] !== '' && $data['REA_NumeroREA'] !== NULL) ? "'{$data['REA_NumeroREA']}'" : 'NULL') . ', `REA_CapitaleSociale`=' . (($data['REA_CapitaleSociale'] !== '' && $data['REA_CapitaleSociale'] !== NULL) ? "'{$data['REA_CapitaleSociale']}'" : 'NULL') . ', `REA_SocioUnico`=' . (($data['REA_SocioUnico'] !== '' && $data['REA_SocioUnico'] !== NULL) ? "'{$data['REA_SocioUnico']}'" : 'NULL') . ', `REA_StatoLiquidazione`=' . (($data['REA_StatoLiquidazione'] !== '' && $data['REA_StatoLiquidazione'] !== NULL) ? "'{$data['REA_StatoLiquidazione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="companies_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -604,6 +617,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$filterer_regimeFiscale = thisOr(undo_magic_quotes($_REQUEST['filterer_regimeFiscale']), '');
 	$filterer_tipoCassa = thisOr(undo_magic_quotes($_REQUEST['filterer_tipoCassa']), '');
 	$filterer_modalitaPagamento = thisOr(undo_magic_quotes($_REQUEST['filterer_modalitaPagamento']), '');
+	$filterer_FormatoTrasmissione = thisOr(undo_magic_quotes($_REQUEST['filterer_FormatoTrasmissione']), '');
 
 	// populate filterers, starting from children to grand-parents
 
@@ -611,6 +625,22 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
 	// combobox: kind
 	$combo_kind = new DataCombo;
+	// combobox: personaFisica
+	$combo_personaFisica = new Combo;
+	$combo_personaFisica->ListType = 2;
+	$combo_personaFisica->MultipleSeparator = ', ';
+	$combo_personaFisica->ListBoxHeight = 10;
+	$combo_personaFisica->RadiosPerLine = 1;
+	if(is_file(dirname(__FILE__).'/hooks/companies.personaFisica.csv')){
+		$personaFisica_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/companies.personaFisica.csv')));
+		$combo_personaFisica->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($personaFisica_data)));
+		$combo_personaFisica->ListData = $combo_personaFisica->ListItem;
+	}else{
+		$combo_personaFisica->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("Si;;No")));
+		$combo_personaFisica->ListData = $combo_personaFisica->ListItem;
+	}
+	$combo_personaFisica->SelectName = 'personaFisica';
+	$combo_personaFisica->AllowNull = false;
 	// combobox: regimeFiscale
 	$combo_regimeFiscale = new DataCombo;
 	// combobox: tipoCassa
@@ -618,21 +648,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	// combobox: modalitaPagamento
 	$combo_modalitaPagamento = new DataCombo;
 	// combobox: FormatoTrasmissione
-	$combo_FormatoTrasmissione = new Combo;
-	$combo_FormatoTrasmissione->ListType = 2;
-	$combo_FormatoTrasmissione->MultipleSeparator = ', ';
-	$combo_FormatoTrasmissione->ListBoxHeight = 10;
-	$combo_FormatoTrasmissione->RadiosPerLine = 1;
-	if(is_file(dirname(__FILE__).'/hooks/companies.FormatoTrasmissione.csv')){
-		$FormatoTrasmissione_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/companies.FormatoTrasmissione.csv')));
-		$combo_FormatoTrasmissione->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($FormatoTrasmissione_data)));
-		$combo_FormatoTrasmissione->ListData = $combo_FormatoTrasmissione->ListItem;
-	}else{
-		$combo_FormatoTrasmissione->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("Pubblica amministrazione (FPR12);;FPA12")));
-		$combo_FormatoTrasmissione->ListData = $combo_FormatoTrasmissione->ListItem;
-	}
-	$combo_FormatoTrasmissione->SelectName = 'FormatoTrasmissione';
-	$combo_FormatoTrasmissione->AllowNull = false;
+	$combo_FormatoTrasmissione = new DataCombo;
 	// combobox: REA_SocioUnico
 	$combo_REA_SocioUnico = new Combo;
 	$combo_REA_SocioUnico->ListType = 2;
@@ -712,6 +728,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$hc = new CI_Input();
 		$row = $hc->xss_clean($row); /* sanitize data */
 		$combo_kind->SelectedData = $row['kind'];
+		$combo_personaFisica->SelectedData = $row['personaFisica'];
 		$combo_regimeFiscale->SelectedData = $row['regimeFiscale'];
 		$combo_tipoCassa->SelectedData = $row['tipoCassa'];
 		$combo_modalitaPagamento->SelectedData = $row['modalitaPagamento'];
@@ -721,23 +738,26 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$combo_RIT_tipoRitenuta->SelectedData = $row['RIT_tipoRitenuta'];
 	}else{
 		$combo_kind->SelectedData = $filterer_kind;
+		$combo_personaFisica->SelectedText = ( $_REQUEST['FilterField'][1]=='5' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "No");
 		$combo_regimeFiscale->SelectedData = $filterer_regimeFiscale;
 		$combo_tipoCassa->SelectedData = $filterer_tipoCassa;
 		$combo_modalitaPagamento->SelectedData = $filterer_modalitaPagamento;
-		$combo_FormatoTrasmissione->SelectedText = ( $_REQUEST['FilterField'][1]=='14' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "FPR12");
+		$combo_FormatoTrasmissione->SelectedData = $filterer_FormatoTrasmissione;
 		$combo_REA_SocioUnico->SelectedText = ( $_REQUEST['FilterField'][1]=='18' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "SU");
 		$combo_REA_StatoLiquidazione->SelectedText = ( $_REQUEST['FilterField'][1]=='19' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "LN");
 		$combo_RIT_tipoRitenuta->SelectedText = ( $_REQUEST['FilterField'][1]=='21' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "RT02");
 	}
 	$combo_kind->HTML = '<span id="kind-container' . $rnd1 . '"></span><input type="hidden" name="kind" id="kind' . $rnd1 . '" value="' . html_attr($combo_kind->SelectedData) . '">';
 	$combo_kind->MatchText = '<span id="kind-container-readonly' . $rnd1 . '"></span><input type="hidden" name="kind" id="kind' . $rnd1 . '" value="' . html_attr($combo_kind->SelectedData) . '">';
+	$combo_personaFisica->Render();
 	$combo_regimeFiscale->HTML = '<span id="regimeFiscale-container' . $rnd1 . '"></span><input type="hidden" name="regimeFiscale" id="regimeFiscale' . $rnd1 . '" value="' . html_attr($combo_regimeFiscale->SelectedData) . '">';
 	$combo_regimeFiscale->MatchText = '<span id="regimeFiscale-container-readonly' . $rnd1 . '"></span><input type="hidden" name="regimeFiscale" id="regimeFiscale' . $rnd1 . '" value="' . html_attr($combo_regimeFiscale->SelectedData) . '">';
 	$combo_tipoCassa->HTML = '<span id="tipoCassa-container' . $rnd1 . '"></span><input type="hidden" name="tipoCassa" id="tipoCassa' . $rnd1 . '" value="' . html_attr($combo_tipoCassa->SelectedData) . '">';
 	$combo_tipoCassa->MatchText = '<span id="tipoCassa-container-readonly' . $rnd1 . '"></span><input type="hidden" name="tipoCassa" id="tipoCassa' . $rnd1 . '" value="' . html_attr($combo_tipoCassa->SelectedData) . '">';
 	$combo_modalitaPagamento->HTML = '<span id="modalitaPagamento-container' . $rnd1 . '"></span><input type="hidden" name="modalitaPagamento" id="modalitaPagamento' . $rnd1 . '" value="' . html_attr($combo_modalitaPagamento->SelectedData) . '">';
 	$combo_modalitaPagamento->MatchText = '<span id="modalitaPagamento-container-readonly' . $rnd1 . '"></span><input type="hidden" name="modalitaPagamento" id="modalitaPagamento' . $rnd1 . '" value="' . html_attr($combo_modalitaPagamento->SelectedData) . '">';
-	$combo_FormatoTrasmissione->Render();
+	$combo_FormatoTrasmissione->HTML = '<span id="FormatoTrasmissione-container' . $rnd1 . '"></span><input type="hidden" name="FormatoTrasmissione" id="FormatoTrasmissione' . $rnd1 . '" value="' . html_attr($combo_FormatoTrasmissione->SelectedData) . '">';
+	$combo_FormatoTrasmissione->MatchText = '<span id="FormatoTrasmissione-container-readonly' . $rnd1 . '"></span><input type="hidden" name="FormatoTrasmissione" id="FormatoTrasmissione' . $rnd1 . '" value="' . html_attr($combo_FormatoTrasmissione->SelectedData) . '">';
 	$combo_REA_SocioUnico->Render();
 	$combo_REA_StatoLiquidazione->Render();
 	$combo_RIT_tipoRitenuta->Render();
@@ -751,6 +771,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		AppGini.current_regimeFiscale__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['regimeFiscale'] : $filterer_regimeFiscale); ?>"};
 		AppGini.current_tipoCassa__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['tipoCassa'] : $filterer_tipoCassa); ?>"};
 		AppGini.current_modalitaPagamento__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['modalitaPagamento'] : $filterer_modalitaPagamento); ?>"};
+		AppGini.current_FormatoTrasmissione__RAND__ = { text: "<?php echo ($selected_id ? '' : 'FPR12'); ?>", value: "<?php echo addslashes($selected_id ? $urow['FormatoTrasmissione'] : $filterer_FormatoTrasmissione); ?>"};
 
 		jQuery(function() {
 			setTimeout(function(){
@@ -758,6 +779,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				if(typeof(regimeFiscale_reload__RAND__) == 'function') regimeFiscale_reload__RAND__();
 				if(typeof(tipoCassa_reload__RAND__) == 'function') tipoCassa_reload__RAND__();
 				if(typeof(modalitaPagamento_reload__RAND__) == 'function') modalitaPagamento_reload__RAND__();
+				if(typeof(FormatoTrasmissione_reload__RAND__) == 'function') FormatoTrasmissione_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
 		});
 		function kind_reload__RAND__(){
@@ -1068,6 +1090,88 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		<?php } ?>
 
 		}
+		function FormatoTrasmissione_reload__RAND__(){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			$j("#FormatoTrasmissione-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					$j.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						<?php if(!$selected_id && !$filterer_FormatoTrasmissione){ ?>
+							data: { text: 'FPR12', t: 'companies', f: 'FormatoTrasmissione' },
+						<?php }else{ ?>
+							data: { id: AppGini.current_FormatoTrasmissione__RAND__.value, t: 'companies', f: 'FormatoTrasmissione' },
+						<?php } ?>
+
+						success: function(resp){
+							c({
+								id: resp.results[0].id,
+								text: resp.results[0].text
+							});
+							$j('[name="FormatoTrasmissione"]').val(resp.results[0].id);
+							$j('[id=FormatoTrasmissione-container-readonly__RAND__]').html('<span id="FormatoTrasmissione-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
+
+
+							if(typeof(FormatoTrasmissione_update_autofills__RAND__) == 'function') FormatoTrasmissione_update_autofills__RAND__();
+						}
+					});
+				},
+				width: '100%',
+				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 5,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ /* */ return { s: term, p: page, t: 'companies', f: 'FormatoTrasmissione' }; },
+					results: function(resp, page){ /* */ return resp; }
+				},
+				escapeMarkup: function(str){ /* */ return str; }
+			}).on('change', function(e){
+				AppGini.current_FormatoTrasmissione__RAND__.value = e.added.id;
+				AppGini.current_FormatoTrasmissione__RAND__.text = e.added.text;
+				$j('[name="FormatoTrasmissione"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
+
+
+				if(typeof(FormatoTrasmissione_update_autofills__RAND__) == 'function') FormatoTrasmissione_update_autofills__RAND__();
+			});
+
+			if(!$j("#FormatoTrasmissione-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: AppGini.current_FormatoTrasmissione__RAND__.value, t: 'companies', f: 'FormatoTrasmissione' },
+					success: function(resp){
+						$j('[name="FormatoTrasmissione"]').val(resp.results[0].id);
+						$j('[id=FormatoTrasmissione-container-readonly__RAND__]').html('<span id="FormatoTrasmissione-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
+
+						if(typeof(FormatoTrasmissione_update_autofills__RAND__) == 'function') FormatoTrasmissione_update_autofills__RAND__();
+					}
+				});
+			}
+
+		<?php }else{ ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: AppGini.current_FormatoTrasmissione__RAND__.value, t: 'companies', f: 'FormatoTrasmissione' },
+				success: function(resp){
+					$j('[id=FormatoTrasmissione-container__RAND__], [id=FormatoTrasmissione-container-readonly__RAND__]').html('<span id="FormatoTrasmissione-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=kinds_view_parent]').hide(); }else{ $j('.btn[id=kinds_view_parent]').show(); }
+
+					if(typeof(FormatoTrasmissione_update_autofills__RAND__) == 'function') FormatoTrasmissione_update_autofills__RAND__();
+				}
+			});
+		<?php } ?>
+
+		}
 	</script>
 	<?php
 
@@ -1087,7 +1191,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	}
 
 	// process form title
-	$templateCode = str_replace('<%%DETAIL_VIEW_TITLE%%>', 'Companie details', $templateCode);
+	$templateCode = str_replace('<%%DETAIL_VIEW_TITLE%%>', 'Azienda dati', $templateCode);
 	$templateCode = str_replace('<%%RND1%%>', $rnd1, $templateCode);
 	$templateCode = str_replace('<%%EMBEDDED%%>', ($_REQUEST['Embedded'] ? 'Embedded=1' : ''), $templateCode);
 	// process buttons
@@ -1130,6 +1234,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$jsReadOnly .= "\tjQuery('#kind_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#companyCode').replaceWith('<div class=\"form-control-static\" id=\"companyCode\">' + (jQuery('#companyCode').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#companyName').replaceWith('<div class=\"form-control-static\" id=\"companyName\">' + (jQuery('#companyName').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('input[name=personaFisica]').parent().html('<div class=\"form-control-static\">' + jQuery('input[name=personaFisica]:checked').next().text() + '</div>')\n";
 		$jsReadOnly .= "\tjQuery('#fiscalCode').replaceWith('<div class=\"form-control-static\" id=\"fiscalCode\">' + (jQuery('#fiscalCode').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#vat').replaceWith('<div class=\"form-control-static\" id=\"vat\">' + (jQuery('#vat').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#codiceDestinatario').replaceWith('<div class=\"form-control-static\" id=\"codiceDestinatario\">' + (jQuery('#codiceDestinatario').val() || '') + '</div>');\n";
@@ -1140,7 +1245,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$jsReadOnly .= "\tjQuery('#modalitaPagamento').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#modalitaPagamento_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#RiferimentoAmministrazione').replaceWith('<div class=\"form-control-static\" id=\"RiferimentoAmministrazione\">' + (jQuery('#RiferimentoAmministrazione').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('input[name=FormatoTrasmissione]').parent().html('<div class=\"form-control-static\">' + jQuery('input[name=FormatoTrasmissione]:checked').next().text() + '</div>')\n";
+		$jsReadOnly .= "\tjQuery('#FormatoTrasmissione').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#FormatoTrasmissione_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#REA_Ufficio').replaceWith('<div class=\"form-control-static\" id=\"REA_Ufficio\">' + (jQuery('#REA_Ufficio').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#REA_NumeroREA').replaceWith('<div class=\"form-control-static\" id=\"REA_NumeroREA\">' + (jQuery('#REA_NumeroREA').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#REA_CapitaleSociale').replaceWith('<div class=\"form-control-static\" id=\"REA_CapitaleSociale\">' + (jQuery('#REA_CapitaleSociale').val() || '') + '</div>');\n";
@@ -1162,6 +1268,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%COMBO(kind)%%>', $combo_kind->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(kind)%%>', $combo_kind->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(kind)%%>', urlencode($combo_kind->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(personaFisica)%%>', $combo_personaFisica->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(personaFisica)%%>', $combo_personaFisica->SelectedData, $templateCode);
 	$templateCode = str_replace('<%%COMBO(regimeFiscale)%%>', $combo_regimeFiscale->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(regimeFiscale)%%>', $combo_regimeFiscale->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(regimeFiscale)%%>', urlencode($combo_regimeFiscale->MatchText), $templateCode);
@@ -1172,7 +1280,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%COMBOTEXT(modalitaPagamento)%%>', $combo_modalitaPagamento->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(modalitaPagamento)%%>', urlencode($combo_modalitaPagamento->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(FormatoTrasmissione)%%>', $combo_FormatoTrasmissione->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(FormatoTrasmissione)%%>', $combo_FormatoTrasmissione->SelectedData, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(FormatoTrasmissione)%%>', $combo_FormatoTrasmissione->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(FormatoTrasmissione)%%>', urlencode($combo_FormatoTrasmissione->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(REA_SocioUnico)%%>', $combo_REA_SocioUnico->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(REA_SocioUnico)%%>', $combo_REA_SocioUnico->SelectedData, $templateCode);
 	$templateCode = str_replace('<%%COMBO(REA_StatoLiquidazione)%%>', $combo_REA_StatoLiquidazione->HTML, $templateCode);
@@ -1181,7 +1290,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%COMBOTEXT(RIT_tipoRitenuta)%%>', $combo_RIT_tipoRitenuta->SelectedData, $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'kind' => array('kinds', 'Kind'), 'regimeFiscale' => array('kinds', 'Regime Fiscale'), 'tipoCassa' => array('kinds', 'TipoCassa'), 'modalitaPagamento' => array('kinds', 'ModalitaPagamento'));
+	$lookup_fields = array(  'kind' => array('kinds', 'Tipo'), 'regimeFiscale' => array('kinds', 'Regime Fiscale'), 'tipoCassa' => array('kinds', 'Tipo Cassa'), 'modalitaPagamento' => array('kinds', 'Modalita Pagamento'), 'FormatoTrasmissione' => array('kinds', 'Destinatario'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -1201,6 +1310,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%UPLOADFILE(kind)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(companyCode)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(companyName)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(personaFisica)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(fiscalCode)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(vat)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(notes)%%>', '', $templateCode);
@@ -1234,6 +1344,9 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(companyName)%%>', safe_html($urow['companyName']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(companyName)%%>', html_attr($row['companyName']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(companyName)%%>', urlencode($urow['companyName']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(personaFisica)%%>', safe_html($urow['personaFisica']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(personaFisica)%%>', html_attr($row['personaFisica']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(personaFisica)%%>', urlencode($urow['personaFisica']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(fiscalCode)%%>', safe_html($urow['fiscalCode']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(fiscalCode)%%>', html_attr($row['fiscalCode']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(fiscalCode)%%>', urlencode($urow['fiscalCode']), $templateCode);
@@ -1247,11 +1360,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		}
 		$templateCode = str_replace('<%%VALUE(notes)%%>', nl2br($row['notes']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(notes)%%>', urlencode($urow['notes']), $templateCode);
-		if($dvprint || (!$AllowUpdate && !$AllowInsert)){
-			$templateCode = str_replace('<%%VALUE(codiceDestinatario)%%>', safe_html($urow['codiceDestinatario']), $templateCode);
-		}else{
-			$templateCode = str_replace('<%%VALUE(codiceDestinatario)%%>', html_attr($row['codiceDestinatario']), $templateCode);
-		}
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(codiceDestinatario)%%>', safe_html($urow['codiceDestinatario']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(codiceDestinatario)%%>', html_attr($row['codiceDestinatario']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(codiceDestinatario)%%>', urlencode($urow['codiceDestinatario']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(regimeFiscale)%%>', safe_html($urow['regimeFiscale']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(regimeFiscale)%%>', html_attr($row['regimeFiscale']), $templateCode);
@@ -1302,6 +1412,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$templateCode = str_replace('<%%URLVALUE(companyCode)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(companyName)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(companyName)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(personaFisica)%%>', 'No', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(personaFisica)%%>', urlencode('No'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(fiscalCode)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(fiscalCode)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(vat)%%>', '', $templateCode);
@@ -1368,19 +1480,6 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	// ajaxed auto-fill fields
 	$templateCode .= '<script>';
 	$templateCode .= '$j(function() {';
-
-	$templateCode .= "\tkind_update_autofills$rnd1 = function(){\n";
-	$templateCode .= "\t\t\$j.ajax({\n";
-	if($dvprint){
-		$templateCode .= "\t\t\turl: 'companies_autofill.php?rnd1=$rnd1&mfk=kind&id=' + encodeURIComponent('".addslashes($row['kind'])."'),\n";
-		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET'\n";
-	}else{
-		$templateCode .= "\t\t\turl: 'companies_autofill.php?rnd1=$rnd1&mfk=kind&id=' + encodeURIComponent(AppGini.current_kind{$rnd1}.value),\n";
-		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET', beforeSend: function(){ /* */ \$j('#kind$rnd1').prop('disabled', true); \$j('#kindLoading').html('<img src=loading.gif align=top>'); }, complete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#kind$rnd1').prop('disabled', false); " : "\$j('#kind$rnd1').prop('disabled', true); ")."\$j('#kindLoading').html('');}\n";
-	}
-	$templateCode.="\t\t});\n";
-	$templateCode.="\t};\n";
-	if(!$dvprint) $templateCode.="\tif(\$j('#kind_caption').length) \$j('#kind_caption').click(function(){ /* */ kind_update_autofills$rnd1(); });\n";
 
 
 	$templateCode.="});";

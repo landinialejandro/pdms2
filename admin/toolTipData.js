@@ -120,22 +120,22 @@ vatRegister_delete2Tip=["",spacer+"This option allows each member of the group t
 vatRegister_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Registro Corrispettivi' table."];
 
 // companies table
-companies_addTip=["",spacer+"This option allows all members of the group to add records to the 'Companies' table. A member who adds a record to the table becomes the 'owner' of that record."];
+companies_addTip=["",spacer+"This option allows all members of the group to add records to the 'Aziende' table. A member who adds a record to the table becomes the 'owner' of that record."];
 
-companies_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Companies' table."];
-companies_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Companies' table."];
-companies_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Companies' table."];
-companies_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Companies' table."];
+companies_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Aziende' table."];
+companies_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Aziende' table."];
+companies_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Aziende' table."];
+companies_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Aziende' table."];
 
-companies_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Companies' table."];
-companies_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Companies' table."];
-companies_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Companies' table."];
-companies_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Companies' table, regardless of their owner."];
+companies_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Aziende' table."];
+companies_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Aziende' table."];
+companies_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Aziende' table."];
+companies_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Aziende' table, regardless of their owner."];
 
-companies_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Companies' table."];
-companies_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Companies' table."];
-companies_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Companies' table."];
-companies_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Companies' table."];
+companies_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Aziende' table."];
+companies_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Aziende' table."];
+companies_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Aziende' table."];
+companies_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Aziende' table."];
 
 // contacts table
 contacts_addTip=["",spacer+"This option allows all members of the group to add records to the 'Contacts' table. A member who adds a record to the table becomes the 'owner' of that record."];

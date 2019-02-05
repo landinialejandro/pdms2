@@ -37,23 +37,15 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Kind<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Tipo<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(kind)%%><%%PLINK(kind)%%><%%ADDNEW(kinds)%%><span id="kindLoading"></span></div>
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(kind)%%><%%PLINK(kind)%%><%%ADDNEW(kinds)%%></div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="kind_code" class="control-label col-lg-3">Kind code</label>
-					<div class="col-lg-9">
-						<div class="form-control-static" id="kind_code"></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="companyCode" class="control-label col-lg-3">CompanyCode</label>
+					<label for="companyCode" class="control-label col-lg-3">Codice</label>
 					<div class="col-lg-9">
 						<input maxlength="255" type="text" class="form-control" name="companyCode" id="companyCode" value="<%%VALUE(companyCode)%%>"><div class="text-danger vspacer-md" id="companyCode-uniqueness-note" style="display: none;"><%%TRANSLATION(unique field error)%%></div>
 					</div>
@@ -61,7 +53,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="companyName" class="control-label col-lg-3">CompanyName</label>
+					<label for="companyName" class="control-label col-lg-3">Ragione Sociale</label>
 					<div class="col-lg-9">
 						<input maxlength="255" type="text" class="form-control" name="companyName" id="companyName" value="<%%VALUE(companyName)%%>">
 					</div>
@@ -69,7 +61,15 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="fiscalCode" class="control-label col-lg-3">FiscalCode</label>
+					<label for="personaFisica" class="control-label col-lg-3">Persona Fisica<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<div class="col-lg-9">
+						<%%COMBO(personaFisica)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="fiscalCode" class="control-label col-lg-3">Codice Fiscale</label>
 					<div class="col-lg-9">
 						<input maxlength="255" type="text" class="form-control" name="fiscalCode" id="fiscalCode" value="<%%VALUE(fiscalCode)%%>">
 					</div>
@@ -97,7 +97,7 @@
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="codiceDestinatario-description"><div class="alert alert-info">        Criteri di valorizzazione: occorre distinguere il tipo di destinatario;<br>        se la fattura &#232; destinata ad una pubblica amministrazione, il campo deve  contenere il codice di 6 caratteri, presente su IndicePA tra le informazioni  relative al servizio di fatturazione elettronica, associato all&#8217;ufficio che,<br>        all&#8217;interno dell&#8217;amministrazione destinataria, svolge la funzione di ricezione (ed eventualmente lavorazione) della fattura; in alternativa, &#232; possibile valorizzare il campo con il codice Ufficio &#8220;centrale&#8221; o con il valore di default<br>        &#8220;999999&#8221;, quando ricorrono le condizioni previste dalle disposizioni della  circolare interpretativa del Ministero dell&#8217;Economia e delle Finanze n.1 del 31 marzo 2014;<br>       <br>     *  se la fattura &#232; destinata ad un soggetto privato, il campo deve contenere il codice di 7 caratteri che il Sistema di Interscambio ha attribuito a chi, in  qualit&#224; di titolare di un canale di trasmissione diverso dalla PEC abilitato a<br>        ricevere fatture elettroniche, ne abbia fatto richiesta attraverso l&#8217;apposita funzionalit&#224; presente sul sito www.fatturapa.gov.it; se la fattura deve essere recapitata ad un soggetto che intende ricevere le fatture<br>        elettroniche attraverso il canale PEC, il campo deve essere valorizzato con sette zeri (&#8220;0000000&#8221;) e deve essere valorizzato il campo PECDestinatario (1.1.6).</div></span>
 
-						<textarea class="form-control" name="codiceDestinatario" id="codiceDestinatario" rows="5"><%%VALUE(codiceDestinatario)%%></textarea>
+						<input maxlength="7" type="text" class="form-control" name="codiceDestinatario" id="codiceDestinatario" value="<%%VALUE(codiceDestinatario)%%>">
 					</div>
 				</div>
 
@@ -113,7 +113,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="tipoCassa" class="control-label col-lg-3" data-parent_link="view_parent_modal">TipoCassa</label>
+					<label for="tipoCassa" class="control-label col-lg-3" data-parent_link="view_parent_modal">Tipo Cassa</label>
 					<div class="col-lg-9">
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(tipoCassa)%%><%%PLINK(tipoCassa)%%><%%ADDNEW(kinds)%%></div>
 					</div>
@@ -121,7 +121,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="modalitaPagamento" class="control-label col-lg-3" data-parent_link="view_parent_modal">ModalitaPagamento</label>
+					<label for="modalitaPagamento" class="control-label col-lg-3" data-parent_link="view_parent_modal">Modalita Pagamento</label>
 					<div class="col-lg-9">
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(modalitaPagamento)%%><%%PLINK(modalitaPagamento)%%><%%ADDNEW(kinds)%%></div>
 					</div>
@@ -139,11 +139,11 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="FormatoTrasmissione" class="control-label col-lg-3">Formato Trasmissione<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#FormatoTrasmissione-description"></i></label>
+					<label for="FormatoTrasmissione" class="control-label col-lg-3" data-parent_link="view_parent_modal">Destinatario<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#FormatoTrasmissione-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="FormatoTrasmissione-description"><div class="alert alert-info">valore fisso pari a &#8220;FPA12&#8221;, se &#232;  una pubblica amministrazione, oppure &#8220;FPR12&#8221;, se &#232; un privato.</div></span>
 
-						<%%COMBO(FormatoTrasmissione)%%>
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(FormatoTrasmissione)%%><%%PLINK(FormatoTrasmissione)%%><%%ADDNEW(kinds)%%></div>
 					</div>
 				</div>
 
@@ -202,14 +202,14 @@
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
 					<div class="col-lg-offset-3 col-lg-9">
-						<div class="checkbox"><label for="RIT_soggettoRitenuta"><input type="checkbox" name="RIT_soggettoRitenuta" id="RIT_soggettoRitenuta" value="1" <%%CHECKED(RIT_soggettoRitenuta)%%>> RIT soggettoRitenuta</label>
+						<div class="checkbox"><label for="RIT_soggettoRitenuta"><input type="checkbox" name="RIT_soggettoRitenuta" id="RIT_soggettoRitenuta" value="1" <%%CHECKED(RIT_soggettoRitenuta)%%>> RIT soggetto Ritenuta</label>
 						</div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="RIT_tipoRitenuta" class="control-label col-lg-3">RIT tipoRitenuta<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_tipoRitenuta-description"></i></label>
+					<label for="RIT_tipoRitenuta" class="control-label col-lg-3">RIT tipo Ritenuta<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_tipoRitenuta-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="RIT_tipoRitenuta-description"><div class="alert alert-info">Utilit&#224;: serve per identificare la tipologia di ritenuta indicata in fattura.<br>Criteri di valorizzazione: il campo assume il valore &#8220;RT01&#8221; per<br>persone fisiche, &#8220;RT02&#8221; per persone giuridiche.
 </div></span>
@@ -220,7 +220,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="RIT_AliquotaRitenuta" class="control-label col-lg-3">RIT AliquotaRitenuta <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_AliquotaRitenuta-description"></i></label>
+					<label for="RIT_AliquotaRitenuta" class="control-label col-lg-3">RIT Aliquota Ritenuta <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_AliquotaRitenuta-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="RIT_AliquotaRitenuta-description"><div class="alert alert-info">Utilit&#224;: serve per dare evidenza del valore percentuale della ritenuta.<br>Criteri di valorizzazione: assume i valori previsti dalla normativa<br>fiscale. I decimali, separati dall&#8217;intero con il carattere punto (&#8220;.&#8221;),<br>vanno sempre indicati anche se pari a zero (es.: 4.00).
 </div></span>
@@ -231,7 +231,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="RIT_CausalePagamento" class="control-label col-lg-3">RIT CausalePagamento <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_CausalePagamento-description"></i></label>
+					<label for="RIT_CausalePagamento" class="control-label col-lg-3">RIT Causale Pagamento <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_CausalePagamento-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="RIT_CausalePagamento-description"><div class="alert alert-info">Utilit&#224;: serve per dare evidenza della causale del pagamento.<br>Criteri di valorizzazione: deve essere valorizzato con una codifica tra<br>quelle previste come causali di pagamento sul Modello 770S.
 </div></span>

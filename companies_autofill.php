@@ -24,20 +24,6 @@
 
 	switch($mfk){
 
-		case 'kind':
-			if(!$id){
-				?>
-				$j('#kind_code<?php echo $rnd1; ?>').html('&nbsp;');
-				<?php
-				break;
-			}
-			$res = sql("SELECT `kinds`.`entity` as 'entity', `kinds`.`code` as 'code', if(CHAR_LENGTH(`kinds`.`name`)>100, concat(left(`kinds`.`name`,100),' ...'), `kinds`.`name`) as 'name', `kinds`.`value` as 'value', `kinds`.`descriptions` as 'descriptions' FROM `kinds`  WHERE `kinds`.`code`='{$id}' limit 1", $eo);
-			$row = db_fetch_assoc($res);
-			?>
-			$j('#kind_code<?php echo $rnd1; ?>').html('<?php echo addslashes(str_replace(array("\r", "\n"), '', nl2br($row['code']))); ?>&nbsp;');
-			<?php
-			break;
-
 
 	}
 
