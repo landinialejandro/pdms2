@@ -93,11 +93,11 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="codiceDestinatario" class="control-label col-lg-3" data-parent_link="view_parent_modal">Codice Destinatario <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#codiceDestinatario-description"></i></label>
+					<label for="codiceDestinatario" class="control-label col-lg-3">Codice Destinatario <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#codiceDestinatario-description"></i></label>
 					<div class="col-lg-9">
-						<span class="help-block collapse" id="codiceDestinatario-description"><div class="alert alert-info">        Criteri di valorizzazione: occorre distinguere il tipo di destinatario;<br>        se la fattura &#232; destinata ad una pubblica amministrazione, il campo deve<br>        contenere il codice di 6 caratteri, presente su IndicePA tra le informazioni<br>        relative al servizio di fatturazione elettronica, associato all&#8217;ufficio che,<br>        all&#8217;interno dell&#8217;amministrazione destinataria, svolge la funzione di ricezione<br>        (ed eventualmente lavorazione) della fattura; in alternativa, &#232; possibile<br>        valorizzare il campo con il codice Ufficio &#8220;centrale&#8221; o con il valore di default<br>        &#8220;999999&#8221;, quando ricorrono le condizioni previste dalle disposizioni della<br>        circolare interpretativa del Ministero dell&#8217;Economia e delle Finanze n.1 del<br>        31 marzo 2014;<br>       <br>     *  se la fattura &#232; destinata ad un soggetto privato, il campo deve contenere il<br>        codice di 7 caratteri che il Sistema di Interscambio ha attribuito a chi, in<br>        qualit&#224; di titolare di un canale di trasmissione diverso dalla PEC abilitato a<br>        ricevere fatture elettroniche, ne abbia fatto richiesta attraverso l&#8217;apposita<br>        funzionalit&#224; presente sul sito www.fatturapa.gov.it; se la fattura deve<br>        essere recapitata ad un soggetto che intende ricevere le fatture<br>        elettroniche attraverso il canale PEC, il campo deve essere valorizzato con<br>        sette zeri (&#8220;0000000&#8221;) e deve essere valorizzato il campo PECDestinatario<br>        (1.1.6).</div></span>
+						<span class="help-block collapse" id="codiceDestinatario-description"><div class="alert alert-info">        Criteri di valorizzazione: occorre distinguere il tipo di destinatario;<br>        se la fattura &#232; destinata ad una pubblica amministrazione, il campo deve  contenere il codice di 6 caratteri, presente su IndicePA tra le informazioni  relative al servizio di fatturazione elettronica, associato all&#8217;ufficio che,<br>        all&#8217;interno dell&#8217;amministrazione destinataria, svolge la funzione di ricezione (ed eventualmente lavorazione) della fattura; in alternativa, &#232; possibile valorizzare il campo con il codice Ufficio &#8220;centrale&#8221; o con il valore di default<br>        &#8220;999999&#8221;, quando ricorrono le condizioni previste dalle disposizioni della  circolare interpretativa del Ministero dell&#8217;Economia e delle Finanze n.1 del 31 marzo 2014;<br>       <br>     *  se la fattura &#232; destinata ad un soggetto privato, il campo deve contenere il codice di 7 caratteri che il Sistema di Interscambio ha attribuito a chi, in  qualit&#224; di titolare di un canale di trasmissione diverso dalla PEC abilitato a<br>        ricevere fatture elettroniche, ne abbia fatto richiesta attraverso l&#8217;apposita funzionalit&#224; presente sul sito www.fatturapa.gov.it; se la fattura deve essere recapitata ad un soggetto che intende ricevere le fatture<br>        elettroniche attraverso il canale PEC, il campo deve essere valorizzato con sette zeri (&#8220;0000000&#8221;) e deve essere valorizzato il campo PECDestinatario (1.1.6).</div></span>
 
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(codiceDestinatario)%%><%%PLINK(codiceDestinatario)%%><%%ADDNEW(kinds)%%></div>
+						<textarea class="form-control" name="codiceDestinatario" id="codiceDestinatario" rows="5"><%%VALUE(codiceDestinatario)%%></textarea>
 					</div>
 				</div>
 
@@ -258,8 +258,8 @@
 				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
 					<%%INSERT_BUTTON%%>
 				</div>
-                        </div>
-                </div>
+			</div>
+		</div>
 	</div>
 
 

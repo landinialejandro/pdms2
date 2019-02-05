@@ -263,8 +263,8 @@ if($groupID != ''){
 <script>
 	$j(function(){
 		var highlight_selections = function(){
-			$j('input[type=radio]:checked').parent().parent().addClass('text-primary');
-			$j('input[type=radio]:not(:checked)').parent().parent().removeClass('text-primary');
+			$j('input[type=radio]:checked').parent().parent().addClass('bg-warning text-warning text-bold');
+			$j('input[type=radio]:not(:checked)').parent().parent().removeClass('bg-warning text-warning text-bold');
 		}
 
 		$j('input[type=radio]').change(function(){

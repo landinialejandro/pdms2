@@ -447,7 +447,7 @@ function post2(url, params, notify, disable, loading, redirectOnSuccess){
 			},
 			onSuccess: function(resp) {
 				/* show notification containing returned text */
-				if($(notify) != undefined) $(notify).removeClassName('Error').appear().update(resp.responseText);
+				if($(notify) != undefined) $(notify).removeClassName('alert-danger').appear().update(resp.responseText);
 
 				/* in case no errors returned, */
 				if(!resp.responseText.match(/<?php echo preg_quote($Translation['error:']); ?>/)){
@@ -462,7 +462,7 @@ function post2(url, params, notify, disable, loading, redirectOnSuccess){
 
 				/* in case of error, apply error class */
 				}else{
-					$(notify).addClassName('Error');
+					$(notify).addClassName('alert-danger');
 				}
 			},
 			onComplete: function() {

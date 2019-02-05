@@ -30,10 +30,10 @@
 		"if(CHAR_LENGTH(`companies`.`fiscalCode`)>100, concat(left(`companies`.`fiscalCode`,100),' ...'), `companies`.`fiscalCode`)" => "fiscalCode",
 		"if(CHAR_LENGTH(`companies`.`vat`)>100, concat(left(`companies`.`vat`,100),' ...'), `companies`.`vat`)" => "vat",
 		"`companies`.`notes`" => "notes",
-		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Codice Destinatario */" => "codiceDestinatario",
-		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* Regime Fiscale */" => "regimeFiscale",
-		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* TipoCassa */" => "tipoCassa",
-		"IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento",
+		"`companies`.`codiceDestinatario`" => "codiceDestinatario",
+		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Regime Fiscale */" => "regimeFiscale",
+		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* TipoCassa */" => "tipoCassa",
+		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento",
 		"`companies`.`RiferimentoAmministrazione`" => "RiferimentoAmministrazione",
 		"`companies`.`FormatoTrasmissione`" => "FormatoTrasmissione",
 		"`companies`.`REA_Ufficio`" => "REA_Ufficio",
@@ -83,10 +83,10 @@
 		"`companies`.`fiscalCode`" => "fiscalCode",
 		"`companies`.`vat`" => "vat",
 		"`companies`.`notes`" => "notes",
-		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Codice Destinatario */" => "codiceDestinatario",
-		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* Regime Fiscale */" => "regimeFiscale",
-		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* TipoCassa */" => "tipoCassa",
-		"IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento",
+		"`companies`.`codiceDestinatario`" => "codiceDestinatario",
+		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Regime Fiscale */" => "regimeFiscale",
+		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* TipoCassa */" => "tipoCassa",
+		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento",
 		"`companies`.`RiferimentoAmministrazione`" => "RiferimentoAmministrazione",
 		"`companies`.`FormatoTrasmissione`" => "FormatoTrasmissione",
 		"`companies`.`REA_Ufficio`" => "REA_Ufficio",
@@ -109,10 +109,10 @@
 		"`companies`.`fiscalCode`" => "FiscalCode",
 		"`companies`.`vat`" => "Vat",
 		"`companies`.`notes`" => "Notes",
-		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Codice Destinatario */" => "Codice Destinatario",
-		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* Regime Fiscale */" => "Regime Fiscale",
-		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* TipoCassa */" => "TipoCassa",
-		"IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') /* ModalitaPagamento */" => "ModalitaPagamento",
+		"`companies`.`codiceDestinatario`" => "Codice Destinatario",
+		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Regime Fiscale */" => "Regime Fiscale",
+		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* TipoCassa */" => "TipoCassa",
+		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* ModalitaPagamento */" => "ModalitaPagamento",
 		"`companies`.`RiferimentoAmministrazione`" => "Riferimento Amministrazione",
 		"`companies`.`FormatoTrasmissione`" => "Formato Trasmissione",
 		"`companies`.`REA_Ufficio`" => "REA Ufficio",
@@ -136,10 +136,10 @@
 		"`companies`.`fiscalCode`" => "FiscalCode",
 		"`companies`.`vat`" => "Vat",
 		"`companies`.`notes`" => "notes",
-		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Codice Destinatario */" => "codiceDestinatario",
-		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* Regime Fiscale */" => "regimeFiscale",
-		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* TipoCassa */" => "tipoCassa",
-		"IF(    CHAR_LENGTH(`kinds5`.`code`) || CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`code`, ' - ', `kinds5`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento",
+		"`companies`.`codiceDestinatario`" => "codiceDestinatario",
+		"IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') /* Regime Fiscale */" => "regimeFiscale",
+		"IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') /* TipoCassa */" => "tipoCassa",
+		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* ModalitaPagamento */" => "modalitaPagamento",
 		"`companies`.`RiferimentoAmministrazione`" => "RiferimentoAmministrazione",
 		"`companies`.`FormatoTrasmissione`" => "FormatoTrasmissione",
 		"`companies`.`REA_Ufficio`" => "REA_Ufficio",
@@ -154,9 +154,9 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'kind' => 'Kind', 'codiceDestinatario' => 'Codice Destinatario', 'regimeFiscale' => 'Regime Fiscale', 'tipoCassa' => 'TipoCassa', 'modalitaPagamento' => 'ModalitaPagamento');
+	$x->filterers = array(  'kind' => 'Kind', 'regimeFiscale' => 'Regime Fiscale', 'tipoCassa' => 'TipoCassa', 'modalitaPagamento' => 'ModalitaPagamento');
 
-	$x->QueryFrom = "`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`companies`.`codiceDestinatario` LEFT JOIN `kinds` as kinds3 ON `kinds3`.`code`=`companies`.`regimeFiscale` LEFT JOIN `kinds` as kinds4 ON `kinds4`.`code`=`companies`.`tipoCassa` LEFT JOIN `kinds` as kinds5 ON `kinds5`.`code`=`companies`.`modalitaPagamento` ";
+	$x->QueryFrom = "`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`companies`.`regimeFiscale` LEFT JOIN `kinds` as kinds3 ON `kinds3`.`code`=`companies`.`tipoCassa` LEFT JOIN `kinds` as kinds4 ON `kinds4`.`code`=`companies`.`modalitaPagamento` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 

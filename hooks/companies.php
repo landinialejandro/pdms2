@@ -1,5 +1,5 @@
 <?php
-
+	// For help on using hooks, please refer to https://bigprof.com/appgini/help/working-with-generated-web-database-application/hooks
 
 	function companies_init(&$options, $memberInfo, &$args){
 		/* Inserted by Search Page Maker for AppGini on 2018-09-26 02:07:33 */
@@ -12,7 +12,6 @@
 
 		return TRUE;
 	}
-
 
 	function companies_header($contentType, $memberInfo, &$args){
 		$header='';
@@ -45,7 +44,6 @@
 
 		return $header;
 	}
-
 
 	function companies_footer($contentType, $memberInfo, &$args){
 		$footer='';
@@ -85,41 +83,34 @@
 		return $footer;
 	}
 
-
 	function companies_before_insert(&$data, $memberInfo, &$args){
 
 		return TRUE;
 	}
-
 
 	function companies_after_insert($data, $memberInfo, &$args){
 
 		return TRUE;
 	}
 
-
 	function companies_before_update(&$data, $memberInfo, &$args){
 
 		return TRUE;
 	}
-
 
 	function companies_after_update($data, $memberInfo, &$args){
 
 		return TRUE;
 	}
 
-
 	function companies_before_delete($selectedID, &$skipChecks, $memberInfo, &$args){
 
 		return TRUE;
 	}
 
-
 	function companies_after_delete($selectedID, $memberInfo, &$args){
 
 	}
-
 
 	function companies_dv($selectedID, $memberInfo, &$html, &$args){
             
@@ -182,7 +173,6 @@
 
 		return $query;
 	}
-
 	function companies_batch_actions(&$args){
 
 		return array();

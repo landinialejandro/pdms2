@@ -40,7 +40,7 @@ include("$currDir/myLib.php");
 	// detecting classes not included above
 	@spl_autoload_register(function($class) {
 		$app_dir = dirname(__FILE__);
-		include("{$app_dir}/resources/lib/{$class}.php");
+		@include("{$app_dir}/resources/lib/{$class}.php");
 	});
 
 	ob_start();
@@ -115,3 +115,6 @@ include("$currDir/myLib.php");
 		/* no sorting and came from filters page .. so clear sorting */
 		$_REQUEST['SortField'] = $_REQUEST['SortDirection'] = '';
 	}
+
+	// include nav menu links
+	@include_once("$currDir/hooks/links-navmenu.php");

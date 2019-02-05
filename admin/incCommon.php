@@ -25,7 +25,7 @@
 	// detecting classes not included above
 	@spl_autoload_register(function($class) {
 		$admin_dir = dirname(__FILE__);
-		include("{$admin_dir}/../resources/lib/{$class}.php");
+		@include("{$admin_dir}/../resources/lib/{$class}.php");
 	});
 
 	/* trim $_POST, $_GET, $_REQUEST */

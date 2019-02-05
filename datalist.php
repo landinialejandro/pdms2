@@ -1142,7 +1142,7 @@ class DataList{
 			if($Print_x == '' && $i){ // TV
 				$this->HTML .= '<div class="row pagination-section">';
 					$this->HTML .= '<div class="col-xs-4 col-md-3 col-lg-2 vspacer-lg">';
-						$this->HTML .= '<button onClick="' . $resetSelection . ' document.myform.NoDV.value = 1; return true;" type="submit" name="Previous_x" id="Previous" value="1" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-left"></i> <span class="hidden-xs">' . $Translation['Previous'] . '</span></button>';
+						if($FirstRecord > 1) $this->HTML .= '<button onClick="' . $resetSelection . ' document.myform.NoDV.value = 1; return true;" type="submit" name="Previous_x" id="Previous" value="1" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-left"></i> <span class="hidden-xs">' . $Translation['Previous'] . '</span></button>';
 					$this->HTML .= '</div>';
 
 					$this->HTML .= '<div class="col-xs-4 col-md-4 col-lg-2 col-md-offset-1 col-lg-offset-3 text-center vspacer-lg">';
@@ -1150,7 +1150,7 @@ class DataList{
 					$this->HTML .= '</div>';
 
 					$this->HTML .= '<div class="col-xs-4 col-md-3 col-lg-2 col-md-offset-1 col-lg-offset-3 text-right vspacer-lg">';
-						$this->HTML .= '<button onClick="'.$resetSelection.' document.myform.NoDV.value=1; return true;" type="submit" name="Next_x" id="Next" value="1" class="btn btn-default btn-block"><span class="hidden-xs">' . $Translation['Next'] . '</span> <i class="glyphicon glyphicon-chevron-right"></i></button>';
+						if($i < $RecordCount) $this->HTML .= '<button onClick="'.$resetSelection.' document.myform.NoDV.value=1; return true;" type="submit" name="Next_x" id="Next" value="1" class="btn btn-default btn-block"><span class="hidden-xs">' . $Translation['Next'] . '</span> <i class="glyphicon glyphicon-chevron-right"></i></button>';
 					$this->HTML .= '</div>';
 				$this->HTML .= '</div>';
 			}
