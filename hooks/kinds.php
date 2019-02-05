@@ -4,7 +4,10 @@
 		/* Inserted by Search Page Maker for AppGini on 2018-09-26 02:07:33 */
 		$options->FilterPage = 'hooks/kinds_filter.php';
 		/* End of Search Page Maker for AppGini code */
-
+		if (isset($_REQUEST['e'])){
+			$ok = makeSafe($_REQUEST['e']);
+			addFilter(1, 'and', 1, 'like', $ok);
+		}
 
 		return TRUE;
 	}
