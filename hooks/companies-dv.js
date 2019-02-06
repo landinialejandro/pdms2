@@ -11,9 +11,14 @@ $j('form input[name=personaFisica]').on('change', function() {
 
 function getContactId( view = 'No' ){
     if (is_add_new()){
+        var $si = $j('label[for=personaFisica1]');
+        if (view === 'Si'){
+            $si.text('Si: After save you can select a defualt contact.' );
+        }else{
+            $si.text('Si' );
+        }
         return;
     }
-    console.log(view);
     var id = $j('input[name=SelectedID]').val();
     if (view === "Si"){
         //bucar la persona default, si no abrir una y cargar
@@ -27,12 +32,19 @@ function getContactId( view = 'No' ){
             if ( msg ){
                 //get contact data
                 var contactId = msg.contact;
-                console.log(contactId);
                 getContact(contactId);
+            }else{
+                //not default contact
+                var id = $j('input[name=SelectedID]').val();
+                var $si = $j('label[for=personaFisica1]');
+                $si.append(': <a href="contacts_view.php?addNew_x=1&c=' + id + '" id="add_contact" class="btn btn-default btn-xs">add a contact</a>' );
             }
         });
     }else{
         //ocultar la vista
+        
+        var $si = $j('label[for=personaFisica1]');
+                $si.text( 'Si' );
     }
 };
 
@@ -41,12 +53,12 @@ function getContact(id){
         type: "post",
         url: "hooks/contacts_AJAX.php",
         data: {cmd: 'record',id:id},
-        dataType: "json",
+        dataType: "json"
     }).done(function(msg){
         if (msg){
             console.log(msg);
-            var $si = $j('#personaFisica1');
-            $si.append('<div id="contatc_data"> hola' + msg + '</div>')
+            var $si = $j('label[for=personaFisica1]');
+            $si.append(': ' + msg.lastName + ', ' + msg.name );
         }
     });
 
