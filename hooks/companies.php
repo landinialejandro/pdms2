@@ -124,24 +124,24 @@
                         $ck_text = makeSafe($_REQUEST['FilterValue'][1]);
                         $ck_id = sqlValue("select code from kinds where name = '{$ck_text}'");
                     }
-                }
-                ob_start();
-                ?>
-                    <!-- insert HTML code-->
-                    <?php echo title_tv($ck_text,"?ck=$ck_text");?>
-                    <script>
-                     $j(function(){
-                         setTimeout(function(){
-                             $j('#s2id_kind-container').select2("data", {id: "<?php echo $ck_id; ?>", text: "<?php echo $ck_text; ?>"});
-                             $j('#kind').val("<?php echo $ck_id; ?>");
-                             orderNumber();
-                         },1000);
-                     });  
-                    </script>
-                <?php
-                $html_code = ob_get_contents();
-                ob_end_clean();
-                $html= $html . $html_code;
+					ob_start();
+					?>
+						<!-- insert HTML code-->
+						<?php echo title_tv($ck_text,"?ck=$ck_text");?>
+						<script>
+							$j(function(){
+								setTimeout(function(){
+									$j('#s2id_kind-container').select2("data", {id: "<?php echo $ck_id; ?>", text: "<?php echo $ck_text; ?>"});
+									$j('#kind').val("<?php echo $ck_id; ?>");
+									orderNumber();
+								},1000);
+							});  
+						</script>
+					<?php
+					$html_code = ob_get_contents();
+					ob_end_clean();
+					$html= $html . $html_code;
+				}
             }
             // add actions buttons
             if(!function_exists('mkbuttons')){
@@ -154,7 +154,7 @@
             $buttons['settings']['CUST_CREDIT']['update'] = true;
             $buttons['settings']['CUST_CREDIT']['style'] = 'info';
             $buttons['settings']['CUST_CREDIT']['icon'] = 'fa fa-arrows-h';
-            $buttons['settings']['CUST_CREDIT']['onclick'] = 'script|setLimit(' . $selectedID . ',this)';
+            $buttons['settings']['CUST_CREDIT']['onclick'] = 'script|setLimit("' . $selectedID . '",this)';
             $buttons['settings']['CUST_CREDIT']['confirm'] = '';
 
             $buttons['settings']['CUST_PAYMENT']['name'] = 'Set Payment Limit';
@@ -162,7 +162,7 @@
             $buttons['settings']['CUST_PAYMENT']['update'] = true;
             $buttons['settings']['CUST_PAYMENT']['style'] = 'info';
             $buttons['settings']['CUST_PAYMENT']['icon'] = 'fa fa-calendar';
-            $buttons['settings']['CUST_PAYMENT']['onclick'] = 'script|setLimit(' . $selectedID . ',this)';
+            $buttons['settings']['CUST_PAYMENT']['onclick'] = 'script|setLimit("' . $selectedID . '",this)';
             $buttons['settings']['CUST_PAYMENT']['confirm'] = '';
             
             $html .= mkbuttons('companies', $selectedID, $buttons);

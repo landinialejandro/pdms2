@@ -64,9 +64,15 @@
 
 			
 			<?php if(!defined('APPGINI_SETUP') && is_file(dirname(__FILE__) . '/hooks/header-extras.php')){ include(dirname(__FILE__).'/hooks/header-extras.php'); } ?>
+			<?php if(class_exists('Notification')) echo Notification::placeholder(); ?>
+
 			<?php if($_REQUEST['Embedded']){ ?>
+				<!-- process notifications -->
+				<div style="height: 65px; margin: 5px 0px -25px;">
+					<?php if(function_exists('showNotifications')) echo showNotifications(); ?>
+				</div>
 				<?php return; ?>
-				<?php } ?>
+			<?php } ?>
 				
 				<?php include('header_lte_main.php'); ?>
 				<!-- Content Wrapper. Contains page content -->
@@ -74,13 +80,6 @@
 					<!-- Content Header (Page header) -->
                       <section class="content-header">
 					  
-						<?php if(class_exists('Notification')) echo Notification::placeholder(); ?>
-
-						<!-- process notifications -->
-						<?php $notification_margin = ($_REQUEST['Embedded'] ? '15px 0px' : '-13px 0 -45px'); ?>
-						<div style="height: 65px; margin: <?php echo $notification_margin; ?>;">
-							<?php if(function_exists('showNotifications')) echo showNotifications(); ?>
-						</div>
                           
 						  <section class="content container-fluid">
 							  
@@ -88,4 +87,8 @@
 							  
 							  <!-- Left side column. contains the logo and sidebar -->
 							  <?php include ('header_lte_leftSideMenu.php') ?>
+								<!-- process notifications -->
+								<div style="height: 65px; margin: -25px 0 -25px;">
+									<?php if(function_exists('showNotifications')) echo showNotifications(); ?>
+								</div>
 							  

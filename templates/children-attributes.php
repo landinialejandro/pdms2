@@ -50,10 +50,11 @@
 				break;
 			case 'new': /* new record */
 				var parentId = $j('[name=SelectedID]').val();
+				var parts = command.select ? '&ak=' + command.code : '';
 				var url = param.ChildTable + '_view.php?' + 
 					'filterer_' + param.ChildLookupField + '=' + encodeURIComponent(parentId) +
 					'&addNew_x=1' + 
-					'&Embedded=1' + 
+					'&Embedded=1' + parts +
 					(param.AutoClose ? '&AutoClose=1' : '');
 				modal_window({
 					url: url,

@@ -56,7 +56,7 @@ ob_start();
         <div class="col-lg-4">
             <div class="box box-info">
                 <div class="">
-                    <strong><h7 class="box-title"><?php echo $Translation['data']; ?></h7></strong>
+                    <strong><h6 class="box-title"><?php echo $Translation['data']; ?></h6></strong>
                 </div>
                 Fiscal code: <?php echo $result['fiscalCode']; ?><br>
                 vat: <?php echo $result['vat']; ?><br>
@@ -66,7 +66,7 @@ ob_start();
         <div class="col-lg-8">
             <div class="box box-info">
                 <div class="">
-                    <strong><h7 class="box-title"><?php echo $Translation['notes']; ?></h7></strong>
+                    <strong><h6 class="box-title"><?php echo $Translation['notes']; ?></h6></strong>
                 </div>
                 <textarea class="form-control" rows="2"><?php echo $result['notes']; ?></textarea>
             </div>
@@ -77,11 +77,11 @@ ob_start();
     <div class="col-lg-12">
         <div class="box box-info">
             <div class="">
-                <h7 class="box-title"><?php echo $Translation['attributes']; ?></h7>
+                <h6 class="box-title"><?php echo $Translation['attributes']; ?></h6>
             </div>
             <div class="box-body">
                 <?php 
-                foreach ($attributes as $i => $attribute){
+                foreach ($attributes as $attribute){
                     echo $attribute['attribute'] . ": ". $attribute['value']."<br>";
                 }
                 //show progress bar
@@ -97,7 +97,7 @@ ob_start();
                 } 
                 if ($databar['overdraft'] ){
                 ?>
-                    scoperto: <?php echo money_format("%.2n",$databar['overdraft']); ?>
+                    scoperto: <?php echo money_format("%.2n", $databar['overdraft'] ); ?>
                 <?php
                 }
                 ?>
