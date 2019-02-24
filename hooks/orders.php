@@ -204,8 +204,8 @@
             }
             $where_id = "AND  firstCashNote.order = '{$data['id']}' order by id asc limit 1;";
             $fc = getDataTable_Values('firstCashNote', $where_id );
-            // $res = sql("select * from firstCashNote where firstCashNote.`order` = '{$data['id']}' order by id asc limit 1;",$eo);
-            // $fc = db_fetch_assoc($res);
+             $res = sql("select * from firstCashNote where firstCashNote.`order` = '{$data['id']}' order by id asc limit 1;",$eo);
+             $fc = db_fetch_assoc($res);
             $fc['order'] = $data['id'];
             $dk_name = getKindsData($data['kind']);
             $fc['causal'] = ( $dk_name ? $dk_name['name'] : $data['kind']);
