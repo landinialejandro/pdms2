@@ -38,8 +38,6 @@ if(!$table_from){
     exit(error_message('Access denied!','', false));
 }
 
-
-
 if(!$where_id){
     exit(error_message('The monkey are eating the product Code. (the product code are lost)','', false));
 }
@@ -70,7 +68,7 @@ elseif($stock['Stock']==0){
 $table_name = 'attributes';
 $attributes_from= get_sql_from($table_name);
 $attributes_fields= get_sql_fields($table_name);
-$res = sql("SELECT {$attributes_fields} FROM {$attributes_from} and products = {$where_id}", $eo);
+$res = sql("SELECT {$attributes_fields} FROM {$attributes_from} and product = {$where_id}", $eo);
 $attributes = db_fetch_row($res);
 
 

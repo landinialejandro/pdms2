@@ -85,10 +85,10 @@ function showCard(field, dest, url){
     if (id < 1){
         id = parseInt($j('#' + field).val());
     }
-    ajaxCard(id,url,dest);
+    ajaxCard(id, dest, url);
 }
 
-function ajaxCard(id,url,dest){
+function ajaxCard(id, dest, url){
     if (id >0){
         $j.ajax({
             method: 'post', //post, get

@@ -110,10 +110,8 @@ xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.
     <FatturaElettronicaHeader>
     </FatturaElettronicaHeader>
     <FatturaElettronicaBody>
-        <!-- 2.1 -->
         <DatiGenerali>
         </DatiGenerali>
-        <!-- 2.2 -->
         <DatiBeniServizi>
         </DatiBeniServizi>
     </FatturaElettronicaBody>
@@ -135,7 +133,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.1.1.2 obligatory
             $IdTrasmittente->addChild("IdCodice",$company['vat']);
         //1.1.2 obligatory
-        $DatiTrasmissione->addChild("ProgressivoInvio",$order['multiOrder']);
+        $DatiTrasmissione->addChild("ProgressivoInvio",sprintf("%'.05d", $order['multiOrder']));
         //1.1.3 obligatory assume valore fisso pari a “FPA12”, se la fattura è destinata ad una pubblica amministrazione, oppure “FPR12”, se la fattura è destinata ad un soggetto privato.
         $DatiTrasmissione->addChild("FormatoTrasmissione",$company_values['FormatoTrasmissione']);
         /*  1.1.4 obligatory
@@ -236,7 +234,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
                 dispone di una stabile organizzazione attraverso la quale svolge la propria
                 attività (cessioni di beni o prestazioni di servizi oggetto di fatturazione)
                 */
-        $CP_StabileOrganizzazione =$xml_invoice->FatturaElettronicaHeader->addchild("CedentePrestatore")->addChild("StabileOrganizzazione");
+        $CP_StabileOrganizzazione = $CedentePrestatore->addChild("StabileOrganizzazione");
              //1.2.3.1  
             $CP_StabileOrganizzazione->addChild("Indirizzo",$address['address']);
             //1.2.3.2  
@@ -406,7 +404,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
 //                //1.5.1.3.5
 //                $TS_DatiAnagrafici_Anagrafica->addChild("CodEORI",$contactCustomer['codEORI']);
     //1.6 SoggettoEmittente  indicare “CC” se la fattura è stata compilata da parte del cessionario/committente, “TZ” se è stata compilata da un soggetto terzo.
-    $header->addChild("SoggettoEmittente","CC");
+    $header->addChild("SoggettoEmittente","");
 //2
 $body = $xml_invoice->FatturaElettronicaBody;      
     //2.1 DatiGenerali
