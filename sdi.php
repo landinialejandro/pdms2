@@ -36,58 +36,11 @@ if($order_values['kind'] !== 'OUT'){
 
 /* retrieve multycompany info <CedentePrestatore> */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        $where_id ="AND companies.id={$order_values['company']}";//change this to set select where
-        $company = getDataTable('companies',$where_id);
-        $company_values = getDataTable_Values('companies', $where_id);
-            //error control
-            if(!$company['vat']){
-                exit(error_message('<h1>vat not valid in company data</h1>', false));
-            }
-            if(!$company['FormatoTrasmissione']){
-                exit(error_message('<h1>Formato Trasmissione not valid in company data</h1>', false));
-            }
-            if(!$company['regimeFiscale']){
-                exit(error_message('<h1>regime fiscale not valid in company data</h1>', false));
-            }
-            if(!$company['RiferimentoAmministrazione']){
-                exit(error_message('<h1>Riferimento Amministrazione not valid in company data</h1>', false));
-            }
+        retCompanyData($company,$company_values,$order_values['company']);
 
-        //default multiCompany address or firstaddress found
-        $where_id = "AND addresses.company = {$order_values['company']} ORDER BY addresses.default, addresses.id DESC LIMIT 1;";
-        $address = getDataTable("addresses", $where_id);
-            //error control
-            if (!$address['country']){
-                exit(error_message('<h1>country not valid in company address</h1>', false));
-            }
-            if (!$address['address']){
-                exit(error_message('<h1>address not valid in company address</h1>', false));
-            }
-            if (!$address['houseNumber']){
-                exit(error_message('<h1>numero civico not valid in company address</h1>', false));
-            }
-            if (!$address['postalCode']){
-                exit(error_message('<h1>postal Code not valid in company address</h1>', false));
-            }
-            if (!$address['district']){
-                exit(error_message('<h1>district Code not valid in company address</h1>', false));
-            }
-            if (!$address['town']){
-                exit(error_message('<h1>town not valid in company address</h1>', false));
-            }
+        retCompanyAddress($address, $address_values, $order_values['company']);
 
-        //default work multiCompany mail 
-        $where_id ="AND mails.company = {$company['id']} AND mails.kind = 'WORK'";//change this to set select where
-        $mail = getDataTable('mails',$where_id);
-        
-        
-        //default work multiCompany phone 
-        $where_id ="AND phones.company = {$company['id']} AND phones.kind = 'WORK'";//change this to set select where
-        $phone = getDataTable('phones',$where_id);
-        
-        //default work multiCompany phone 
-        $where_id ="AND phones.company = {$company['id']} AND phones.kind = 'FAX'";//change this to set select where
-        $fax = getDataTable('phones',$where_id);
+        retMailPhonelFax_Company($mail, $phone, $fax, $company['id']);
 
         //default contact in multiCompany or first contact found
         $defualtContactId = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$order_values['company']} ORDER BY contacts_companies.default DESC LIMIT 1"));
@@ -104,45 +57,25 @@ if($order_values['kind'] !== 'OUT'){
             if (!$addressContact) {
                 exit(error_message('<h1>Adrress contact not valid</h1>', false));
             }
-            
-            //and defaul mail contact
-            $where_id="AND mails.contact = {$defualtContactId} ORDER BY mails.id DESC LIMIT 1;";
-            $mailContact = getDataTable("mails", $where_id);
-            
-            //and default phone contact
-            $where_id="AND phones.contact = {$defualtContactId} ORDER BY phones.id DESC LIMIT 1;";
-            $mailContact = getDataTable("phones", $where_id);
-            
-            //and default FAX phone contact
-            $where_id="AND phones.contact = {$defualtContactId} AND phones.kind = 'FAX' ORDER BY phones.id DESC LIMIT 1;";
-            $mailContact = getDataTable("phones", $where_id);
+            retMailPhonelFax_Contact($mailContact, $phoneContact, $faxContact, $defualtContactId);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* retrieve customer info */
 ///////////////////////////
 if ($order_values['customer']){
-    $where_id="AND companies.id = {$order_values['customer']}";
-    $customer = getDataTable('companies',$where_id);
-    $customer_values = getDataTable_Values("companies", $where_id);
+    retCompanyData($customer,$customer_values,$order_values['customer'],false);
     
     //Client address
-    $where_id ="AND addresses.company = {$customer['id']} ORDER BY addresses.default DESC LIMIT 1;";//change this to set select where
-    $addressCustomer = getDataTable('addresses',$where_id);
-    if (!$addressCustomer){
-        exit(error_message("<h1>The customer's address is not valid</h1>", false));
-    }
-
+    retCompanyAddress($addressCustomer, $addressCustomer_values, $customer['id']);
+            
     //default PEC Company mail 
     $where_id ="AND mails.company = {$customer['id']} AND mails.kind = 'PEC'";//change this to set select where
     $PECmail = getDataTable('mails',$where_id);
     
     //shiping client address
-    $where_id ="AND addresses.company = {$customer['id']} AND addresses.ship = 1;";//change this to set select where
-    $addressCustomerShip = getDataTable('addresses',$where_id);
-    if (!$addressCustomerShip){
-        exit(error_message("<h1>The customer's shipping address is not valid</h1>", false));
-    }
+    retCompanyAddress($addressCustomerShip, $addressCustomerShip_values, $customer['id']);
+
     //default contact in multiCompany or first contact found
         $defualtContactId_customer = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$order_values['customer']} ORDER BY contacts_companies.default DESC LIMIT 1"));
             if (!$defualtContactId_customer){
@@ -158,11 +91,11 @@ if ($order_values['customer']){
 
 // shipper via
 if ($order_values['shipVia']){
-    $where_id="AND companies.id = {$order_values['shipVia']}";
-    $shipper = getDataTable('companies',$where_id);
-    ///////////////////////////shipper address
-    $where_id ="AND addresses.company = {$shipper['id']} AND addresses.default = 1";//change this to set select where
-    $addressShipper = getDataTable('addresses',$where_id);
+    retCompanyData($shipper,$shipper_values,$order_values['shipVia'],false);
+    
+    //shipper address
+    retCompanyAddress($addressCustomerShip, $addressCustomerShip_values, $shipper['id']);
+    
 }else{
     exit(error_message('<h1>order Shipper not valid</h1>', false));
 }
@@ -204,7 +137,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
         //1.1.2 obligatory
         $DatiTrasmissione->addChild("ProgressivoInvio",$order['multiOrder']);
         //1.1.3 obligatory assume valore fisso pari a “FPA12”, se la fattura è destinata ad una pubblica amministrazione, oppure “FPR12”, se la fattura è destinata ad un soggetto privato.
-        $DatiTrasmissione->addChild("FormatoTrasmissione",$company['FormatoTrasmissione']);
+        $DatiTrasmissione->addChild("FormatoTrasmissione",$company_values['FormatoTrasmissione']);
         /*  1.1.4 obligatory
             Utilità: è indispensabile al Sistema di Interscambio per individuare gli
             elementi necessari per recapitare correttamente il file al destinatario.
@@ -830,3 +763,4 @@ if($xml_file){
 }else{
     exit(error_message('XML file generation error.', false));
 }
+

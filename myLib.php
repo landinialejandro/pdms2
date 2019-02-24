@@ -136,3 +136,93 @@ function importData(){
         $res = sql(file_get_contents("$dir/$sql"),$eo);
     }
 }
+
+function retCompanyData(&$company,&$company_values, $id = false, $control = true){
+    
+    if ($id){
+        $where_id ="AND companies.id={$id}";//change this to set select where
+    }
+    $company = getDataTable('companies',$where_id);
+    $company_values = getDataTable_Values('companies', $where_id);
+
+    //error control
+    if ($control){
+        if(!$company['vat']){
+            exit(error_message('<h1>vat not valid in company data</h1>', false));
+        }
+        if(!$company['FormatoTrasmissione']){
+            exit(error_message('<h1>Formato Trasmissione not valid in company data</h1>', false));
+        }
+        if(!$company['regimeFiscale']){
+            exit(error_message('<h1>regime fiscale not valid in company data</h1>', false));
+        }
+        if(!$company['RiferimentoAmministrazione']){
+            exit(error_message('<h1>Riferimento Amministrazione not valid in company data</h1>', false));
+        }
+    }
+}
+
+function retCompanyAddress(&$address, &$address_values, $companyId = false, $control = true){
+    //default multiCompany address or firstaddress found
+        if (!$companyId){
+            exit(error_message('<h1>not select company for a valid address</h1>', false));
+        }
+        
+        $where_id = "AND addresses.company = {$companyId} ORDER BY addresses.default, addresses.id DESC LIMIT 1;";
+    
+        $address = getDataTable("addresses", $where_id);
+        $address_values = getDataTable_Values('addresses', $where_id);
+            //error control
+        if ($control){
+        
+            if (!$address['country']){
+                exit(error_message('<h1>country not valid in company address</h1>', false));
+            }
+            if (!$address['address']){
+                exit(error_message('<h1>address not valid in company address</h1>', false));
+            }
+            if (!$address['houseNumber']){
+                exit(error_message('<h1>numero civico not valid in company address</h1>', false));
+            }
+            if (!$address['postalCode']){
+                exit(error_message('<h1>postal Code not valid in company address</h1>', false));
+            }
+            if (!$address['district']){
+                exit(error_message('<h1>district Code not valid in company address</h1>', false));
+            }
+            if (!$address['town']){
+                exit(error_message('<h1>town not valid in company address</h1>', false));
+            }
+        }
+}
+
+function retMailPhonelFax_Company(&$mail, &$phone, &$fax, $companyId){
+    
+        //default work multiCompany mail 
+        $where_id ="AND mails.company = {$companyId} AND mails.kind = 'WORK'";//change this to set select where
+        $mail = getDataTable('mails',$where_id);
+        
+        //default work multiCompany phone 
+        $where_id ="AND phones.company = {$companyId} AND phones.kind = 'WORK'";//change this to set select where
+        $phone = getDataTable('phones',$where_id);
+        
+        //default work multiCompany phone 
+        $where_id ="AND phones.company = {$companyId} AND phones.kind = 'FAX'";//change this to set select where
+        $fax = getDataTable('phones',$where_id);
+
+}
+function retMailPhonelFax_Contact(&$mail, &$phone, &$fax, $contactId){
+    
+        //and defaul mail contact
+        $where_id="AND mails.contact = {$contactId} ORDER BY mails.id DESC LIMIT 1;";
+        $mail = getDataTable("mails", $where_id);
+
+        //and default phone contact
+        $where_id="AND phones.contact = {$contactId} ORDER BY phones.id DESC LIMIT 1;";
+        $phone = getDataTable("phones", $where_id);
+
+        //and default FAX phone contact
+        $where_id="AND phones.contact = {$contactId} AND phones.kind = 'FAX' ORDER BY phones.id DESC LIMIT 1;";
+        $fax = getDataTable("phones", $where_id);
+
+}
