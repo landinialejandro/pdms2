@@ -581,15 +581,18 @@ $body = $xml_invoice->FatturaElettronicaBody;
     $item_fields = get_sql_fields('ordersDetails');
     $item_from = get_sql_from('ordersDetails');
     $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
+    
     foreach($items as $i => $item){
-        $productId = intval(sqlValue("select ordersDetails.productCode from ordersDetails where ordersDetails.id = {$item['id']} "));
-        if (!$productId){
-            echo '<div class="alert alert-danger alert-dismissible"><h1>product id not valid: '. $productId.'/'.$item['id'].'</h1></div>';
-        }
-        $where_id = "AND products.id = $productId";
-        $product = getDataTable("products", $where_id);
+        
+        $where_id = "AND ordersDetails.id = {$item['id']}";
+        $item_values = getDataTable_Values('ordersDetails', $where_id);
+        
+        $where_id = "AND products.id = {$item_values['productCode']}";
+        $product = getDataTable_Values("products", $where_id);
+        
         $categoryId = sqlValue("select products.CategoryID from products where products.id = {$product['id']}");
         $categoryData = getKindsData($categoryId );
+        
         //2.2.1
         $DettaglioLinee = $DatiBeniServizi->addChild("DettaglioLinee");
             //2.2.1.1
@@ -613,19 +616,24 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.2.1.8
             $DettaglioLinee->addChild("DataFinePeriodo","");
             //2.2.1.9
-            $DettaglioLinee->addChild("PrezzoUnitario",number_format($item['UnitPriceValue'] , 2));
+            $DettaglioLinee->addChild("PrezzoUnitario",number_format($item_values['UnitPrice'] , 2));
             //2.2.1.10
-            $ScontoMaggiorazione = $DettaglioLinee->addChild("ScontoMaggiorazione");//tree childs
-                //2.2.1.10.1
-                $ScontoMaggiorazione->addChild("Tipo",$item['Discount']? "SC" : "");
-                //2.2.1.10.2
-                $ScontoMaggiorazione->addChild("Percentuale",number_format($item['Discount'] , 2));
-                //2.2.1.10.3
-                $ScontoMaggiorazione->addChild("Importo",number_format($item['SubtotalValue']*$item['Discount']/100 , 2));
+            if ( $item['Discount']){
+                
+                $ScontoMaggiorazione = $DettaglioLinee->addChild("ScontoMaggiorazione");//tree childs
+                    //2.2.1.10.1
+                    $ScontoMaggiorazione->addChild("Tipo", $item['Discount'] ? "SC" : "");
+                    //2.2.1.10.2
+                    $discount = number_format($item_values['Discount'] , 2);
+                    $ScontoMaggiorazione->addChild("Percentuale",$discount ? $discount : "");
+                    //2.2.1.10.3
+                    $discount_importo = number_format($item_values['SubtotalValue']*$item['Discount']/100 , 2);
+                    $ScontoMaggiorazione->addChild("Importo",$discount_importo ? $discount_importo : "" );
+            }
             //2.2.1.11
-            $DettaglioLinee->addChild("PrezzoTotale",number_format($item['SubtotalValue'] , 2));
+            $DettaglioLinee->addChild("PrezzoTotale",number_format($item_values['LineTotal'] , 2));
             //2.2.1.12
-            $DettaglioLinee->addChild("AliquotaIVA",number_format($item['taxesValue'] , 2));
+            $DettaglioLinee->addChild("AliquotaIVA",number_format($product['tax'] , 2));
             //2.2.1.13
             $DettaglioLinee->addChild("Ritenuta","");
             //2.2.1.14
@@ -635,13 +643,13 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.2.1.16
             $AltriDatiGestionali = $DettaglioLinee->addChild("AltriDatiGestionali");//four childs
                 //2.2.1.16.1
-                $ScontoMaggiorazione->addChild("TipoDato","");
+                $AltriDatiGestionali->addChild("TipoDato","");
                 //2.2.1.16.2
-                $ScontoMaggiorazione->addChild("RiferimentoTesto","");
+                $AltriDatiGestionali->addChild("RiferimentoTesto","");
                 //2.2.1.16.3
-                $ScontoMaggiorazione->addChild("RiferimentoNumero","");
+                $AltriDatiGestionali->addChild("RiferimentoNumero","");
                 //2.2.1.16.4
-                $ScontoMaggiorazione->addChild("RiferimentoData","");
+                $AltriDatiGestionali->addChild("RiferimentoData","");
             
         $inponibiliTotale = $inponibiliTotale + $item['SubtotalValue'];
         $taxesTotales = $taxesTotales + $item['taxesValue'];
@@ -650,7 +658,7 @@ $body = $xml_invoice->FatturaElettronicaBody;
         //2.2.2
         $DatiRiepilogo = $DatiBeniServizi->addChild("DatiRiepilogo");
             //2.2.2.1
-            $DatiRiepilogo->addChild("AliquotaIVA","4.00");
+            $DatiRiepilogo->addChild("AliquotaIVA",number_format($product['tax'] , 2));
             //2.2.2.2
             $DatiRiepilogo->addChild("Natura","");
             //2.2.2.3
