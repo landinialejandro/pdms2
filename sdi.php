@@ -253,17 +253,17 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             tale ha l’obbligo di indicare in tutti i documenti anche i dati relativi all’iscrizione
             (art. 2250 codice civile)
          */
-        $CP_IscrizioneREA = $CedentePrestatore->addChild("IscrizioneREA");
-            //1.2.4.1
-            $CP_IscrizioneREA->addChild("Ufficio",$company['REA_Ufficio']);
-            //1.2.4.2
-            $CP_IscrizioneREA->addChild("NumeroREA",$company['REA_NumeroREA']);
-            //1.2.4.3
-            $CP_IscrizioneREA->addChild("CapitaleSociale",$company['REA_CapitaleSociale']);
-            //1.2.4.4
-            $CP_IscrizioneREA->addChild("SocioUnico",$company['REA_SocioUnico']);
-            //1.2.4.5
-            $CP_IscrizioneREA->addChild("StatoLiquidazione",$company['REA_StatoLiquidazione']);
+//        $CP_IscrizioneREA = $CedentePrestatore->addChild("IscrizioneREA");
+//            //1.2.4.1
+//            $CP_IscrizioneREA->addChild("Ufficio",$company['REA_Ufficio']);
+//            //1.2.4.2
+//            $CP_IscrizioneREA->addChild("NumeroREA",$company['REA_NumeroREA']);
+//            //1.2.4.3
+//            $CP_IscrizioneREA->addChild("CapitaleSociale",$company['REA_CapitaleSociale']);
+//            //1.2.4.4
+//            $CP_IscrizioneREA->addChild("SocioUnico",$company['REA_SocioUnico']);
+//            //1.2.4.5
+//            $CP_IscrizioneREA->addChild("StatoLiquidazione",$company['REA_StatoLiquidazione']);
         //1.2.5
         if($phone['phoneNumber'] || $fax['phoneNumber'] || $mail['mail']){
             $CP_Contatti =  $CedentePrestatore->addChild("Contatti");
@@ -371,7 +371,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.4.2
             $CC_RappresentanteFiscale->addChild("Denominazione",$customer['companyName']);
             //1.4.4.3
-            $CC_RappresentanteFiscale->addChild("Nome",$contactCustomer['name']);
+//            $CC_RappresentanteFiscale->addChild("Nome",$contactCustomer['name']);
             //1.4.4.4
         
     //1.5 TerzoIntermediarioOSoggettoEmittente
@@ -382,7 +382,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             */
     $TerzoIntermediarioOSoggettoEmittente = $header->addChild("TerzoIntermediarioOSoggettoEmittente");
         //1.5.1
-        $TS_DatiAnagrafici = $CessionarioCommittente->addChild("DatiAnagrafici");
+        $TS_DatiAnagrafici = $TerzoIntermediarioOSoggettoEmittente->addChild("DatiAnagrafici");
             //1.5.1.1
             $TS_DatiAnagrafici_IdFiscaleIVA = $TS_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.5.1.1.1
@@ -415,7 +415,9 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.1.1.2
             $DatiGeneraliDocumento->addChild("Divisa","EUR");
             //2.1.1.3
-            $DatiGeneraliDocumento->addChild("Data",$order['date']);
+            $originalDate = strtotime(str_replace('/', '-',$order['date']));
+            $newDate = date("Y-m-d",$originalDate);
+            $DatiGeneraliDocumento->addChild("Data",$newDate);
             //2.1.1.4
             $DatiGeneraliDocumento->addChild("Numero",$order['multiOrder']);
             //2.1.1.5
@@ -587,8 +589,12 @@ $body = $xml_invoice->FatturaElettronicaBody;
         $where_id = "AND ordersDetails.id = {$item['id']}";
         $item_values = getDataTable_Values('ordersDetails', $where_id);
         
+        var_dump($item_values);
+        
         $where_id = "AND products.id = {$item_values['productCode']}";
         $product = getDataTable_Values("products", $where_id);
+        
+        var_dump($product);
         
         $categoryId = sqlValue("select products.CategoryID from products where products.id = {$product['id']}");
         $categoryData = getKindsData($categoryId );
@@ -627,7 +633,7 @@ $body = $xml_invoice->FatturaElettronicaBody;
                     $discount = number_format($item_values['Discount'] , 2);
                     $ScontoMaggiorazione->addChild("Percentuale",$discount ? $discount : "");
                     //2.2.1.10.3
-                    $discount_importo = number_format($item_values['SubtotalValue']*$item['Discount']/100 , 2);
+                    $discount_importo = number_format($item_values['Subtotal']*$item['Discount']/100 , 2);
                     $ScontoMaggiorazione->addChild("Importo",$discount_importo ? $discount_importo : "" );
             }
             //2.2.1.11
@@ -651,8 +657,8 @@ $body = $xml_invoice->FatturaElettronicaBody;
                 //2.2.1.16.4
                 $AltriDatiGestionali->addChild("RiferimentoData","");
             
-        $inponibiliTotale = $inponibiliTotale + $item['SubtotalValue'];
-        $taxesTotales = $taxesTotales + $item['taxesValue'];
+        $inponibiliTotale +=  $item_values['Subtotal'];
+        $taxesTotales +=  ($product['tax']/100) * $item_values['Subtotal'];
     }
     ///////////////////////////
         //2.2.2
