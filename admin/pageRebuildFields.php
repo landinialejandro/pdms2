@@ -140,7 +140,7 @@
 			'fiscalCode' => array('appgini' => 'VARCHAR(255) null '),
 			'vat' => array('appgini' => 'VARCHAR(255) not null '),
 			'notes' => array('appgini' => 'TEXT null '),
-			'codiceDestinatario' => array('appgini' => 'VARCHAR(7) null '),
+			'codiceDestinatario' => array('appgini' => 'VARCHAR(7) null default \'0000000\' '),
 			'regimeFiscale' => array('appgini' => 'VARCHAR(40) null '),
 			'tipoCassa' => array('appgini' => 'VARCHAR(40) null '),
 			'modalitaPagamento' => array('appgini' => 'VARCHAR(40) null '),

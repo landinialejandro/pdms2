@@ -1186,7 +1186,7 @@
 		$host = (isset($s['HTTP_HOST']) ? $s['HTTP_HOST'] : $s['SERVER_NAME'] . $port);
 
 		$fp = normalize_path(dirname(__FILE__));
-		$dr = normalize_path($s['DOCUMENT_ROOT']);
+		$dr = normalize_path(realpath($s['DOCUMENT_ROOT']));
 
 		$uri = str_replace($dr, '', $fp);
 		// remove '/admin' postfix

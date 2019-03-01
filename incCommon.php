@@ -425,7 +425,7 @@
 				'fiscalCode' => '',
 				'vat' => '',
 				'notes' => '',
-				'codiceDestinatario' => '',
+				'codiceDestinatario' => '0000000',
 				'regimeFiscale' => '',
 				'tipoCassa' => '',
 				'modalitaPagamento' => '',
