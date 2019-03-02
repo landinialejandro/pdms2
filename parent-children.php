@@ -676,9 +676,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'PhoneNumber'),
-					'display-field-names' => array(1 => 'kind', 2 => 'phoneNumber'),
-					'sortable-fields' => array(0 => '`phones`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`'),
+					'display-fields' => array(1 => 'Kind', 2 => 'PhoneNumber', 5 => 'Default'),
+					'display-field-names' => array(1 => 'kind', 2 => 'phoneNumber', 5 => 'default'),
+					'sortable-fields' => array(0 => '`phones`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`', 5 => 6),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -687,7 +687,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-phones',
 					'template-printable' => 'children-phones-printable',
-					'query' => "SELECT `phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`phones`.`phoneNumber`)>100, concat(left(`phones`.`phoneNumber`,100),' ...'), `phones`.`phoneNumber`) as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `phones` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`phones`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`phones`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`phones`.`company` "
+					'query' => "SELECT `phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`phones`.`phoneNumber`)>100, concat(left(`phones`.`phoneNumber`,100),' ...'), `phones`.`phoneNumber`) as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', concat('<i class=\"glyphicon glyphicon-', if(`phones`.`default`, 'check', 'unchecked'), '\"></i>') as 'default' FROM `phones` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`phones`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`phones`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`phones`.`company` "
 				),
 				'contact' => array(   
 					'parent-table' => 'contacts',
@@ -700,9 +700,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'PhoneNumber'),
-					'display-field-names' => array(1 => 'kind', 2 => 'phoneNumber'),
-					'sortable-fields' => array(0 => '`phones`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`'),
+					'display-fields' => array(1 => 'Kind', 2 => 'PhoneNumber', 5 => 'Default'),
+					'display-field-names' => array(1 => 'kind', 2 => 'phoneNumber', 5 => 'default'),
+					'sortable-fields' => array(0 => '`phones`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`', 5 => 6),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -711,7 +711,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-phones',
 					'template-printable' => 'children-phones-printable',
-					'query' => "SELECT `phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`phones`.`phoneNumber`)>100, concat(left(`phones`.`phoneNumber`,100),' ...'), `phones`.`phoneNumber`) as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `phones` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`phones`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`phones`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`phones`.`company` "
+					'query' => "SELECT `phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`phones`.`phoneNumber`)>100, concat(left(`phones`.`phoneNumber`,100),' ...'), `phones`.`phoneNumber`) as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', concat('<i class=\"glyphicon glyphicon-', if(`phones`.`default`, 'check', 'unchecked'), '\"></i>') as 'default' FROM `phones` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`phones`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`phones`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`phones`.`company` "
 				),
 				'company' => array(   
 					'parent-table' => 'companies',
@@ -724,9 +724,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'PhoneNumber'),
-					'display-field-names' => array(1 => 'kind', 2 => 'phoneNumber'),
-					'sortable-fields' => array(0 => '`phones`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`'),
+					'display-fields' => array(1 => 'Kind', 2 => 'PhoneNumber', 5 => 'Default'),
+					'display-field-names' => array(1 => 'kind', 2 => 'phoneNumber', 5 => 'default'),
+					'sortable-fields' => array(0 => '`phones`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`', 5 => 6),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -735,7 +735,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-phones',
 					'template-printable' => 'children-phones-printable',
-					'query' => "SELECT `phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`phones`.`phoneNumber`)>100, concat(left(`phones`.`phoneNumber`,100),' ...'), `phones`.`phoneNumber`) as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `phones` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`phones`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`phones`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`phones`.`company` "
+					'query' => "SELECT `phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`phones`.`phoneNumber`)>100, concat(left(`phones`.`phoneNumber`,100),' ...'), `phones`.`phoneNumber`) as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', concat('<i class=\"glyphicon glyphicon-', if(`phones`.`default`, 'check', 'unchecked'), '\"></i>') as 'default' FROM `phones` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`phones`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`phones`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`phones`.`company` "
 				)
 			),
 			'mails' => array(   
@@ -750,9 +750,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'Mail'),
-					'display-field-names' => array(1 => 'kind', 2 => 'mail'),
-					'sortable-fields' => array(0 => '`mails`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`'),
+					'display-fields' => array(1 => 'Kind', 2 => 'Mail', 5 => 'Default'),
+					'display-field-names' => array(1 => 'kind', 2 => 'mail', 5 => 'default'),
+					'sortable-fields' => array(0 => '`mails`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`', 5 => 6),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -761,7 +761,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-mails',
 					'template-printable' => 'children-mails-printable',
-					'query' => "SELECT `mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`mails`.`mail`)>100, concat(left(`mails`.`mail`,100),' ...'), `mails`.`mail`) as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` "
+					'query' => "SELECT `mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`mails`.`mail`)>100, concat(left(`mails`.`mail`,100),' ...'), `mails`.`mail`) as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', concat('<i class=\"glyphicon glyphicon-', if(`mails`.`default`, 'check', 'unchecked'), '\"></i>') as 'default' FROM `mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` "
 				),
 				'contact' => array(   
 					'parent-table' => 'contacts',
@@ -774,9 +774,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'Mail'),
-					'display-field-names' => array(1 => 'kind', 2 => 'mail'),
-					'sortable-fields' => array(0 => '`mails`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`'),
+					'display-fields' => array(1 => 'Kind', 2 => 'Mail', 5 => 'Default'),
+					'display-field-names' => array(1 => 'kind', 2 => 'mail', 5 => 'default'),
+					'sortable-fields' => array(0 => '`mails`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`', 5 => 6),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -785,7 +785,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-mails',
 					'template-printable' => 'children-mails-printable',
-					'query' => "SELECT `mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`mails`.`mail`)>100, concat(left(`mails`.`mail`,100),' ...'), `mails`.`mail`) as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` "
+					'query' => "SELECT `mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`mails`.`mail`)>100, concat(left(`mails`.`mail`,100),' ...'), `mails`.`mail`) as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', concat('<i class=\"glyphicon glyphicon-', if(`mails`.`default`, 'check', 'unchecked'), '\"></i>') as 'default' FROM `mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` "
 				),
 				'company' => array(   
 					'parent-table' => 'companies',
@@ -798,9 +798,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Kind', 2 => 'Mail'),
-					'display-field-names' => array(1 => 'kind', 2 => 'mail'),
-					'sortable-fields' => array(0 => '`mails`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`'),
+					'display-fields' => array(1 => 'Kind', 2 => 'Mail', 5 => 'Default'),
+					'display-field-names' => array(1 => 'kind', 2 => 'mail', 5 => 'default'),
+					'sortable-fields' => array(0 => '`mails`.`id`', 1 => '`kinds1`.`name`', 2 => 3, 3 => '`contacts1`.`id`', 4 => '`companies1`.`id`', 5 => 6),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -809,7 +809,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-mails',
 					'template-printable' => 'children-mails-printable',
-					'query' => "SELECT `mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`mails`.`mail`)>100, concat(left(`mails`.`mail`,100),' ...'), `mails`.`mail`) as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company' FROM `mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` "
+					'query' => "SELECT `mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', if(CHAR_LENGTH(`mails`.`mail`)>100, concat(left(`mails`.`mail`,100),' ...'), `mails`.`mail`) as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', concat('<i class=\"glyphicon glyphicon-', if(`mails`.`default`, 'check', 'unchecked'), '\"></i>') as 'default' FROM `mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` "
 				)
 			),
 			'contacts_companies' => array(   

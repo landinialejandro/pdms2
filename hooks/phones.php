@@ -3,7 +3,7 @@
 	/**
 	 * @file
 	 * This file contains hook functions that get called when data operations are performed on 'phones' table. 
-	 * For example, when a new record is added, when a record is edited, when a record is deleted, … etc.
+	 * For example, when a new record is added, when a record is edited, when a record is deleted, ï¿½ etc.
 	*/
 
 	/**
@@ -154,7 +154,11 @@
 	*/
 
 	function phones_before_insert(&$data, $memberInfo, &$args){
-
+            
+                if (isset($_REQUEST['c']) && $_REQUEST['c']){
+                    $data['company']= makeSafe($_REQUEST['c']);
+                }
+                
 		return TRUE;
 	}
 
@@ -207,7 +211,7 @@
 	*/
 
 	function phones_before_update(&$data, $memberInfo, &$args){
-
+            
 		return TRUE;
 	}
 
@@ -296,7 +300,7 @@
 	 * 
 	 * @param $html
 	 * (passed by reference) the HTML code of the form ready to be displayed. This could be useful for manipulating 
-	 * the code before displaying it using regular expressions, … etc.
+	 * the code before displaying it using regular expressions, ï¿½ etc.
 	 * 
 	 * @param $args
 	 * An empty array that is passed by reference. It's currently not used but is reserved for future uses.

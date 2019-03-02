@@ -26,7 +26,8 @@
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
 		"if(CHAR_LENGTH(`phones`.`phoneNumber`)>100, concat(left(`phones`.`phoneNumber`,100),' ...'), `phones`.`phoneNumber`)" => "phoneNumber",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
-		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company"
+		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
+		"concat('<i class=\"glyphicon glyphicon-', if(`phones`.`default`, 'check', 'unchecked'), '\"></i>')" => "default"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -34,7 +35,8 @@
 		2 => '`kinds1`.`name`',
 		3 => 3,
 		4 => '`contacts1`.`id`',
-		5 => '`companies1`.`id`'
+		5 => '`companies1`.`id`',
+		6 => 6
 	);
 
 	// Fields that can be displayed in the csv file
@@ -43,7 +45,8 @@
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
 		"`phones`.`phoneNumber`" => "phoneNumber",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
-		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company"
+		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
+		"`phones`.`default`" => "default"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -51,7 +54,8 @@
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "Kind",
 		"`phones`.`phoneNumber`" => "PhoneNumber",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "Contact",
-		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "Company"
+		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "Company",
+		"`phones`.`default`" => "Default"
 	);
 
 	// Fields that can be quick searched
@@ -60,7 +64,8 @@
 		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
 		"`phones`.`phoneNumber`" => "PhoneNumber",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
-		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company"
+		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
+		"concat('<i class=\"glyphicon glyphicon-', if(`phones`.`default`, 'check', 'unchecked'), '\"></i>')" => "default"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -93,10 +98,10 @@
 	$x->TableIcon = "resources/table_icons/phone.png";
 	$x->PrimaryKey = "`phones`.`id`";
 
-	$x->ColWidth   = array(  150, 150);
-	$x->ColCaption = array("Kind", "PhoneNumber");
-	$x->ColFieldName = array('kind', 'phoneNumber');
-	$x->ColNumber  = array(2, 3);
+	$x->ColWidth   = array(  150, 150, 150);
+	$x->ColCaption = array("Kind", "PhoneNumber", "Default");
+	$x->ColFieldName = array('kind', 'phoneNumber', 'default');
+	$x->ColNumber  = array(2, 3, 6);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/phones_templateTV.html';

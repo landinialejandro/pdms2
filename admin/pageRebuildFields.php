@@ -250,14 +250,16 @@
 			'kind' => array('appgini' => 'VARCHAR(40) null '),
 			'phoneNumber' => array('appgini' => 'VARCHAR(255) null '),
 			'contact' => array('appgini' => 'INT unsigned null '),
-			'company' => array('appgini' => 'INT unsigned null ')
+			'company' => array('appgini' => 'INT unsigned null '),
+			'default' => array('appgini' => 'VARCHAR(40) null default \'0\' ')
 		),
 		'mails' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'kind' => array('appgini' => 'VARCHAR(40) null '),
 			'mail' => array('appgini' => 'VARCHAR(255) null '),
 			'contact' => array('appgini' => 'INT unsigned null '),
-			'company' => array('appgini' => 'INT unsigned null ')
+			'company' => array('appgini' => 'INT unsigned null '),
+			'default' => array('appgini' => 'VARCHAR(40) null default \'0\' ')
 		),
 		'contacts_companies' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),

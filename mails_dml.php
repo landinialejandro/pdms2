@@ -22,6 +22,8 @@ function mails_insert(){
 		if($data['contact'] == empty_lookup_value){ $data['contact'] = ''; }
 	$data['company'] = makeSafe($_REQUEST['company']);
 		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
+	$data['default'] = makeSafe($_REQUEST['default']);
+		if($data['default'] == empty_lookup_value){ $data['default'] = ''; }
 
 	// hook: mails_before_insert
 	if(function_exists('mails_before_insert')){
@@ -30,7 +32,7 @@ function mails_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `mails` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `mail`=' . (($data['mail'] !== '' && $data['mail'] !== NULL) ? "'{$data['mail']}'" : 'NULL'), $o);
+	sql('insert into `mails` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `mail`=' . (($data['mail'] !== '' && $data['mail'] !== NULL) ? "'{$data['mail']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"mails_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -121,6 +123,8 @@ function mails_update($selected_id){
 		if($data['contact'] == empty_lookup_value){ $data['contact'] = ''; }
 	$data['company'] = makeSafe($_REQUEST['company']);
 		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
+	$data['default'] = makeSafe($_REQUEST['default']);
+		if($data['default'] == empty_lookup_value){ $data['default'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: mails_before_update
@@ -130,7 +134,7 @@ function mails_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `mails` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `mail`=' . (($data['mail'] !== '' && $data['mail'] !== NULL) ? "'{$data['mail']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `mails` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `mail`=' . (($data['mail'] !== '' && $data['mail'] !== NULL) ? "'{$data['mail']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="mails_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -539,6 +543,7 @@ function mails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$jsReadOnly .= "\tjQuery('#kind').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#kind_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#mail').replaceWith('<div class=\"form-control-static\" id=\"mail\">' + (jQuery('#mail').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#default').prop('disabled', true);\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -580,6 +585,7 @@ function mails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 	$templateCode = str_replace('<%%UPLOADFILE(mail)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(contact)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(company)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(default)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -598,6 +604,7 @@ function mails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', safe_html($urow['company']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', html_attr($row['company']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode($urow['company']), $templateCode);
+		$templateCode = str_replace('<%%CHECKED(default)%%>', ($row['default'] ? "checked" : ""), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -609,6 +616,7 @@ function mails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$templateCode = str_replace('<%%URLVALUE(contact)%%>', urlencode( $_REQUEST['FilterField'][1]=='4' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_contact->SelectedData : ''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(company)%%>', ( $_REQUEST['FilterField'][1]=='5' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_company->SelectedData : ''), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode( $_REQUEST['FilterField'][1]=='5' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_company->SelectedData : ''), $templateCode);
+		$templateCode = str_replace('<%%CHECKED(default)%%>', '', $templateCode);
 	}
 
 	// process translations
