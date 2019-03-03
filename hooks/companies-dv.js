@@ -7,7 +7,7 @@ $j(function(){
     }
 });
 
-$j('#phone, #mail, #address').on('click', function () {
+$j('#phone, #mail, #address, #register').on('click', function () {
     var file = $j('.default-'+ $j(this).attr('id') + ' label').attr('for');
     childsFunctions(file,'Company',this.attributes.thisid.value);
 });
@@ -73,6 +73,9 @@ function getDefaultChild(child){
                 break;
             case 'phone':
                 text = 'telefono: ' + msg.phoneNumber;
+                break;
+            case 'register':
+                text = 'tax: ' + msg.tax + ', Anno: ' + msg.year + ', mese: ' + msg.month;
                 break;
             case 'address':
                 text = 'indirizzo: ' + msg.address + ' ' + msg.houseNumber + ', '+ msg.town + ', ' + msg.country + ' (' + msg.kind + ')';

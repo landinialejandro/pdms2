@@ -14,9 +14,9 @@ function vatRegister_insert(){
 		return false;
 	}
 
-	$data['idCompany'] = makeSafe($_REQUEST['idCompany']);
-		if($data['idCompany'] == empty_lookup_value){ $data['idCompany'] = ''; }
-	$data['companyName'] = makeSafe($_REQUEST['idCompany']);
+	$data['company'] = makeSafe($_REQUEST['company']);
+		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
+	$data['companyName'] = makeSafe($_REQUEST['company']);
 		if($data['companyName'] == empty_lookup_value){ $data['companyName'] = ''; }
 	$data['tax'] = makeSafe($_REQUEST['tax']);
 		if($data['tax'] == empty_lookup_value){ $data['tax'] = ''; }
@@ -50,7 +50,7 @@ function vatRegister_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `vatRegister` set       `idCompany`=' . (($data['idCompany'] !== '' && $data['idCompany'] !== NULL) ? "'{$data['idCompany']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `tax`=' . (($data['tax'] !== '' && $data['tax'] !== NULL) ? "'{$data['tax']}'" : 'NULL') . ', `month`=' . (($data['month'] !== '' && $data['month'] !== NULL) ? "'{$data['month']}'" : 'NULL') . ', `year`=' . (($data['year'] !== '' && $data['year'] !== NULL) ? "'{$data['year']}'" : 'NULL') . ', `amount`=' . (($data['amount'] !== '' && $data['amount'] !== NULL) ? "'{$data['amount']}'" : 'NULL') . ', `ufficio_Ced_PA`=' . (($data['ufficio_Ced_PA'] !== '' && $data['ufficio_Ced_PA'] !== NULL) ? "'{$data['ufficio_Ced_PA']}'" : 'NULL') . ', `numeroREA_Ced_PA`=' . (($data['numeroREA_Ced_PA'] !== '' && $data['numeroREA_Ced_PA'] !== NULL) ? "'{$data['numeroREA_Ced_PA']}'" : 'NULL') . ', `capitaleSociale_Ced_PA`=' . (($data['capitaleSociale_Ced_PA'] !== '' && $data['capitaleSociale_Ced_PA'] !== NULL) ? "'{$data['capitaleSociale_Ced_PA']}'" : 'NULL') . ', `socioUnico_Ced_PA`=' . (($data['socioUnico_Ced_PA'] !== '' && $data['socioUnico_Ced_PA'] !== NULL) ? "'{$data['socioUnico_Ced_PA']}'" : 'NULL') . ', `statoLiquidazione_Ced_PA`=' . (($data['statoLiquidazione_Ced_PA'] !== '' && $data['statoLiquidazione_Ced_PA'] !== NULL) ? "'{$data['statoLiquidazione_Ced_PA']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL'), $o);
+	sql('insert into `vatRegister` set       `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `tax`=' . (($data['tax'] !== '' && $data['tax'] !== NULL) ? "'{$data['tax']}'" : 'NULL') . ', `month`=' . (($data['month'] !== '' && $data['month'] !== NULL) ? "'{$data['month']}'" : 'NULL') . ', `year`=' . (($data['year'] !== '' && $data['year'] !== NULL) ? "'{$data['year']}'" : 'NULL') . ', `amount`=' . (($data['amount'] !== '' && $data['amount'] !== NULL) ? "'{$data['amount']}'" : 'NULL') . ', `ufficio_Ced_PA`=' . (($data['ufficio_Ced_PA'] !== '' && $data['ufficio_Ced_PA'] !== NULL) ? "'{$data['ufficio_Ced_PA']}'" : 'NULL') . ', `numeroREA_Ced_PA`=' . (($data['numeroREA_Ced_PA'] !== '' && $data['numeroREA_Ced_PA'] !== NULL) ? "'{$data['numeroREA_Ced_PA']}'" : 'NULL') . ', `capitaleSociale_Ced_PA`=' . (($data['capitaleSociale_Ced_PA'] !== '' && $data['capitaleSociale_Ced_PA'] !== NULL) ? "'{$data['capitaleSociale_Ced_PA']}'" : 'NULL') . ', `socioUnico_Ced_PA`=' . (($data['socioUnico_Ced_PA'] !== '' && $data['socioUnico_Ced_PA'] !== NULL) ? "'{$data['socioUnico_Ced_PA']}'" : 'NULL') . ', `statoLiquidazione_Ced_PA`=' . (($data['statoLiquidazione_Ced_PA'] !== '' && $data['statoLiquidazione_Ced_PA'] !== NULL) ? "'{$data['statoLiquidazione_Ced_PA']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"vatRegister_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -123,9 +123,9 @@ function vatRegister_update($selected_id){
 		return false;
 	}
 
-	$data['idCompany'] = makeSafe($_REQUEST['idCompany']);
-		if($data['idCompany'] == empty_lookup_value){ $data['idCompany'] = ''; }
-	$data['companyName'] = makeSafe($_REQUEST['idCompany']);
+	$data['company'] = makeSafe($_REQUEST['company']);
+		if($data['company'] == empty_lookup_value){ $data['company'] = ''; }
+	$data['companyName'] = makeSafe($_REQUEST['company']);
 		if($data['companyName'] == empty_lookup_value){ $data['companyName'] = ''; }
 	$data['tax'] = makeSafe($_REQUEST['tax']);
 		if($data['tax'] == empty_lookup_value){ $data['tax'] = ''; }
@@ -156,7 +156,7 @@ function vatRegister_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `vatRegister` set       `idCompany`=' . (($data['idCompany'] !== '' && $data['idCompany'] !== NULL) ? "'{$data['idCompany']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `tax`=' . (($data['tax'] !== '' && $data['tax'] !== NULL) ? "'{$data['tax']}'" : 'NULL') . ', `month`=' . (($data['month'] !== '' && $data['month'] !== NULL) ? "'{$data['month']}'" : 'NULL') . ', `year`=' . (($data['year'] !== '' && $data['year'] !== NULL) ? "'{$data['year']}'" : 'NULL') . ', `amount`=' . (($data['amount'] !== '' && $data['amount'] !== NULL) ? "'{$data['amount']}'" : 'NULL') . ', `ufficio_Ced_PA`=' . (($data['ufficio_Ced_PA'] !== '' && $data['ufficio_Ced_PA'] !== NULL) ? "'{$data['ufficio_Ced_PA']}'" : 'NULL') . ', `numeroREA_Ced_PA`=' . (($data['numeroREA_Ced_PA'] !== '' && $data['numeroREA_Ced_PA'] !== NULL) ? "'{$data['numeroREA_Ced_PA']}'" : 'NULL') . ', `capitaleSociale_Ced_PA`=' . (($data['capitaleSociale_Ced_PA'] !== '' && $data['capitaleSociale_Ced_PA'] !== NULL) ? "'{$data['capitaleSociale_Ced_PA']}'" : 'NULL') . ', `socioUnico_Ced_PA`=' . (($data['socioUnico_Ced_PA'] !== '' && $data['socioUnico_Ced_PA'] !== NULL) ? "'{$data['socioUnico_Ced_PA']}'" : 'NULL') . ', `statoLiquidazione_Ced_PA`=' . (($data['statoLiquidazione_Ced_PA'] !== '' && $data['statoLiquidazione_Ced_PA'] !== NULL) ? "'{$data['statoLiquidazione_Ced_PA']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `vatRegister` set       `company`=' . (($data['company'] !== '' && $data['company'] !== NULL) ? "'{$data['company']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `tax`=' . (($data['tax'] !== '' && $data['tax'] !== NULL) ? "'{$data['tax']}'" : 'NULL') . ', `month`=' . (($data['month'] !== '' && $data['month'] !== NULL) ? "'{$data['month']}'" : 'NULL') . ', `year`=' . (($data['year'] !== '' && $data['year'] !== NULL) ? "'{$data['year']}'" : 'NULL') . ', `amount`=' . (($data['amount'] !== '' && $data['amount'] !== NULL) ? "'{$data['amount']}'" : 'NULL') . ', `ufficio_Ced_PA`=' . (($data['ufficio_Ced_PA'] !== '' && $data['ufficio_Ced_PA'] !== NULL) ? "'{$data['ufficio_Ced_PA']}'" : 'NULL') . ', `numeroREA_Ced_PA`=' . (($data['numeroREA_Ced_PA'] !== '' && $data['numeroREA_Ced_PA'] !== NULL) ? "'{$data['numeroREA_Ced_PA']}'" : 'NULL') . ', `capitaleSociale_Ced_PA`=' . (($data['capitaleSociale_Ced_PA'] !== '' && $data['capitaleSociale_Ced_PA'] !== NULL) ? "'{$data['capitaleSociale_Ced_PA']}'" : 'NULL') . ', `socioUnico_Ced_PA`=' . (($data['socioUnico_Ced_PA'] !== '' && $data['socioUnico_Ced_PA'] !== NULL) ? "'{$data['socioUnico_Ced_PA']}'" : 'NULL') . ', `statoLiquidazione_Ced_PA`=' . (($data['statoLiquidazione_Ced_PA'] !== '' && $data['statoLiquidazione_Ced_PA'] !== NULL) ? "'{$data['statoLiquidazione_Ced_PA']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="vatRegister_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -198,14 +198,14 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		$dvprint = true;
 	}
 
-	$filterer_idCompany = thisOr(undo_magic_quotes($_REQUEST['filterer_idCompany']), '');
+	$filterer_company = thisOr(undo_magic_quotes($_REQUEST['filterer_company']), '');
 
 	// populate filterers, starting from children to grand-parents
 
 	// unique random identifier
 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
-	// combobox: idCompany
-	$combo_idCompany = new DataCombo;
+	// combobox: company
+	$combo_company = new DataCombo;
 	// combobox: tax
 	$combo_tax = new Combo;
 	$combo_tax->ListType = 0;
@@ -311,22 +311,22 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		$urow = $row; /* unsanitized data */
 		$hc = new CI_Input();
 		$row = $hc->xss_clean($row); /* sanitize data */
-		$combo_idCompany->SelectedData = $row['idCompany'];
+		$combo_company->SelectedData = $row['company'];
 		$combo_tax->SelectedData = $row['tax'];
 		$combo_month->SelectedData = $row['month'];
 		$combo_ufficio_Ced_PA->SelectedData = $row['ufficio_Ced_PA'];
 		$combo_socioUnico_Ced_PA->SelectedData = $row['socioUnico_Ced_PA'];
 		$combo_statoLiquidazione_Ced_PA->SelectedData = $row['statoLiquidazione_Ced_PA'];
 	}else{
-		$combo_idCompany->SelectedData = $filterer_idCompany;
+		$combo_company->SelectedData = $filterer_company;
 		$combo_tax->SelectedText = ( $_REQUEST['FilterField'][1]=='4' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "4%");
 		$combo_month->SelectedText = ( $_REQUEST['FilterField'][1]=='5' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
 		$combo_ufficio_Ced_PA->SelectedText = ( $_REQUEST['FilterField'][1]=='8' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
 		$combo_socioUnico_Ced_PA->SelectedText = ( $_REQUEST['FilterField'][1]=='11' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "SM");
 		$combo_statoLiquidazione_Ced_PA->SelectedText = ( $_REQUEST['FilterField'][1]=='12' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "LN");
 	}
-	$combo_idCompany->HTML = '<span id="idCompany-container' . $rnd1 . '"></span><input type="hidden" name="idCompany" id="idCompany' . $rnd1 . '" value="' . html_attr($combo_idCompany->SelectedData) . '">';
-	$combo_idCompany->MatchText = '<span id="idCompany-container-readonly' . $rnd1 . '"></span><input type="hidden" name="idCompany" id="idCompany' . $rnd1 . '" value="' . html_attr($combo_idCompany->SelectedData) . '">';
+	$combo_company->HTML = '<span id="company-container' . $rnd1 . '"></span><input type="hidden" name="company" id="company' . $rnd1 . '" value="' . html_attr($combo_company->SelectedData) . '">';
+	$combo_company->MatchText = '<span id="company-container-readonly' . $rnd1 . '"></span><input type="hidden" name="company" id="company' . $rnd1 . '" value="' . html_attr($combo_company->SelectedData) . '">';
 	$combo_tax->Render();
 	$combo_month->Render();
 	$combo_ufficio_Ced_PA->Render();
@@ -338,34 +338,34 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 
 	<script>
 		// initial lookup values
-		AppGini.current_idCompany__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['idCompany'] : $filterer_idCompany); ?>"};
+		AppGini.current_company__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['company'] : $filterer_company); ?>"};
 
 		jQuery(function() {
 			setTimeout(function(){
-				if(typeof(idCompany_reload__RAND__) == 'function') idCompany_reload__RAND__();
+				if(typeof(company_reload__RAND__) == 'function') company_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
 		});
-		function idCompany_reload__RAND__(){
+		function company_reload__RAND__(){
 		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
 
-			$j("#idCompany-container__RAND__").select2({
+			$j("#company-container__RAND__").select2({
 				/* initial default value */
 				initSelection: function(e, c){
 					$j.ajax({
 						url: 'ajax_combo.php',
 						dataType: 'json',
-						data: { id: AppGini.current_idCompany__RAND__.value, t: 'vatRegister', f: 'idCompany' },
+						data: { id: AppGini.current_company__RAND__.value, t: 'vatRegister', f: 'company' },
 						success: function(resp){
 							c({
 								id: resp.results[0].id,
 								text: resp.results[0].text
 							});
-							$j('[name="idCompany"]').val(resp.results[0].id);
-							$j('[id=idCompany-container-readonly__RAND__]').html('<span id="idCompany-match-text">' + resp.results[0].text + '</span>');
+							$j('[name="company"]').val(resp.results[0].id);
+							$j('[id=company-container-readonly__RAND__]').html('<span id="company-match-text">' + resp.results[0].text + '</span>');
 							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
 
 
-							if(typeof(idCompany_update_autofills__RAND__) == 'function') idCompany_update_autofills__RAND__();
+							if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
 						}
 					});
 				},
@@ -377,31 +377,31 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 					url: 'ajax_combo.php',
 					dataType: 'json',
 					cache: true,
-					data: function(term, page){ /* */ return { s: term, p: page, t: 'vatRegister', f: 'idCompany' }; },
+					data: function(term, page){ /* */ return { s: term, p: page, t: 'vatRegister', f: 'company' }; },
 					results: function(resp, page){ /* */ return resp; }
 				},
 				escapeMarkup: function(str){ /* */ return str; }
 			}).on('change', function(e){
-				AppGini.current_idCompany__RAND__.value = e.added.id;
-				AppGini.current_idCompany__RAND__.text = e.added.text;
-				$j('[name="idCompany"]').val(e.added.id);
+				AppGini.current_company__RAND__.value = e.added.id;
+				AppGini.current_company__RAND__.text = e.added.text;
+				$j('[name="company"]').val(e.added.id);
 				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
 
 
-				if(typeof(idCompany_update_autofills__RAND__) == 'function') idCompany_update_autofills__RAND__();
+				if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
 			});
 
-			if(!$j("#idCompany-container__RAND__").length){
+			if(!$j("#company-container__RAND__").length){
 				$j.ajax({
 					url: 'ajax_combo.php',
 					dataType: 'json',
-					data: { id: AppGini.current_idCompany__RAND__.value, t: 'vatRegister', f: 'idCompany' },
+					data: { id: AppGini.current_company__RAND__.value, t: 'vatRegister', f: 'company' },
 					success: function(resp){
-						$j('[name="idCompany"]').val(resp.results[0].id);
-						$j('[id=idCompany-container-readonly__RAND__]').html('<span id="idCompany-match-text">' + resp.results[0].text + '</span>');
+						$j('[name="company"]').val(resp.results[0].id);
+						$j('[id=company-container-readonly__RAND__]').html('<span id="company-match-text">' + resp.results[0].text + '</span>');
 						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
 
-						if(typeof(idCompany_update_autofills__RAND__) == 'function') idCompany_update_autofills__RAND__();
+						if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
 					}
 				});
 			}
@@ -411,12 +411,12 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 			$j.ajax({
 				url: 'ajax_combo.php',
 				dataType: 'json',
-				data: { id: AppGini.current_idCompany__RAND__.value, t: 'vatRegister', f: 'idCompany' },
+				data: { id: AppGini.current_company__RAND__.value, t: 'vatRegister', f: 'company' },
 				success: function(resp){
-					$j('[id=idCompany-container__RAND__], [id=idCompany-container-readonly__RAND__]').html('<span id="idCompany-match-text">' + resp.results[0].text + '</span>');
+					$j('[id=company-container__RAND__], [id=company-container-readonly__RAND__]').html('<span id="company-match-text">' + resp.results[0].text + '</span>');
 					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=companies_view_parent]').hide(); }else{ $j('.btn[id=companies_view_parent]').show(); }
 
-					if(typeof(idCompany_update_autofills__RAND__) == 'function') idCompany_update_autofills__RAND__();
+					if(typeof(company_update_autofills__RAND__) == 'function') company_update_autofills__RAND__();
 				}
 			});
 		<?php } ?>
@@ -480,8 +480,8 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 
 	// set records to read only if user can't insert new records and can't edit current record
 	if(($selected_id && !$AllowUpdate && !$AllowInsert) || (!$selected_id && !$AllowInsert)){
-		$jsReadOnly .= "\tjQuery('#idCompany').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#idCompany_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+		$jsReadOnly .= "\tjQuery('#company').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#company_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#tax').replaceWith('<div class=\"form-control-static\" id=\"tax\">' + (jQuery('#tax').val() || '') + '</div>'); jQuery('#tax-multi-selection-help').hide();\n";
 		$jsReadOnly .= "\tjQuery('#month').replaceWith('<div class=\"form-control-static\" id=\"month\">' + (jQuery('#month').val() || '') + '</div>'); jQuery('#month-multi-selection-help').hide();\n";
 		$jsReadOnly .= "\tjQuery('#year').replaceWith('<div class=\"form-control-static\" id=\"year\">' + (jQuery('#year').val() || '') + '</div>');\n";
@@ -501,9 +501,9 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 	}
 
 	// process combos
-	$templateCode = str_replace('<%%COMBO(idCompany)%%>', $combo_idCompany->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(idCompany)%%>', $combo_idCompany->MatchText, $templateCode);
-	$templateCode = str_replace('<%%URLCOMBOTEXT(idCompany)%%>', urlencode($combo_idCompany->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(company)%%>', $combo_company->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(company)%%>', $combo_company->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(company)%%>', urlencode($combo_company->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(tax)%%>', $combo_tax->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(tax)%%>', $combo_tax->SelectedData, $templateCode);
 	$templateCode = str_replace('<%%COMBO(month)%%>', $combo_month->HTML, $templateCode);
@@ -516,7 +516,7 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 	$templateCode = str_replace('<%%COMBOTEXT(statoLiquidazione_Ced_PA)%%>', $combo_statoLiquidazione_Ced_PA->SelectedData, $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'idCompany' => array('companies', 'ID Azienda'));
+	$lookup_fields = array(  'company' => array('companies', 'ID Azienda'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -533,7 +533,7 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 
 	// process images
 	$templateCode = str_replace('<%%UPLOADFILE(id)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(idCompany)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(company)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(tax)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(month)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(year)%%>', '', $templateCode);
@@ -550,9 +550,9 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(id)%%>', safe_html($urow['id']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(id)%%>', html_attr($row['id']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode($urow['id']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(idCompany)%%>', safe_html($urow['idCompany']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(idCompany)%%>', html_attr($row['idCompany']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(idCompany)%%>', urlencode($urow['idCompany']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', safe_html($urow['company']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(company)%%>', html_attr($row['company']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode($urow['company']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(tax)%%>', safe_html($urow['tax']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(tax)%%>', html_attr($row['tax']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(tax)%%>', urlencode($urow['tax']), $templateCode);
@@ -584,8 +584,8 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(idCompany)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(idCompany)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(company)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(company)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(tax)%%>', '4%', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(tax)%%>', urlencode('4%'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(month)%%>', '', $templateCode);
@@ -638,18 +638,18 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 	$templateCode .= '<script>';
 	$templateCode .= '$j(function() {';
 
-	$templateCode .= "\tidCompany_update_autofills$rnd1 = function(){\n";
+	$templateCode .= "\tcompany_update_autofills$rnd1 = function(){\n";
 	$templateCode .= "\t\t\$j.ajax({\n";
 	if($dvprint){
-		$templateCode .= "\t\t\turl: 'vatRegister_autofill.php?rnd1=$rnd1&mfk=idCompany&id=' + encodeURIComponent('".addslashes($row['idCompany'])."'),\n";
+		$templateCode .= "\t\t\turl: 'vatRegister_autofill.php?rnd1=$rnd1&mfk=company&id=' + encodeURIComponent('".addslashes($row['company'])."'),\n";
 		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET'\n";
 	}else{
-		$templateCode .= "\t\t\turl: 'vatRegister_autofill.php?rnd1=$rnd1&mfk=idCompany&id=' + encodeURIComponent(AppGini.current_idCompany{$rnd1}.value),\n";
-		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET', beforeSend: function(){ /* */ \$j('#idCompany$rnd1').prop('disabled', true); \$j('#idCompanyLoading').html('<img src=loading.gif align=top>'); }, complete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#idCompany$rnd1').prop('disabled', false); " : "\$j('#idCompany$rnd1').prop('disabled', true); ")."\$j('#idCompanyLoading').html('');}\n";
+		$templateCode .= "\t\t\turl: 'vatRegister_autofill.php?rnd1=$rnd1&mfk=company&id=' + encodeURIComponent(AppGini.current_company{$rnd1}.value),\n";
+		$templateCode .= "\t\t\tcontentType: 'application/x-www-form-urlencoded; charset=" . datalist_db_encoding . "', type: 'GET', beforeSend: function(){ /* */ \$j('#company$rnd1').prop('disabled', true); \$j('#companyLoading').html('<img src=loading.gif align=top>'); }, complete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#company$rnd1').prop('disabled', false); " : "\$j('#company$rnd1').prop('disabled', true); ")."\$j('#companyLoading').html('');}\n";
 	}
 	$templateCode.="\t\t});\n";
 	$templateCode.="\t};\n";
-	if(!$dvprint) $templateCode.="\tif(\$j('#idCompany_caption').length) \$j('#idCompany_caption').click(function(){ /* */ idCompany_update_autofills$rnd1(); });\n";
+	if(!$dvprint) $templateCode.="\tif(\$j('#company_caption').length) \$j('#company_caption').click(function(){ /* */ company_update_autofills$rnd1(); });\n";
 
 
 	$templateCode.="});";

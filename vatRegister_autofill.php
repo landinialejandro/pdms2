@@ -24,7 +24,7 @@
 
 	switch($mfk){
 
-		case 'idCompany':
+		case 'company':
 			if(!$id){
 				?>
 				$j('#companyName<?php echo $rnd1; ?>').html('&nbsp;');

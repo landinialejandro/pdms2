@@ -23,8 +23,8 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
 		"`vatRegister`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyCode`), '') /* ID Azienda */" => "idCompany",
-		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Esercizio commerciale */" => "companyName",
+		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* ID Azienda */" => "company",
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Nome Societ&#224; */" => "companyName",
 		"`vatRegister`.`tax`" => "tax",
 		"`vatRegister`.`month`" => "month",
 		"`vatRegister`.`year`" => "year",
@@ -39,7 +39,7 @@
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
 		1 => '`vatRegister`.`id`',
-		2 => '`companies1`.`companyCode`',
+		2 => 2,
 		3 => '`companies1`.`companyName`',
 		4 => 4,
 		5 => 5,
@@ -56,8 +56,8 @@
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
 		"`vatRegister`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyCode`), '') /* ID Azienda */" => "idCompany",
-		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Esercizio commerciale */" => "companyName",
+		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* ID Azienda */" => "company",
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Nome Societ&#224; */" => "companyName",
 		"`vatRegister`.`tax`" => "tax",
 		"`vatRegister`.`month`" => "month",
 		"`vatRegister`.`year`" => "year",
@@ -72,8 +72,8 @@
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
 		"`vatRegister`.`id`" => "ID",
-		"IF(    CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyCode`), '') /* ID Azienda */" => "ID Azienda",
-		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Esercizio commerciale */" => "Esercizio commerciale",
+		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* ID Azienda */" => "ID Azienda",
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Nome Societ&#224; */" => "Nome Societ&#224;",
 		"`vatRegister`.`tax`" => "Aliquota riferimento",
 		"`vatRegister`.`month`" => "Mese corrispettivi",
 		"`vatRegister`.`year`" => "Anno",
@@ -89,8 +89,8 @@
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
 		"`vatRegister`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyCode`), '') /* ID Azienda */" => "idCompany",
-		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Esercizio commerciale */" => "companyName",
+		"IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') /* ID Azienda */" => "company",
+		"IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') /* Nome Societ&#224; */" => "companyName",
 		"`vatRegister`.`tax`" => "tax",
 		"`vatRegister`.`month`" => "month",
 		"`vatRegister`.`year`" => "year",
@@ -104,9 +104,9 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'idCompany' => 'ID Azienda');
+	$x->filterers = array(  'company' => 'ID Azienda');
 
-	$x->QueryFrom = "`vatRegister` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`vatRegister`.`idCompany` ";
+	$x->QueryFrom = "`vatRegister` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`vatRegister`.`company` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -134,8 +134,8 @@
 	$x->PrimaryKey = "`vatRegister`.`id`";
 
 	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("ID Azienda", "Esercizio commerciale", "Aliquota riferimento", "Mese corrispettivi", "Anno", "Importo", "Ufficio Cedente PA", "Numero Iscr. REA PA", "Capitale Sociale Ced. PA", "Socio Unico Ced. PA", "Stato Liquidazione", "Default");
-	$x->ColFieldName = array('idCompany', 'companyName', 'tax', 'month', 'year', 'amount', 'ufficio_Ced_PA', 'numeroREA_Ced_PA', 'capitaleSociale_Ced_PA', 'socioUnico_Ced_PA', 'statoLiquidazione_Ced_PA', 'default');
+	$x->ColCaption = array("ID Azienda", "Nome Societ&#224;", "Aliquota riferimento", "Mese corrispettivi", "Anno", "Importo", "Ufficio Cedente PA", "Numero Iscr. REA PA", "Capitale Sociale Ced. PA", "Socio Unico Ced. PA", "Stato Liquidazione", "Default");
+	$x->ColFieldName = array('company', 'companyName', 'tax', 'month', 'year', 'amount', 'ufficio_Ced_PA', 'numeroREA_Ced_PA', 'capitaleSociale_Ced_PA', 'socioUnico_Ced_PA', 'statoLiquidazione_Ced_PA', 'default');
 	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
 
 	// template paths below are based on the app main directory
@@ -197,7 +197,7 @@
 		if($row = db_fetch_row($res)){
 			$sumRow = '<tr class="success">';
 			if(!isset($_REQUEST['Print_x'])) $sumRow .= '<td class="text-center"><strong>&sum;</strong></td>';
-			$sumRow .= '<td class="vatRegister-idCompany"></td>';
+			$sumRow .= '<td class="vatRegister-company"></td>';
 			$sumRow .= '<td class="vatRegister-companyName"></td>';
 			$sumRow .= '<td class="vatRegister-tax"></td>';
 			$sumRow .= '<td class="vatRegister-month"></td>';

@@ -355,7 +355,7 @@
 				)
 			),
 			'vatRegister' => array(   
-				'idCompany' => array(   
+				'company' => array(   
 					'parent-table' => 'companies',
 					'parent-primary-key' => 'id',
 					'child-primary-key' => 'id',
@@ -366,9 +366,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'ID Azienda', 2 => 'Esercizio commerciale', 3 => 'Aliquota riferimento', 4 => 'Mese corrispettivi', 5 => 'Anno', 6 => 'Importo', 7 => 'Ufficio Cedente PA', 8 => 'Numero Iscr. REA PA', 9 => 'Capitale Sociale Ced. PA', 10 => 'Socio Unico Ced. PA', 11 => 'Stato Liquidazione', 12 => 'Default'),
-					'display-field-names' => array(1 => 'idCompany', 2 => 'companyName', 3 => 'tax', 4 => 'month', 5 => 'year', 6 => 'amount', 7 => 'ufficio_Ced_PA', 8 => 'numeroREA_Ced_PA', 9 => 'capitaleSociale_Ced_PA', 10 => 'socioUnico_Ced_PA', 11 => 'statoLiquidazione_Ced_PA', 12 => 'default'),
-					'sortable-fields' => array(0 => '`vatRegister`.`id`', 1 => '`companies1`.`companyCode`', 2 => '`companies1`.`companyName`', 3 => 4, 4 => 5, 5 => 6, 6 => '`vatRegister`.`amount`', 7 => 8, 8 => 9, 9 => '`vatRegister`.`capitaleSociale_Ced_PA`', 10 => 11, 11 => 12, 12 => '`vatRegister`.`default`'),
+					'display-fields' => array(1 => 'ID Azienda', 2 => 'Nome Societ&#224;', 3 => 'Aliquota riferimento', 4 => 'Mese corrispettivi', 5 => 'Anno', 6 => 'Importo', 7 => 'Ufficio Cedente PA', 8 => 'Numero Iscr. REA PA', 9 => 'Capitale Sociale Ced. PA', 10 => 'Socio Unico Ced. PA', 11 => 'Stato Liquidazione', 12 => 'Default'),
+					'display-field-names' => array(1 => 'company', 2 => 'companyName', 3 => 'tax', 4 => 'month', 5 => 'year', 6 => 'amount', 7 => 'ufficio_Ced_PA', 8 => 'numeroREA_Ced_PA', 9 => 'capitaleSociale_Ced_PA', 10 => 'socioUnico_Ced_PA', 11 => 'statoLiquidazione_Ced_PA', 12 => 'default'),
+					'sortable-fields' => array(0 => '`vatRegister`.`id`', 1 => 2, 2 => '`companies1`.`companyName`', 3 => 4, 4 => 5, 5 => 6, 6 => '`vatRegister`.`amount`', 7 => 8, 8 => 9, 9 => '`vatRegister`.`capitaleSociale_Ced_PA`', 10 => 11, 11 => 12, 12 => '`vatRegister`.`default`'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -377,7 +377,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-vatRegister',
 					'template-printable' => 'children-vatRegister-printable',
-					'query' => "SELECT `vatRegister`.`id` as 'id', IF(    CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyCode`), '') as 'idCompany', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'companyName', `vatRegister`.`tax` as 'tax', `vatRegister`.`month` as 'month', `vatRegister`.`year` as 'year', `vatRegister`.`amount` as 'amount', `vatRegister`.`ufficio_Ced_PA` as 'ufficio_Ced_PA', `vatRegister`.`numeroREA_Ced_PA` as 'numeroREA_Ced_PA', `vatRegister`.`capitaleSociale_Ced_PA` as 'capitaleSociale_Ced_PA', `vatRegister`.`socioUnico_Ced_PA` as 'socioUnico_Ced_PA', `vatRegister`.`statoLiquidazione_Ced_PA` as 'statoLiquidazione_Ced_PA', concat('<i class=\"glyphicon glyphicon-', if(`vatRegister`.`default`, 'check', 'unchecked'), '\"></i>') as 'default' FROM `vatRegister` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`vatRegister`.`idCompany` "
+					'query' => "SELECT `vatRegister`.`id` as 'id', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'companyName', `vatRegister`.`tax` as 'tax', `vatRegister`.`month` as 'month', `vatRegister`.`year` as 'year', `vatRegister`.`amount` as 'amount', `vatRegister`.`ufficio_Ced_PA` as 'ufficio_Ced_PA', `vatRegister`.`numeroREA_Ced_PA` as 'numeroREA_Ced_PA', `vatRegister`.`capitaleSociale_Ced_PA` as 'capitaleSociale_Ced_PA', `vatRegister`.`socioUnico_Ced_PA` as 'socioUnico_Ced_PA', `vatRegister`.`statoLiquidazione_Ced_PA` as 'statoLiquidazione_Ced_PA', concat('<i class=\"glyphicon glyphicon-', if(`vatRegister`.`default`, 'check', 'unchecked'), '\"></i>') as 'default' FROM `vatRegister` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`vatRegister`.`company` "
 				)
 			),
 			'contacts' => array(   

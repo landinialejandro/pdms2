@@ -43,21 +43,24 @@ if($order_values['kind'] !== 'OUT'){
         retMailPhonelFax_Company($mail, $phone, $fax, $company['id']);
 
         //default contact in multiCompany or first contact found
-        $defualtContactId = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$order_values['company']} ORDER BY contacts_companies.default DESC LIMIT 1"));
-            if (!$defualtContactId){
-                exit(error_message('<h1>Contact company not setting</h1>', false));
-            }
-            $where_id = "AND contacts.id = {$defualtContactId}";
-            $contact = getDataTable("contacts", $where_id);
+        if ($company['personaFisica'] === 'Si'){
             
-            //and address contact
-            $where_id="AND addresses.contact = {$defualtContactId} ORDER BY addresses.default, addresses.id DESC LIMIT 1;";
-            $addressContact = getDataTable("addresses", $where_id);
+            $defualtContactId = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$order_values['company']} ORDER BY contacts_companies.default DESC LIMIT 1"));
+                if (!$defualtContactId){
+                    exit(error_message('<h1>Contact company not setting</h1>', false));
+                }
+                $where_id = "AND contacts.id = {$defualtContactId}";
+                $contact = getDataTable("contacts", $where_id);
 
-            if (!$addressContact) {
-                exit(error_message('<h1>Adrress contact not valid</h1>', false));
-            }
-            retMailPhonelFax_Contact($mailContact, $phoneContact, $faxContact, $defualtContactId);
+                //and address contact
+                $where_id="AND addresses.contact = {$defualtContactId} ORDER BY addresses.default, addresses.id DESC LIMIT 1;";
+                $addressContact = getDataTable("addresses", $where_id);
+
+                if (!$addressContact) {
+                    exit(error_message('<h1>Adrress contact not valid</h1>', false));
+                }
+                retMailPhonelFax_Contact($mailContact, $phoneContact, $faxContact, $defualtContactId);
+        }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -589,12 +592,12 @@ $body = $xml_invoice->FatturaElettronicaBody;
         $where_id = "AND ordersDetails.id = {$item['id']}";
         $item_values = getDataTable_Values('ordersDetails', $where_id);
         
-        var_dump($item_values);
+//        var_dump($item_values);
         
         $where_id = "AND products.id = {$item_values['productCode']}";
         $product = getDataTable_Values("products", $where_id);
         
-        var_dump($product);
+//        var_dump($product);
         
         $categoryId = sqlValue("select products.CategoryID from products where products.id = {$product['id']}");
         $categoryData = getKindsData($categoryId );

@@ -144,7 +144,7 @@
 		),
 		'vatRegister' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
-			'idCompany' => array('appgini' => 'INT unsigned null '),
+			'company' => array('appgini' => 'INT unsigned null '),
 			'companyName' => array('appgini' => 'INT unsigned null '),
 			'tax' => array('appgini' => 'VARCHAR(40) null default \'4%\' '),
 			'month' => array('appgini' => 'VARCHAR(40) null '),
