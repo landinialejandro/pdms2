@@ -559,7 +559,7 @@
 				'custom_query' => '',
 				'inherit_permissions' => false,
 				'list_type' => 0,
-				'not_null' => true
+				'not_null' => false
 			),
 			'district' => array(
 				'parent_table' => 'town',
@@ -570,7 +570,7 @@
 				'custom_query' => '',
 				'inherit_permissions' => false,
 				'list_type' => 0,
-				'not_null' => true
+				'not_null' => false
 			),
 			'contact' => array(
 				'parent_table' => 'contacts',

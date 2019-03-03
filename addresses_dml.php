@@ -60,16 +60,6 @@ function addresses_insert(){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	if($data['postalCode']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'PostalCode': " . $Translation['field not null'] . '<br><br>';
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
-	if($data['district']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'District': " . $Translation['field not null'] . '<br><br>';
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 
 	// hook: addresses_before_insert
 	if(function_exists('addresses_before_insert')){
@@ -195,18 +185,8 @@ function addresses_update($selected_id){
 	}
 	$data['postalCode'] = makeSafe($_REQUEST['town']);
 		if($data['postalCode'] == empty_lookup_value){ $data['postalCode'] = ''; }
-	if($data['postalCode']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'PostalCode': {$Translation['field not null']}<br><br>";
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 	$data['district'] = makeSafe($_REQUEST['town']);
 		if($data['district'] == empty_lookup_value){ $data['district'] = ''; }
-	if($data['district']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'District': {$Translation['field not null']}<br><br>";
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 	$data['contact'] = makeSafe($_REQUEST['contact']);
 		if($data['contact'] == empty_lookup_value){ $data['contact'] = ''; }
 	$data['company'] = makeSafe($_REQUEST['company']);
