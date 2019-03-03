@@ -40,16 +40,6 @@ function companies_insert(){
 		if($data['RiferimentoAmministrazione'] == empty_lookup_value){ $data['RiferimentoAmministrazione'] = ''; }
 	$data['FormatoTrasmissione'] = makeSafe($_REQUEST['FormatoTrasmissione']);
 		if($data['FormatoTrasmissione'] == empty_lookup_value){ $data['FormatoTrasmissione'] = ''; }
-	$data['REA_Ufficio'] = makeSafe($_REQUEST['REA_Ufficio']);
-		if($data['REA_Ufficio'] == empty_lookup_value){ $data['REA_Ufficio'] = ''; }
-	$data['REA_NumeroREA'] = makeSafe($_REQUEST['REA_NumeroREA']);
-		if($data['REA_NumeroREA'] == empty_lookup_value){ $data['REA_NumeroREA'] = ''; }
-	$data['REA_CapitaleSociale'] = makeSafe($_REQUEST['REA_CapitaleSociale']);
-		if($data['REA_CapitaleSociale'] == empty_lookup_value){ $data['REA_CapitaleSociale'] = ''; }
-	$data['REA_SocioUnico'] = makeSafe($_REQUEST['REA_SocioUnico']);
-		if($data['REA_SocioUnico'] == empty_lookup_value){ $data['REA_SocioUnico'] = ''; }
-	$data['REA_StatoLiquidazione'] = makeSafe($_REQUEST['REA_StatoLiquidazione']);
-		if($data['REA_StatoLiquidazione'] == empty_lookup_value){ $data['REA_StatoLiquidazione'] = ''; }
 	$data['RIT_soggettoRitenuta'] = makeSafe($_REQUEST['RIT_soggettoRitenuta']);
 		if($data['RIT_soggettoRitenuta'] == empty_lookup_value){ $data['RIT_soggettoRitenuta'] = ''; }
 	$data['RIT_tipoRitenuta'] = makeSafe($_REQUEST['RIT_tipoRitenuta']);
@@ -81,18 +71,6 @@ function companies_insert(){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	if($data['REA_SocioUnico'] == '') $data['REA_SocioUnico'] = "SU";
-	if($data['REA_SocioUnico']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'REA SocioUnico': " . $Translation['field not null'] . '<br><br>';
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
-	if($data['REA_StatoLiquidazione'] == '') $data['REA_StatoLiquidazione'] = "LN";
-	if($data['REA_StatoLiquidazione']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'StatoLiquidazione': " . $Translation['field not null'] . '<br><br>';
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 	if($data['RIT_tipoRitenuta'] == '') $data['RIT_tipoRitenuta'] = "RT02";
 	if($data['RIT_tipoRitenuta']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'RIT tipo Ritenuta': " . $Translation['field not null'] . '<br><br>';
@@ -107,7 +85,7 @@ function companies_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `REA_Ufficio`=' . (($data['REA_Ufficio'] !== '' && $data['REA_Ufficio'] !== NULL) ? "'{$data['REA_Ufficio']}'" : 'NULL') . ', `REA_NumeroREA`=' . (($data['REA_NumeroREA'] !== '' && $data['REA_NumeroREA'] !== NULL) ? "'{$data['REA_NumeroREA']}'" : 'NULL') . ', `REA_CapitaleSociale`=' . (($data['REA_CapitaleSociale'] !== '' && $data['REA_CapitaleSociale'] !== NULL) ? "'{$data['REA_CapitaleSociale']}'" : 'NULL') . ', `REA_SocioUnico`=' . (($data['REA_SocioUnico'] !== '' && $data['REA_SocioUnico'] !== NULL) ? "'{$data['REA_SocioUnico']}'" : 'NULL') . ', `REA_StatoLiquidazione`=' . (($data['REA_StatoLiquidazione'] !== '' && $data['REA_StatoLiquidazione'] !== NULL) ? "'{$data['REA_StatoLiquidazione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL'), $o);
+	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"companies_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -530,26 +508,6 @@ function companies_update($selected_id){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	$data['REA_Ufficio'] = makeSafe($_REQUEST['REA_Ufficio']);
-		if($data['REA_Ufficio'] == empty_lookup_value){ $data['REA_Ufficio'] = ''; }
-	$data['REA_NumeroREA'] = makeSafe($_REQUEST['REA_NumeroREA']);
-		if($data['REA_NumeroREA'] == empty_lookup_value){ $data['REA_NumeroREA'] = ''; }
-	$data['REA_CapitaleSociale'] = makeSafe($_REQUEST['REA_CapitaleSociale']);
-		if($data['REA_CapitaleSociale'] == empty_lookup_value){ $data['REA_CapitaleSociale'] = ''; }
-	$data['REA_SocioUnico'] = makeSafe($_REQUEST['REA_SocioUnico']);
-		if($data['REA_SocioUnico'] == empty_lookup_value){ $data['REA_SocioUnico'] = ''; }
-	if($data['REA_SocioUnico']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'REA SocioUnico': {$Translation['field not null']}<br><br>";
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
-	$data['REA_StatoLiquidazione'] = makeSafe($_REQUEST['REA_StatoLiquidazione']);
-		if($data['REA_StatoLiquidazione'] == empty_lookup_value){ $data['REA_StatoLiquidazione'] = ''; }
-	if($data['REA_StatoLiquidazione']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'StatoLiquidazione': {$Translation['field not null']}<br><br>";
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 	$data['RIT_soggettoRitenuta'] = makeSafe($_REQUEST['RIT_soggettoRitenuta']);
 		if($data['RIT_soggettoRitenuta'] == empty_lookup_value){ $data['RIT_soggettoRitenuta'] = ''; }
 	$data['RIT_tipoRitenuta'] = makeSafe($_REQUEST['RIT_tipoRitenuta']);
@@ -572,7 +530,7 @@ function companies_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `REA_Ufficio`=' . (($data['REA_Ufficio'] !== '' && $data['REA_Ufficio'] !== NULL) ? "'{$data['REA_Ufficio']}'" : 'NULL') . ', `REA_NumeroREA`=' . (($data['REA_NumeroREA'] !== '' && $data['REA_NumeroREA'] !== NULL) ? "'{$data['REA_NumeroREA']}'" : 'NULL') . ', `REA_CapitaleSociale`=' . (($data['REA_CapitaleSociale'] !== '' && $data['REA_CapitaleSociale'] !== NULL) ? "'{$data['REA_CapitaleSociale']}'" : 'NULL') . ', `REA_SocioUnico`=' . (($data['REA_SocioUnico'] !== '' && $data['REA_SocioUnico'] !== NULL) ? "'{$data['REA_SocioUnico']}'" : 'NULL') . ', `REA_StatoLiquidazione`=' . (($data['REA_StatoLiquidazione'] !== '' && $data['REA_StatoLiquidazione'] !== NULL) ? "'{$data['REA_StatoLiquidazione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="companies_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -650,38 +608,6 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$combo_modalitaPagamento = new DataCombo;
 	// combobox: FormatoTrasmissione
 	$combo_FormatoTrasmissione = new DataCombo;
-	// combobox: REA_SocioUnico
-	$combo_REA_SocioUnico = new Combo;
-	$combo_REA_SocioUnico->ListType = 2;
-	$combo_REA_SocioUnico->MultipleSeparator = ', ';
-	$combo_REA_SocioUnico->ListBoxHeight = 10;
-	$combo_REA_SocioUnico->RadiosPerLine = 1;
-	if(is_file(dirname(__FILE__).'/hooks/companies.REA_SocioUnico.csv')){
-		$REA_SocioUnico_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/companies.REA_SocioUnico.csv')));
-		$combo_REA_SocioUnico->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($REA_SocioUnico_data)));
-		$combo_REA_SocioUnico->ListData = $combo_REA_SocioUnico->ListItem;
-	}else{
-		$combo_REA_SocioUnico->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("SU;;SM")));
-		$combo_REA_SocioUnico->ListData = $combo_REA_SocioUnico->ListItem;
-	}
-	$combo_REA_SocioUnico->SelectName = 'REA_SocioUnico';
-	$combo_REA_SocioUnico->AllowNull = false;
-	// combobox: REA_StatoLiquidazione
-	$combo_REA_StatoLiquidazione = new Combo;
-	$combo_REA_StatoLiquidazione->ListType = 2;
-	$combo_REA_StatoLiquidazione->MultipleSeparator = ', ';
-	$combo_REA_StatoLiquidazione->ListBoxHeight = 10;
-	$combo_REA_StatoLiquidazione->RadiosPerLine = 1;
-	if(is_file(dirname(__FILE__).'/hooks/companies.REA_StatoLiquidazione.csv')){
-		$REA_StatoLiquidazione_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/companies.REA_StatoLiquidazione.csv')));
-		$combo_REA_StatoLiquidazione->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($REA_StatoLiquidazione_data)));
-		$combo_REA_StatoLiquidazione->ListData = $combo_REA_StatoLiquidazione->ListItem;
-	}else{
-		$combo_REA_StatoLiquidazione->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("LS;;LN")));
-		$combo_REA_StatoLiquidazione->ListData = $combo_REA_StatoLiquidazione->ListItem;
-	}
-	$combo_REA_StatoLiquidazione->SelectName = 'REA_StatoLiquidazione';
-	$combo_REA_StatoLiquidazione->AllowNull = false;
 	// combobox: RIT_tipoRitenuta
 	$combo_RIT_tipoRitenuta = new Combo;
 	$combo_RIT_tipoRitenuta->ListType = 2;
@@ -734,8 +660,6 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$combo_tipoCassa->SelectedData = $row['tipoCassa'];
 		$combo_modalitaPagamento->SelectedData = $row['modalitaPagamento'];
 		$combo_FormatoTrasmissione->SelectedData = $row['FormatoTrasmissione'];
-		$combo_REA_SocioUnico->SelectedData = $row['REA_SocioUnico'];
-		$combo_REA_StatoLiquidazione->SelectedData = $row['REA_StatoLiquidazione'];
 		$combo_RIT_tipoRitenuta->SelectedData = $row['RIT_tipoRitenuta'];
 	}else{
 		$combo_kind->SelectedData = $filterer_kind;
@@ -744,9 +668,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$combo_tipoCassa->SelectedData = $filterer_tipoCassa;
 		$combo_modalitaPagamento->SelectedData = $filterer_modalitaPagamento;
 		$combo_FormatoTrasmissione->SelectedData = $filterer_FormatoTrasmissione;
-		$combo_REA_SocioUnico->SelectedText = ( $_REQUEST['FilterField'][1]=='18' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "SU");
-		$combo_REA_StatoLiquidazione->SelectedText = ( $_REQUEST['FilterField'][1]=='19' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "LN");
-		$combo_RIT_tipoRitenuta->SelectedText = ( $_REQUEST['FilterField'][1]=='21' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "RT02");
+		$combo_RIT_tipoRitenuta->SelectedText = ( $_REQUEST['FilterField'][1]=='16' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "RT02");
 	}
 	$combo_kind->HTML = '<span id="kind-container' . $rnd1 . '"></span><input type="hidden" name="kind" id="kind' . $rnd1 . '" value="' . html_attr($combo_kind->SelectedData) . '">';
 	$combo_kind->MatchText = '<span id="kind-container-readonly' . $rnd1 . '"></span><input type="hidden" name="kind" id="kind' . $rnd1 . '" value="' . html_attr($combo_kind->SelectedData) . '">';
@@ -759,8 +681,6 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$combo_modalitaPagamento->MatchText = '<span id="modalitaPagamento-container-readonly' . $rnd1 . '"></span><input type="hidden" name="modalitaPagamento" id="modalitaPagamento' . $rnd1 . '" value="' . html_attr($combo_modalitaPagamento->SelectedData) . '">';
 	$combo_FormatoTrasmissione->HTML = '<span id="FormatoTrasmissione-container' . $rnd1 . '"></span><input type="hidden" name="FormatoTrasmissione" id="FormatoTrasmissione' . $rnd1 . '" value="' . html_attr($combo_FormatoTrasmissione->SelectedData) . '">';
 	$combo_FormatoTrasmissione->MatchText = '<span id="FormatoTrasmissione-container-readonly' . $rnd1 . '"></span><input type="hidden" name="FormatoTrasmissione" id="FormatoTrasmissione' . $rnd1 . '" value="' . html_attr($combo_FormatoTrasmissione->SelectedData) . '">';
-	$combo_REA_SocioUnico->Render();
-	$combo_REA_StatoLiquidazione->Render();
 	$combo_RIT_tipoRitenuta->Render();
 
 	ob_start();
@@ -1248,11 +1168,6 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$jsReadOnly .= "\tjQuery('#RiferimentoAmministrazione').replaceWith('<div class=\"form-control-static\" id=\"RiferimentoAmministrazione\">' + (jQuery('#RiferimentoAmministrazione').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#FormatoTrasmissione').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#FormatoTrasmissione_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
-		$jsReadOnly .= "\tjQuery('#REA_Ufficio').replaceWith('<div class=\"form-control-static\" id=\"REA_Ufficio\">' + (jQuery('#REA_Ufficio').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('#REA_NumeroREA').replaceWith('<div class=\"form-control-static\" id=\"REA_NumeroREA\">' + (jQuery('#REA_NumeroREA').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('#REA_CapitaleSociale').replaceWith('<div class=\"form-control-static\" id=\"REA_CapitaleSociale\">' + (jQuery('#REA_CapitaleSociale').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('input[name=REA_SocioUnico]').parent().html('<div class=\"form-control-static\">' + jQuery('input[name=REA_SocioUnico]:checked').next().text() + '</div>')\n";
-		$jsReadOnly .= "\tjQuery('input[name=REA_StatoLiquidazione]').parent().html('<div class=\"form-control-static\">' + jQuery('input[name=REA_StatoLiquidazione]:checked').next().text() + '</div>')\n";
 		$jsReadOnly .= "\tjQuery('#RIT_soggettoRitenuta').prop('disabled', true);\n";
 		$jsReadOnly .= "\tjQuery('input[name=RIT_tipoRitenuta]').parent().html('<div class=\"form-control-static\">' + jQuery('input[name=RIT_tipoRitenuta]:checked').next().text() + '</div>')\n";
 		$jsReadOnly .= "\tjQuery('#RIT_AliquotaRitenuta').replaceWith('<div class=\"form-control-static\" id=\"RIT_AliquotaRitenuta\">' + (jQuery('#RIT_AliquotaRitenuta').val() || '') + '</div>');\n";
@@ -1283,10 +1198,6 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%COMBO(FormatoTrasmissione)%%>', $combo_FormatoTrasmissione->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(FormatoTrasmissione)%%>', $combo_FormatoTrasmissione->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(FormatoTrasmissione)%%>', urlencode($combo_FormatoTrasmissione->MatchText), $templateCode);
-	$templateCode = str_replace('<%%COMBO(REA_SocioUnico)%%>', $combo_REA_SocioUnico->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(REA_SocioUnico)%%>', $combo_REA_SocioUnico->SelectedData, $templateCode);
-	$templateCode = str_replace('<%%COMBO(REA_StatoLiquidazione)%%>', $combo_REA_StatoLiquidazione->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(REA_StatoLiquidazione)%%>', $combo_REA_StatoLiquidazione->SelectedData, $templateCode);
 	$templateCode = str_replace('<%%COMBO(RIT_tipoRitenuta)%%>', $combo_RIT_tipoRitenuta->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(RIT_tipoRitenuta)%%>', $combo_RIT_tipoRitenuta->SelectedData, $templateCode);
 
@@ -1321,11 +1232,6 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%UPLOADFILE(modalitaPagamento)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(RiferimentoAmministrazione)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(FormatoTrasmissione)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(REA_Ufficio)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(REA_NumeroREA)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(REA_CapitaleSociale)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(REA_SocioUnico)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(REA_StatoLiquidazione)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(RIT_soggettoRitenuta)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(RIT_tipoRitenuta)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(RIT_AliquotaRitenuta)%%>', '', $templateCode);
@@ -1379,21 +1285,6 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(FormatoTrasmissione)%%>', safe_html($urow['FormatoTrasmissione']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(FormatoTrasmissione)%%>', html_attr($row['FormatoTrasmissione']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(FormatoTrasmissione)%%>', urlencode($urow['FormatoTrasmissione']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(REA_Ufficio)%%>', safe_html($urow['REA_Ufficio']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(REA_Ufficio)%%>', html_attr($row['REA_Ufficio']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(REA_Ufficio)%%>', urlencode($urow['REA_Ufficio']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(REA_NumeroREA)%%>', safe_html($urow['REA_NumeroREA']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(REA_NumeroREA)%%>', html_attr($row['REA_NumeroREA']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(REA_NumeroREA)%%>', urlencode($urow['REA_NumeroREA']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(REA_CapitaleSociale)%%>', safe_html($urow['REA_CapitaleSociale']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(REA_CapitaleSociale)%%>', html_attr($row['REA_CapitaleSociale']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(REA_CapitaleSociale)%%>', urlencode($urow['REA_CapitaleSociale']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(REA_SocioUnico)%%>', safe_html($urow['REA_SocioUnico']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(REA_SocioUnico)%%>', html_attr($row['REA_SocioUnico']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(REA_SocioUnico)%%>', urlencode($urow['REA_SocioUnico']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(REA_StatoLiquidazione)%%>', safe_html($urow['REA_StatoLiquidazione']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(REA_StatoLiquidazione)%%>', html_attr($row['REA_StatoLiquidazione']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(REA_StatoLiquidazione)%%>', urlencode($urow['REA_StatoLiquidazione']), $templateCode);
 		$templateCode = str_replace('<%%CHECKED(RIT_soggettoRitenuta)%%>', ($row['RIT_soggettoRitenuta'] ? "checked" : ""), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(RIT_tipoRitenuta)%%>', safe_html($urow['RIT_tipoRitenuta']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(RIT_tipoRitenuta)%%>', html_attr($row['RIT_tipoRitenuta']), $templateCode);
@@ -1432,16 +1323,6 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$templateCode = str_replace('<%%URLVALUE(RiferimentoAmministrazione)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(FormatoTrasmissione)%%>', 'FPR12', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(FormatoTrasmissione)%%>', urlencode('FPR12'), $templateCode);
-		$templateCode = str_replace('<%%VALUE(REA_Ufficio)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(REA_Ufficio)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(REA_NumeroREA)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(REA_NumeroREA)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(REA_CapitaleSociale)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(REA_CapitaleSociale)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(REA_SocioUnico)%%>', 'SU', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(REA_SocioUnico)%%>', urlencode('SU'), $templateCode);
-		$templateCode = str_replace('<%%VALUE(REA_StatoLiquidazione)%%>', 'LN', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(REA_StatoLiquidazione)%%>', urlencode('LN'), $templateCode);
 		$templateCode = str_replace('<%%CHECKED(RIT_soggettoRitenuta)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%VALUE(RIT_tipoRitenuta)%%>', 'RT02', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(RIT_tipoRitenuta)%%>', urlencode('RT02'), $templateCode);

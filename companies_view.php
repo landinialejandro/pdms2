@@ -36,11 +36,6 @@
 		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* Modalita Pagamento */" => "modalitaPagamento",
 		"`companies`.`RiferimentoAmministrazione`" => "RiferimentoAmministrazione",
 		"IF(    CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`name`), '') /* Destinatario */" => "FormatoTrasmissione",
-		"`companies`.`REA_Ufficio`" => "REA_Ufficio",
-		"`companies`.`REA_NumeroREA`" => "REA_NumeroREA",
-		"`companies`.`REA_CapitaleSociale`" => "REA_CapitaleSociale",
-		"`companies`.`REA_SocioUnico`" => "REA_SocioUnico",
-		"`companies`.`REA_StatoLiquidazione`" => "REA_StatoLiquidazione",
 		"concat('<i class=\"glyphicon glyphicon-', if(`companies`.`RIT_soggettoRitenuta`, 'check', 'unchecked'), '\"></i>')" => "RIT_soggettoRitenuta",
 		"`companies`.`RIT_tipoRitenuta`" => "RIT_tipoRitenuta",
 		"`companies`.`RIT_AliquotaRitenuta`" => "RIT_AliquotaRitenuta",
@@ -64,13 +59,8 @@
 		14 => '`kinds5`.`name`',
 		15 => 15,
 		16 => 16,
-		17 => 17,
-		18 => 18,
-		19 => 19,
-		20 => 20,
-		21 => 21,
-		22 => '`companies`.`RIT_AliquotaRitenuta`',
-		23 => 23
+		17 => '`companies`.`RIT_AliquotaRitenuta`',
+		18 => 18
 	);
 
 	// Fields that can be displayed in the csv file
@@ -89,11 +79,6 @@
 		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* Modalita Pagamento */" => "modalitaPagamento",
 		"`companies`.`RiferimentoAmministrazione`" => "RiferimentoAmministrazione",
 		"IF(    CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`name`), '') /* Destinatario */" => "FormatoTrasmissione",
-		"`companies`.`REA_Ufficio`" => "REA_Ufficio",
-		"`companies`.`REA_NumeroREA`" => "REA_NumeroREA",
-		"`companies`.`REA_CapitaleSociale`" => "REA_CapitaleSociale",
-		"`companies`.`REA_SocioUnico`" => "REA_SocioUnico",
-		"`companies`.`REA_StatoLiquidazione`" => "REA_StatoLiquidazione",
 		"`companies`.`RIT_soggettoRitenuta`" => "RIT_soggettoRitenuta",
 		"`companies`.`RIT_tipoRitenuta`" => "RIT_tipoRitenuta",
 		"`companies`.`RIT_AliquotaRitenuta`" => "RIT_AliquotaRitenuta",
@@ -115,11 +100,6 @@
 		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* Modalita Pagamento */" => "Modalita Pagamento",
 		"`companies`.`RiferimentoAmministrazione`" => "Riferimento Amministrazione",
 		"IF(    CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`name`), '') /* Destinatario */" => "Destinatario",
-		"`companies`.`REA_Ufficio`" => "REA Ufficio",
-		"`companies`.`REA_NumeroREA`" => "Numero REA",
-		"`companies`.`REA_CapitaleSociale`" => "Capitale Sociale",
-		"`companies`.`REA_SocioUnico`" => "REA SocioUnico",
-		"`companies`.`REA_StatoLiquidazione`" => "StatoLiquidazione",
 		"`companies`.`RIT_soggettoRitenuta`" => "RIT soggetto Ritenuta",
 		"`companies`.`RIT_tipoRitenuta`" => "RIT tipo Ritenuta",
 		"`companies`.`RIT_AliquotaRitenuta`" => "RIT Aliquota Ritenuta",
@@ -142,11 +122,6 @@
 		"IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') /* Modalita Pagamento */" => "modalitaPagamento",
 		"`companies`.`RiferimentoAmministrazione`" => "RiferimentoAmministrazione",
 		"IF(    CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`name`), '') /* Destinatario */" => "FormatoTrasmissione",
-		"`companies`.`REA_Ufficio`" => "REA_Ufficio",
-		"`companies`.`REA_NumeroREA`" => "REA_NumeroREA",
-		"`companies`.`REA_CapitaleSociale`" => "REA_CapitaleSociale",
-		"`companies`.`REA_SocioUnico`" => "REA_SocioUnico",
-		"`companies`.`REA_StatoLiquidazione`" => "REA_StatoLiquidazione",
 		"concat('<i class=\"glyphicon glyphicon-', if(`companies`.`RIT_soggettoRitenuta`, 'check', 'unchecked'), '\"></i>')" => "RIT_soggettoRitenuta",
 		"`companies`.`RIT_tipoRitenuta`" => "RIT_tipoRitenuta",
 		"`companies`.`RIT_AliquotaRitenuta`" => "RIT_AliquotaRitenuta",
@@ -188,7 +163,7 @@
 	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150);
 	$x->ColCaption = array("Tipo", "Codice", "Ragione Sociale", "Codice Fiscale", "Vat", "Notes", "RIT soggetto Ritenuta", "RIT Aliquota Ritenuta");
 	$x->ColFieldName = array('kind', 'companyCode', 'companyName', 'fiscalCode', 'vat', 'notes', 'RIT_soggettoRitenuta', 'RIT_AliquotaRitenuta');
-	$x->ColNumber  = array(2, 3, 4, 6, 7, 8, 20, 22);
+	$x->ColNumber  = array(2, 3, 4, 6, 7, 8, 15, 17);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/companies_templateTV.html';

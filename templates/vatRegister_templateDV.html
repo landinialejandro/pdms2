@@ -73,6 +73,58 @@
 					</div>
 				</div>
 
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="ufficio_Ced_PA" class="control-label col-lg-3">Ufficio Cedente PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#ufficio_Ced_PA-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="ufficio_Ced_PA-description"><div class="alert alert-info">1.2.4.1 <Ufficio>sigla della provincia dell'Ufficio del registro delle imprese presso il quale &#232; registrata la societ&#224; </div></span>
+
+						<%%COMBO(ufficio_Ced_PA)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="numeroREA_Ced_PA" class="control-label col-lg-3">Numero Iscr. REA PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#numeroREA_Ced_PA-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="numeroREA_Ced_PA-description"><div class="alert alert-info">1.2.4 <IscrizioneREA> numero di iscrizione al registro delle imprese </div></span>
+
+						<input maxlength="20" type="text" class="form-control" name="numeroREA_Ced_PA" id="numeroREA_Ced_PA" value="<%%VALUE(numeroREA_Ced_PA)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="capitaleSociale_Ced_PA" class="control-label col-lg-3">Capitale Sociale Ced. PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#capitaleSociale_Ced_PA-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="capitaleSociale_Ced_PA-description"><div class="alert alert-info">1.2.4.3 <CapitaleSociale>nei soli casi di societ&#224; di capitali (SpA, SApA, SRL), il campo va compilato per indicare il capitale sociale  -<br> formato numerico; i decimali vanno separati dall'intero con il carattere '.' (punto)</div></span>
+
+						<input maxlength="18" type="text" class="form-control" name="capitaleSociale_Ced_PA" id="capitaleSociale_Ced_PA" value="<%%VALUE(capitaleSociale_Ced_PA)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="socioUnico_Ced_PA" class="control-label col-lg-3">Socio Unico Ced. PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#socioUnico_Ced_PA-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="socioUnico_Ced_PA-description"><div class="alert alert-info">1.2.4.4 <SocioUnico>nei casi di societ&#224; per azioni e a responsabilit&#224; limitata, il campo va valorizzato per indicare se vi &#232; un <br>socio unico oppure se vi sono pi&#249; soci - valori ammessi: [SU] : socio unico [SM] : pi&#249; soci</div></span>
+
+						<%%COMBO(socioUnico_Ced_PA)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="statoLiquidazione_Ced_PA" class="control-label col-lg-3">Stato Liquidazione <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#statoLiquidazione_Ced_PA-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="statoLiquidazione_Ced_PA-description"><div class="alert alert-info">1.2.4.5 <StatoLiquidazione>indica se la Societ&#224; si trova in stato di liquidazione oppure no
+ -  valori ammessi:<br>[LS] : in liquidazione<br>[LN] : non in liquidazione
+</div></span>
+
+						<%%COMBO(statoLiquidazione_Ced_PA)%%>
+					</div>
+				</div>
+
 			</fieldset>
 		</div>
 

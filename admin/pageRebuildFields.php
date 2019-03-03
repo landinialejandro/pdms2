@@ -122,15 +122,6 @@
 			'paymentDeadLine' => array('appgini' => 'DATE null '),
 			'payed' => array('appgini' => 'VARCHAR(255) null default \'0\' ')
 		),
-		'vatRegister' => array(   
-			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
-			'idCompany' => array('appgini' => 'INT unsigned null '),
-			'companyName' => array('appgini' => 'INT unsigned null '),
-			'tax' => array('appgini' => 'VARCHAR(40) null default \'4%\' '),
-			'month' => array('appgini' => 'VARCHAR(40) null '),
-			'year' => array('appgini' => 'VARCHAR(40) null default \'2018\' '),
-			'amount' => array('appgini' => 'DECIMAL(10,2) null ')
-		),
 		'companies' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'kind' => array('appgini' => 'VARCHAR(40) not null '),
@@ -146,15 +137,24 @@
 			'modalitaPagamento' => array('appgini' => 'VARCHAR(40) null '),
 			'RiferimentoAmministrazione' => array('appgini' => 'VARCHAR(40) null '),
 			'FormatoTrasmissione' => array('appgini' => 'VARCHAR(40) not null default \'FPR12\' '),
-			'REA_Ufficio' => array('appgini' => 'VARCHAR(2) null '),
-			'REA_NumeroREA' => array('appgini' => 'VARCHAR(20) null '),
-			'REA_CapitaleSociale' => array('appgini' => 'VARCHAR(40) null '),
-			'REA_SocioUnico' => array('appgini' => 'VARCHAR(2) not null default \'SU\' '),
-			'REA_StatoLiquidazione' => array('appgini' => 'VARCHAR(2) not null default \'LN\' '),
 			'RIT_soggettoRitenuta' => array('appgini' => 'VARCHAR(40) null default \'0\' '),
 			'RIT_tipoRitenuta' => array('appgini' => 'VARCHAR(40) not null default \'RT02\' '),
 			'RIT_AliquotaRitenuta' => array('appgini' => 'DECIMAL(10,2) null '),
 			'RIT_CausalePagamento' => array('appgini' => 'VARCHAR(40) null ')
+		),
+		'vatRegister' => array(   
+			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
+			'idCompany' => array('appgini' => 'INT unsigned null '),
+			'companyName' => array('appgini' => 'INT unsigned null '),
+			'tax' => array('appgini' => 'VARCHAR(40) null default \'4%\' '),
+			'month' => array('appgini' => 'VARCHAR(40) null '),
+			'year' => array('appgini' => 'VARCHAR(40) null default \'2018\' '),
+			'amount' => array('appgini' => 'DECIMAL(10,2) null '),
+			'ufficio_Ced_PA' => array('appgini' => 'CHAR(2) null '),
+			'numeroREA_Ced_PA' => array('appgini' => 'CHAR(20) null '),
+			'capitaleSociale_Ced_PA' => array('appgini' => 'DECIMAL(15,2) null '),
+			'socioUnico_Ced_PA' => array('appgini' => 'VARCHAR(2) null default \'SM\' '),
+			'statoLiquidazione_Ced_PA' => array('appgini' => 'CHAR(2) null default \'LN\' ')
 		),
 		'contacts' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),

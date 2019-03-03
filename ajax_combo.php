@@ -340,30 +340,6 @@
 				'not_null' => false
 			)
 		),
-		'vatRegister' => array(   
-			'idCompany' => array(
-				'parent_table' => 'companies',
-				'parent_pk_field' => 'id',
-				'parent_caption' => '`companies`.`companyCode`',
-				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`companies`.`regimeFiscale` LEFT JOIN `kinds` as kinds3 ON `kinds3`.`code`=`companies`.`tipoCassa` LEFT JOIN `kinds` as kinds4 ON `kinds4`.`code`=`companies`.`modalitaPagamento` LEFT JOIN `kinds` as kinds5 ON `kinds5`.`code`=`companies`.`FormatoTrasmissione` ',
-				'filterers' => array(),
-				'custom_query' => 'SELECT `companies`.`id`, IF(CHAR_LENGTH(`companies`.`companyCode`) || CHAR_LENGTH(`companies`.`companyName`), CONCAT_WS(\'\', `companies`.`companyCode`, \' - \', `companies`.`companyName`), \'\') FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`name`=`companies`.`kind` WHERE `companies`.`kind` like \'%MultyCompany%\' ORDER BY 2',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
-			),
-			'companyName' => array(
-				'parent_table' => 'companies',
-				'parent_pk_field' => 'id',
-				'parent_caption' => '`companies`.`companyName`',
-				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`companies`.`regimeFiscale` LEFT JOIN `kinds` as kinds3 ON `kinds3`.`code`=`companies`.`tipoCassa` LEFT JOIN `kinds` as kinds4 ON `kinds4`.`code`=`companies`.`modalitaPagamento` LEFT JOIN `kinds` as kinds5 ON `kinds5`.`code`=`companies`.`FormatoTrasmissione` ',
-				'filterers' => array(),
-				'custom_query' => '',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
-			)
-		),
 		'companies' => array(   
 			'kind' => array(
 				'parent_table' => 'kinds',
@@ -419,6 +395,30 @@
 				'inherit_permissions' => false,
 				'list_type' => 0,
 				'not_null' => true
+			)
+		),
+		'vatRegister' => array(   
+			'idCompany' => array(
+				'parent_table' => 'companies',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`companies`.`companyCode`',
+				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`companies`.`regimeFiscale` LEFT JOIN `kinds` as kinds3 ON `kinds3`.`code`=`companies`.`tipoCassa` LEFT JOIN `kinds` as kinds4 ON `kinds4`.`code`=`companies`.`modalitaPagamento` LEFT JOIN `kinds` as kinds5 ON `kinds5`.`code`=`companies`.`FormatoTrasmissione` ',
+				'filterers' => array(),
+				'custom_query' => 'SELECT `companies`.`id`, IF(CHAR_LENGTH(`companies`.`companyCode`) || CHAR_LENGTH(`companies`.`companyName`), CONCAT_WS(\'\', `companies`.`companyCode`, \' - \', `companies`.`companyName`), \'\') FROM `companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`name`=`companies`.`kind` WHERE `companies`.`kind` like \'%MultyCompany%\' ORDER BY 2',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
+			'companyName' => array(
+				'parent_table' => 'companies',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`companies`.`companyName`',
+				'parent_from' => '`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`companies`.`regimeFiscale` LEFT JOIN `kinds` as kinds3 ON `kinds3`.`code`=`companies`.`tipoCassa` LEFT JOIN `kinds` as kinds4 ON `kinds4`.`code`=`companies`.`modalitaPagamento` LEFT JOIN `kinds` as kinds5 ON `kinds5`.`code`=`companies`.`FormatoTrasmissione` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
 			)
 		),
 		'contacts' => array(   

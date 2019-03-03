@@ -101,24 +101,6 @@ firstCashNote_delete1Tip=["",spacer+"This option allows each member of the group
 firstCashNote_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Prima Nota' table."];
 firstCashNote_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Prima Nota' table."];
 
-// vatRegister table
-vatRegister_addTip=["",spacer+"This option allows all members of the group to add records to the 'Registro Corrispettivi' table. A member who adds a record to the table becomes the 'owner' of that record."];
-
-vatRegister_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Registro Corrispettivi' table."];
-vatRegister_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Registro Corrispettivi' table."];
-vatRegister_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Registro Corrispettivi' table."];
-vatRegister_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Registro Corrispettivi' table."];
-
-vatRegister_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Registro Corrispettivi' table."];
-vatRegister_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Registro Corrispettivi' table."];
-vatRegister_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Registro Corrispettivi' table."];
-vatRegister_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Registro Corrispettivi' table, regardless of their owner."];
-
-vatRegister_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Registro Corrispettivi' table."];
-vatRegister_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Registro Corrispettivi' table."];
-vatRegister_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Registro Corrispettivi' table."];
-vatRegister_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Registro Corrispettivi' table."];
-
 // companies table
 companies_addTip=["",spacer+"This option allows all members of the group to add records to the 'Aziende' table. A member who adds a record to the table becomes the 'owner' of that record."];
 
@@ -136,6 +118,24 @@ companies_delete0Tip=["",spacer+"This option prohibits all members of the group 
 companies_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Aziende' table."];
 companies_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Aziende' table."];
 companies_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Aziende' table."];
+
+// vatRegister table
+vatRegister_addTip=["",spacer+"This option allows all members of the group to add records to the 'Registro Corrispettivi' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+vatRegister_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Registro Corrispettivi' table."];
+vatRegister_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Registro Corrispettivi' table."];
+vatRegister_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Registro Corrispettivi' table."];
+vatRegister_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Registro Corrispettivi' table."];
+
+vatRegister_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Registro Corrispettivi' table."];
+vatRegister_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Registro Corrispettivi' table."];
+vatRegister_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Registro Corrispettivi' table."];
+vatRegister_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Registro Corrispettivi' table, regardless of their owner."];
+
+vatRegister_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Registro Corrispettivi' table."];
+vatRegister_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Registro Corrispettivi' table."];
+vatRegister_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Registro Corrispettivi' table."];
+vatRegister_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Registro Corrispettivi' table."];
 
 // contacts table
 contacts_addTip=["",spacer+"This option allows all members of the group to add records to the 'Contacts' table. A member who adds a record to the table becomes the 'owner' of that record."];

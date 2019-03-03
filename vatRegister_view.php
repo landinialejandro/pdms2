@@ -28,7 +28,12 @@
 		"`vatRegister`.`tax`" => "tax",
 		"`vatRegister`.`month`" => "month",
 		"`vatRegister`.`year`" => "year",
-		"`vatRegister`.`amount`" => "amount"
+		"`vatRegister`.`amount`" => "amount",
+		"`vatRegister`.`ufficio_Ced_PA`" => "ufficio_Ced_PA",
+		"`vatRegister`.`numeroREA_Ced_PA`" => "numeroREA_Ced_PA",
+		"`vatRegister`.`capitaleSociale_Ced_PA`" => "capitaleSociale_Ced_PA",
+		"`vatRegister`.`socioUnico_Ced_PA`" => "socioUnico_Ced_PA",
+		"`vatRegister`.`statoLiquidazione_Ced_PA`" => "statoLiquidazione_Ced_PA"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -38,7 +43,12 @@
 		4 => 4,
 		5 => 5,
 		6 => 6,
-		7 => '`vatRegister`.`amount`'
+		7 => '`vatRegister`.`amount`',
+		8 => 8,
+		9 => 9,
+		10 => '`vatRegister`.`capitaleSociale_Ced_PA`',
+		11 => 11,
+		12 => 12
 	);
 
 	// Fields that can be displayed in the csv file
@@ -49,7 +59,12 @@
 		"`vatRegister`.`tax`" => "tax",
 		"`vatRegister`.`month`" => "month",
 		"`vatRegister`.`year`" => "year",
-		"`vatRegister`.`amount`" => "amount"
+		"`vatRegister`.`amount`" => "amount",
+		"`vatRegister`.`ufficio_Ced_PA`" => "ufficio_Ced_PA",
+		"`vatRegister`.`numeroREA_Ced_PA`" => "numeroREA_Ced_PA",
+		"`vatRegister`.`capitaleSociale_Ced_PA`" => "capitaleSociale_Ced_PA",
+		"`vatRegister`.`socioUnico_Ced_PA`" => "socioUnico_Ced_PA",
+		"`vatRegister`.`statoLiquidazione_Ced_PA`" => "statoLiquidazione_Ced_PA"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -59,7 +74,12 @@
 		"`vatRegister`.`tax`" => "Aliquota riferimento",
 		"`vatRegister`.`month`" => "Mese corrispettivi",
 		"`vatRegister`.`year`" => "Anno",
-		"`vatRegister`.`amount`" => "Importo"
+		"`vatRegister`.`amount`" => "Importo",
+		"`vatRegister`.`ufficio_Ced_PA`" => "Ufficio Cedente PA",
+		"`vatRegister`.`numeroREA_Ced_PA`" => "Numero Iscr. REA PA",
+		"`vatRegister`.`capitaleSociale_Ced_PA`" => "Capitale Sociale Ced. PA",
+		"`vatRegister`.`socioUnico_Ced_PA`" => "Socio Unico Ced. PA",
+		"`vatRegister`.`statoLiquidazione_Ced_PA`" => "Stato Liquidazione"
 	);
 
 	// Fields that can be quick searched
@@ -70,7 +90,12 @@
 		"`vatRegister`.`tax`" => "tax",
 		"`vatRegister`.`month`" => "month",
 		"`vatRegister`.`year`" => "year",
-		"`vatRegister`.`amount`" => "amount"
+		"`vatRegister`.`amount`" => "amount",
+		"`vatRegister`.`ufficio_Ced_PA`" => "ufficio_Ced_PA",
+		"`vatRegister`.`numeroREA_Ced_PA`" => "numeroREA_Ced_PA",
+		"`vatRegister`.`capitaleSociale_Ced_PA`" => "capitaleSociale_Ced_PA",
+		"`vatRegister`.`socioUnico_Ced_PA`" => "socioUnico_Ced_PA",
+		"`vatRegister`.`statoLiquidazione_Ced_PA`" => "statoLiquidazione_Ced_PA"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -103,10 +128,10 @@
 	$x->TableIcon = "resources/table_icons/book_spelling.png";
 	$x->PrimaryKey = "`vatRegister`.`id`";
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("ID Azienda", "Esercizio commerciale", "Aliquota riferimento", "Mese corrispettivi", "Anno", "Importo");
-	$x->ColFieldName = array('idCompany', 'companyName', 'tax', 'month', 'year', 'amount');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("ID Azienda", "Esercizio commerciale", "Aliquota riferimento", "Mese corrispettivi", "Anno", "Importo", "Ufficio Cedente PA", "Numero Iscr. REA PA", "Capitale Sociale Ced. PA", "Socio Unico Ced. PA", "Stato Liquidazione");
+	$x->ColFieldName = array('idCompany', 'companyName', 'tax', 'month', 'year', 'amount', 'ufficio_Ced_PA', 'numeroREA_Ced_PA', 'capitaleSociale_Ced_PA', 'socioUnico_Ced_PA', 'statoLiquidazione_Ced_PA');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/vatRegister_templateTV.html';
@@ -173,6 +198,11 @@
 			$sumRow .= '<td class="vatRegister-month"></td>';
 			$sumRow .= '<td class="vatRegister-year"></td>';
 			$sumRow .= "<td class=\"vatRegister-amount text-right\">{$row[0]}</td>";
+			$sumRow .= '<td class="vatRegister-ufficio_Ced_PA"></td>';
+			$sumRow .= '<td class="vatRegister-numeroREA_Ced_PA"></td>';
+			$sumRow .= '<td class="vatRegister-capitaleSociale_Ced_PA"></td>';
+			$sumRow .= '<td class="vatRegister-socioUnico_Ced_PA"></td>';
+			$sumRow .= '<td class="vatRegister-statoLiquidazione_Ced_PA"></td>';
 			$sumRow .= '</tr>';
 
 			$x->HTML = str_replace('<!-- tv data below -->', '', $x->HTML);

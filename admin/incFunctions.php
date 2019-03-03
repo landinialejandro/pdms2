@@ -129,18 +129,18 @@
 					'group' => $tg[2],
 					'homepageShowCount' => 1
 				),
-				'vatRegister' => array(
-					'Caption' => 'Registro Corrispettivi',
-					'Description' => '',
-					'tableIcon' => 'resources/table_icons/book_spelling.png',
-					'group' => $tg[2],
-					'homepageShowCount' => 1
-				),
 				'companies' => array(
 					'Caption' => 'Aziende',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/factory.png',
 					'group' => $tg[3],
+					'homepageShowCount' => 1
+				),
+				'vatRegister' => array(
+					'Caption' => 'Registro Corrispettivi',
+					'Description' => '',
+					'tableIcon' => 'resources/table_icons/book_spelling.png',
+					'group' => $tg[5],
 					'homepageShowCount' => 1
 				),
 				'contacts' => array(
@@ -289,8 +289,8 @@
 				'_resumeOrders' => 'Resume Orders',
 				'products' => 'Articoli Magazzino',
 				'firstCashNote' => 'Prima Nota',
-				'vatRegister' => 'Registro Corrispettivi',
 				'companies' => 'Aziende',
+				'vatRegister' => 'Registro Corrispettivi',
 				'contacts' => 'Contacts',
 				'creditDocument' => 'Nota Credito',
 				'electronicInvoice' => 'ElectronicInvoice',
