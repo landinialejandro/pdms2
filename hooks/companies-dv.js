@@ -2,17 +2,14 @@
 
 $j(function(){
     hideFileds();
-    getContactId();
-    getDefaultChild('phone');
-    getDefaultChild('mail');
+    if (!is_add_new()){
+        loadDefaults();
+    }
 });
 
-$j('#add_phone').on('click', function () {
-    childsFunctions('phones','Company',this.attributes.phoneid.value);
-});
-
-$j('#add_mail').on('click', function () {
-    childsFunctions('mails','Company',this.attributes.mailid.value);
+$j('#phone, #mail, #address').on('click', function () {
+    var file = $j('.default-'+ $j(this).attr('id') + ' label').attr('for');
+    childsFunctions(file,'Company',this.attributes.thisid.value);
 });
 
 $j('form input[name=personaFisica]').on('change', function() {
@@ -62,31 +59,40 @@ function getContactId(){
 function getDefaultChild(child){
     var id = $j('input[name=SelectedID]').val();
     var $parent = $j('.default-'+child);
-    var $btnChild = $j('#add_'+child);
+    var file = $j('.default-'+child + ' label').attr('for');
+    var $btnChild = $j('#'+child);
     var text ="";
     
-    $j.get('hooks/' + child + 's_AJAX.php', {cmd: 'record',id:id})
+    $j.get('hooks/' + file + '_AJAX.php', {cmd: 'record',id:id})
     .done(function ( msg ) {
         if ( msg ){
-            //get contact phone
-            if (child === 'mail'){
-                text =  msg.mail;
+            console.log(msg);
+            switch (child) {
+            case 'mail':
+                text =   child +': ' + msg.mail;
+                break;
+            case 'phone':
+                text = 'telefono: ' + msg.phoneNumber;
+                break;
+            case 'address':
+                text = 'indirizzo: ' + msg.address + ' ' + msg.houseNumber + ', '+ msg.town + ', ' + msg.country + ' (' + msg.kind + ')';
+                break;
+            default:
+                text = "oops";
             }
-            if (child === 'phone'){
-                text =  msg.phoneNumber;
-            }
-            $btnChild.attr(child + 'ID', msg.id);
+            
+            $btnChild.attr('thisID', msg.id);
             if (!msg.default){
-                $btnChild.addClass('btn-warning');
-                $btnChild.text('Ho trovato questo '+ child +': ' + text + ', pero no é il default');
-            }else{
                 //not default phone
+                $btnChild.addClass('btn-warning');
+                $btnChild.text('Ho trovato questo '+ text + ', pero no é il default');
+            }else{
                 $btnChild.removeClass('btn-warning');
                 $btnChild.text( text );
             }
         }else{
             //not phone
-            $btnChild.attr(child + 'ID','');
+            $btnChild.attr('thisID','');
         }
         $parent.show();
     });
@@ -145,8 +151,7 @@ function addContact(id = false){
 $j(document).on('hide.bs.modal','.modal',function(){
     
     setTimeout(function(){
-        getDefaultPhone();
-        getDefaultMail();
+        loadDefaults();
     },400);
     
 });
@@ -161,4 +166,11 @@ function childsFunctions(child, parent, id = false, code = ""){
         args={ Verb: 'open', ChildID: id, select: true}; 
     }
     window[fn](args);
+}
+
+function loadDefaults(){
+    getContactId();
+    getDefaultChild('address');
+    getDefaultChild('phone');
+    getDefaultChild('mail');
 }
