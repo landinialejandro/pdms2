@@ -36,6 +36,8 @@ function vatRegister_insert(){
 		if($data['socioUnico_Ced_PA'] == empty_lookup_value){ $data['socioUnico_Ced_PA'] = ''; }
 	$data['statoLiquidazione_Ced_PA'] = makeSafe($_REQUEST['statoLiquidazione_Ced_PA']);
 		if($data['statoLiquidazione_Ced_PA'] == empty_lookup_value){ $data['statoLiquidazione_Ced_PA'] = ''; }
+	$data['default'] = makeSafe($_REQUEST['default']);
+		if($data['default'] == empty_lookup_value){ $data['default'] = ''; }
 	if($data['tax'] == '') $data['tax'] = "4%";
 	if($data['year'] == '') $data['year'] = "2018";
 	if($data['socioUnico_Ced_PA'] == '') $data['socioUnico_Ced_PA'] = "SM";
@@ -48,7 +50,7 @@ function vatRegister_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `vatRegister` set       `idCompany`=' . (($data['idCompany'] !== '' && $data['idCompany'] !== NULL) ? "'{$data['idCompany']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `tax`=' . (($data['tax'] !== '' && $data['tax'] !== NULL) ? "'{$data['tax']}'" : 'NULL') . ', `month`=' . (($data['month'] !== '' && $data['month'] !== NULL) ? "'{$data['month']}'" : 'NULL') . ', `year`=' . (($data['year'] !== '' && $data['year'] !== NULL) ? "'{$data['year']}'" : 'NULL') . ', `amount`=' . (($data['amount'] !== '' && $data['amount'] !== NULL) ? "'{$data['amount']}'" : 'NULL') . ', `ufficio_Ced_PA`=' . (($data['ufficio_Ced_PA'] !== '' && $data['ufficio_Ced_PA'] !== NULL) ? "'{$data['ufficio_Ced_PA']}'" : 'NULL') . ', `numeroREA_Ced_PA`=' . (($data['numeroREA_Ced_PA'] !== '' && $data['numeroREA_Ced_PA'] !== NULL) ? "'{$data['numeroREA_Ced_PA']}'" : 'NULL') . ', `capitaleSociale_Ced_PA`=' . (($data['capitaleSociale_Ced_PA'] !== '' && $data['capitaleSociale_Ced_PA'] !== NULL) ? "'{$data['capitaleSociale_Ced_PA']}'" : 'NULL') . ', `socioUnico_Ced_PA`=' . (($data['socioUnico_Ced_PA'] !== '' && $data['socioUnico_Ced_PA'] !== NULL) ? "'{$data['socioUnico_Ced_PA']}'" : 'NULL') . ', `statoLiquidazione_Ced_PA`=' . (($data['statoLiquidazione_Ced_PA'] !== '' && $data['statoLiquidazione_Ced_PA'] !== NULL) ? "'{$data['statoLiquidazione_Ced_PA']}'" : 'NULL'), $o);
+	sql('insert into `vatRegister` set       `idCompany`=' . (($data['idCompany'] !== '' && $data['idCompany'] !== NULL) ? "'{$data['idCompany']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `tax`=' . (($data['tax'] !== '' && $data['tax'] !== NULL) ? "'{$data['tax']}'" : 'NULL') . ', `month`=' . (($data['month'] !== '' && $data['month'] !== NULL) ? "'{$data['month']}'" : 'NULL') . ', `year`=' . (($data['year'] !== '' && $data['year'] !== NULL) ? "'{$data['year']}'" : 'NULL') . ', `amount`=' . (($data['amount'] !== '' && $data['amount'] !== NULL) ? "'{$data['amount']}'" : 'NULL') . ', `ufficio_Ced_PA`=' . (($data['ufficio_Ced_PA'] !== '' && $data['ufficio_Ced_PA'] !== NULL) ? "'{$data['ufficio_Ced_PA']}'" : 'NULL') . ', `numeroREA_Ced_PA`=' . (($data['numeroREA_Ced_PA'] !== '' && $data['numeroREA_Ced_PA'] !== NULL) ? "'{$data['numeroREA_Ced_PA']}'" : 'NULL') . ', `capitaleSociale_Ced_PA`=' . (($data['capitaleSociale_Ced_PA'] !== '' && $data['capitaleSociale_Ced_PA'] !== NULL) ? "'{$data['capitaleSociale_Ced_PA']}'" : 'NULL') . ', `socioUnico_Ced_PA`=' . (($data['socioUnico_Ced_PA'] !== '' && $data['socioUnico_Ced_PA'] !== NULL) ? "'{$data['socioUnico_Ced_PA']}'" : 'NULL') . ', `statoLiquidazione_Ced_PA`=' . (($data['statoLiquidazione_Ced_PA'] !== '' && $data['statoLiquidazione_Ced_PA'] !== NULL) ? "'{$data['statoLiquidazione_Ced_PA']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"vatRegister_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -143,6 +145,8 @@ function vatRegister_update($selected_id){
 		if($data['socioUnico_Ced_PA'] == empty_lookup_value){ $data['socioUnico_Ced_PA'] = ''; }
 	$data['statoLiquidazione_Ced_PA'] = makeSafe($_REQUEST['statoLiquidazione_Ced_PA']);
 		if($data['statoLiquidazione_Ced_PA'] == empty_lookup_value){ $data['statoLiquidazione_Ced_PA'] = ''; }
+	$data['default'] = makeSafe($_REQUEST['default']);
+		if($data['default'] == empty_lookup_value){ $data['default'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: vatRegister_before_update
@@ -152,7 +156,7 @@ function vatRegister_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `vatRegister` set       `idCompany`=' . (($data['idCompany'] !== '' && $data['idCompany'] !== NULL) ? "'{$data['idCompany']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `tax`=' . (($data['tax'] !== '' && $data['tax'] !== NULL) ? "'{$data['tax']}'" : 'NULL') . ', `month`=' . (($data['month'] !== '' && $data['month'] !== NULL) ? "'{$data['month']}'" : 'NULL') . ', `year`=' . (($data['year'] !== '' && $data['year'] !== NULL) ? "'{$data['year']}'" : 'NULL') . ', `amount`=' . (($data['amount'] !== '' && $data['amount'] !== NULL) ? "'{$data['amount']}'" : 'NULL') . ', `ufficio_Ced_PA`=' . (($data['ufficio_Ced_PA'] !== '' && $data['ufficio_Ced_PA'] !== NULL) ? "'{$data['ufficio_Ced_PA']}'" : 'NULL') . ', `numeroREA_Ced_PA`=' . (($data['numeroREA_Ced_PA'] !== '' && $data['numeroREA_Ced_PA'] !== NULL) ? "'{$data['numeroREA_Ced_PA']}'" : 'NULL') . ', `capitaleSociale_Ced_PA`=' . (($data['capitaleSociale_Ced_PA'] !== '' && $data['capitaleSociale_Ced_PA'] !== NULL) ? "'{$data['capitaleSociale_Ced_PA']}'" : 'NULL') . ', `socioUnico_Ced_PA`=' . (($data['socioUnico_Ced_PA'] !== '' && $data['socioUnico_Ced_PA'] !== NULL) ? "'{$data['socioUnico_Ced_PA']}'" : 'NULL') . ', `statoLiquidazione_Ced_PA`=' . (($data['statoLiquidazione_Ced_PA'] !== '' && $data['statoLiquidazione_Ced_PA'] !== NULL) ? "'{$data['statoLiquidazione_Ced_PA']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `vatRegister` set       `idCompany`=' . (($data['idCompany'] !== '' && $data['idCompany'] !== NULL) ? "'{$data['idCompany']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `tax`=' . (($data['tax'] !== '' && $data['tax'] !== NULL) ? "'{$data['tax']}'" : 'NULL') . ', `month`=' . (($data['month'] !== '' && $data['month'] !== NULL) ? "'{$data['month']}'" : 'NULL') . ', `year`=' . (($data['year'] !== '' && $data['year'] !== NULL) ? "'{$data['year']}'" : 'NULL') . ', `amount`=' . (($data['amount'] !== '' && $data['amount'] !== NULL) ? "'{$data['amount']}'" : 'NULL') . ', `ufficio_Ced_PA`=' . (($data['ufficio_Ced_PA'] !== '' && $data['ufficio_Ced_PA'] !== NULL) ? "'{$data['ufficio_Ced_PA']}'" : 'NULL') . ', `numeroREA_Ced_PA`=' . (($data['numeroREA_Ced_PA'] !== '' && $data['numeroREA_Ced_PA'] !== NULL) ? "'{$data['numeroREA_Ced_PA']}'" : 'NULL') . ', `capitaleSociale_Ced_PA`=' . (($data['capitaleSociale_Ced_PA'] !== '' && $data['capitaleSociale_Ced_PA'] !== NULL) ? "'{$data['capitaleSociale_Ced_PA']}'" : 'NULL') . ', `socioUnico_Ced_PA`=' . (($data['socioUnico_Ced_PA'] !== '' && $data['socioUnico_Ced_PA'] !== NULL) ? "'{$data['socioUnico_Ced_PA']}'" : 'NULL') . ', `statoLiquidazione_Ced_PA`=' . (($data['statoLiquidazione_Ced_PA'] !== '' && $data['statoLiquidazione_Ced_PA'] !== NULL) ? "'{$data['statoLiquidazione_Ced_PA']}'" : 'NULL') . ', `default`=' . (($data['default'] !== '' && $data['default'] !== NULL) ? "'{$data['default']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="vatRegister_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -487,6 +491,7 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		$jsReadOnly .= "\tjQuery('#capitaleSociale_Ced_PA').replaceWith('<div class=\"form-control-static\" id=\"capitaleSociale_Ced_PA\">' + (jQuery('#capitaleSociale_Ced_PA').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#socioUnico_Ced_PA').replaceWith('<div class=\"form-control-static\" id=\"socioUnico_Ced_PA\">' + (jQuery('#socioUnico_Ced_PA').val() || '') + '</div>'); jQuery('#socioUnico_Ced_PA-multi-selection-help').hide();\n";
 		$jsReadOnly .= "\tjQuery('#statoLiquidazione_Ced_PA').replaceWith('<div class=\"form-control-static\" id=\"statoLiquidazione_Ced_PA\">' + (jQuery('#statoLiquidazione_Ced_PA').val() || '') + '</div>'); jQuery('#statoLiquidazione_Ced_PA-multi-selection-help').hide();\n";
+		$jsReadOnly .= "\tjQuery('#default').prop('disabled', true);\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -538,6 +543,7 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 	$templateCode = str_replace('<%%UPLOADFILE(capitaleSociale_Ced_PA)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(socioUnico_Ced_PA)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(statoLiquidazione_Ced_PA)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(default)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -574,6 +580,7 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(statoLiquidazione_Ced_PA)%%>', safe_html($urow['statoLiquidazione_Ced_PA']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(statoLiquidazione_Ced_PA)%%>', html_attr($row['statoLiquidazione_Ced_PA']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(statoLiquidazione_Ced_PA)%%>', urlencode($urow['statoLiquidazione_Ced_PA']), $templateCode);
+		$templateCode = str_replace('<%%CHECKED(default)%%>', ($row['default'] ? "checked" : ""), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -597,6 +604,7 @@ function vatRegister_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		$templateCode = str_replace('<%%URLVALUE(socioUnico_Ced_PA)%%>', urlencode('SM'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(statoLiquidazione_Ced_PA)%%>', 'LN', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(statoLiquidazione_Ced_PA)%%>', urlencode('LN'), $templateCode);
+		$templateCode = str_replace('<%%CHECKED(default)%%>', '', $templateCode);
 	}
 
 	// process translations

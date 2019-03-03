@@ -36,7 +36,7 @@
 		3 => 3,
 		4 => '`contacts1`.`id`',
 		5 => '`companies1`.`id`',
-		6 => 6
+		6 => '`mails`.`default`'
 	);
 
 	// Fields that can be displayed in the csv file

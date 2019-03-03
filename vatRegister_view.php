@@ -33,7 +33,8 @@
 		"`vatRegister`.`numeroREA_Ced_PA`" => "numeroREA_Ced_PA",
 		"`vatRegister`.`capitaleSociale_Ced_PA`" => "capitaleSociale_Ced_PA",
 		"`vatRegister`.`socioUnico_Ced_PA`" => "socioUnico_Ced_PA",
-		"`vatRegister`.`statoLiquidazione_Ced_PA`" => "statoLiquidazione_Ced_PA"
+		"`vatRegister`.`statoLiquidazione_Ced_PA`" => "statoLiquidazione_Ced_PA",
+		"concat('<i class=\"glyphicon glyphicon-', if(`vatRegister`.`default`, 'check', 'unchecked'), '\"></i>')" => "default"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -48,7 +49,8 @@
 		9 => 9,
 		10 => '`vatRegister`.`capitaleSociale_Ced_PA`',
 		11 => 11,
-		12 => 12
+		12 => 12,
+		13 => '`vatRegister`.`default`'
 	);
 
 	// Fields that can be displayed in the csv file
@@ -64,7 +66,8 @@
 		"`vatRegister`.`numeroREA_Ced_PA`" => "numeroREA_Ced_PA",
 		"`vatRegister`.`capitaleSociale_Ced_PA`" => "capitaleSociale_Ced_PA",
 		"`vatRegister`.`socioUnico_Ced_PA`" => "socioUnico_Ced_PA",
-		"`vatRegister`.`statoLiquidazione_Ced_PA`" => "statoLiquidazione_Ced_PA"
+		"`vatRegister`.`statoLiquidazione_Ced_PA`" => "statoLiquidazione_Ced_PA",
+		"`vatRegister`.`default`" => "default"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -79,7 +82,8 @@
 		"`vatRegister`.`numeroREA_Ced_PA`" => "Numero Iscr. REA PA",
 		"`vatRegister`.`capitaleSociale_Ced_PA`" => "Capitale Sociale Ced. PA",
 		"`vatRegister`.`socioUnico_Ced_PA`" => "Socio Unico Ced. PA",
-		"`vatRegister`.`statoLiquidazione_Ced_PA`" => "Stato Liquidazione"
+		"`vatRegister`.`statoLiquidazione_Ced_PA`" => "Stato Liquidazione",
+		"`vatRegister`.`default`" => "Default"
 	);
 
 	// Fields that can be quick searched
@@ -95,7 +99,8 @@
 		"`vatRegister`.`numeroREA_Ced_PA`" => "numeroREA_Ced_PA",
 		"`vatRegister`.`capitaleSociale_Ced_PA`" => "capitaleSociale_Ced_PA",
 		"`vatRegister`.`socioUnico_Ced_PA`" => "socioUnico_Ced_PA",
-		"`vatRegister`.`statoLiquidazione_Ced_PA`" => "statoLiquidazione_Ced_PA"
+		"`vatRegister`.`statoLiquidazione_Ced_PA`" => "statoLiquidazione_Ced_PA",
+		"concat('<i class=\"glyphicon glyphicon-', if(`vatRegister`.`default`, 'check', 'unchecked'), '\"></i>')" => "default"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -128,10 +133,10 @@
 	$x->TableIcon = "resources/table_icons/book_spelling.png";
 	$x->PrimaryKey = "`vatRegister`.`id`";
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("ID Azienda", "Esercizio commerciale", "Aliquota riferimento", "Mese corrispettivi", "Anno", "Importo", "Ufficio Cedente PA", "Numero Iscr. REA PA", "Capitale Sociale Ced. PA", "Socio Unico Ced. PA", "Stato Liquidazione");
-	$x->ColFieldName = array('idCompany', 'companyName', 'tax', 'month', 'year', 'amount', 'ufficio_Ced_PA', 'numeroREA_Ced_PA', 'capitaleSociale_Ced_PA', 'socioUnico_Ced_PA', 'statoLiquidazione_Ced_PA');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("ID Azienda", "Esercizio commerciale", "Aliquota riferimento", "Mese corrispettivi", "Anno", "Importo", "Ufficio Cedente PA", "Numero Iscr. REA PA", "Capitale Sociale Ced. PA", "Socio Unico Ced. PA", "Stato Liquidazione", "Default");
+	$x->ColFieldName = array('idCompany', 'companyName', 'tax', 'month', 'year', 'amount', 'ufficio_Ced_PA', 'numeroREA_Ced_PA', 'capitaleSociale_Ced_PA', 'socioUnico_Ced_PA', 'statoLiquidazione_Ced_PA', 'default');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/vatRegister_templateTV.html';
@@ -203,6 +208,7 @@
 			$sumRow .= '<td class="vatRegister-capitaleSociale_Ced_PA"></td>';
 			$sumRow .= '<td class="vatRegister-socioUnico_Ced_PA"></td>';
 			$sumRow .= '<td class="vatRegister-statoLiquidazione_Ced_PA"></td>';
+			$sumRow .= '<td class="vatRegister-default"></td>';
 			$sumRow .= '</tr>';
 
 			$x->HTML = str_replace('<!-- tv data below -->', '', $x->HTML);

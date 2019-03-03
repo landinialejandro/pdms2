@@ -173,4 +173,5 @@ function loadDefaults(){
     getDefaultChild('address');
     getDefaultChild('phone');
     getDefaultChild('mail');
+    getDefaultChild('register');
 }

@@ -154,7 +154,8 @@
 			'numeroREA_Ced_PA' => array('appgini' => 'CHAR(20) null '),
 			'capitaleSociale_Ced_PA' => array('appgini' => 'DECIMAL(15,2) null '),
 			'socioUnico_Ced_PA' => array('appgini' => 'VARCHAR(2) null default \'SM\' '),
-			'statoLiquidazione_Ced_PA' => array('appgini' => 'CHAR(2) null default \'LN\' ')
+			'statoLiquidazione_Ced_PA' => array('appgini' => 'CHAR(2) null default \'LN\' '),
+			'default' => array('appgini' => 'INT null default \'0\' ')
 		),
 		'contacts' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -251,7 +252,7 @@
 			'phoneNumber' => array('appgini' => 'VARCHAR(255) null '),
 			'contact' => array('appgini' => 'INT unsigned null '),
 			'company' => array('appgini' => 'INT unsigned null '),
-			'default' => array('appgini' => 'VARCHAR(40) null default \'0\' ')
+			'default' => array('appgini' => 'TINYINT null default \'0\' ')
 		),
 		'mails' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -259,13 +260,13 @@
 			'mail' => array('appgini' => 'VARCHAR(255) null '),
 			'contact' => array('appgini' => 'INT unsigned null '),
 			'company' => array('appgini' => 'INT unsigned null '),
-			'default' => array('appgini' => 'VARCHAR(40) null default \'0\' ')
+			'default' => array('appgini' => 'TINYINT null default \'0\' ')
 		),
 		'contacts_companies' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'contact' => array('appgini' => 'INT unsigned null '),
 			'company' => array('appgini' => 'INT unsigned null '),
-			'default' => array('appgini' => 'VARCHAR(40) null default \'0\' ')
+			'default' => array('appgini' => 'TINYINT null default \'0\' ')
 		),
 		'attachments' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
