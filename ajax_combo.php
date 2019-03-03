@@ -508,7 +508,7 @@
 		'addresses' => array(   
 			'kind' => array(
 				'parent_table' => 'kinds',
-				'parent_pk_field' => 'name',
+				'parent_pk_field' => 'code',
 				'parent_caption' => '`kinds`.`name`',
 				'parent_from' => '`kinds` ',
 				'filterers' => array(),
@@ -598,7 +598,7 @@
 		'phones' => array(   
 			'kind' => array(
 				'parent_table' => 'kinds',
-				'parent_pk_field' => 'name',
+				'parent_pk_field' => 'code',
 				'parent_caption' => '`kinds`.`name`',
 				'parent_from' => '`kinds` ',
 				'filterers' => array(),
@@ -633,7 +633,7 @@
 		'mails' => array(   
 			'kind' => array(
 				'parent_table' => 'kinds',
-				'parent_pk_field' => 'name',
+				'parent_pk_field' => 'code',
 				'parent_caption' => '`kinds`.`name`',
 				'parent_from' => '`kinds` ',
 				'filterers' => array(),

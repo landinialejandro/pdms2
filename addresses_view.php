@@ -23,7 +23,7 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
 		"`addresses`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo */" => "kind",
 		"if(CHAR_LENGTH(`addresses`.`address`)>100, concat(left(`addresses`.`address`,100),' ...'), `addresses`.`address`)" => "address",
 		"if(CHAR_LENGTH(`addresses`.`houseNumber`)>100, concat(left(`addresses`.`houseNumber`,100),' ...'), `addresses`.`houseNumber`)" => "houseNumber",
 		"IF(    CHAR_LENGTH(`countries1`.`code`), CONCAT_WS('',   `countries1`.`code`), '') /* Country Code */" => "country",
@@ -58,7 +58,7 @@
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
 		"`addresses`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo */" => "kind",
 		"`addresses`.`address`" => "address",
 		"`addresses`.`houseNumber`" => "houseNumber",
 		"IF(    CHAR_LENGTH(`countries1`.`code`), CONCAT_WS('',   `countries1`.`code`), '') /* Country Code */" => "country",
@@ -75,7 +75,7 @@
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
 		"`addresses`.`id`" => "ID",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "Kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo */" => "Tipo",
 		"`addresses`.`address`" => "Address",
 		"`addresses`.`houseNumber`" => "HouseNumber",
 		"IF(    CHAR_LENGTH(`countries1`.`code`), CONCAT_WS('',   `countries1`.`code`), '') /* Country Code */" => "Country Code",
@@ -93,7 +93,7 @@
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
 		"`addresses`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo */" => "kind",
 		"`addresses`.`address`" => "Address",
 		"`addresses`.`houseNumber`" => "HouseNumber",
 		"IF(    CHAR_LENGTH(`countries1`.`code`), CONCAT_WS('',   `countries1`.`code`), '') /* Country Code */" => "country",
@@ -109,7 +109,7 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'kind' => 'Kind', 'country' => 'Country Code', 'town' => 'Town', 'contact' => 'Contact', 'company' => 'Company');
+	$x->filterers = array(  'kind' => 'Tipo', 'country' => 'Country Code', 'town' => 'Town', 'contact' => 'Contact', 'company' => 'Company');
 
 	$x->QueryFrom = "`addresses` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`addresses`.`kind` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`addresses`.`country` LEFT JOIN `town` as town1 ON `town1`.`id`=`addresses`.`town` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`addresses`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`addresses`.`company` ";
 	$x->QueryWhere = '';
@@ -139,7 +139,7 @@
 	$x->PrimaryKey = "`addresses`.`id`";
 
 	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Kind", "Address", "HouseNumber", "Country Code", "Country Name", "Town", "PostalCode", "District", "Default", "Ship");
+	$x->ColCaption = array("Tipo", "Address", "HouseNumber", "Country Code", "Country Name", "Town", "PostalCode", "District", "Default", "Ship");
 	$x->ColFieldName = array('kind', 'address', 'houseNumber', 'country', 'country_name', 'town', 'postalCode', 'district', 'default', 'ship');
 	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 13, 14);
 

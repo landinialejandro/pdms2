@@ -23,7 +23,7 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
 		"`mails`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo */" => "kind",
 		"if(CHAR_LENGTH(`mails`.`mail`)>100, concat(left(`mails`.`mail`,100),' ...'), `mails`.`mail`)" => "mail",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
@@ -42,7 +42,7 @@
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
 		"`mails`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo */" => "kind",
 		"`mails`.`mail`" => "mail",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
@@ -51,7 +51,7 @@
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
 		"`mails`.`id`" => "ID",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "Kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo */" => "Tipo",
 		"`mails`.`mail`" => "Mail",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "Contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "Company",
@@ -61,7 +61,7 @@
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
 		"`mails`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo */" => "kind",
 		"`mails`.`mail`" => "Mail",
 		"IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') /* Contact */" => "contact",
 		"IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') /* Company */" => "company",
@@ -69,7 +69,7 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'kind' => 'Kind', 'contact' => 'Contact', 'company' => 'Company');
+	$x->filterers = array(  'kind' => 'Tipo', 'contact' => 'Contact', 'company' => 'Company');
 
 	$x->QueryFrom = "`mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` ";
 	$x->QueryWhere = '';
@@ -99,7 +99,7 @@
 	$x->PrimaryKey = "`mails`.`id`";
 
 	$x->ColWidth   = array(  150, 150, 150);
-	$x->ColCaption = array("Kind", "Mail", "Default");
+	$x->ColCaption = array("Tipo", "Mail", "Default");
 	$x->ColFieldName = array('kind', 'mail', 'default');
 	$x->ColNumber  = array(2, 3, 6);
 

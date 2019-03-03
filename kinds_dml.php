@@ -381,9 +381,9 @@ function kinds_delete($selected_id, $AllowDeleteOfParents=false, $skipChecks=fal
 	}
 
 	// child table: addresses
-	$res = sql("select `name` from `kinds` where `code`='$selected_id'", $eo);
-	$name = db_fetch_row($res);
-	$rires = sql("select count(1) from `addresses` where `kind`='".addslashes($name[0])."'", $eo);
+	$res = sql("select `code` from `kinds` where `code`='$selected_id'", $eo);
+	$code = db_fetch_row($res);
+	$rires = sql("select count(1) from `addresses` where `kind`='".addslashes($code[0])."'", $eo);
 	$rirow = db_fetch_row($rires);
 	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
 		$RetMsg = $Translation["couldn't delete"];
@@ -400,9 +400,9 @@ function kinds_delete($selected_id, $AllowDeleteOfParents=false, $skipChecks=fal
 	}
 
 	// child table: phones
-	$res = sql("select `name` from `kinds` where `code`='$selected_id'", $eo);
-	$name = db_fetch_row($res);
-	$rires = sql("select count(1) from `phones` where `kind`='".addslashes($name[0])."'", $eo);
+	$res = sql("select `code` from `kinds` where `code`='$selected_id'", $eo);
+	$code = db_fetch_row($res);
+	$rires = sql("select count(1) from `phones` where `kind`='".addslashes($code[0])."'", $eo);
 	$rirow = db_fetch_row($rires);
 	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
 		$RetMsg = $Translation["couldn't delete"];
@@ -419,9 +419,9 @@ function kinds_delete($selected_id, $AllowDeleteOfParents=false, $skipChecks=fal
 	}
 
 	// child table: mails
-	$res = sql("select `name` from `kinds` where `code`='$selected_id'", $eo);
-	$name = db_fetch_row($res);
-	$rires = sql("select count(1) from `mails` where `kind`='".addslashes($name[0])."'", $eo);
+	$res = sql("select `code` from `kinds` where `code`='$selected_id'", $eo);
+	$code = db_fetch_row($res);
+	$rires = sql("select count(1) from `mails` where `kind`='".addslashes($code[0])."'", $eo);
 	$rirow = db_fetch_row($rires);
 	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
 		$RetMsg = $Translation["couldn't delete"];

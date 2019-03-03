@@ -23,7 +23,7 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
 		"`orders`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo ordine */" => "kind",
 		"`orders`.`progressiveNr`" => "progressiveNr",
 		"`orders`.`trasmissionFor`" => "trasmissionFor",
 		"`orders`.`consigneeID`" => "consigneeID",
@@ -86,7 +86,7 @@
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
 		"`orders`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo ordine */" => "kind",
 		"`orders`.`progressiveNr`" => "progressiveNr",
 		"`orders`.`trasmissionFor`" => "trasmissionFor",
 		"`orders`.`consigneeID`" => "consigneeID",
@@ -117,7 +117,7 @@
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
 		"`orders`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "Kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo ordine */" => "Tipo ordine",
 		"`orders`.`progressiveNr`" => "Numero progressivo",
 		"`orders`.`trasmissionFor`" => "Formato Trasmissione",
 		"`orders`.`consigneeID`" => "Codice Destinatario",
@@ -149,7 +149,7 @@
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
 		"`orders`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Kind */" => "kind",
+		"IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') /* Tipo ordine */" => "kind",
 		"`orders`.`progressiveNr`" => "Numero progressivo",
 		"`orders`.`trasmissionFor`" => "Formato Trasmissione",
 		"`orders`.`consigneeID`" => "Codice Destinatario",
@@ -179,7 +179,7 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'kind' => 'Kind', 'company' => 'ID Azienda', 'typeDoc' => 'Documento', 'customer' => 'Cliente', 'supplier' => 'Supplier', 'employee' => 'Impiegato', 'shipVia' => 'Spedizione a mezzo');
+	$x->filterers = array(  'kind' => 'Tipo ordine', 'company' => 'ID Azienda', 'typeDoc' => 'Documento', 'customer' => 'Cliente', 'supplier' => 'Supplier', 'employee' => 'Impiegato', 'shipVia' => 'Spedizione a mezzo');
 
 	$x->QueryFrom = "`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`supplier` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`orders`.`employee` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`orders`.`shipVia` ";
 	$x->QueryWhere = '';
@@ -211,7 +211,7 @@
 	$x->DefaultSortDirection = 'desc';
 
 	$x->ColWidth   = array(  150, 150, 150, 150, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Kind", "ID Azienda", "Documento", "Numero", "Cliente", "Supplier", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Provvigione su ordine", "CommisionRate", "Ora di consegna", "Luogo consegna");
+	$x->ColCaption = array("Tipo ordine", "ID Azienda", "Documento", "Numero", "Cliente", "Supplier", "Data Ordine", "Data di spedizione", "Spedizione a mezzo", "Pallets", "Targa Automezzo", "Totale ordine", "Credito o cassa", "Provvigione su ordine", "CommisionRate", "Ora di consegna", "Luogo consegna");
 	$x->ColFieldName = array('kind', 'company', 'typeDoc', 'multiOrder', 'customer', 'supplier', 'date', 'shippedDate', 'shipVia', 'pallets', 'licencePlate', 'orderTotal', 'cashCredit', 'commisionFee', 'commisionRate', 'consigneeHour', 'consigneePlace');
 	$x->ColNumber  = array(2, 6, 7, 8, 9, 10, 12, 14, 15, 17, 18, 19, 20, 23, 24, 25, 26);
 

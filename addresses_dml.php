@@ -845,7 +845,7 @@ function addresses_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%URLCOMBOTEXT(company)%%>', urlencode($combo_company->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'kind' => array('kinds', 'Kind'), 'country' => array('countries', 'Country Code'), 'town' => array('town', 'Town'), 'contact' => array('contacts', 'Contact'), 'company' => array('companies', 'Company'));
+	$lookup_fields = array(  'kind' => array('kinds', 'Tipo'), 'country' => array('countries', 'Country Code'), 'town' => array('town', 'Town'), 'contact' => array('contacts', 'Contact'), 'company' => array('companies', 'Company'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
