@@ -44,17 +44,21 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="town" class="control-label col-lg-3">Comune</label>
+					<label for="town" class="control-label col-lg-3">Comune <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#town-description"></i></label>
 					<div class="col-lg-9">
-						<input maxlength="255" type="text" class="form-control" name="town" id="town" value="<%%VALUE(town)%%>">
+						<span class="help-block collapse" id="town-description"><div class="alert alert-info">Comune relativo alla stabileorganizzazionein Italia.</div></span>
+
+						<input maxlength="60" type="text" class="form-control" name="town" id="town" value="<%%VALUE(town)%%>">
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="district" class="control-label col-lg-3">Provincia<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="district" class="control-label col-lg-3">Provincia<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#district-description"></i></label>
 					<div class="col-lg-9">
-						<input maxlength="255" type="text" class="form-control" name="district" id="district" value="<%%VALUE(district)%%>" required>
+						<span class="help-block collapse" id="district-description"><div class="alert alert-info">Sigla della provincia di appartenenza del comune indicato nell'elemento informativo. Da valorizzare se<br>l'elemento informativo Nazione &#232; uguale a IT<br></div></span>
+
+						<input maxlength="2" type="text" class="form-control" name="district" id="district" value="<%%VALUE(district)%%>" required>
 					</div>
 				</div>
 
