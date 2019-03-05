@@ -520,7 +520,7 @@
 			'country' => array(
 				'parent_table' => 'countries',
 				'parent_pk_field' => 'id',
-				'parent_caption' => '`countries`.`code`',
+				'parent_caption' => 'IF(CHAR_LENGTH(`countries`.`code`) || CHAR_LENGTH(`countries`.`country`), CONCAT_WS(\'\', `countries`.`code`, \' - \', `countries`.`country`), \'\')',
 				'parent_from' => '`countries` ',
 				'filterers' => array(),
 				'custom_query' => '',
@@ -528,38 +528,16 @@
 				'list_type' => 0,
 				'not_null' => true
 			),
-			'country_name' => array(
-				'parent_table' => 'countries',
-				'parent_pk_field' => 'id',
-				'parent_caption' => '`countries`.`country`',
-				'parent_from' => '`countries` ',
-				'filterers' => array(),
-				'custom_query' => '',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
-			),
 			'town' => array(
 				'parent_table' => 'town',
 				'parent_pk_field' => 'id',
-				'parent_caption' => '`town`.`town`',
+				'parent_caption' => 'IF(CHAR_LENGTH(`town`.`town`) || CHAR_LENGTH(`town`.`district`), CONCAT_WS(\'\', `town`.`town`, \' - \', `town`.`district`), \'\')',
 				'parent_from' => '`town` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`town`.`country` ',
 				'filterers' => array('country' => 'country'),
 				'custom_query' => '',
 				'inherit_permissions' => false,
 				'list_type' => 0,
 				'not_null' => true
-			),
-			'postalCode' => array(
-				'parent_table' => 'town',
-				'parent_pk_field' => 'id',
-				'parent_caption' => '`town`.`shipCode`',
-				'parent_from' => '`town` LEFT JOIN `countries` as countries1 ON `countries1`.`id`=`town`.`country` ',
-				'filterers' => array(),
-				'custom_query' => '',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
 			),
 			'district' => array(
 				'parent_table' => 'town',

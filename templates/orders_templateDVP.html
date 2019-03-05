@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">ID Azienda</label>
+			<label class="col-xs-3 control-label">Azienda</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><span id="company<%%RND1%%>"><%%COMBOTEXT(company)%%></span></div>
 			</div>
@@ -36,6 +36,18 @@
 			<label class="col-xs-3 control-label">Numero</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%VALUE(multiOrder)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Divisa</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(divisa)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Causale</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(causale)%%></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
@@ -57,9 +69,15 @@
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Data Ora Ritiro PA</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(dateRequired)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
 			<label class="col-xs-3 control-label">Data di spedizione</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><%%COMBOTEXT(shippedDate)%%></div>
+				<div class="form-control-static"><%%COMBOTEXT(dateShipped)%%></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
@@ -87,9 +105,21 @@
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Totale ordine</label>
+			<label class="col-xs-3 control-label">Importo Sconto o Mag PA</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(importoSconto)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Importo Totale doc</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%VALUE(orderTotal)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">RIT importo</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(RIT_importoRitenuta)%%></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
@@ -126,6 +156,12 @@
 			<label class="col-xs-3 control-label">Related</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%VALUE(related)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Document</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(document)%%></div>
 			</div>
 		</div>
 	</fieldset>
