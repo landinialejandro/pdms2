@@ -39,7 +39,11 @@
 		"concat('<i class=\"glyphicon glyphicon-', if(`companies`.`RIT_soggettoRitenuta`, 'check', 'unchecked'), '\"></i>')" => "RIT_soggettoRitenuta",
 		"`companies`.`RIT_tipoRitenuta`" => "RIT_tipoRitenuta",
 		"`companies`.`RIT_AliquotaRitenuta`" => "RIT_AliquotaRitenuta",
-		"`companies`.`RIT_CausalePagamento`" => "RIT_CausalePagamento"
+		"`companies`.`RIT_CausalePagamento`" => "RIT_CausalePagamento",
+		"`companies`.`IBAN`" => "IBAN",
+		"`companies`.`ABI`" => "ABI",
+		"`companies`.`CAB`" => "CAB",
+		"`companies`.`BIC`" => "BIC"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -57,10 +61,14 @@
 		12 => 12,
 		13 => 13,
 		14 => '`kinds5`.`name`',
-		15 => 15,
+		15 => '`companies`.`RIT_soggettoRitenuta`',
 		16 => 16,
 		17 => '`companies`.`RIT_AliquotaRitenuta`',
-		18 => 18
+		18 => 18,
+		19 => 19,
+		20 => 20,
+		21 => 21,
+		22 => 22
 	);
 
 	// Fields that can be displayed in the csv file
@@ -82,7 +90,11 @@
 		"`companies`.`RIT_soggettoRitenuta`" => "RIT_soggettoRitenuta",
 		"`companies`.`RIT_tipoRitenuta`" => "RIT_tipoRitenuta",
 		"`companies`.`RIT_AliquotaRitenuta`" => "RIT_AliquotaRitenuta",
-		"`companies`.`RIT_CausalePagamento`" => "RIT_CausalePagamento"
+		"`companies`.`RIT_CausalePagamento`" => "RIT_CausalePagamento",
+		"`companies`.`IBAN`" => "IBAN",
+		"`companies`.`ABI`" => "ABI",
+		"`companies`.`CAB`" => "CAB",
+		"`companies`.`BIC`" => "BIC"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -103,7 +115,11 @@
 		"`companies`.`RIT_soggettoRitenuta`" => "RIT soggetto Ritenuta",
 		"`companies`.`RIT_tipoRitenuta`" => "RIT tipo Ritenuta",
 		"`companies`.`RIT_AliquotaRitenuta`" => "RIT Aliquota Ritenuta",
-		"`companies`.`RIT_CausalePagamento`" => "RIT Causale Pagamento"
+		"`companies`.`RIT_CausalePagamento`" => "RIT Causale Pagamento",
+		"`companies`.`IBAN`" => "IBAN PA",
+		"`companies`.`ABI`" => "ABI PA",
+		"`companies`.`CAB`" => "CAB",
+		"`companies`.`BIC`" => "BIC"
 	);
 
 	// Fields that can be quick searched
@@ -125,7 +141,11 @@
 		"concat('<i class=\"glyphicon glyphicon-', if(`companies`.`RIT_soggettoRitenuta`, 'check', 'unchecked'), '\"></i>')" => "RIT_soggettoRitenuta",
 		"`companies`.`RIT_tipoRitenuta`" => "RIT_tipoRitenuta",
 		"`companies`.`RIT_AliquotaRitenuta`" => "RIT_AliquotaRitenuta",
-		"`companies`.`RIT_CausalePagamento`" => "RIT_CausalePagamento"
+		"`companies`.`RIT_CausalePagamento`" => "RIT_CausalePagamento",
+		"`companies`.`IBAN`" => "IBAN",
+		"`companies`.`ABI`" => "ABI",
+		"`companies`.`CAB`" => "CAB",
+		"`companies`.`BIC`" => "BIC"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -160,10 +180,10 @@
 	$x->DefaultSortField = '4';
 	$x->DefaultSortDirection = 'asc';
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Tipo", "Codice", "Ragione Sociale", "Codice Fiscale", "Vat", "Notes", "RIT soggetto Ritenuta", "RIT Aliquota Ritenuta");
-	$x->ColFieldName = array('kind', 'companyCode', 'companyName', 'fiscalCode', 'vat', 'notes', 'RIT_soggettoRitenuta', 'RIT_AliquotaRitenuta');
-	$x->ColNumber  = array(2, 3, 4, 6, 7, 8, 15, 17);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Tipo", "Codice", "Ragione Sociale", "Codice Fiscale", "Vat", "Notes", "RIT soggetto Ritenuta", "RIT Aliquota Ritenuta", "IBAN PA", "ABI PA", "CAB", "BIC");
+	$x->ColFieldName = array('kind', 'companyCode', 'companyName', 'fiscalCode', 'vat', 'notes', 'RIT_soggettoRitenuta', 'RIT_AliquotaRitenuta', 'IBAN', 'ABI', 'CAB', 'BIC');
+	$x->ColNumber  = array(2, 3, 4, 6, 7, 8, 15, 17, 19, 20, 21, 22);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/companies_templateTV.html';

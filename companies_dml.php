@@ -48,6 +48,14 @@ function companies_insert(){
 		if($data['RIT_AliquotaRitenuta'] == empty_lookup_value){ $data['RIT_AliquotaRitenuta'] = ''; }
 	$data['RIT_CausalePagamento'] = makeSafe($_REQUEST['RIT_CausalePagamento']);
 		if($data['RIT_CausalePagamento'] == empty_lookup_value){ $data['RIT_CausalePagamento'] = ''; }
+	$data['IBAN'] = makeSafe($_REQUEST['IBAN']);
+		if($data['IBAN'] == empty_lookup_value){ $data['IBAN'] = ''; }
+	$data['ABI'] = makeSafe($_REQUEST['ABI']);
+		if($data['ABI'] == empty_lookup_value){ $data['ABI'] = ''; }
+	$data['CAB'] = makeSafe($_REQUEST['CAB']);
+		if($data['CAB'] == empty_lookup_value){ $data['CAB'] = ''; }
+	$data['BIC'] = makeSafe($_REQUEST['BIC']);
+		if($data['BIC'] == empty_lookup_value){ $data['BIC'] = ''; }
 	if($data['kind']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Tipo': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
@@ -85,7 +93,7 @@ function companies_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL'), $o);
+	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL') . ', `IBAN`=' . (($data['IBAN'] !== '' && $data['IBAN'] !== NULL) ? "'{$data['IBAN']}'" : 'NULL') . ', `ABI`=' . (($data['ABI'] !== '' && $data['ABI'] !== NULL) ? "'{$data['ABI']}'" : 'NULL') . ', `CAB`=' . (($data['CAB'] !== '' && $data['CAB'] !== NULL) ? "'{$data['CAB']}'" : 'NULL') . ', `BIC`=' . (($data['BIC'] !== '' && $data['BIC'] !== NULL) ? "'{$data['BIC']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"companies_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -521,6 +529,14 @@ function companies_update($selected_id){
 		if($data['RIT_AliquotaRitenuta'] == empty_lookup_value){ $data['RIT_AliquotaRitenuta'] = ''; }
 	$data['RIT_CausalePagamento'] = makeSafe($_REQUEST['RIT_CausalePagamento']);
 		if($data['RIT_CausalePagamento'] == empty_lookup_value){ $data['RIT_CausalePagamento'] = ''; }
+	$data['IBAN'] = makeSafe($_REQUEST['IBAN']);
+		if($data['IBAN'] == empty_lookup_value){ $data['IBAN'] = ''; }
+	$data['ABI'] = makeSafe($_REQUEST['ABI']);
+		if($data['ABI'] == empty_lookup_value){ $data['ABI'] = ''; }
+	$data['CAB'] = makeSafe($_REQUEST['CAB']);
+		if($data['CAB'] == empty_lookup_value){ $data['CAB'] = ''; }
+	$data['BIC'] = makeSafe($_REQUEST['BIC']);
+		if($data['BIC'] == empty_lookup_value){ $data['BIC'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: companies_before_update
@@ -530,7 +546,7 @@ function companies_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL') . ', `IBAN`=' . (($data['IBAN'] !== '' && $data['IBAN'] !== NULL) ? "'{$data['IBAN']}'" : 'NULL') . ', `ABI`=' . (($data['ABI'] !== '' && $data['ABI'] !== NULL) ? "'{$data['ABI']}'" : 'NULL') . ', `CAB`=' . (($data['CAB'] !== '' && $data['CAB'] !== NULL) ? "'{$data['CAB']}'" : 'NULL') . ', `BIC`=' . (($data['BIC'] !== '' && $data['BIC'] !== NULL) ? "'{$data['BIC']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="companies_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -1172,6 +1188,10 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$jsReadOnly .= "\tjQuery('input[name=RIT_tipoRitenuta]').parent().html('<div class=\"form-control-static\">' + jQuery('input[name=RIT_tipoRitenuta]:checked').next().text() + '</div>')\n";
 		$jsReadOnly .= "\tjQuery('#RIT_AliquotaRitenuta').replaceWith('<div class=\"form-control-static\" id=\"RIT_AliquotaRitenuta\">' + (jQuery('#RIT_AliquotaRitenuta').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#RIT_CausalePagamento').replaceWith('<div class=\"form-control-static\" id=\"RIT_CausalePagamento\">' + (jQuery('#RIT_CausalePagamento').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#IBAN').replaceWith('<div class=\"form-control-static\" id=\"IBAN\">' + (jQuery('#IBAN').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#ABI').replaceWith('<div class=\"form-control-static\" id=\"ABI\">' + (jQuery('#ABI').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#CAB').replaceWith('<div class=\"form-control-static\" id=\"CAB\">' + (jQuery('#CAB').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#BIC').replaceWith('<div class=\"form-control-static\" id=\"BIC\">' + (jQuery('#BIC').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -1236,6 +1256,10 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%UPLOADFILE(RIT_tipoRitenuta)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(RIT_AliquotaRitenuta)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(RIT_CausalePagamento)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(IBAN)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(ABI)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(CAB)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(BIC)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -1295,6 +1319,18 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(RIT_CausalePagamento)%%>', safe_html($urow['RIT_CausalePagamento']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(RIT_CausalePagamento)%%>', html_attr($row['RIT_CausalePagamento']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(RIT_CausalePagamento)%%>', urlencode($urow['RIT_CausalePagamento']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(IBAN)%%>', safe_html($urow['IBAN']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(IBAN)%%>', html_attr($row['IBAN']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(IBAN)%%>', urlencode($urow['IBAN']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(ABI)%%>', safe_html($urow['ABI']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(ABI)%%>', html_attr($row['ABI']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(ABI)%%>', urlencode($urow['ABI']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(CAB)%%>', safe_html($urow['CAB']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(CAB)%%>', html_attr($row['CAB']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(CAB)%%>', urlencode($urow['CAB']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(BIC)%%>', safe_html($urow['BIC']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(BIC)%%>', html_attr($row['BIC']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(BIC)%%>', urlencode($urow['BIC']), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -1330,6 +1366,14 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$templateCode = str_replace('<%%URLVALUE(RIT_AliquotaRitenuta)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(RIT_CausalePagamento)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(RIT_CausalePagamento)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(IBAN)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(IBAN)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(ABI)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(ABI)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(CAB)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(CAB)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(BIC)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(BIC)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

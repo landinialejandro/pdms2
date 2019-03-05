@@ -141,7 +141,11 @@
 			'RIT_soggettoRitenuta' => array('appgini' => 'TINYINT null default \'0\' '),
 			'RIT_tipoRitenuta' => array('appgini' => 'VARCHAR(40) not null default \'RT02\' '),
 			'RIT_AliquotaRitenuta' => array('appgini' => 'DECIMAL(10,2) null '),
-			'RIT_CausalePagamento' => array('appgini' => 'VARCHAR(40) null ')
+			'RIT_CausalePagamento' => array('appgini' => 'VARCHAR(40) null '),
+			'IBAN' => array('appgini' => 'VARCHAR(40) null '),
+			'ABI' => array('appgini' => 'VARCHAR(40) null '),
+			'CAB' => array('appgini' => 'VARCHAR(40) null '),
+			'BIC' => array('appgini' => 'VARCHAR(40) null ')
 		),
 		'vatRegister' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -275,22 +279,6 @@
 			'contact' => array('appgini' => 'INT unsigned null '),
 			'company' => array('appgini' => 'INT unsigned null '),
 			'thumbUse' => array('appgini' => 'INT null default \'0\' ')
-		),
-		'codiceDestinatario' => array(   
-			'code' => array('appgini' => 'VARCHAR(40) not null primary key '),
-			'text' => array('appgini' => 'TEXT null ')
-		),
-		'regimeFiscale' => array(   
-			'code' => array('appgini' => 'VARCHAR(40) not null primary key '),
-			'text' => array('appgini' => 'TEXT null ')
-		),
-		'tipoCassa' => array(   
-			'code' => array('appgini' => 'VARCHAR(40) not null primary key '),
-			'text' => array('appgini' => 'TEXT null ')
-		),
-		'modalitaPagamento' => array(   
-			'code' => array('appgini' => 'VARCHAR(40) not null primary key '),
-			'text' => array('appgini' => 'TEXT null ')
 		)
 	);
 

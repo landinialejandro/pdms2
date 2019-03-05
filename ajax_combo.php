@@ -690,14 +690,6 @@
 				'list_type' => 0,
 				'not_null' => false
 			)
-		),
-		'codiceDestinatario' => array(  
-		),
-		'regimeFiscale' => array(  
-		),
-		'tipoCassa' => array(  
-		),
-		'modalitaPagamento' => array(  
 		)
 	);
 

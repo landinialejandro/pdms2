@@ -240,34 +240,6 @@
 					'tableIcon' => 'resources/table_icons/attach.png',
 					'group' => $tg[5],
 					'homepageShowCount' => 0
-				),
-				'codiceDestinatario' => array(
-					'Caption' => 'Codice Destinatario',
-					'Description' => 'codice dell\'ufficio dell&#8217;amministrazione dello stato destinatario della fattura, definito dall\'amministrazione di appartenenza come riportato nella rubrica &#8220;Indice PA&#8221;.',
-					'tableIcon' => 'table.gif',
-					'group' => $tg[3],
-					'homepageShowCount' => 1
-				),
-				'regimeFiscale' => array(
-					'Caption' => 'RegimeFiscale',
-					'Description' => '',
-					'tableIcon' => 'table.gif',
-					'group' => $tg[3],
-					'homepageShowCount' => 1
-				),
-				'tipoCassa' => array(
-					'Caption' => 'TipoCassa',
-					'Description' => '',
-					'tableIcon' => 'table.gif',
-					'group' => $tg[3],
-					'homepageShowCount' => 1
-				),
-				'modalitaPagamento' => array(
-					'Caption' => 'ModalitaPagamento',
-					'Description' => '',
-					'tableIcon' => 'table.gif',
-					'group' => $tg[0],
-					'homepageShowCount' => 0
 				)
 		);
 
@@ -304,11 +276,7 @@
 				'phones' => 'Phones',
 				'mails' => 'Mails',
 				'contacts_companies' => 'Contacts companies',
-				'attachments' => 'Attaches',
-				'codiceDestinatario' => 'Codice Destinatario',
-				'regimeFiscale' => 'RegimeFiscale',
-				'tipoCassa' => 'TipoCassa',
-				'modalitaPagamento' => 'ModalitaPagamento'
+				'attachments' => 'Attaches'
 			);
 
 			return $arrTables;

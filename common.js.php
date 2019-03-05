@@ -395,30 +395,6 @@ function attachments_validateData(){
 	$j('.has-error').removeClass('has-error');
 	return true;
 }
-function codiceDestinatario_validateData(){
-	$j('.has-error').removeClass('has-error');
-	/* Field code can't be empty */
-	if($j('#code').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Code", close: function(){ /* */ $j('[name=code]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	return true;
-}
-function regimeFiscale_validateData(){
-	$j('.has-error').removeClass('has-error');
-	/* Field code can't be empty */
-	if($j('#code').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Code", close: function(){ /* */ $j('[name=code]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	return true;
-}
-function tipoCassa_validateData(){
-	$j('.has-error').removeClass('has-error');
-	/* Field code can't be empty */
-	if($j('#code').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Code", close: function(){ /* */ $j('[name=code]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	return true;
-}
-function modalitaPagamento_validateData(){
-	$j('.has-error').removeClass('has-error');
-	/* Field code can't be empty */
-	if($j('#code').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Code", close: function(){ /* */ $j('[name=code]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	return true;
-}
 
 function post(url, params, update, disable, loading, success_callback){
 	$j.ajax({
