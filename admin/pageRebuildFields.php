@@ -145,7 +145,12 @@
 			'IBAN' => array('appgini' => 'VARCHAR(40) null '),
 			'ABI' => array('appgini' => 'VARCHAR(40) null '),
 			'CAB' => array('appgini' => 'VARCHAR(40) null '),
-			'BIC' => array('appgini' => 'VARCHAR(40) null ')
+			'BIC' => array('appgini' => 'VARCHAR(40) null '),
+			'autorizzSanitaria_SAM' => array('appgini' => 'VARCHAR(255) null '),
+			'AutSanEmessa_SAM' => array('appgini' => 'VARCHAR(255) null '),
+			'NrPresSan_SAM' => array('appgini' => 'VARCHAR(255) null '),
+			'NrAutSan_SAM' => array('appgini' => 'VARCHAR(40) null '),
+			'dataAutSan_SAM' => array('appgini' => 'DATE null ')
 		),
 		'vatRegister' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),

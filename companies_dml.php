@@ -56,6 +56,16 @@ function companies_insert(){
 		if($data['CAB'] == empty_lookup_value){ $data['CAB'] = ''; }
 	$data['BIC'] = makeSafe($_REQUEST['BIC']);
 		if($data['BIC'] == empty_lookup_value){ $data['BIC'] = ''; }
+	$data['autorizzSanitaria_SAM'] = makeSafe($_REQUEST['autorizzSanitaria_SAM']);
+		if($data['autorizzSanitaria_SAM'] == empty_lookup_value){ $data['autorizzSanitaria_SAM'] = ''; }
+	$data['AutSanEmessa_SAM'] = makeSafe($_REQUEST['AutSanEmessa_SAM']);
+		if($data['AutSanEmessa_SAM'] == empty_lookup_value){ $data['AutSanEmessa_SAM'] = ''; }
+	$data['NrPresSan_SAM'] = makeSafe($_REQUEST['NrPresSan_SAM']);
+		if($data['NrPresSan_SAM'] == empty_lookup_value){ $data['NrPresSan_SAM'] = ''; }
+	$data['NrAutSan_SAM'] = makeSafe($_REQUEST['NrAutSan_SAM']);
+		if($data['NrAutSan_SAM'] == empty_lookup_value){ $data['NrAutSan_SAM'] = ''; }
+	$data['dataAutSan_SAM'] = intval($_REQUEST['dataAutSan_SAMYear']) . '-' . intval($_REQUEST['dataAutSan_SAMMonth']) . '-' . intval($_REQUEST['dataAutSan_SAMDay']);
+	$data['dataAutSan_SAM'] = parseMySQLDate($data['dataAutSan_SAM'], '');
 	if($data['kind']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Tipo': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
@@ -93,7 +103,7 @@ function companies_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL') . ', `IBAN`=' . (($data['IBAN'] !== '' && $data['IBAN'] !== NULL) ? "'{$data['IBAN']}'" : 'NULL') . ', `ABI`=' . (($data['ABI'] !== '' && $data['ABI'] !== NULL) ? "'{$data['ABI']}'" : 'NULL') . ', `CAB`=' . (($data['CAB'] !== '' && $data['CAB'] !== NULL) ? "'{$data['CAB']}'" : 'NULL') . ', `BIC`=' . (($data['BIC'] !== '' && $data['BIC'] !== NULL) ? "'{$data['BIC']}'" : 'NULL'), $o);
+	sql('insert into `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL') . ', `IBAN`=' . (($data['IBAN'] !== '' && $data['IBAN'] !== NULL) ? "'{$data['IBAN']}'" : 'NULL') . ', `ABI`=' . (($data['ABI'] !== '' && $data['ABI'] !== NULL) ? "'{$data['ABI']}'" : 'NULL') . ', `CAB`=' . (($data['CAB'] !== '' && $data['CAB'] !== NULL) ? "'{$data['CAB']}'" : 'NULL') . ', `BIC`=' . (($data['BIC'] !== '' && $data['BIC'] !== NULL) ? "'{$data['BIC']}'" : 'NULL') . ', `autorizzSanitaria_SAM`=' . (($data['autorizzSanitaria_SAM'] !== '' && $data['autorizzSanitaria_SAM'] !== NULL) ? "'{$data['autorizzSanitaria_SAM']}'" : 'NULL') . ', `AutSanEmessa_SAM`=' . (($data['AutSanEmessa_SAM'] !== '' && $data['AutSanEmessa_SAM'] !== NULL) ? "'{$data['AutSanEmessa_SAM']}'" : 'NULL') . ', `NrPresSan_SAM`=' . (($data['NrPresSan_SAM'] !== '' && $data['NrPresSan_SAM'] !== NULL) ? "'{$data['NrPresSan_SAM']}'" : 'NULL') . ', `NrAutSan_SAM`=' . (($data['NrAutSan_SAM'] !== '' && $data['NrAutSan_SAM'] !== NULL) ? "'{$data['NrAutSan_SAM']}'" : 'NULL') . ', `dataAutSan_SAM`=' . (($data['dataAutSan_SAM'] !== '' && $data['dataAutSan_SAM'] !== NULL) ? "'{$data['dataAutSan_SAM']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"companies_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -537,6 +547,16 @@ function companies_update($selected_id){
 		if($data['CAB'] == empty_lookup_value){ $data['CAB'] = ''; }
 	$data['BIC'] = makeSafe($_REQUEST['BIC']);
 		if($data['BIC'] == empty_lookup_value){ $data['BIC'] = ''; }
+	$data['autorizzSanitaria_SAM'] = makeSafe($_REQUEST['autorizzSanitaria_SAM']);
+		if($data['autorizzSanitaria_SAM'] == empty_lookup_value){ $data['autorizzSanitaria_SAM'] = ''; }
+	$data['AutSanEmessa_SAM'] = makeSafe($_REQUEST['AutSanEmessa_SAM']);
+		if($data['AutSanEmessa_SAM'] == empty_lookup_value){ $data['AutSanEmessa_SAM'] = ''; }
+	$data['NrPresSan_SAM'] = makeSafe($_REQUEST['NrPresSan_SAM']);
+		if($data['NrPresSan_SAM'] == empty_lookup_value){ $data['NrPresSan_SAM'] = ''; }
+	$data['NrAutSan_SAM'] = makeSafe($_REQUEST['NrAutSan_SAM']);
+		if($data['NrAutSan_SAM'] == empty_lookup_value){ $data['NrAutSan_SAM'] = ''; }
+	$data['dataAutSan_SAM'] = intval($_REQUEST['dataAutSan_SAMYear']) . '-' . intval($_REQUEST['dataAutSan_SAMMonth']) . '-' . intval($_REQUEST['dataAutSan_SAMDay']);
+	$data['dataAutSan_SAM'] = parseMySQLDate($data['dataAutSan_SAM'], '');
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: companies_before_update
@@ -546,7 +566,7 @@ function companies_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL') . ', `IBAN`=' . (($data['IBAN'] !== '' && $data['IBAN'] !== NULL) ? "'{$data['IBAN']}'" : 'NULL') . ', `ABI`=' . (($data['ABI'] !== '' && $data['ABI'] !== NULL) ? "'{$data['ABI']}'" : 'NULL') . ', `CAB`=' . (($data['CAB'] !== '' && $data['CAB'] !== NULL) ? "'{$data['CAB']}'" : 'NULL') . ', `BIC`=' . (($data['BIC'] !== '' && $data['BIC'] !== NULL) ? "'{$data['BIC']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `companies` set       `kind`=' . (($data['kind'] !== '' && $data['kind'] !== NULL) ? "'{$data['kind']}'" : 'NULL') . ', `companyCode`=' . (($data['companyCode'] !== '' && $data['companyCode'] !== NULL) ? "'{$data['companyCode']}'" : 'NULL') . ', `companyName`=' . (($data['companyName'] !== '' && $data['companyName'] !== NULL) ? "'{$data['companyName']}'" : 'NULL') . ', `personaFisica`=' . (($data['personaFisica'] !== '' && $data['personaFisica'] !== NULL) ? "'{$data['personaFisica']}'" : 'NULL') . ', `fiscalCode`=' . (($data['fiscalCode'] !== '' && $data['fiscalCode'] !== NULL) ? "'{$data['fiscalCode']}'" : 'NULL') . ', `vat`=' . (($data['vat'] !== '' && $data['vat'] !== NULL) ? "'{$data['vat']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `codiceDestinatario`=' . (($data['codiceDestinatario'] !== '' && $data['codiceDestinatario'] !== NULL) ? "'{$data['codiceDestinatario']}'" : 'NULL') . ', `regimeFiscale`=' . (($data['regimeFiscale'] !== '' && $data['regimeFiscale'] !== NULL) ? "'{$data['regimeFiscale']}'" : 'NULL') . ', `tipoCassa`=' . (($data['tipoCassa'] !== '' && $data['tipoCassa'] !== NULL) ? "'{$data['tipoCassa']}'" : 'NULL') . ', `modalitaPagamento`=' . (($data['modalitaPagamento'] !== '' && $data['modalitaPagamento'] !== NULL) ? "'{$data['modalitaPagamento']}'" : 'NULL') . ', `RiferimentoAmministrazione`=' . (($data['RiferimentoAmministrazione'] !== '' && $data['RiferimentoAmministrazione'] !== NULL) ? "'{$data['RiferimentoAmministrazione']}'" : 'NULL') . ', `FormatoTrasmissione`=' . (($data['FormatoTrasmissione'] !== '' && $data['FormatoTrasmissione'] !== NULL) ? "'{$data['FormatoTrasmissione']}'" : 'NULL') . ', `RIT_soggettoRitenuta`=' . (($data['RIT_soggettoRitenuta'] !== '' && $data['RIT_soggettoRitenuta'] !== NULL) ? "'{$data['RIT_soggettoRitenuta']}'" : 'NULL') . ', `RIT_tipoRitenuta`=' . (($data['RIT_tipoRitenuta'] !== '' && $data['RIT_tipoRitenuta'] !== NULL) ? "'{$data['RIT_tipoRitenuta']}'" : 'NULL') . ', `RIT_AliquotaRitenuta`=' . (($data['RIT_AliquotaRitenuta'] !== '' && $data['RIT_AliquotaRitenuta'] !== NULL) ? "'{$data['RIT_AliquotaRitenuta']}'" : 'NULL') . ', `RIT_CausalePagamento`=' . (($data['RIT_CausalePagamento'] !== '' && $data['RIT_CausalePagamento'] !== NULL) ? "'{$data['RIT_CausalePagamento']}'" : 'NULL') . ', `IBAN`=' . (($data['IBAN'] !== '' && $data['IBAN'] !== NULL) ? "'{$data['IBAN']}'" : 'NULL') . ', `ABI`=' . (($data['ABI'] !== '' && $data['ABI'] !== NULL) ? "'{$data['ABI']}'" : 'NULL') . ', `CAB`=' . (($data['CAB'] !== '' && $data['CAB'] !== NULL) ? "'{$data['CAB']}'" : 'NULL') . ', `BIC`=' . (($data['BIC'] !== '' && $data['BIC'] !== NULL) ? "'{$data['BIC']}'" : 'NULL') . ', `autorizzSanitaria_SAM`=' . (($data['autorizzSanitaria_SAM'] !== '' && $data['autorizzSanitaria_SAM'] !== NULL) ? "'{$data['autorizzSanitaria_SAM']}'" : 'NULL') . ', `AutSanEmessa_SAM`=' . (($data['AutSanEmessa_SAM'] !== '' && $data['AutSanEmessa_SAM'] !== NULL) ? "'{$data['AutSanEmessa_SAM']}'" : 'NULL') . ', `NrPresSan_SAM`=' . (($data['NrPresSan_SAM'] !== '' && $data['NrPresSan_SAM'] !== NULL) ? "'{$data['NrPresSan_SAM']}'" : 'NULL') . ', `NrAutSan_SAM`=' . (($data['NrAutSan_SAM'] !== '' && $data['NrAutSan_SAM'] !== NULL) ? "'{$data['NrAutSan_SAM']}'" : 'NULL') . ', `dataAutSan_SAM`=' . (($data['dataAutSan_SAM'] !== '' && $data['dataAutSan_SAM'] !== NULL) ? "'{$data['dataAutSan_SAM']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="companies_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -640,6 +660,14 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	}
 	$combo_RIT_tipoRitenuta->SelectName = 'RIT_tipoRitenuta';
 	$combo_RIT_tipoRitenuta->AllowNull = false;
+	// combobox: dataAutSan_SAM
+	$combo_dataAutSan_SAM = new DateCombo;
+	$combo_dataAutSan_SAM->DateFormat = "dmy";
+	$combo_dataAutSan_SAM->MinYear = 1900;
+	$combo_dataAutSan_SAM->MaxYear = 2100;
+	$combo_dataAutSan_SAM->DefaultDate = parseMySQLDate('', '');
+	$combo_dataAutSan_SAM->MonthNames = $Translation['month names'];
+	$combo_dataAutSan_SAM->NamePrefix = 'dataAutSan_SAM';
 
 	if($selected_id){
 		// mm: check member permissions
@@ -677,6 +705,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$combo_modalitaPagamento->SelectedData = $row['modalitaPagamento'];
 		$combo_FormatoTrasmissione->SelectedData = $row['FormatoTrasmissione'];
 		$combo_RIT_tipoRitenuta->SelectedData = $row['RIT_tipoRitenuta'];
+		$combo_dataAutSan_SAM->DefaultDate = $row['dataAutSan_SAM'];
 	}else{
 		$combo_kind->SelectedData = $filterer_kind;
 		$combo_personaFisica->SelectedText = ( $_REQUEST['FilterField'][1]=='5' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "No");
@@ -1192,6 +1221,12 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$jsReadOnly .= "\tjQuery('#ABI').replaceWith('<div class=\"form-control-static\" id=\"ABI\">' + (jQuery('#ABI').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#CAB').replaceWith('<div class=\"form-control-static\" id=\"CAB\">' + (jQuery('#CAB').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#BIC').replaceWith('<div class=\"form-control-static\" id=\"BIC\">' + (jQuery('#BIC').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#autorizzSanitaria_SAM').replaceWith('<div class=\"form-control-static\" id=\"autorizzSanitaria_SAM\">' + (jQuery('#autorizzSanitaria_SAM').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#AutSanEmessa_SAM').replaceWith('<div class=\"form-control-static\" id=\"AutSanEmessa_SAM\">' + (jQuery('#AutSanEmessa_SAM').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#NrPresSan_SAM').replaceWith('<div class=\"form-control-static\" id=\"NrPresSan_SAM\">' + (jQuery('#NrPresSan_SAM').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#NrAutSan_SAM').replaceWith('<div class=\"form-control-static\" id=\"NrAutSan_SAM\">' + (jQuery('#NrAutSan_SAM').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#dataAutSan_SAM').prop('readonly', true);\n";
+		$jsReadOnly .= "\tjQuery('#dataAutSan_SAMDay, #dataAutSan_SAMMonth, #dataAutSan_SAMYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -1220,6 +1255,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%URLCOMBOTEXT(FormatoTrasmissione)%%>', urlencode($combo_FormatoTrasmissione->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(RIT_tipoRitenuta)%%>', $combo_RIT_tipoRitenuta->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(RIT_tipoRitenuta)%%>', $combo_RIT_tipoRitenuta->SelectedData, $templateCode);
+	$templateCode = str_replace('<%%COMBO(dataAutSan_SAM)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_dataAutSan_SAM->GetHTML(true) . '</div>' : $combo_dataAutSan_SAM->GetHTML()), $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(dataAutSan_SAM)%%>', $combo_dataAutSan_SAM->GetHTML(true), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
 	$lookup_fields = array(  'kind' => array('kinds', 'Tipo'), 'regimeFiscale' => array('kinds', 'Regime Fiscale'), 'tipoCassa' => array('kinds', 'Tipo Cassa'), 'modalitaPagamento' => array('kinds', 'Modalita Pagamento'), 'FormatoTrasmissione' => array('kinds', 'Destinatario'));
@@ -1260,6 +1297,11 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%UPLOADFILE(ABI)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(CAB)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(BIC)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(autorizzSanitaria_SAM)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(AutSanEmessa_SAM)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(NrPresSan_SAM)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(NrAutSan_SAM)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(dataAutSan_SAM)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -1331,6 +1373,20 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(BIC)%%>', safe_html($urow['BIC']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(BIC)%%>', html_attr($row['BIC']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(BIC)%%>', urlencode($urow['BIC']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(autorizzSanitaria_SAM)%%>', safe_html($urow['autorizzSanitaria_SAM']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(autorizzSanitaria_SAM)%%>', html_attr($row['autorizzSanitaria_SAM']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(autorizzSanitaria_SAM)%%>', urlencode($urow['autorizzSanitaria_SAM']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(AutSanEmessa_SAM)%%>', safe_html($urow['AutSanEmessa_SAM']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(AutSanEmessa_SAM)%%>', html_attr($row['AutSanEmessa_SAM']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(AutSanEmessa_SAM)%%>', urlencode($urow['AutSanEmessa_SAM']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(NrPresSan_SAM)%%>', safe_html($urow['NrPresSan_SAM']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(NrPresSan_SAM)%%>', html_attr($row['NrPresSan_SAM']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(NrPresSan_SAM)%%>', urlencode($urow['NrPresSan_SAM']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(NrAutSan_SAM)%%>', safe_html($urow['NrAutSan_SAM']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(NrAutSan_SAM)%%>', html_attr($row['NrAutSan_SAM']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(NrAutSan_SAM)%%>', urlencode($urow['NrAutSan_SAM']), $templateCode);
+		$templateCode = str_replace('<%%VALUE(dataAutSan_SAM)%%>', @date('d/m/Y', @strtotime(html_attr($row['dataAutSan_SAM']))), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(dataAutSan_SAM)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['dataAutSan_SAM'])))), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -1374,6 +1430,16 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$templateCode = str_replace('<%%URLVALUE(CAB)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(BIC)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(BIC)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(autorizzSanitaria_SAM)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(autorizzSanitaria_SAM)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(AutSanEmessa_SAM)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(AutSanEmessa_SAM)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(NrPresSan_SAM)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(NrPresSan_SAM)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(NrAutSan_SAM)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(NrAutSan_SAM)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(dataAutSan_SAM)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(dataAutSan_SAM)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

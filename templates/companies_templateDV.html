@@ -228,6 +228,52 @@
 					</div>
 				</div>
 
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="autorizzSanitaria_SAM" class="control-label col-lg-3">Autorizzazione Sanitaria SAM <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#autorizzSanitaria_SAM-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="autorizzSanitaria_SAM-description"><div class="alert alert-info">Autorizzazione sanitaria rilasciata al cliente.</div></span>
+
+						<input maxlength="255" type="text" class="form-control" name="autorizzSanitaria_SAM" id="autorizzSanitaria_SAM" value="<%%VALUE(autorizzSanitaria_SAM)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="AutSanEmessa_SAM" class="control-label col-lg-3">AutSanEmessa SAM <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#AutSanEmessa_SAM-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="AutSanEmessa_SAM-description"><div class="alert alert-info">Ente erogante autorizzazione</div></span>
+
+						<input maxlength="255" type="text" class="form-control" name="AutSanEmessa_SAM" id="AutSanEmessa_SAM" value="<%%VALUE(AutSanEmessa_SAM)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="NrPresSan_SAM" class="control-label col-lg-3">NrPresSan SAM</label>
+					<div class="col-lg-9">
+						<input maxlength="255" type="text" class="form-control" name="NrPresSan_SAM" id="NrPresSan_SAM" value="<%%VALUE(NrPresSan_SAM)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="NrAutSan_SAM" class="control-label col-lg-3">NrAutSan SAM</label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="NrAutSan_SAM" id="NrAutSan_SAM" value="<%%VALUE(NrAutSan_SAM)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="dataAutSan_SAM" class="control-label col-lg-3">DataAutSan SAM <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dataAutSan_SAM-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="dataAutSan_SAM-description"><div class="alert alert-info">Data Rilascio Autorizzazione Sanitaria</div></span>
+
+						<%%COMBO(dataAutSan_SAM)%%>
+					</div>
+				</div>
+
 			</fieldset>
 		</div>
 

@@ -43,7 +43,12 @@
 		"`companies`.`IBAN`" => "IBAN",
 		"`companies`.`ABI`" => "ABI",
 		"`companies`.`CAB`" => "CAB",
-		"`companies`.`BIC`" => "BIC"
+		"`companies`.`BIC`" => "BIC",
+		"`companies`.`autorizzSanitaria_SAM`" => "autorizzSanitaria_SAM",
+		"`companies`.`AutSanEmessa_SAM`" => "AutSanEmessa_SAM",
+		"`companies`.`NrPresSan_SAM`" => "NrPresSan_SAM",
+		"`companies`.`NrAutSan_SAM`" => "NrAutSan_SAM",
+		"if(`companies`.`dataAutSan_SAM`,date_format(`companies`.`dataAutSan_SAM`,'%d/%m/%Y'),'')" => "dataAutSan_SAM"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -68,7 +73,12 @@
 		19 => 19,
 		20 => 20,
 		21 => 21,
-		22 => 22
+		22 => 22,
+		23 => 23,
+		24 => 24,
+		25 => 25,
+		26 => 26,
+		27 => '`companies`.`dataAutSan_SAM`'
 	);
 
 	// Fields that can be displayed in the csv file
@@ -94,7 +104,12 @@
 		"`companies`.`IBAN`" => "IBAN",
 		"`companies`.`ABI`" => "ABI",
 		"`companies`.`CAB`" => "CAB",
-		"`companies`.`BIC`" => "BIC"
+		"`companies`.`BIC`" => "BIC",
+		"`companies`.`autorizzSanitaria_SAM`" => "autorizzSanitaria_SAM",
+		"`companies`.`AutSanEmessa_SAM`" => "AutSanEmessa_SAM",
+		"`companies`.`NrPresSan_SAM`" => "NrPresSan_SAM",
+		"`companies`.`NrAutSan_SAM`" => "NrAutSan_SAM",
+		"if(`companies`.`dataAutSan_SAM`,date_format(`companies`.`dataAutSan_SAM`,'%d/%m/%Y'),'')" => "dataAutSan_SAM"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -119,7 +134,12 @@
 		"`companies`.`IBAN`" => "IBAN PA",
 		"`companies`.`ABI`" => "ABI PA",
 		"`companies`.`CAB`" => "CAB",
-		"`companies`.`BIC`" => "BIC"
+		"`companies`.`BIC`" => "BIC",
+		"`companies`.`autorizzSanitaria_SAM`" => "Autorizzazione Sanitaria SAM",
+		"`companies`.`AutSanEmessa_SAM`" => "AutSanEmessa SAM",
+		"`companies`.`NrPresSan_SAM`" => "NrPresSan SAM",
+		"`companies`.`NrAutSan_SAM`" => "NrAutSan SAM",
+		"`companies`.`dataAutSan_SAM`" => "DataAutSan SAM"
 	);
 
 	// Fields that can be quick searched
@@ -145,7 +165,12 @@
 		"`companies`.`IBAN`" => "IBAN",
 		"`companies`.`ABI`" => "ABI",
 		"`companies`.`CAB`" => "CAB",
-		"`companies`.`BIC`" => "BIC"
+		"`companies`.`BIC`" => "BIC",
+		"`companies`.`autorizzSanitaria_SAM`" => "autorizzSanitaria_SAM",
+		"`companies`.`AutSanEmessa_SAM`" => "AutSanEmessa_SAM",
+		"`companies`.`NrPresSan_SAM`" => "NrPresSan_SAM",
+		"`companies`.`NrAutSan_SAM`" => "NrAutSan_SAM",
+		"if(`companies`.`dataAutSan_SAM`,date_format(`companies`.`dataAutSan_SAM`,'%d/%m/%Y'),'')" => "dataAutSan_SAM"
 	);
 
 	// Lookup fields that can be used as filterers
