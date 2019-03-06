@@ -23,6 +23,10 @@ $j('label').on('click','a[id=add_contact]',function () {
 function hideFileds(){
     
     $j("#codiceDestinatario").parent().parent().hide();
+    $j(":input[name='RIT_tipoRitenuta']").parent().parent().parent().hide();
+    $j("#RIT_AliquotaRitenuta").parent().parent().hide();
+    $j("#RIT_CausalePagamento").parent().parent().hide();
+    
 }
 
 function getContactId(){
