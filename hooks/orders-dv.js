@@ -11,6 +11,7 @@
 //
 
 $j(function(){
+    hiddeFields()
     $j('#multiOrder').attr('readonly','true');
     if(!is_add_new()){
         setTimeout(function(){
@@ -67,6 +68,11 @@ $j(function(){
         ToggleFix(field);
     });
 });
+
+function hiddeFields (){
+    $j("#commisionRate").parent().parent().hide()
+    $j("#commisionFee").parent().parent().hide()
+}
 
 function commisionRate(fix = false){
     var Data = $j('#company-container').select2("data");

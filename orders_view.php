@@ -31,7 +31,7 @@
 		"`orders`.`causale`" => "causale",
 		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Cliente */" => "customer",
 		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Supplier */" => "supplier",
-		"IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') /* Impiegato */" => "employee",
+		"`orders`.`employee`" => "employee",
 		"if(`orders`.`date`,date_format(`orders`.`date`,'%d/%m/%Y'),'')" => "date",
 		"if(`orders`.`dateRequired`,date_format(`orders`.`dateRequired`,'%d/%m/%Y'),'')" => "dateRequired",
 		"if(`orders`.`dateShipped`,date_format(`orders`.`dateShipped`,'%d/%m/%Y'),'')" => "dateShipped",
@@ -63,7 +63,7 @@
 		7 => 7,
 		8 => '`companies2`.`companyName`',
 		9 => '`companies3`.`companyName`',
-		10 => '`contacts1`.`name`',
+		10 => 10,
 		11 => '`orders`.`date`',
 		12 => '`orders`.`dateRequired`',
 		13 => '`orders`.`dateShipped`',
@@ -96,7 +96,7 @@
 		"`orders`.`causale`" => "causale",
 		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Cliente */" => "customer",
 		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Supplier */" => "supplier",
-		"IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') /* Impiegato */" => "employee",
+		"`orders`.`employee`" => "employee",
 		"if(`orders`.`date`,date_format(`orders`.`date`,'%d/%m/%Y'),'')" => "date",
 		"if(`orders`.`dateRequired`,date_format(`orders`.`dateRequired`,'%d/%m/%Y'),'')" => "dateRequired",
 		"if(`orders`.`dateShipped`,date_format(`orders`.`dateShipped`,'%d/%m/%Y'),'')" => "dateShipped",
@@ -128,7 +128,7 @@
 		"`orders`.`causale`" => "Causale",
 		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Cliente */" => "Cliente",
 		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Supplier */" => "Supplier",
-		"IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') /* Impiegato */" => "Impiegato",
+		"`orders`.`employee`" => "Impiegato",
 		"`orders`.`date`" => "Data Ordine",
 		"`orders`.`dateRequired`" => "Data Ora Ritiro PA",
 		"`orders`.`dateShipped`" => "Data di spedizione",
@@ -161,7 +161,7 @@
 		"`orders`.`causale`" => "causale",
 		"IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') /* Cliente */" => "customer",
 		"IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') /* Supplier */" => "supplier",
-		"IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') /* Impiegato */" => "employee",
+		"`orders`.`employee`" => "employee",
 		"if(`orders`.`date`,date_format(`orders`.`date`,'%d/%m/%Y'),'')" => "date",
 		"if(`orders`.`dateRequired`,date_format(`orders`.`dateRequired`,'%d/%m/%Y'),'')" => "dateRequired",
 		"if(`orders`.`dateShipped`,date_format(`orders`.`dateShipped`,'%d/%m/%Y'),'')" => "dateShipped",
@@ -184,9 +184,9 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'kind' => 'Tipo ordine', 'company' => 'Azienda', 'typeDoc' => 'Documento', 'customer' => 'Cliente', 'supplier' => 'Supplier', 'employee' => 'Impiegato', 'shipVia' => 'Spedizione a mezzo');
+	$x->filterers = array(  'kind' => 'Tipo ordine', 'company' => 'Azienda', 'typeDoc' => 'Documento', 'customer' => 'Cliente', 'supplier' => 'Supplier', 'shipVia' => 'Spedizione a mezzo');
 
-	$x->QueryFrom = "`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`supplier` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`orders`.`employee` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`orders`.`shipVia` ";
+	$x->QueryFrom = "`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`supplier` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`orders`.`shipVia` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 

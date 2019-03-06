@@ -30,7 +30,7 @@ function orders_insert(){
 		if($data['customer'] == empty_lookup_value){ $data['customer'] = ''; }
 	$data['supplier'] = makeSafe($_REQUEST['supplier']);
 		if($data['supplier'] == empty_lookup_value){ $data['supplier'] = ''; }
-	$data['employee'] = parseCode('<%%creatorUsername%%>', true, true);
+	$data['employee'] = parseCode('<%%creatorUsername%%>', true);
 	$data['date'] = parseCode('<%%creationDate%%>', true, true);
 	$data['dateRequired'] = intval($_REQUEST['dateRequiredYear']) . '-' . intval($_REQUEST['dateRequiredMonth']) . '-' . intval($_REQUEST['dateRequiredDay']);
 	$data['dateRequired'] = parseMySQLDate($data['dateRequired'], '<%%creationDate%%>');
@@ -100,6 +100,7 @@ function orders_insert(){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
+	if($data['orderTotal'] == '') $data['orderTotal'] = "0";
 	if($data['orderTotal']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Importo Totale doc': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
@@ -121,11 +122,6 @@ function orders_insert(){
 	}
 
 	$recID = db_insert_id(db_link());
-
-	// automatic employee
-	if($_REQUEST['filterer_employee']){
-		sql("update `orders` set `employee`='" . makeSafe($_REQUEST['filterer_employee']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
-	}
 
 	// hook: orders_after_insert
 	if(function_exists('orders_after_insert')){
@@ -392,7 +388,6 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$filterer_typeDoc = thisOr(undo_magic_quotes($_REQUEST['filterer_typeDoc']), '');
 	$filterer_customer = thisOr(undo_magic_quotes($_REQUEST['filterer_customer']), '');
 	$filterer_supplier = thisOr(undo_magic_quotes($_REQUEST['filterer_supplier']), '');
-	$filterer_employee = thisOr(undo_magic_quotes($_REQUEST['filterer_employee']), '');
 	$filterer_shipVia = thisOr(undo_magic_quotes($_REQUEST['filterer_shipVia']), '');
 
 	// populate filterers, starting from children to grand-parents
@@ -441,8 +436,6 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$combo_customer = new DataCombo;
 	// combobox: supplier
 	$combo_supplier = new DataCombo;
-	// combobox: employee
-	$combo_employee = new DataCombo;
 	// combobox: date
 	$combo_date = new DateCombo;
 	$combo_date->DateFormat = "dmy";
@@ -506,7 +499,6 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		$combo_causale->SelectedData = $row['causale'];
 		$combo_customer->SelectedData = $row['customer'];
 		$combo_supplier->SelectedData = $row['supplier'];
-		$combo_employee->SelectedData = $row['employee'];
 		$combo_date->DefaultDate = $row['date'];
 		$combo_dateRequired->DefaultDate = $row['dateRequired'];
 		$combo_dateShipped->DefaultDate = $row['dateShipped'];
@@ -519,7 +511,6 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		$combo_causale->SelectedText = ( $_REQUEST['FilterField'][1]=='7' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "VENDITA");
 		$combo_customer->SelectedData = $filterer_customer;
 		$combo_supplier->SelectedData = $filterer_supplier;
-		$combo_employee->SelectedData = $filterer_employee;
 		$combo_shipVia->SelectedData = $filterer_shipVia;
 	}
 	$combo_kind->HTML = '<span id="kind-container' . $rnd1 . '"></span><input type="hidden" name="kind" id="kind' . $rnd1 . '" value="' . html_attr($combo_kind->SelectedData) . '">';
@@ -534,8 +525,6 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$combo_customer->MatchText = '<span id="customer-container-readonly' . $rnd1 . '"></span><input type="hidden" name="customer" id="customer' . $rnd1 . '" value="' . html_attr($combo_customer->SelectedData) . '">';
 	$combo_supplier->HTML = '<span id="supplier-container' . $rnd1 . '"></span><input type="hidden" name="supplier" id="supplier' . $rnd1 . '" value="' . html_attr($combo_supplier->SelectedData) . '">';
 	$combo_supplier->MatchText = '<span id="supplier-container-readonly' . $rnd1 . '"></span><input type="hidden" name="supplier" id="supplier' . $rnd1 . '" value="' . html_attr($combo_supplier->SelectedData) . '">';
-	$combo_employee->HTML = '<span id="employee-container' . $rnd1 . '"></span><input type="hidden" name="employee" id="employee' . $rnd1 . '" value="' . html_attr($combo_employee->SelectedData) . '">';
-	$combo_employee->MatchText = '<span id="employee-container-readonly' . $rnd1 . '"></span><input type="hidden" name="employee" id="employee' . $rnd1 . '" value="' . html_attr($combo_employee->SelectedData) . '">';
 	$combo_shipVia->HTML = '<span id="shipVia-container' . $rnd1 . '"></span><input type="hidden" name="shipVia" id="shipVia' . $rnd1 . '" value="' . html_attr($combo_shipVia->SelectedData) . '">';
 	$combo_shipVia->MatchText = '<span id="shipVia-container-readonly' . $rnd1 . '"></span><input type="hidden" name="shipVia" id="shipVia' . $rnd1 . '" value="' . html_attr($combo_shipVia->SelectedData) . '">';
 
@@ -549,7 +538,6 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		AppGini.current_typeDoc__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['typeDoc'] : $filterer_typeDoc); ?>"};
 		AppGini.current_customer__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['customer'] : $filterer_customer); ?>"};
 		AppGini.current_supplier__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['supplier'] : $filterer_supplier); ?>"};
-		AppGini.current_employee__RAND__ = { text: "<?php echo ($selected_id ? '' : '<%%creatorUsername%%>'); ?>", value: "<?php echo addslashes($selected_id ? $urow['employee'] : $filterer_employee); ?>"};
 		AppGini.current_shipVia__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['shipVia'] : $filterer_shipVia); ?>"};
 
 		jQuery(function() {
@@ -559,7 +547,6 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 				if(typeof(typeDoc_reload__RAND__) == 'function') typeDoc_reload__RAND__();
 				if(typeof(customer_reload__RAND__) == 'function') customer_reload__RAND__();
 				if(typeof(supplier_reload__RAND__) == 'function') supplier_reload__RAND__();
-				if(typeof(employee_reload__RAND__) == 'function') employee_reload__RAND__();
 				if(typeof(shipVia_reload__RAND__) == 'function') shipVia_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
 		});
@@ -948,88 +935,6 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		<?php } ?>
 
 		}
-		function employee_reload__RAND__(){
-		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
-
-			$j("#employee-container__RAND__").select2({
-				/* initial default value */
-				initSelection: function(e, c){
-					$j.ajax({
-						url: 'ajax_combo.php',
-						dataType: 'json',
-						<?php if(!$selected_id && !$filterer_employee){ ?>
-							data: { text: '<%%creatorUsername%%>', t: 'orders', f: 'employee' },
-						<?php }else{ ?>
-							data: { id: AppGini.current_employee__RAND__.value, t: 'orders', f: 'employee' },
-						<?php } ?>
-
-						success: function(resp){
-							c({
-								id: resp.results[0].id,
-								text: resp.results[0].text
-							});
-							$j('[name="employee"]').val(resp.results[0].id);
-							$j('[id=employee-container-readonly__RAND__]').html('<span id="employee-match-text">' + resp.results[0].text + '</span>');
-							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=contacts_view_parent]').hide(); }else{ $j('.btn[id=contacts_view_parent]').show(); }
-
-
-							if(typeof(employee_update_autofills__RAND__) == 'function') employee_update_autofills__RAND__();
-						}
-					});
-				},
-				width: '100%',
-				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
-				minimumResultsForSearch: 5,
-				loadMorePadding: 200,
-				ajax: {
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					cache: true,
-					data: function(term, page){ /* */ return { s: term, p: page, t: 'orders', f: 'employee' }; },
-					results: function(resp, page){ /* */ return resp; }
-				},
-				escapeMarkup: function(str){ /* */ return str; }
-			}).on('change', function(e){
-				AppGini.current_employee__RAND__.value = e.added.id;
-				AppGini.current_employee__RAND__.text = e.added.text;
-				$j('[name="employee"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=contacts_view_parent]').hide(); }else{ $j('.btn[id=contacts_view_parent]').show(); }
-
-
-				if(typeof(employee_update_autofills__RAND__) == 'function') employee_update_autofills__RAND__();
-			});
-
-			if(!$j("#employee-container__RAND__").length){
-				$j.ajax({
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					data: { id: AppGini.current_employee__RAND__.value, t: 'orders', f: 'employee' },
-					success: function(resp){
-						$j('[name="employee"]').val(resp.results[0].id);
-						$j('[id=employee-container-readonly__RAND__]').html('<span id="employee-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=contacts_view_parent]').hide(); }else{ $j('.btn[id=contacts_view_parent]').show(); }
-
-						if(typeof(employee_update_autofills__RAND__) == 'function') employee_update_autofills__RAND__();
-					}
-				});
-			}
-
-		<?php }else{ ?>
-
-			$j.ajax({
-				url: 'ajax_combo.php',
-				dataType: 'json',
-				data: { id: AppGini.current_employee__RAND__.value, t: 'orders', f: 'employee' },
-				success: function(resp){
-					$j('[id=employee-container__RAND__], [id=employee-container-readonly__RAND__]').html('<span id="employee-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=contacts_view_parent]').hide(); }else{ $j('.btn[id=contacts_view_parent]').show(); }
-
-					if(typeof(employee_update_autofills__RAND__) == 'function') employee_update_autofills__RAND__();
-				}
-			});
-		<?php } ?>
-
-		}
 		function shipVia_reload__RAND__(){
 		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
 
@@ -1221,9 +1126,6 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$templateCode = str_replace('<%%COMBO(supplier)%%>', $combo_supplier->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(supplier)%%>', $combo_supplier->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(supplier)%%>', urlencode($combo_supplier->MatchText), $templateCode);
-	$templateCode = str_replace('<%%COMBO(employee)%%>', $combo_employee->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(employee)%%>', $combo_employee->MatchText, $templateCode);
-	$templateCode = str_replace('<%%URLCOMBOTEXT(employee)%%>', urlencode($combo_employee->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(date)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_date->GetHTML(true) . '</div>' : $combo_date->GetHTML()), $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(date)%%>', $combo_date->GetHTML(true), $templateCode);
 	$templateCode = str_replace('<%%COMBO(dateRequired)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_dateRequired->GetHTML(true) . '</div>' : $combo_dateRequired->GetHTML()), $templateCode);
@@ -1235,7 +1137,7 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$templateCode = str_replace('<%%URLCOMBOTEXT(shipVia)%%>', urlencode($combo_shipVia->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'kind' => array('kinds', 'Tipo ordine'), 'company' => array('companies', 'Azienda'), 'typeDoc' => array('kinds', 'Documento'), 'customer' => array('companies', 'Cliente'), 'supplier' => array('companies', 'Supplier'), 'employee' => array('contacts', 'Impiegato'), 'shipVia' => array('companies', 'Spedizione a mezzo'));
+	$lookup_fields = array(  'kind' => array('kinds', 'Tipo ordine'), 'company' => array('companies', 'Azienda'), 'typeDoc' => array('kinds', 'Documento'), 'customer' => array('companies', 'Cliente'), 'supplier' => array('companies', 'Supplier'), 'shipVia' => array('companies', 'Spedizione a mezzo'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -1382,8 +1284,8 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		$templateCode = str_replace('<%%URLVALUE(customer)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(supplier)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(supplier)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(employee)%%>', ( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_employee->SelectedData : '<%%creatorUsername%%>'), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(employee)%%>', urlencode( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_employee->SelectedData : '<%%creatorUsername%%>'), $templateCode);
+		$templateCode = str_replace('<%%VALUE(employee)%%>', '<%%creatorUsername%%>', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(employee)%%>', urlencode('<%%creatorUsername%%>'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(date)%%>', '<%%creationDate%%>', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(date)%%>', urlencode('<%%creationDate%%>'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dateRequired)%%>', '<%%creationDate%%>', $templateCode);
@@ -1400,8 +1302,8 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 		$templateCode = str_replace('<%%URLVALUE(licencePlate)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(importoSconto)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(importoSconto)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(orderTotal)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(orderTotal)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(orderTotal)%%>', '0', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(orderTotal)%%>', urlencode('0'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(RIT_importoRitenuta)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(RIT_importoRitenuta)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%CHECKED(cashCredit)%%>', 'checked', $templateCode);
@@ -1460,9 +1362,6 @@ function orders_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $All
 	$templateCode .= $lookups;
 
 	// handle enforced parent values for read-only lookup fields
-	if( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>'){
-		$templateCode.="\n<input type=hidden name=employee value=\"" . html_attr((get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]))."\">\n";
-	}
 
 	// don't include blank images in lightbox gallery
 	$templateCode = preg_replace('/blank.gif" data-lightbox=".*?"/', 'blank.gif"', $templateCode);

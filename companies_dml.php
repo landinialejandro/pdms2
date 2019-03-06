@@ -83,6 +83,7 @@ function companies_insert(){
 		exit;
 	}
 	if($data['codiceDestinatario'] == '') $data['codiceDestinatario'] = "0000000";
+	if($data['regimeFiscale'] == '') $data['regimeFiscale'] = "RF01";
 	if($data['FormatoTrasmissione'] == '') $data['FormatoTrasmissione'] = "FPR12";
 	if($data['FormatoTrasmissione']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Destinatario': " . $Translation['field not null'] . '<br><br>';
@@ -734,7 +735,7 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	<script>
 		// initial lookup values
 		AppGini.current_kind__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['kind'] : $filterer_kind); ?>"};
-		AppGini.current_regimeFiscale__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['regimeFiscale'] : $filterer_regimeFiscale); ?>"};
+		AppGini.current_regimeFiscale__RAND__ = { text: "<?php echo ($selected_id ? '' : 'RF01'); ?>", value: "<?php echo addslashes($selected_id ? $urow['regimeFiscale'] : $filterer_regimeFiscale); ?>"};
 		AppGini.current_tipoCassa__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['tipoCassa'] : $filterer_tipoCassa); ?>"};
 		AppGini.current_modalitaPagamento__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['modalitaPagamento'] : $filterer_modalitaPagamento); ?>"};
 		AppGini.current_FormatoTrasmissione__RAND__ = { text: "<?php echo ($selected_id ? '' : 'FPR12'); ?>", value: "<?php echo addslashes($selected_id ? $urow['FormatoTrasmissione'] : $filterer_FormatoTrasmissione); ?>"};
@@ -834,7 +835,12 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 					$j.ajax({
 						url: 'ajax_combo.php',
 						dataType: 'json',
-						data: { id: AppGini.current_regimeFiscale__RAND__.value, t: 'companies', f: 'regimeFiscale' },
+						<?php if(!$selected_id && !$filterer_regimeFiscale){ ?>
+							data: { text: 'RF01', t: 'companies', f: 'regimeFiscale' },
+						<?php }else{ ?>
+							data: { id: AppGini.current_regimeFiscale__RAND__.value, t: 'companies', f: 'regimeFiscale' },
+						<?php } ?>
+
 						success: function(resp){
 							c({
 								id: resp.results[0].id,
@@ -1405,8 +1411,8 @@ function companies_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		$templateCode = str_replace('<%%HTMLAREA(notes)%%>', '<textarea name="notes" id="notes" rows="5"></textarea>', $templateCode);
 		$templateCode = str_replace('<%%VALUE(codiceDestinatario)%%>', '0000000', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(codiceDestinatario)%%>', urlencode('0000000'), $templateCode);
-		$templateCode = str_replace('<%%VALUE(regimeFiscale)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(regimeFiscale)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(regimeFiscale)%%>', 'RF01', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(regimeFiscale)%%>', urlencode('RF01'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(tipoCassa)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(tipoCassa)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(modalitaPagamento)%%>', '', $templateCode);

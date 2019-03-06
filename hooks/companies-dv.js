@@ -1,7 +1,7 @@
 /* global $j */
 
 $j(function(){
-    hideFileds();
+    hiddeFields();
     if (!is_add_new()){
         loadDefaults();
     }
@@ -20,7 +20,7 @@ $j('label').on('click','a[id=add_contact]',function () {
     addContact(this.attributes.selectedid.value);
 });
 
-function hideFileds(){
+function hiddeFields(){
     
     $j("#codiceDestinatario").parent().parent().hide();
     $j(":input[name='RIT_tipoRitenuta']").parent().parent().parent().hide();
