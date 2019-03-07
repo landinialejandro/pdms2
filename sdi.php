@@ -133,7 +133,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
         //1.1.1
         $IdTrasmittente = $DatiTrasmissione->addChild("IdTrasmittente");
             //1.1.1.1 obligatory
-            $IdTrasmittente->addChild("IdPaese",$address['country']);
+            $IdTrasmittente->addChild("IdPaese",$address_values['country']);
             //1.1.1.2 obligatory
             $IdTrasmittente->addChild("IdCodice",$company['vat']);
         //1.1.2 obligatory
@@ -190,7 +190,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.2.1.1
             $IdFiscaleIVA = $CP_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.2.1.1.1 obligatory
-                $IdFiscaleIVA->addChild("IdPaese",$address['country']);
+                $IdFiscaleIVA->addChild("IdPaese",$address_values['country']);
                 //1.2.1.1.2 obligatory
                 $IdFiscaleIVA->addChild("IdCodice",$company['vat']);
             //1.2.1.2 recomend    
@@ -291,7 +291,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.3.1.1
             $DatiAnagrafici_IdFiscaleIVA = $RP_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.3.1.1.1
-                $DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$address['country']);
+                $DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$address_values['country']);
                 //1.3.1.1.2
                 $DatiAnagrafici_IdFiscaleIVA->addChild("IdCodice",$company['vat']);
             //1.3.1.2
@@ -309,7 +309,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.1.1
             $CC_DatiAnagrafici_IdFiscaleIVA = $CC_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.4.1.1.1
-                $CC_DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$addressCustomer['country']);
+                $CC_DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$addressCustomer_values['country']);
                 //1.4.1.1.2
                 $CC_DatiAnagrafici_IdFiscaleIVA->addChild("IdCodice",$customer['vat']);
             //1.4.1.2
@@ -369,7 +369,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.4.1
             $CC_RappresentanteFiscale_IdFiscaleIVA = $CC_RappresentanteFiscale->addChild("IdFiscaleIVA");
                 //1.4.4.1.1
-                $CC_RappresentanteFiscale_IdFiscaleIVA->addChild("IdPaese",$addressCustomer['country']);
+                $CC_RappresentanteFiscale_IdFiscaleIVA->addChild("IdPaese",$addressCustomer_values['country']);
                 //1.4.4.1.2
                 $CC_RappresentanteFiscale_IdFiscaleIVA->addChild("IdCodice",$customer['vat']);
             //1.4.4.2
@@ -390,7 +390,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.5.1.1
             $TS_DatiAnagrafici_IdFiscaleIVA = $TS_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.5.1.1.1
-                $TS_DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$addressCustomer['country']);
+                $TS_DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$addressCustomer_values['country']);
                 //1.5.1.1.2
                 $TS_DatiAnagrafici_IdFiscaleIVA->addChild("IdCodice",$customer['vat']);
             //1.5.1.2
