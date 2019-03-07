@@ -99,9 +99,10 @@ if ($order_values['shipVia']){
     //shipper address
     retCompanyAddress($addressCustomerShip, $addressCustomerShip_values, $shipper['id']);
     
-}else{
-    exit(error_message('<h1>order Shipper not valid</h1>', false));
 }
+//else{
+//    exit(error_message('<h1>order Shipper not valid</h1>', false));
+//}
 
 
 $invoice=<<<XML
