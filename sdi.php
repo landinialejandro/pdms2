@@ -30,16 +30,27 @@ if (!is_null($order['document'])){
     exit(error_message('The invoice file exist, you can\'t make a new xml file after print invoice.', false));
 }
 
+
 if($order_values['kind'] !== 'OUT'){
     exit(error_message('<h1>order not valid</h1>' . $order['kind'], false));
 }
 
+$documents='OUT';
+
+if($order_values['typeDoc'] !== 'TD01'){
+    exit(error_message('<h1>order not valid</h1>' . $order['kind'], false));
+}
+
+
+
 /* retrieve multycompany info <CedentePrestatore> */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         retCompanyData($company,$company_values,$order_values['company']);
-
+        
         retCompanyAddress($address, $address_values, $order_values['company']);
 
+        retCountryData($countryCompany, $country_valuesCompany, $address_values['country']);
+        
         retMailPhonelFax_Company($mail, $phone, $fax, $company['id']);
 
         //default contact in multiCompany or first contact found
@@ -71,6 +82,8 @@ if ($order_values['customer']){
     
     //Client address
     retCompanyAddress($addressCustomer, $addressCustomer_values, $customer['id']);
+    
+    retCountryData($countryCustomer, $country_valuesCustomer, $addressCustomer_values['country']);
             
     //default PEC Company mail 
     $where_id ="AND mails.company = {$customer['id']} AND mails.kind = 'PEC'";//change this to set select where
@@ -133,7 +146,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
         //1.1.1
         $IdTrasmittente = $DatiTrasmissione->addChild("IdTrasmittente");
             //1.1.1.1 obligatory
-            $IdTrasmittente->addChild("IdPaese",$address_values['country']);
+            $IdTrasmittente->addChild("IdPaese",$countryCompany['code']);
             //1.1.1.2 obligatory
             $IdTrasmittente->addChild("IdCodice",$company['vat']);
         //1.1.2 obligatory
@@ -190,7 +203,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.2.1.1
             $IdFiscaleIVA = $CP_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.2.1.1.1 obligatory
-                $IdFiscaleIVA->addChild("IdPaese",$address_values['country']);
+                $IdFiscaleIVA->addChild("IdPaese",$countryCompany['code']);
                 //1.2.1.1.2 obligatory
                 $IdFiscaleIVA->addChild("IdCodice",$company['vat']);
             //1.2.1.2 recomend    
@@ -230,7 +243,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.2.2.5  
             $CP_Sede->addChild("Provincia",$address['district']);
             //1.2.2.6  
-            $CP_Sede->addChild("Nazione",$address['country']);
+            $CP_Sede->addChild("Nazione",$countryCompany['code']);
         //1.2.3 StabileOrganizzazione
             /*  not enabled yet
              *  solo se
@@ -250,7 +263,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.2.3.5  
             $CP_StabileOrganizzazione->addChild("Provincia",$address['district']);
             //1.2.3.6  
-            $CP_StabileOrganizzazione->addChild("Nazione",$address['country']);
+            $CP_StabileOrganizzazione->addChild("Nazione",$countryCompany['code']);
         //1.2.4 IscrizioneREA
         /*solo se
          *  il cedente/prestatore è una società iscritta nel registro delle imprese e come
@@ -291,7 +304,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.3.1.1
             $DatiAnagrafici_IdFiscaleIVA = $RP_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.3.1.1.1
-                $DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$address_values['country']);
+                $DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$countryCompany['code']);
                 //1.3.1.1.2
                 $DatiAnagrafici_IdFiscaleIVA->addChild("IdCodice",$company['vat']);
             //1.3.1.2
@@ -309,7 +322,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.1.1
             $CC_DatiAnagrafici_IdFiscaleIVA = $CC_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.4.1.1.1
-                $CC_DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$addressCustomer_values['country']);
+                $CC_DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$country_valuesCustomer['code']);
                 //1.4.1.1.2
                 $CC_DatiAnagrafici_IdFiscaleIVA->addChild("IdCodice",$customer['vat']);
             //1.4.1.2
@@ -339,7 +352,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.2.5
             $CC_Sede->addChild("Provincia",$addressCustomer['district']);
             //1.4.2.6
-            $CC_Sede->addChild("Nazione",$addressCustomer['country']);
+            $CC_Sede->addChild("Nazione",$country_valuesCustomer['code']);
         //1.4.3 StabileOrganizzazione
         /*
          * il cessionario/committente è un soggetto che non risiede in Italia ma che, in
@@ -358,7 +371,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.2.5
             $CC_StabileOrganizzazione->addChild("Provincia",$addressCustomer['district']);
             //1.4.2.6
-            $CC_StabileOrganizzazione->addChild("Nazione",$addressCustomer['country']);
+            $CC_StabileOrganizzazione->addChild("Nazione",$country_valuesCustomer['code']);
         //1.4.4 RappresentanteFiscale
         /*  
          * il cessionario/committentee si configura come soggetto non residente che effettua
@@ -369,7 +382,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.4.1
             $CC_RappresentanteFiscale_IdFiscaleIVA = $CC_RappresentanteFiscale->addChild("IdFiscaleIVA");
                 //1.4.4.1.1
-                $CC_RappresentanteFiscale_IdFiscaleIVA->addChild("IdPaese",$addressCustomer_values['country']);
+                $CC_RappresentanteFiscale_IdFiscaleIVA->addChild("IdPaese",$country_valuesCustomer['code']);
                 //1.4.4.1.2
                 $CC_RappresentanteFiscale_IdFiscaleIVA->addChild("IdCodice",$customer['vat']);
             //1.4.4.2
@@ -390,7 +403,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.5.1.1
             $TS_DatiAnagrafici_IdFiscaleIVA = $TS_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.5.1.1.1
-                $TS_DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$addressCustomer_values['country']);
+                $TS_DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$country_valuesCustomer['code']);
                 //1.5.1.1.2
                 $TS_DatiAnagrafici_IdFiscaleIVA->addChild("IdCodice",$customer['vat']);
             //1.5.1.2
