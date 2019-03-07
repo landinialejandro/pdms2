@@ -32,16 +32,12 @@ if (!is_null($order['document'])){
 
 
 if($order_values['kind'] !== 'OUT'){
-    exit(error_message('<h1>order not valid</h1>' . $order['kind'], false));
+    exit(error_message('<h1>order not valid</h1><h2>' . $order['kind'] . '</h2>', false));
 }
-
-$documents='OUT';
 
 if($order_values['typeDoc'] !== 'TD01'){
-    exit(error_message('<h1>order not valid</h1>' . $order['kind'], false));
+    exit(error_message('<h1>Document type not valid</h1><h2>' . $order['typeDoc'] . '</h2>', false));
 }
-
-
 
 /* retrieve multycompany info <CedentePrestatore> */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
