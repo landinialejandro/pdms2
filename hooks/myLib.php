@@ -153,9 +153,9 @@ function retCompanyData(&$company,&$company_values, $id = false, $control = true
         if(!$company['regimeFiscale']){
             exit(error_message('<h1>regime fiscale not valid in company data</h1>', false));
         }
-        if(!$company['RiferimentoAmministrazione']){
-            exit(error_message('<h1>Riferimento Amministrazione not valid in company data</h1>', false));
-        }
+//        if(!$company['RiferimentoAmministrazione']){
+//            exit(error_message('<h1>Riferimento Amministrazione not valid in company data</h1>', false));
+//        }
     }
 }
 

@@ -200,7 +200,7 @@ include_once("$currDir/header_old.php");
 <?php
 $html_code = ob_get_contents();
 ob_end_clean();
-echo $html_code;
+//echo $html_code;
 
 $mpdf = new \Mpdf\Mpdf([
 	'margin_left' => 5,
