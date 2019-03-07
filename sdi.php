@@ -81,11 +81,11 @@ if ($order_values['customer']){
 
     //default contact in multiCompany or first contact found
         $defualtContactId_customer = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$order_values['customer']} ORDER BY contacts_companies.default DESC LIMIT 1"));
-            if (!$defualtContactId_customer){
-                exit(error_message('<h1>Contact company not setting</h1>', false));
+            if ($defualtContactId_customer){
+//                exit(error_message('<h1>Contact company not setting</h1>', false));
+                $where_id = "AND contacts.id = {$defualtContactId_customer}";
+                $contactCustomer = getDataTable("contacts", $where_id);
             }
-            $where_id = "AND contacts.id = {$defualtContactId_customer}";
-            $contactCustomer = getDataTable("contacts", $where_id);
             
     ///////////////////////////
 }else{
