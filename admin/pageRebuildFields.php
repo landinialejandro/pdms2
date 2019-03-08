@@ -70,7 +70,7 @@
 			'return' => array('appgini' => 'VARCHAR(255) null default \'1\' '),
 			'supplierCode' => array('appgini' => 'VARCHAR(100) null ')
 		),
-		'_resumeOrders' => array(   
+		'_ordersSummary' => array(   
 			'kind' => array('appgini' => 'VARCHAR(40) null '),
 			'company' => array('appgini' => 'INT unsigned null '),
 			'typedoc' => array('appgini' => 'VARCHAR(40) null '),

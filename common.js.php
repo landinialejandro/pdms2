@@ -289,7 +289,7 @@ function ordersDetails_validateData(){
 	$j('.has-error').removeClass('has-error');
 	return true;
 }
-function _resumeOrders_validateData(){
+function _ordersSummary_validateData(){
 	$j('.has-error').removeClass('has-error');
 	return true;
 }

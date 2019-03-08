@@ -108,9 +108,9 @@
 					'group' => $tg[5],
 					'homepageShowCount' => 1
 				),
-				'_resumeOrders' => array(
-					'Caption' => 'Resume Orders',
-					'Description' => '',
+				'_ordersSummary' => array(
+					'Caption' => 'order summary',
+					'Description' => 'raggruppamento degli ordini di trasporto chiusi senza fatturazione.',
 					'tableIcon' => 'table.gif',
 					'group' => $tg[0],
 					'homepageShowCount' => 0
@@ -258,7 +258,7 @@
 			$arrTables = array(   
 				'orders' => 'Ordini',
 				'ordersDetails' => 'Dettaglio Ordini vendita',
-				'_resumeOrders' => 'Resume Orders',
+				'_ordersSummary' => 'order summary',
 				'products' => 'Articoli Magazzino',
 				'firstCashNote' => 'Prima Nota',
 				'companies' => 'Aziende',
@@ -719,7 +719,7 @@
 	}
 	########################################################################
 	function isEmail($email) {
-		if(preg_match('/^([*+!.&#$¦\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,45})$/i', $email)){
+		if(preg_match('/^([*+!.&#$ï¿½\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,45})$/i', $email)){
 			return $email;
 		}
 
@@ -1622,7 +1622,7 @@
 	 */
 	function insert($tn, $set_array, &$error = '') {
 		$set = prepare_sql_set($set_array);
-		if(!count($set)) return false;
+//		if(!count($set)) return false;
 
 		$eo = array('silentErrors' => true);
 		$res = sql("INSERT INTO `{$tn}` SET {$set}", $eo);

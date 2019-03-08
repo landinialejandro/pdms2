@@ -8,7 +8,7 @@
 	<div class="row vspacer-md">
 		<div class="col-xs-12">
 			<input type="hidden" id="orders_hclink" value="orders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="_resumeOrders_hclink" value="_resumeOrders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+			<input type="hidden" id="_ordersSummary_hclink" value="_ordersSummary_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="firstCashNote_hclink" value="firstCashNote_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="vatRegister_hclink" value="vatRegister_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="attributes_hclink" value="attributes_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
@@ -218,6 +218,92 @@
 </div></span>
 
 						<input maxlength="40" type="text" class="form-control" name="RIT_CausalePagamento" id="RIT_CausalePagamento" value="<%%VALUE(RIT_CausalePagamento)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="IBAN" class="control-label col-lg-3">IBAN PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#IBAN-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="IBAN-description"><div class="alert alert-info">2.4.2.13 <IBAN>International Bank Account Number (coordinata bancaria internazionale che consente di identificare, in maniera standard, il conto<br>corrente del beneficiario )</div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="IBAN" id="IBAN" value="<%%VALUE(IBAN)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="ABI" class="control-label col-lg-3">ABI PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#ABI-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="ABI-description"><div class="alert alert-info">2.4.2.14 <ABI>codice ABI </div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="ABI" id="ABI" value="<%%VALUE(ABI)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="CAB" class="control-label col-lg-3">CAB <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#CAB-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="CAB-description"><div class="alert alert-info">2.4.2.15 <CAB>codice CAB</div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="CAB" id="CAB" value="<%%VALUE(CAB)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="BIC" class="control-label col-lg-3">BIC <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#BIC-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="BIC-description"><div class="alert alert-info">2.4.2.16 <BIC>Bank Identifier Code (codice che identifica la banca del beneficiario) </div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="BIC" id="BIC" value="<%%VALUE(BIC)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="autorizzSanitaria_SAM" class="control-label col-lg-3">Autorizzazione Sanitaria SAM <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#autorizzSanitaria_SAM-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="autorizzSanitaria_SAM-description"><div class="alert alert-info">Autorizzazione sanitaria rilasciata al cliente.</div></span>
+
+						<input maxlength="255" type="text" class="form-control" name="autorizzSanitaria_SAM" id="autorizzSanitaria_SAM" value="<%%VALUE(autorizzSanitaria_SAM)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="AutSanEmessa_SAM" class="control-label col-lg-3">AutSanEmessa SAM <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#AutSanEmessa_SAM-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="AutSanEmessa_SAM-description"><div class="alert alert-info">Ente erogante autorizzazione</div></span>
+
+						<input maxlength="255" type="text" class="form-control" name="AutSanEmessa_SAM" id="AutSanEmessa_SAM" value="<%%VALUE(AutSanEmessa_SAM)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="NrPresSan_SAM" class="control-label col-lg-3">NrPresSan SAM</label>
+					<div class="col-lg-9">
+						<input maxlength="255" type="text" class="form-control" name="NrPresSan_SAM" id="NrPresSan_SAM" value="<%%VALUE(NrPresSan_SAM)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="NrAutSan_SAM" class="control-label col-lg-3">NrAutSan SAM</label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="NrAutSan_SAM" id="NrAutSan_SAM" value="<%%VALUE(NrAutSan_SAM)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="dataAutSan_SAM" class="control-label col-lg-3">DataAutSan SAM <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dataAutSan_SAM-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="dataAutSan_SAM-description"><div class="alert alert-info">Data Rilascio Autorizzazione Sanitaria</div></span>
+
+						<%%COMBO(dataAutSan_SAM)%%>
 					</div>
 				</div>
 

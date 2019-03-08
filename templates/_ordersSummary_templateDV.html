@@ -3,23 +3,10 @@
 <a name="detail-view"></a>
 <div class="panel-heading"><h3 class="panel-title"><strong><%%DETAIL_VIEW_TITLE%%></strong></h3></div>
 
-<div class="panel-body" id="kinds_dv_container">
+<div class="panel-body" id="_ordersSummary_dv_container">
 	<!-- child links -->
 	<div class="row vspacer-md">
 		<div class="col-xs-12">
-			<input type="hidden" id="orders_hclink" value="orders_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="ordersDetails_hclink" value="ordersDetails_view.php?filterer_section=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="_ordersSummary_hclink" value="_ordersSummary_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="products_hclink" value="products_view.php?filterer_tax=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="firstCashNote_hclink" value="firstCashNote_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="companies_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>" id="companies_link"><i class="glyphicon glyphicon-list-alt"></i> Aziende</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="companies_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>" id="xs_companies_link"><i class="glyphicon glyphicon-list-alt"></i> Aziende</a>
-			<input type="hidden" id="companies_hclink" value="companies_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="contacts_hclink" value="contacts_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="attributes_hclink" value="attributes_view.php?filterer_attribute=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="addresses_hclink" value="addresses_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="phones_hclink" value="phones_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="mails_hclink" value="mails_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -27,51 +14,86 @@
 
 	<div class="row">
 		<!-- form inputs -->
-		<div class="col-md-8 col-lg-10" id="kinds_dv_form">
+		<div class="col-md-8 col-lg-10" id="_ordersSummary_dv_form">
 			<fieldset class="form-horizontal">
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="entity" class="control-label col-lg-3">Entity<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#entity-description"></i></label>
+					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Kind</label>
 					<div class="col-lg-9">
-						<span class="help-block collapse" id="entity-description"><div class="alert alert-info">Entities class select</div></span>
-
-						<%%COMBO(entity)%%>
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(kind)%%><%%PLINK(kind)%%><%%ADDNEW(kinds)%%></div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="code" class="control-label col-lg-3">Code/prefix</label>
+					<label for="company" class="control-label col-lg-3" data-parent_link="view_parent_modal">Company</label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="code" id="code" value="<%%VALUE(code)%%>" required>
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(company)%%><%%PLINK(company)%%><%%ADDNEW(companies)%%></div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="name" class="control-label col-lg-3">Name<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="typedoc" class="control-label col-lg-3" data-parent_link="view_parent_modal">Typedoc</label>
 					<div class="col-lg-9">
-						<textarea class="form-control" name="name" id="name" rows="5"><%%VALUE(name)%%></textarea>
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(typedoc)%%><%%PLINK(typedoc)%%><%%ADDNEW(kinds)%%></div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="value" class="control-label col-lg-3">Value <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#value-description"></i></label>
+					<label for="customer" class="control-label col-lg-3" data-parent_link="view_parent_modal">Customer</label>
 					<div class="col-lg-9">
-						<span class="help-block collapse" id="value-description"><div class="alert alert-info">Value field, you can use JSON object to define multi value.
-<br>predefined value: rowcolor: use bootstrap css color (success, warning, etc.), ico: use for icon image in sidebar menu.</div></span>
-
-						<textarea class="form-control" name="value" id="value" rows="5"><%%VALUE(value)%%></textarea>
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(customer)%%><%%PLINK(customer)%%><%%ADDNEW(companies)%%></div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="descriptions" class="control-label col-lg-3">Descriptions</label>
+					<label for="TOT" class="control-label col-lg-3">TOT</label>
 					<div class="col-lg-9">
-						<textarea class="form-control" name="descriptions" id="descriptions" rows="5"><%%VALUE(descriptions)%%></textarea>
+						<input maxlength="40" type="text" class="form-control" name="TOT" id="TOT" value="<%%VALUE(TOT)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="MONTH" class="control-label col-lg-3">MONTH</label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="MONTH" id="MONTH" value="<%%VALUE(MONTH)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="YEAR" class="control-label col-lg-3">YEAR</label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="YEAR" id="YEAR" value="<%%VALUE(YEAR)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="DOCs" class="control-label col-lg-3">DOCs</label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="DOCs" id="DOCs" value="<%%VALUE(DOCs)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="related" class="control-label col-lg-3" data-parent_link="view_parent_modal">Related</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(related)%%><%%PLINK(related)%%><%%ADDNEW(orders)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="id" class="control-label col-lg-3">ID</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" id="id"><%%VALUE(id)%%></div>
 					</div>
 				</div>
 
@@ -80,7 +102,7 @@
 
 		<!-- DV action buttons -->
 		<hr class="hidden-md hidden-lg">
-		<div class="col-md-4 col-lg-2" id="kinds_dv_action_buttons">
+		<div class="col-md-4 col-lg-2" id="_ordersSummary_dv_action_buttons">
 			<div class="btn-toolbar">
 				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
 					<%%UPDATE_BUTTON%%>
@@ -97,14 +119,6 @@
 		</div>
 	</div>
 
-
-	<!-- child records -->
-	<hr>
-	<div class="row">
-		<div class="col-lg-10 col-lg-offset-1">
-			<div id="kinds-children" class="children-tabs"></div>
-		</div>
-	</div>
 
 </div><!-- /div class="panel-body" -->
 	<script>
@@ -135,38 +149,6 @@
 
 			$j('a[href="<%%TRANSLATION(ImageFolder)%%>"]').click(function(){ /* */ return false; });
 
-			if(embedded_mode){
-				/* hide links to children tables in embedded mode */
-				$j('.detail_view a[id$=_link]').remove();
-
-				/* append embedded mode to all links */
-				var append_embedded = function(){
-					$j('a[href]:not([href^="#"]):not([href^="javascript"]):not([href$="Embedded=1"]):not([href*="link.php?t="]):not([href^="mailto:"])').each(
-						function(){
-							$j(this).attr('href', $j(this).attr('href') + '&Embedded=1');
-						}
-					);
-				}
-				setTimeout(append_embedded, 500);
-				setTimeout(append_embedded, 1500);
-				setTimeout(append_embedded, 2500);
-				setTimeout(append_embedded, 3500);
-			}
-
-			/* when no record is selected ('add new' mode) */
-			if(add_new_mode){
-				/* hide links to children tables */
-				$j('.detail_view a[id$=_link]').remove();
-			}else{
-				post(
-					'parent-children.php', {
-						ParentTable: 'kinds',
-						SelectedID: '<%%VALUE(code)%%>',
-						Operation: 'show-children'
-					},
-					'kinds-children'
-				);
-			}
 
 			if(!embedded_mode){
 				/* add a horizontal spacer to [add new parent] buttons that don't have a spacered element before them */
@@ -233,10 +215,10 @@
 			if(!add_new_mode){
 				$j('body').append('<div id="admin-tools-appendix"></div>');
 				$j('#admin-tools-appendix').load(
-					'ajax_admin_tools.php?table=kinds&id=<%%URLVALUE(code)%%>',
+					'ajax_admin_tools.php?table=_ordersSummary&id=<%%URLVALUE(id)%%>',
 					function(resp){
 						if(!resp.length) return;
-						$j.ajax('ajax_admin_tools.php?action=get_admin_tools_js&table=kinds&id=<%%URLVALUE(code)%%>');
+						$j.ajax('ajax_admin_tools.php?action=get_admin_tools_js&table=_ordersSummary&id=<%%URLVALUE(id)%%>');
 					}
 				);
 			}

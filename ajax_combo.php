@@ -180,7 +180,7 @@
 				'not_null' => false
 			)
 		),
-		'_resumeOrders' => array(   
+		'_ordersSummary' => array(   
 			'kind' => array(
 				'parent_table' => 'kinds',
 				'parent_pk_field' => 'code',

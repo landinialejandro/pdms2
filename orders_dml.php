@@ -181,20 +181,20 @@ function orders_delete($selected_id, $AllowDeleteOfParents=false, $skipChecks=fa
 		return $RetMsg;
 	}
 
-	// child table: _resumeOrders
+	// child table: _ordersSummary
 	$res = sql("select `id` from `orders` where `id`='$selected_id'", $eo);
 	$id = db_fetch_row($res);
-	$rires = sql("select count(1) from `_resumeOrders` where `related`='".addslashes($id[0])."'", $eo);
+	$rires = sql("select count(1) from `_ordersSummary` where `related`='".addslashes($id[0])."'", $eo);
 	$rirow = db_fetch_row($rires);
 	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
 		$RetMsg = $Translation["couldn't delete"];
 		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "_resumeOrders", $RetMsg);
+		$RetMsg = str_replace("<TableName>", "_ordersSummary", $RetMsg);
 		return $RetMsg;
 	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
 		$RetMsg = $Translation["confirm delete"];
 		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "_resumeOrders", $RetMsg);
+		$RetMsg = str_replace("<TableName>", "_ordersSummary", $RetMsg);
 		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='orders_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
 		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='orders_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
 		return $RetMsg;

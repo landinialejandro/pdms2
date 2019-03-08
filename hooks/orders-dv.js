@@ -18,6 +18,10 @@ $j(function(){
             refreshCards();
             changueTitle();
             commisionRate();
+            $j('.print_order').show();
+            if ($j('#typeDoc').val() === "TD01"){
+                $j('.sdi_group').show();
+            }
         },1000);
     }
     if (typeof autoSet !== 'undefined'){
@@ -72,6 +76,8 @@ $j(function(){
 function hiddeFields (){
     $j("#commisionRate").parent().parent().hide()
     $j("#commisionFee").parent().parent().hide()
+    $j('.sdi_group').hide();
+    $j('.print_order').hide();
 }
 
 function commisionRate(fix = false){
@@ -86,6 +92,7 @@ function commisionRate(fix = false){
     })
             .done(function (msg) {
                 //function at response
+                if (!msg) return;
                 var rate=parseFloat(msg.value).toFixed(2) || 0;
                 var actualRate = parseFloat($j('#commisionRate').val()).toFixed(2) || 0;
                 

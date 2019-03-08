@@ -253,7 +253,7 @@
 					<label for="consigneeHour" class="control-label col-lg-3">Ora di consegna</label>
 					<div class="col-lg-9">
 						<div class="input-group date datetimepicker"><input maxlength="" type="text" class="form-control" name="consigneeHour" id="consigneeHour" value="<%%VALUE(consigneeHour)%%>"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div>
-					</div>
+					</div> 
 				</div>
 
 				<div class="form-group">
@@ -283,14 +283,15 @@
 					<%%INSERT_BUTTON%%>
 				</div>
                                 <p></p>
-                                <div class="btn-group-vertical" style="width: 100%;">
+                                <div class="btn-group-vertical print_order" style="width: 100%;">
                                     <button type="button" class="btn btn-default" onclick="print_order()">
                                     <i class="glyphicon glyphicon-print"></i> Print Order</button>
                                 </div>
                                 <p></p>
-                                <div class="btn-group-vertical" style="width: 100%;">
-                                    <a target="_blank" rel="noopener noreferrer" type="button" class="btn btn-danger" href="sdi.php?id=<%%VALUE(id)%%>">
-                                    <i class="glyphicon glyphicon-print"></i> Print Fatura</a>
+                                <div class="btn-group-vertical sdi_group" style="width: 100%;" hidden>
+                                    <a target="_blank" type="button" class="btn btn-danger" href="sdi.php?id=<%%VALUE(id)%%>">
+                                        <i class="glyphicon glyphicon-print"></i> Print Fatura
+                                    </a>
                                 </div>
 			</div>
 		</div>

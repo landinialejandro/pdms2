@@ -12,7 +12,7 @@
 //
 
 $j(function(){
-    $j('td._resumeOrders-customer').each(function(){
+    $j('td ._ordersSummary-customer').each(function(){
         var $this = this;
       if($this.children().text() === ""){
         $this.css('background','#eca1a6');
@@ -24,11 +24,11 @@ $j(function(){
         $j(this).css('background','#b1cbbb');
     });
     
-    $j("a[href='SQL_resumeOrders_view.php']").attr('href', '_resumeOrders_view.php');
+    $j("a[href='SQL_ordersSummary_view.php']").attr('href', '_ordersSummary_view.php');
     
     $j('.btn-print-and-close').click(function(){
         var id = this.attributes.myid.value;
-        window.open('REP_printResumeDocument.php?OrderID=' + id);
+        window.open('REP_printSummaryDocument.php?OrderID=' + id);
         setTimeout(function(){
             location.reload();
         },500);

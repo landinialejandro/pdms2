@@ -47,23 +47,23 @@ ordersDetails_delete1Tip=["",spacer+"This option allows each member of the group
 ordersDetails_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Dettaglio Ordini vendita' table."];
 ordersDetails_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Dettaglio Ordini vendita' table."];
 
-// _resumeOrders table
-_resumeOrders_addTip=["",spacer+"This option allows all members of the group to add records to the 'Resume Orders' table. A member who adds a record to the table becomes the 'owner' of that record."];
+// _ordersSummary table
+_ordersSummary_addTip=["",spacer+"This option allows all members of the group to add records to the 'order summary' table. A member who adds a record to the table becomes the 'owner' of that record."];
 
-_resumeOrders_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Resume Orders' table."];
-_resumeOrders_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Resume Orders' table."];
-_resumeOrders_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Resume Orders' table."];
-_resumeOrders_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Resume Orders' table."];
+_ordersSummary_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'order summary' table."];
+_ordersSummary_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'order summary' table."];
+_ordersSummary_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'order summary' table."];
+_ordersSummary_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'order summary' table."];
 
-_resumeOrders_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Resume Orders' table."];
-_resumeOrders_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Resume Orders' table."];
-_resumeOrders_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Resume Orders' table."];
-_resumeOrders_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Resume Orders' table, regardless of their owner."];
+_ordersSummary_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'order summary' table."];
+_ordersSummary_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'order summary' table."];
+_ordersSummary_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'order summary' table."];
+_ordersSummary_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'order summary' table, regardless of their owner."];
 
-_resumeOrders_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Resume Orders' table."];
-_resumeOrders_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Resume Orders' table."];
-_resumeOrders_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Resume Orders' table."];
-_resumeOrders_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Resume Orders' table."];
+_ordersSummary_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'order summary' table."];
+_ordersSummary_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'order summary' table."];
+_ordersSummary_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'order summary' table."];
+_ordersSummary_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'order summary' table."];
 
 // products table
 products_addTip=["",spacer+"This option allows all members of the group to add records to the 'Articoli Magazzino' table. A member who adds a record to the table becomes the 'owner' of that record."];
