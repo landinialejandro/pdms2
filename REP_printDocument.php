@@ -41,10 +41,9 @@ retCompanyData($customer, $customer_values, $order_values['customer'],false);
 
 retCompanyAddress($addressCustomer, $addressCustomer_values, $order_values['customer'],false);
 
-///////////////////////////shiping client address
+/* shiping client address */
 $where_id =" AND addresses.company = {$customer['id']} AND addresses.ship = 1";//change this to set select where
 $addressCustomerShip = getDataTable('addresses',$where_id);
-///////////////////////////
 
 $filename = $company['companyCode']."_".$order_values['typeDoc']."#".$order['multiOrder'].".pdf"; //pdf name
 
@@ -66,7 +65,7 @@ if ($items->num_rows <1){
 
 
 ob_start();
-include_once("$currDir/header_old.php");
+include("$currDir/REP_header.php");
 ?>
 <!-- insert HTML code table version-->
 <!-- MultyCompy data-->
@@ -165,7 +164,7 @@ include_once("$currDir/header_old.php");
 		
 		<tbody>
 			<?php foreach($items as $i => $item){ 
-                                $where_id = "AND productCode = {$item['productCode']}";
+                                $where_id = "AND productCode = '{$item['productCode']}'";
                                 $product = getDataTable('products', $where_id);
                             ?>
 				<tr>
@@ -198,31 +197,14 @@ include_once("$currDir/header_old.php");
 	</table>
 
 <?php
+include("$currDir/REP_footer.php");
 $html_code = ob_get_contents();
 ob_end_clean();
 //echo $html_code;
 
-$mpdf = new \Mpdf\Mpdf([
-	'margin_left' => 5,
-	'margin_right' => 5,
-	'margin_top' => 48,
-	'margin_bottom' => 25,
-	'margin_header' => 10,
-	'margin_footer' => 10
-]);
-$mpdf->SetProtection(array('print'));
-$mpdf->SetTitle("Piattaforma Digitale Management System - Order");
-$mpdf->SetAuthor("PDSM");
-$mpdf->SetWatermarkText("PDMS");
-$mpdf->showWatermarkText = true;
-$mpdf->watermark_font = 'DejaVuSansCondensed';
-$mpdf->watermarkTextAlpha = 0.1;
-$mpdf->SetDisplayMode('fullpage');
-$mpdf->WriteHTML($html_code);
-$f=$currDir.'/PDFfolder/';
-$mpdf->Output($f.$filename, 'F');
+$file = $currDir . '/PDFfolder/' . $filename;
 
-$file = $f . $filename;
+makePdf($html_code, $file);
 
 sql("UPDATE `orders` SET `document` = '{$file}' WHERE id = {$order_id}",$eo);
 

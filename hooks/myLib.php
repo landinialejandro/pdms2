@@ -231,6 +231,14 @@ function retCountryData(&$country, &$country_values, $id){
     
 }
 
+//function splitDat($date){
+//    if(preg_match('#^(\d{2})-(\d{2})-(\d{4})$#', $date, $mateches)){
+//        return $mateches;
+//    }else{
+//        return false;
+//    }
+//}
+
 function openpdf($file,$filename){
     
     header('Content-type: application/pdf');
@@ -239,5 +247,30 @@ function openpdf($file,$filename){
     header('Content-Length: ' . filesize($file));
     header('Accept-Ranges: bytes');
     @readfile($file);
+    return;
+}
+
+function makePdf($html_code, $file){
+    
+    $mpdf = new \Mpdf\Mpdf([
+	'margin_left' => 5,
+	'margin_right' => 5,
+	'margin_top' => 48,
+	'margin_bottom' => 25,
+	'margin_header' => 10,
+	'margin_footer' => 10
+    ]);
+    
+    $mpdf->SetProtection(array('print'));
+    $mpdf->SetTitle("Piattaforma Digitale Management System - Order");
+    $mpdf->SetAuthor("PDSM");
+    $mpdf->SetWatermarkText("PDMS");
+    $mpdf->showWatermarkText = true;
+    $mpdf->watermark_font = 'DejaVuSansCondensed';
+    $mpdf->watermarkTextAlpha = 0.1;
+    $mpdf->SetDisplayMode('fullpage');
+    $mpdf->WriteHTML($html_code);
+    $mpdf->Output($file, 'F');
+    
     return;
 }

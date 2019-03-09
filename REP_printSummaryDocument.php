@@ -30,10 +30,10 @@ $where_id =" AND orders.id = {$order_id}";//change this to set select where
 $order = getDataTable('orders',$where_id);
 $order_values = getDataTable_Values('orders', $where_id);
 
-$docCategorie_id= $order_values['typeDoc'];
-$month_ = sqlValue("select month(date) from orders where id={$order_id}");
-$year_ = sqlValue("select year(date) from orders where id={$order_id}");
-$kind = sqlValue("select kind from orders where id={$order_id}");
+$orderDate = strtotime($order_values['date']);
+
+$month_ = date('m',$orderDate);
+$year_ = date('Y',$orderDate);
 
 //if( !is_null($order['related'])){
 //    exit(error_message('The selected orders already has a report!', false));
@@ -55,20 +55,21 @@ retCompanyAddress($addressCustomer, $addressCustomer_values, $order_values['cust
 
 $where_id =" AND addresses.company = {$customer['id']} AND addresses.ship = 1";//change this to set select where
 $addressCustomerShip = getDataTable('addresses',$where_id);
-///////////////////////////
 
-$totOrderDetail = sqlvalue("SELECT SUM(`LineTotal`) FROM SQL_ordersDetails WHERE company = {$order_values['company']} 
-AND customer ={$order_values['customer']} 
-AND MONTH = {$month_} 
-AND YEAR = {$year_}");
+$totOrderDetail = sqlvalue(
+        "SELECT SUM(`LineTotal`) FROM SQL_ordersDetails WHERE " .
+            "company = {$order_values['company']}
+            AND customer ={$order_values['customer']} 
+            AND MONTH = {$month_} 
+            AND YEAR = {$year_}");
 
 /*
- * Adding TD01 and update DDT with related id
+ * Adding TD01 
  * 
  */
 
 $data = array(
-            'kind' => $kind,
+            'kind' => $order_values['kind'],
             'company' => $order_values['company'],
             'typeDoc' => $orderTypeId, //fattura
             'customer' => $order_values['customer'],
@@ -77,6 +78,11 @@ $data = array(
         );
 
 $recID = addOrder($data);
+
+/*
+ * Update DDT with related id
+ * 
+ */
 
 //copy details items to DFD
 $sql="INSERT INTO `ordersDetails` 
@@ -147,26 +153,33 @@ sql($sql,$eo);
 //buscar las ordenes y actualizar related con la orden actual.
 
 
-$sql = "UPDATE
+$sql_update = "UPDATE
     `orders` 
 SET
     related = {$recID} 
 WHERE
-    `kind` = '{$kind}'
+    `kind` = '{$order_values['kind']}'
     AND `company` = '{$order_values['company']}'
     AND `typeDoc` = '{$order_values['typeDoc']}'
     AND `customer` = '{$order_values['customer']}'
     AND `related` IS NULL";
-sql($sql,$eo);
+    
+sql($sql_update,$eo);
 //$row = db_fetch_assoc($res);
 
+// print order
+$where_id = "AND orders.id = $recID";
+$newOrder = getDataTable('orderes', $where_id);
 
 $multiOrder = intval(sqlvalue("select multiOrder from orders where id = {$recID}"));
-$filename = $company['companyCode']."_".$orderTypeId."#".$multiOrder.".pdf"; //pdf name
 
 $where_id =" AND orders.id = {$recID}";//change this to set select where
 $order = getDataTable('orders',$where_id);
 $docCategorie_id= makeSafe(sqlValue("select typeDoc from orders where id={$recID}"));
+
+
+
+$filename = $company['companyCode']."_".$orderTypeId."#".$multiOrder.".pdf"; //pdf name
 
 
 /* retrieve order items */
@@ -174,7 +187,7 @@ $docCategorie_id= makeSafe(sqlValue("select typeDoc from orders where id={$recID
 $items = sql("SELECT * FROM SQL_ordersDetails WHERE SQL_ordersDetails.order = {$recID}", $eo);
 
 ob_start();
-include_once("$currDir/header_old.php");
+include("$currDir/REP_header.php");
 ?>
 <!-- insert HTML code table version-->
 <!-- MultyCompy data-->
@@ -302,35 +315,17 @@ include_once("$currDir/header_old.php");
 </table>
 
 <?php
+include("$currDir/REP_footer.php");
+
 $html_code = ob_get_contents();
 ob_end_clean();
 echo $html_code;
 
+$file = $currDir . '/PDFfolder/' . $filename;
 
-$mpdf = new \Mpdf\Mpdf([
-	'margin_left' => 5,
-	'margin_right' => 5,
-	'margin_top' => 48,
-	'margin_bottom' => 25,
-	'margin_header' => 10,
-	'margin_footer' => 10
-]);
-$mpdf->SetProtection(array('print'));
-$mpdf->SetTitle("Piattaforma Digitale Management System - FD");
-$mpdf->SetAuthor("PDSM");
-$mpdf->SetWatermarkText("PDMS");
-$mpdf->showWatermarkText = true;
-$mpdf->watermark_font = 'DejaVuSansCondensed';
-$mpdf->watermarkTextAlpha = 0.1;
-$mpdf->SetDisplayMode('fullpage');
-$mpdf->WriteHTML($html_code);
-$f=$currDir.'/PDFfolder/';
-$mpdf->Output($f.$filename, 'F');
-
-$file = $f . $filename;
-
-openpdf($file, $filename);
-
+//makePdf($html_code, $file);
+//
+//openpdf($file, $filename);
 
 function addOrder($data){
     
