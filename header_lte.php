@@ -64,7 +64,6 @@
 
 			
 			<?php if(!defined('APPGINI_SETUP') && is_file(dirname(__FILE__) . '/hooks/header-extras.php')){ include(dirname(__FILE__).'/hooks/header-extras.php'); } ?>
-			<?php if(class_exists('Notification')) echo Notification::placeholder(); ?>
 
 			<?php if($_REQUEST['Embedded']){ ?>
 				<!-- process notifications -->
@@ -87,6 +86,7 @@
 							  
 							  <!-- Left side column. contains the logo and sidebar -->
 							  <?php include ('header_lte_leftSideMenu.php') ?>
+                                                                <?php if(class_exists('Notification')) echo Notification::placeholder(); ?>
 								<!-- process notifications -->
 								<div style="height: 65px; margin: -25px 0 -25px;">
 									<?php if(function_exists('showNotifications')) echo showNotifications(); ?>

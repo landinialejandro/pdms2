@@ -59,16 +59,17 @@ $addressCustomerShip = getDataTable('addresses',$where_id);
 
 $totOrderDetail = sqlvalue(
         "SELECT SUM(`LineTotal`) FROM SQL_ordersDetails WHERE " .
-            "1=1".
+            "1=1 ".
            "AND company  = {$order_values['company']}
-            AND typeDoc  = {$summaryDocument}
+            AND typeDoc  = '{$summaryDocument}'
             AND customer = {$order_values['customer']} 
             AND MONTH    = {$month_} 
             AND YEAR     = {$year_}");
 
 /*
  * Adding a new $orderTypeId 
- * 
+ *
+ *  
  */
 
 $data = array(
@@ -77,14 +78,17 @@ $data = array(
             'typeDoc' => $orderTypeId, //fattura
             'customer' => $order_values['customer'],
             'date' => parseMySQLDate(date('Y-m-d'), ''),
-            'orderTotal' => $totOrderDetail,
+            'orderTotal' => $totOrderDetail
+        );
+
+$recID = addOrder($data);
+
+$data += array(
             'Month' => $month_,
             'Year' => $year_,
             'orderTypeId' => $orderTypeId, //for destination document type
             'summaryDocument' => $summaryDocument // summary document type
         );
-
-$recID = addOrder($data);
 
 /*
  * add lines to new $summaryDocument with related id
@@ -105,9 +109,9 @@ $sql_update = "UPDATE
 SET
     related = {$recID} 
 WHERE
-    `kind` = '{$order_values['kind']}'
+    `kind` = 'OUT'
     AND `company` = '{$order_values['company']}'
-    AND `typeDoc` = {$summaryDocument}
+    AND `typeDoc` = '{$summaryDocument}'
     AND `customer` = '{$order_values['customer']}'
     AND `related` IS NULL";
     
@@ -116,7 +120,7 @@ sql($sql_update,$eo);
 
 // print order
 $where_id = "AND orders.id = $recID";
-$newOrder = getDataTable('orderes', $where_id);
+$newOrder = getDataTable('orders', $where_id);
 
 $multiOrder = intval(sqlvalue("select multiOrder from orders where id = {$recID}"));
 
@@ -278,8 +282,11 @@ function addOrder($data){
     
     if(!orders_before_insert($data, getMemberInfo(), $args)){ return false; }
 
-    insert('orders', $data);
+    if (!insert('orders', $data, $error)){
+        exit(error_message('Error! ' . $error, false));
+    }
 
+    // no funca
     $recID = db_insert_id(db_link());//get last id insert
 
     // hook: orders_after_insert
@@ -363,7 +370,7 @@ function addOrderDetails($data, $recID){
         `SQL_ordersDetails`
     WHERE 
         company = {$data['company']} 
-        AND typeDoc = {$data['summaryDocument']}
+        AND typeDoc = '{$data['summaryDocument']}'
         AND customer ={$data['customer']} 
         AND MONTH = {$data['Month']} 
         AND YEAR = {$data['Year']}";
