@@ -200,12 +200,12 @@ include("$currDir/REP_header.php");
 include("$currDir/REP_footer.php");
 $html_code = ob_get_contents();
 ob_end_clean();
-//echo $html_code;
+echo $html_code;
 
 $file = $currDir . '/PDFfolder/' . $filename;
 
-makePdf($html_code, $file);
+//makePdf($html_code, $file);
 
 sql("UPDATE `orders` SET `document` = '{$file}' WHERE id = {$order_id}",$eo);
 
-openpdf($file, $filename);
+//openpdf($file, $filename);
