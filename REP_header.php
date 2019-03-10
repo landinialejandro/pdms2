@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<title>Pdms | Reports </title>
-		<link id="browser_favicon" rel="shortcut icon" href="<?php echo PREPEND_PATH; ?>resources/images/appgini-icon.png">
+		<link id="browser_favicon" rel="shortcut icon" href="<?php echo PREPEND_PATH; ?>images/favicon.ico">
 
 		<link rel="stylesheet" href="resources/initializr/css/bootstrap.css">
                 <script src="resources/jquery/js/jquery-1.12.4.min.js"></script>

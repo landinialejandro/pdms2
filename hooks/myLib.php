@@ -178,9 +178,6 @@ function retCompanyAddress(&$address, &$address_values, $companyId = false, $con
             if (!$address['address']){
                 exit(error_message('<h1>address not valid in company address</h1>', false));
             }
-//            if (!$address['houseNumber']){
-//                exit(error_message('<h1>numero civico not valid in company address</h1>', false));
-//            }
             if (!$address['postalCode']){
                 exit(error_message('<h1>postal Code not valid in company address</h1>', false));
             }

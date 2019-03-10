@@ -39,4 +39,7 @@ FROM
 LEFT OUTER JOIN orders AS orders
 ON
     orders.id = ordersDetails.order
-WHERE orders.related IS NULL
+WHERE 
+1=1
+AND orders.related IS NULL
+AND orders.typeDoc = "DDT"

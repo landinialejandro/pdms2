@@ -18,7 +18,8 @@ if(!$arrPerm[1]){
         return false;
 }
 
-$orderTypeId='TD01'; //for destination document type
+$orderTypeId = 'TD01'; //for destination document type
+$summaryDocument = 'DDT'; // summary document type
 
 /* get order ID */
 $order_id = intval($_REQUEST['OrderID']);
@@ -58,13 +59,15 @@ $addressCustomerShip = getDataTable('addresses',$where_id);
 
 $totOrderDetail = sqlvalue(
         "SELECT SUM(`LineTotal`) FROM SQL_ordersDetails WHERE " .
-            "company = {$order_values['company']}
-            AND customer ={$order_values['customer']} 
-            AND MONTH = {$month_} 
-            AND YEAR = {$year_}");
+            "1=1".
+           "AND company  = {$order_values['company']}
+            AND typeDoc  = {$summaryDocument}
+            AND customer = {$order_values['customer']} 
+            AND MONTH    = {$month_} 
+            AND YEAR     = {$year_}");
 
 /*
- * Adding TD01 
+ * Adding a new $orderTypeId 
  * 
  */
 
@@ -74,79 +77,23 @@ $data = array(
             'typeDoc' => $orderTypeId, //fattura
             'customer' => $order_values['customer'],
             'date' => parseMySQLDate(date('Y-m-d'), ''),
-            'orderTotal' => $totOrderDetail
+            'orderTotal' => $totOrderDetail,
+            'Month' => $month_,
+            'Year' => $year_,
+            'orderTypeId' => $orderTypeId, //for destination document type
+            'summaryDocument' => $summaryDocument // summary document type
         );
 
 $recID = addOrder($data);
 
 /*
- * Update DDT with related id
+ * add lines to new $summaryDocument with related id
  * 
  */
 
-//copy details items to DFD
-$sql="INSERT INTO `ordersDetails` 
-(   `order`,
-    `manufactureDate`,
-    `sellDate`,
-    `expiryDate`,
-    `daysToExpiry`,
-    `codebar`,
-    `UM`,
-    `productCode`,
-    `batch`,
-    `packages`,
-    `noSell`,
-    `Quantity`,
-    `QuantityReal`,
-    `UnitPrice`,
-    `Subtotal`,
-    `taxes`,
-    `Discount`,
-    `LineTotal`,
-    `section`,
-    `transaction_type`,
-    `skBatches`,
-    `averagePrice`,
-    `averageWeight`,
-    `commission`,
-    `return`,
-    `supplierCode`)
-SELECT
-    '{$recID}' as `order`,
-    `manufactureDate`,
-    `sellDate`,
-    `expiryDate`,
-    `daysToExpiry`,
-    `codebar`,
-    `UM`,
-    `productCode`,
-    `batch`,
-    `packages`,
-    `noSell`,
-    `Quantity`,
-    `QuantityReal`,
-    `UnitPrice`,
-    `Subtotal`,
-    `taxes`,
-    `Discount`,
-    `LineTotal`,
-    `section`,
-    `transaction_type`,
-    `skBatches`,
-    `averagePrice`,
-    `averageWeight`,
-    `commission`,
-    `return`,
-    `supplierCode`
-FROM
-    `SQL_ordersDetails`
-WHERE company = {$order_values['company']} 
-AND customer ={$order_values['customer']} 
-AND MONTH = {$month_} 
-AND YEAR = {$year_}";
+addOrderDetails($data, $recID);
 
-sql($sql,$eo);
+
 
 //updating related orders.
 
@@ -160,7 +107,7 @@ SET
 WHERE
     `kind` = '{$order_values['kind']}'
     AND `company` = '{$order_values['company']}'
-    AND `typeDoc` = '{$order_values['typeDoc']}'
+    AND `typeDoc` = {$summaryDocument}
     AND `customer` = '{$order_values['customer']}'
     AND `related` IS NULL";
     
@@ -177,10 +124,7 @@ $where_id =" AND orders.id = {$recID}";//change this to set select where
 $order = getDataTable('orders',$where_id);
 $docCategorie_id= makeSafe(sqlValue("select typeDoc from orders where id={$recID}"));
 
-
-
 $filename = $company['companyCode']."_".$orderTypeId."#".$multiOrder.".pdf"; //pdf name
-
 
 /* retrieve order items */
 //$order_total = 0;
@@ -277,7 +221,7 @@ include("$currDir/REP_header.php");
 <table border="0" class="table table-striped table-bordered">
     <thead>
         <tr>
-            <th>DDT</th>
+            <th><?php echo $summaryDocument; ?></th>
             <th>Data</th>
             <th>UM</th>
             <th>Quant</th>
@@ -354,4 +298,76 @@ function addOrder($data){
     set_record_owner('orders', $recID, getLoggedMemberID());
 
     return $recID;
+}
+
+function addOrderDetails($data, $recID){
+    
+    
+    
+    //copy details items to $orderTypeId
+    $sql="INSERT INTO `ordersDetails` 
+    (   `order`,
+        `manufactureDate`,
+        `sellDate`,
+        `expiryDate`,
+        `daysToExpiry`,
+        `codebar`,
+        `UM`,
+        `productCode`,
+        `batch`,
+        `packages`,
+        `noSell`,
+        `Quantity`,
+        `QuantityReal`,
+        `UnitPrice`,
+        `Subtotal`,
+        `taxes`,
+        `Discount`,
+        `LineTotal`,
+        `section`,
+        `transaction_type`,
+        `skBatches`,
+        `averagePrice`,
+        `averageWeight`,
+        `commission`,
+        `return`,
+        `supplierCode`)
+    SELECT
+        '{$recID}' as `order`,
+        `manufactureDate`,
+        `sellDate`,
+        `expiryDate`,
+        `daysToExpiry`,
+        `codebar`,
+        `UM`,
+        `productCode`,
+        `batch`,
+        `packages`,
+        `noSell`,
+        `Quantity`,
+        `QuantityReal`,
+        `UnitPrice`,
+        `Subtotal`,
+        `taxes`,
+        `Discount`,
+        `LineTotal`,
+        `section`,
+        `transaction_type`,
+        `skBatches`,
+        `averagePrice`,
+        `averageWeight`,
+        `commission`,
+        `return`,
+        `supplierCode`
+    FROM
+        `SQL_ordersDetails`
+    WHERE 
+        company = {$data['company']} 
+        AND typeDoc = {$data['summaryDocument']}
+        AND customer ={$data['customer']} 
+        AND MONTH = {$data['Month']} 
+        AND YEAR = {$data['Year']}";
+
+    sql($sql,$eo);
+    
 }
