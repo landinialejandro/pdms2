@@ -68,7 +68,8 @@
 			'averageWeight' => array('appgini' => 'DECIMAL(10,2) null '),
 			'commission' => array('appgini' => 'DECIMAL(10,2) null default \'15.00\' '),
 			'return' => array('appgini' => 'VARCHAR(255) null default \'1\' '),
-			'supplierCode' => array('appgini' => 'VARCHAR(100) null ')
+			'supplierCode' => array('appgini' => 'VARCHAR(100) null '),
+			'related' => array('appgini' => 'INT null ')
 		),
 		'_ordersSummary' => array(   
 			'kind' => array('appgini' => 'VARCHAR(40) null '),

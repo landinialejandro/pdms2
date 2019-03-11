@@ -28,7 +28,7 @@ $j(function(){
     
     $j('.btn-print-and-close').click(function(){
         var id = this.attributes.myid.value;
-        window.open('REP_printSummaryDocument.php?OrderID=' + id);
+        window.open('REP_SummaryDocument_make.php?OrderID=' + id);
         setTimeout(function(){
             location.reload();
         },500);

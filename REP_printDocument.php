@@ -10,6 +10,8 @@ include("$currDir/defaultLang.php");
 include("$currDir/language.php");
 include("$currDir/lib.php");
 require "$currDir/vendor/autoload.php";
+include("$currDir/REP_SummaryDocument_print.php");
+
 
 /* get order ID */
 $order_id = intval($_REQUEST['OrderID']);
@@ -21,6 +23,11 @@ if(!$order_id) {exit(error_message('Invalid order ID!', false));}
 $where_id =" AND orders.id = {$order_id}";//change this to set select where
 $order = getDataTable('orders',$where_id);
 $order_values = getDataTable_Values('orders',$where_id);
+
+if ($order_values['typeDoc'] === 'TD01'){
+    printDocument($order_id);
+    return;
+}
 
 //if (!is_null($order['document'])){
 //    if (is_file($order['document'])){

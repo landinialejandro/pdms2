@@ -48,7 +48,8 @@
 		"`ordersDetails`.`averageWeight`" => "averageWeight",
 		"`ordersDetails`.`commission`" => "commission",
 		"concat('<i class=\"glyphicon glyphicon-', if(`ordersDetails`.`return`, 'check', 'unchecked'), '\"></i>')" => "return",
-		"`ordersDetails`.`supplierCode`" => "supplierCode"
+		"`ordersDetails`.`supplierCode`" => "supplierCode",
+		"`ordersDetails`.`related`" => "related"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -78,7 +79,8 @@
 		24 => '`ordersDetails`.`averageWeight`',
 		25 => '`ordersDetails`.`commission`',
 		26 => 26,
-		27 => 27
+		27 => 27,
+		28 => '`ordersDetails`.`related`'
 	);
 
 	// Fields that can be displayed in the csv file
@@ -109,7 +111,8 @@
 		"`ordersDetails`.`averageWeight`" => "averageWeight",
 		"`ordersDetails`.`commission`" => "commission",
 		"`ordersDetails`.`return`" => "return",
-		"`ordersDetails`.`supplierCode`" => "supplierCode"
+		"`ordersDetails`.`supplierCode`" => "supplierCode",
+		"`ordersDetails`.`related`" => "related"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
@@ -139,7 +142,8 @@
 		"`ordersDetails`.`averageWeight`" => "Peso medio giorno",
 		"`ordersDetails`.`commission`" => "Provvigione",
 		"`ordersDetails`.`return`" => "Includi commissione",
-		"`ordersDetails`.`supplierCode`" => "SupplierCode"
+		"`ordersDetails`.`supplierCode`" => "SupplierCode",
+		"`ordersDetails`.`related`" => "Related"
 	);
 
 	// Fields that can be quick searched
@@ -170,7 +174,8 @@
 		"`ordersDetails`.`averageWeight`" => "averageWeight",
 		"`ordersDetails`.`commission`" => "commission",
 		"concat('<i class=\"glyphicon glyphicon-', if(`ordersDetails`.`return`, 'check', 'unchecked'), '\"></i>')" => "return",
-		"`ordersDetails`.`supplierCode`" => "supplierCode"
+		"`ordersDetails`.`supplierCode`" => "supplierCode",
+		"`ordersDetails`.`related`" => "related"
 	);
 
 	// Lookup fields that can be used as filterers

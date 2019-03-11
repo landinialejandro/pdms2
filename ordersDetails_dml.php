@@ -66,6 +66,8 @@ function ordersDetails_insert(){
 		if($data['return'] == empty_lookup_value){ $data['return'] = ''; }
 	$data['supplierCode'] = makeSafe($_REQUEST['supplierCode']);
 		if($data['supplierCode'] == empty_lookup_value){ $data['supplierCode'] = ''; }
+	$data['related'] = makeSafe($_REQUEST['related']);
+		if($data['related'] == empty_lookup_value){ $data['related'] = ''; }
 	if($data['Quantity'] == '') $data['Quantity'] = "1";
 	if($data['section'] == '') $data['section'] = "Magazzino Metaponto";
 	if($data['transaction_type'] == '') $data['transaction_type'] = "Outgoing";
@@ -233,6 +235,8 @@ function ordersDetails_update($selected_id){
 		if($data['return'] == empty_lookup_value){ $data['return'] = ''; }
 	$data['supplierCode'] = makeSafe($_REQUEST['supplierCode']);
 		if($data['supplierCode'] == empty_lookup_value){ $data['supplierCode'] = ''; }
+	$data['related'] = makeSafe($_REQUEST['related']);
+		if($data['related'] == empty_lookup_value){ $data['related'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: ordersDetails_before_update
@@ -765,6 +769,7 @@ function ordersDetails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$templateCode = str_replace('<%%UPLOADFILE(commission)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(return)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(supplierCode)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(related)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -832,6 +837,9 @@ function ordersDetails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(supplierCode)%%>', safe_html($urow['supplierCode']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(supplierCode)%%>', html_attr($row['supplierCode']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(supplierCode)%%>', urlencode($urow['supplierCode']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(related)%%>', safe_html($urow['related']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(related)%%>', html_attr($row['related']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(related)%%>', urlencode($urow['related']), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -878,6 +886,8 @@ function ordersDetails_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$templateCode = str_replace('<%%CHECKED(return)%%>', 'checked', $templateCode);
 		$templateCode = str_replace('<%%VALUE(supplierCode)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(supplierCode)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(related)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(related)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations
