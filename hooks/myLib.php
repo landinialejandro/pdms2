@@ -90,7 +90,7 @@ function dataBar($id){
     return $ret;
 }
 
-function getKindsData($code = "", $name = ""){
+function getKindsData($code = "", $name = "", $retJson = true){
     
     if($code){
         $code = " AND kinds.code = '{$code}'";
@@ -104,7 +104,7 @@ function getKindsData($code = "", $name = ""){
 
     $result = json_decode($res['value']);
 
-    if (json_last_error() === JSON_ERROR_NONE) {
+    if (json_last_error() === JSON_ERROR_NONE && $retJson) {
         // JSON is valid
         $res[]=$result;
     }

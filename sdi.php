@@ -511,14 +511,25 @@ $body = $xml_invoice->FatturaElettronicaBody;
         $datiSAL = $body->DatiGenerali->addChild("DatiSAL");
             //2.1.7.1
             $datiSAL->addChild("RiferimentoFase","");
-        //2.1.8
-        $datiDDT = $body->DatiGenerali->addChild("DatiDDT");
-            //2.1.8.1
-            $datiDDT->addChild("NumeroDDT","");
-            //2.1.8.2
-            $datiDDT->addChild("DataDDT","");
-            //2.1.8.3
-            $datiDDT->addChild("RiferimentoNumeroLinea","");
+            
+         /* retrieve order items */
+        ///////////////////////////
+        $item_fields = get_sql_fields('ordersDetails');
+        $item_from = get_sql_from('ordersDetails');
+        $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
+
+        foreach($items as $i => $item){    
+            $ddtOrder = getDataTable('orders', "AND orders.id = {$item['id']}");
+            //2.1.8
+            $datiDDT = $body->DatiGenerali->addChild("DatiDDT");
+                //2.1.8.1
+                $datiDDT->addChild("NumeroDDT",$ddtOrder['multiOrder']);
+                //2.1.8.2
+                $datiDDT->addChild("DataDDT",$ddtOrder['date']);
+                //2.1.8.3
+                $datiDDT->addChild("RiferimentoNumeroLinea",$i +1);
+        }    
+            
         //2.1.9
         $datiTrasporto = $body->DatiGenerali->addChild("DatiTrasporto");
             //2.1.9.1
@@ -606,6 +617,7 @@ $body = $xml_invoice->FatturaElettronicaBody;
         
         $where_id = "AND products.id = {$item_values['productCode']}";
         $product = getDataTable_Values("products", $where_id);
+        $productTax = getKindsData($product['tax'], "", false);
         
 //        var_dump($product);
         
@@ -652,7 +664,7 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.2.1.11
             $DettaglioLinee->addChild("PrezzoTotale",number_format($item_values['LineTotal'] , 2));
             //2.2.1.12
-            $DettaglioLinee->addChild("AliquotaIVA",number_format($product['tax'] , 2));
+            $DettaglioLinee->addChild("AliquotaIVA",number_format($productTax['value'] , 2));
             //2.2.1.13
             $DettaglioLinee->addChild("Ritenuta","");
             //2.2.1.14
@@ -671,28 +683,43 @@ $body = $xml_invoice->FatturaElettronicaBody;
                 $AltriDatiGestionali->addChild("RiferimentoData","");
             
         $inponibiliTotale +=  $item_values['Subtotal'];
-        $taxesTotales +=  ($product['tax']/100) * $item_values['Subtotal'];
+        $taxesTotales +=  ($productTax['value']/100) * $item_values['Subtotal'];
     }
     ///////////////////////////
         //2.2.2
         $DatiRiepilogo = $DatiBeniServizi->addChild("DatiRiepilogo");
-            //2.2.2.1
-            $DatiRiepilogo->addChild("AliquotaIVA",number_format($product['tax'] , 2));
-            //2.2.2.2
-            $DatiRiepilogo->addChild("Natura","");
-            //2.2.2.3
-            $DatiRiepilogo->addChild("SpeseAccessorie","");
-            //2.2.2.4
-            $DatiRiepilogo->addChild("Arrotondamento","");
-            //2.2.2.5
-            $DatiRiepilogo->addChild("ImponibileImporto",number_format($inponibiliTotale , 2));
-            //2.2.2.6
-            $DatiRiepilogo->addChild("Imposta",number_format($taxesTotales , 2));
-            //2.2.2.7
-            $DatiRiepilogo->addChild("EsigibilitaIVA","D");
-            //2.2.2.8
-            $DatiRiepilogo->addChild("RiferimentoNormativo","");
+            /* retrieve order items */
+            ///////////////////////////
+            $item_fields = get_sql_fields('ordersDetails');
+            $item_from = get_sql_from('ordersDetails');
+            $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
 
+            foreach($items as $i => $item){   
+                
+                $where_id = "AND ordersDetails.id = {$item['id']}";
+                $item_values = getDataTable_Values('ordersDetails', $where_id);
+                
+                $where_id = "AND products.id = {$item_values['productCode']}";
+                $product = getDataTable_Values("products", $where_id);
+                $productTax = getKindsData($product['tax'], "", false);
+                
+                //2.2.2.1
+                $DatiRiepilogo->addChild("AliquotaIVA",number_format($productTax['value'] , 2));
+                //2.2.2.2
+                $DatiRiepilogo->addChild("Natura",$productTax['value'] ? "" : "N4");
+                //2.2.2.3
+                $DatiRiepilogo->addChild("SpeseAccessorie","");
+                //2.2.2.4
+                $DatiRiepilogo->addChild("Arrotondamento","");
+                //2.2.2.5
+                $DatiRiepilogo->addChild("ImponibileImporto",number_format($item_values['Subtotal'] , 2));
+                //2.2.2.6
+                $DatiRiepilogo->addChild("Imposta",number_format($taxesTotales , 2));
+                //2.2.2.7
+                $DatiRiepilogo->addChild("EsigibilitaIVA","D");
+                //2.2.2.8
+                $DatiRiepilogo->addChild("RiferimentoNormativo","");
+            }
     //2.3
     $datiVeicoli = $body->DatiGenerali->addChild("DatiVeicoli");
         //2.3.1
@@ -702,13 +729,13 @@ $body = $xml_invoice->FatturaElettronicaBody;
     //2.4
     $datiPagamento = $body->DatiGenerali->addChild("DatiPagamento");
         //2.4.1
-        $datiPagamento->addChild("CondizioniPagamento","");
+        $datiPagamento->addChild("CondizioniPagamento","TP01");
         //2.4.2
         $DettaglioPagamento = $datiPagamento->addChild("DettaglioPagamento");
             //2.4.2.1
             $DettaglioPagamento->addChild("Beneficiario","");
             //2.4.2.2
-            $DettaglioPagamento->addChild("ModalitaPagamento","");
+            $DettaglioPagamento->addChild("ModalitaPagamento","MP02");
             //2.4.2.3
             $DettaglioPagamento->addChild("DataRiferimentoTerminiPagamento","");
             //2.4.2.4
@@ -716,7 +743,7 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.4.2.5
             $DettaglioPagamento->addChild("DataScadenzaPagamento","");
             //2.4.2.6
-            $DettaglioPagamento->addChild("ImportoPagamento","");
+            $DettaglioPagamento->addChild("ImportoPagamento", number_format($inponibiliTotale+$taxesTotales,2));
             //2.4.2.7
             $DettaglioPagamento->addChild("CodUfficioPostale","");
             //2.4.2.8
