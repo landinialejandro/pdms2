@@ -521,6 +521,8 @@ $body = $xml_invoice->FatturaElettronicaBody;
         foreach($items as $i => $item){    
             $ddtOrder = getDataTable('orders', "AND orders.id = {$item['id']}");
             //2.1.8
+            if ($item['realted']){
+                
             $datiDDT = $body->DatiGenerali->addChild("DatiDDT");
                 //2.1.8.1
                 $datiDDT->addChild("NumeroDDT",$ddtOrder['multiOrder']);
@@ -528,6 +530,7 @@ $body = $xml_invoice->FatturaElettronicaBody;
                 $datiDDT->addChild("DataDDT",$ddtOrder['date']);
                 //2.1.8.3
                 $datiDDT->addChild("RiferimentoNumeroLinea",$i +1);
+            }
         }    
             
         //2.1.9
@@ -687,7 +690,6 @@ $body = $xml_invoice->FatturaElettronicaBody;
     }
     ///////////////////////////
         //2.2.2
-        $DatiRiepilogo = $DatiBeniServizi->addChild("DatiRiepilogo");
             /* retrieve order items */
             ///////////////////////////
             $item_fields = get_sql_fields('ordersDetails');
@@ -695,30 +697,31 @@ $body = $xml_invoice->FatturaElettronicaBody;
             $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
 
             foreach($items as $i => $item){   
-                
-                $where_id = "AND ordersDetails.id = {$item['id']}";
-                $item_values = getDataTable_Values('ordersDetails', $where_id);
-                
-                $where_id = "AND products.id = {$item_values['productCode']}";
-                $product = getDataTable_Values("products", $where_id);
-                $productTax = getKindsData($product['tax'], "", false);
-                
-                //2.2.2.1
-                $DatiRiepilogo->addChild("AliquotaIVA",number_format($productTax['value'] , 2));
-                //2.2.2.2
-                $DatiRiepilogo->addChild("Natura",$productTax['value'] ? "" : "N4");
-                //2.2.2.3
-                $DatiRiepilogo->addChild("SpeseAccessorie","");
-                //2.2.2.4
-                $DatiRiepilogo->addChild("Arrotondamento","");
-                //2.2.2.5
-                $DatiRiepilogo->addChild("ImponibileImporto",number_format($item_values['Subtotal'] , 2));
-                //2.2.2.6
-                $DatiRiepilogo->addChild("Imposta",number_format($taxesTotales , 2));
-                //2.2.2.7
-                $DatiRiepilogo->addChild("EsigibilitaIVA","D");
-                //2.2.2.8
-                $DatiRiepilogo->addChild("RiferimentoNormativo","");
+                $DatiRiepilogo = $DatiBeniServizi->addChild("DatiRiepilogo");
+
+                        $where_id = "AND ordersDetails.id = {$item['id']}";
+                        $item_values = getDataTable_Values('ordersDetails', $where_id);
+
+                        $where_id = "AND products.id = {$item_values['productCode']}";
+                        $product = getDataTable_Values("products", $where_id);
+                        $productTax = getKindsData($product['tax'], "", false);
+
+                        //2.2.2.1
+                        $DatiRiepilogo->addChild("AliquotaIVA",number_format($productTax['value'] , 2));
+                        //2.2.2.2
+                        $DatiRiepilogo->addChild("Natura",$productTax['value'] ? "" : "N4");
+                        //2.2.2.3
+                        $DatiRiepilogo->addChild("SpeseAccessorie","");
+                        //2.2.2.4
+                        $DatiRiepilogo->addChild("Arrotondamento","");
+                        //2.2.2.5
+                        $DatiRiepilogo->addChild("ImponibileImporto",number_format($item_values['Subtotal'] , 2));
+                        //2.2.2.6
+                        $DatiRiepilogo->addChild("Imposta",number_format($taxesTotales , 2));
+                        //2.2.2.7
+                        $DatiRiepilogo->addChild("EsigibilitaIVA","D");
+                        //2.2.2.8
+                        $DatiRiepilogo->addChild("RiferimentoNormativo","");
             }
     //2.3
     $datiVeicoli = $body->DatiGenerali->addChild("DatiVeicoli");
