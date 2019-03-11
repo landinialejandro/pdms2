@@ -224,7 +224,7 @@ function retMailPhonelFax_Contact(&$mail, &$phone, &$fax, $contactId){
 function retCountryData(&$country, &$country_values, $id){
     $where_id = "AND countries.id = $id";
     $country = getDataTable('countries',$where_id);
-    $country = getDataTable_Values('countries',$where_id);
+    $country_values = getDataTable_Values('countries',$where_id);
     
 }
 
