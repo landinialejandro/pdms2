@@ -14,9 +14,7 @@
                             <div class="inner">
                               <h3>
                                   <?php 
-                                      $sql_from = get_sql_from('orders');
-                                      $count_records = ($sql_from ? sqlValue("select count(1) from " . $sql_from) : 0);
-                                      echo number_format($count_records);
+                                      echo '1.000';
                                   ?>
                               </h3>
 

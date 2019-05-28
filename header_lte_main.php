@@ -4,9 +4,9 @@
                       <!-- Logo -->
                       <a href="index.php" class="logo">
                         <!-- mini logo for sidebar mini 50x50 pixels -->
-                        <span class="logo-mini"><b><i class="glyphicon glyphicon-home"></i></b>&nbsp;PDMS</span>
+                        <span class="logo-mini"><b><i class=<?php echo $LTE_globals['logo-mini']; ?>"></i></b>&nbsp;<?php echo $LTE_globals['logo-mini-text']; ?></span>
                         <!-- logo for regular state and mobile devices -->
-                        <span class="logo-lg"><b><i class="glyphicon glyphicon-home"></i>&nbsp;PDMS</b></span>
+                        <span class="logo-lg"><b><i class="<?php echo $LTE_globals['logo-mini']; ?>"></i>&nbsp;<?php echo $LTE_globals['logo-mini-text']; ?></b></span>
                       </a>
 
                       <!-- Header Navbar -->
@@ -15,7 +15,7 @@
                         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                           <span class="sr-only">Toggle navigation</span>
                         </a>
-                        <p class="navbar-text hidden-xs" style="color: white;">Piattaforma Digitale Management System</p>
+                        <p class="navbar-text hidden-xs" style="color: white;"><?php echo $LTE_globals['navbar-text']; ?></p>
 
                         <!-- Navbar Right Menu -->
                         <div class="navbar-custom-menu">
@@ -38,7 +38,9 @@
                                             <small>Member since <?php echo $memberInfo['signupDate']; ?></small>
                                         </p>
                                     </li>
-                                    <?php if(!$_GET['signIn'] && !$_GET['loginFailed']){ ?>
+                                    <?php 
+                                    $call = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
+                                    if(!$_GET['signIn'] && !$_GET['loginFailed'] && $call != "membership_passwordReset.php" && $call != "membership_signup.php" ){ ?>
                                     <!-- Menu Body -->
                                     <li class="user-body">
                                       <div class="row">

@@ -11,7 +11,7 @@
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<title>Pdms | <?php echo (isset($x->TableTitle) ? $x->TableTitle : ''); ?></title>
+		<title><?php echo $LTE_globals['app-title-prefix']; ?><?php echo (isset($x->TableTitle) ? $x->TableTitle : ''); ?></title>
 		<link id="browser_favicon" rel="shortcut icon" href="<?php echo PREPEND_PATH; ?>images/favicon.ico">
 
 		<!-- LTE adding -->
@@ -83,8 +83,10 @@
                           
 						  <section class="content container-fluid">
 							  
-							  <?php if(isset($_GET['loginFailed']) || isset($_GET['signIn'])){return;} ?>
-							  
+						  <?php 
+							  $call = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
+							  if(isset($_GET['loginFailed']) || isset($_GET['signIn']) || $call == "membership_passwordReset.php" || $call == "membership_signup.php"){return;}
+							  ?>
 							  <!-- Left side column. contains the logo and sidebar -->
 							  <?php include ('header_lte_leftSideMenu.php') ?>
 								<!-- process notifications -->

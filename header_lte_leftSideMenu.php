@@ -30,17 +30,11 @@
                                   }
 
                                   $i = 0; 
-                                    $ico_menu = '{
-                                        "Documenti":"fa fa-table",
-                                        "Catalogo":"fa fa-gift",
-                                        "Prima Nota":"fa fa-pencil-square-o",
-                                        "Anagrafiche":"fa fa-cog",
-                                        "Altro":"fa fa-plus",
-                                        "hiddens":"fa fa-eye-slash"
-                                    }';
-                                    $json = json_decode($ico_menu,true);
+                                    //changue this for tablename icon
+                                    if (isset($ico_menu)){
+                                        $json = json_decode($ico_menu,true);
+                                    }
                                     $ico = "fa fa-table"; //default ico
-                                    // $ico = $json['ico'] ? $json['ico'] : $ico ;
                                   foreach ($groups as $lte_group => $lte_tables) {
                                       if (($lte_group !== 'hiddens' || $memberInfo['admin']) ){ // new fucntionality if table group named hiddens dont show in other users
                                         if (count($lte_tables)){
