@@ -1,5 +1,10 @@
 		<?php
-				$options = array("Contacts","Companies","Addresses","Phones","Mails","Products","Documents","Attributes","Orders","Taxes","CashNote","sdi-CodiceDestinatario","sdi-RegimeFiscale","sdi-TipoCassa","sdi-ModalitaPagamento","sdi-Natura");
+				$options = array("Contacts","check.csv");
+                                if(is_file(dirname(__FILE__).'/kinds.entity.csv')){
+                                        $entity_data = addslashes(implode('', @file(dirname(__FILE__).'/kinds.entity.csv')));
+                                        $combo_entity = explode('||', entitiesToUTF8(convertLegacyOptions($entity_data)));
+                                        $options = $combo_entity;
+                                }
 			
 				//convert options to select2 format
 				$optionsList = array();

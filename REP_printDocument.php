@@ -1,67 +1,58 @@
 <?php
 // 
 // Author: Alejandro Landini
-// _printReport 31/7/18, 21:00
-// 
-// GET parameteres for print documents
-// 
-// toDo: 
-// revision:
-//          *30/09/18   adding file to data base to close order.
-//                      adding save file to PDFfolder
-//                      check if exist save document and get it
-//          *22/09/18   adapted to new data 
-//          *25/08/18   add cusotmer data
+// REP_printDocument 31/7/18, 21:00
 // 
 //
+
 $currDir = dirname(__FILE__);
 include("$currDir/defaultLang.php");
 include("$currDir/language.php");
 include("$currDir/lib.php");
 require "$currDir/vendor/autoload.php";
+include("$currDir/REP_SummaryDocument_print.php");
+
 
 /* get order ID */
 $order_id = intval($_REQUEST['OrderID']);
+
 if(!$order_id) {exit(error_message('Invalid order ID!', false));}
 
 /* retrieve order info */
 ///////////////////////////
 $where_id =" AND orders.id = {$order_id}";//change this to set select where
 $order = getDataTable('orders',$where_id);
-$docCategorie_id= makeSafe(sqlValue("select typeDoc from orders where id={$order_id}"));
-///////////////////////////
+$order_values = getDataTable_Values('orders',$where_id);
 
-if (!is_null($order['document'])){
-    if (is_file($order['document'])){
-        openpdf($order['document'], $order['document']);
-    }
+if ($order_values['typeDoc'] === 'TD01'){
+    printDocument($order_id);
     return;
 }
 
+//if (!is_null($order['document'])){
+//    if (is_file($order['document'])){
+//        openpdf($order['document'], $order['document']);
+//    }
+//    return;
+//}
+
 /* retrieve multycompany info */
-///////////////////////////
-$multyCompany_id=intval(sqlValue("select company from orders where id={$order_id}"));
-$where_id =" AND companies.id={$multyCompany_id}";//change this to set select where
-$company = getDataTable('companies',$where_id);
-///////////////////////////
-$where_id =" AND addresses.company = {$company['id']} AND addresses.default = 1";//change this to set select where
-$address = getDataTable('addresses',$where_id);
-///////////////////////////
+
+retCompanyData($company, $company_values, $order_values['company'], false);
+
+retCompanyAddress($address, $address_values, $order_values['company'],false);
 
 /* retrieve customer info */
-///////////////////////////
-$customer_id = intval(sqlValue("select customer from orders where orders.id={$order_id}"));
-$where_id=" AND companies.id = {$customer_id}";
-$customer = getDataTable('companies',$where_id);
-///////////////////////////Client address
-$where_id =" AND addresses.company = {$customer['id']} AND addresses.default = 1";//change this to set select where
-$addressCustomer = getDataTable('addresses',$where_id);
-///////////////////////////shiping client address
+
+retCompanyData($customer, $customer_values, $order_values['customer'],false);
+
+retCompanyAddress($addressCustomer, $addressCustomer_values, $order_values['customer'],false);
+
+/* shiping client address */
 $where_id =" AND addresses.company = {$customer['id']} AND addresses.ship = 1";//change this to set select where
 $addressCustomerShip = getDataTable('addresses',$where_id);
-///////////////////////////
 
-$filename = $company['companyCode']."_".$docCategorie_id."#".$order['multiOrder'].".pdf"; //pdf name
+$filename = $company['companyCode']."_".$order_values['typeDoc']."#".$order['multiOrder'].".pdf"; //pdf name
 
 // shipper via
 
@@ -72,8 +63,16 @@ $item_from = get_sql_from('ordersDetails');
 $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
 ///////////////////////////
 
+
+//VERIFICAR EL MONTO TOTAL Y LA CANTIDAD DE INTEMS.
+if ($items->num_rows <1){
+    //not items
+    exit(error_message('<h1>not items loads in order</h1>', false));
+}
+
+
 ob_start();
-include_once("$currDir/header_old.php");
+include("$currDir/REP_header.php");
 ?>
 <!-- insert HTML code table version-->
 <!-- MultyCompy data-->
@@ -88,10 +87,10 @@ include_once("$currDir/header_old.php");
     <tbody>
         <tr>
             <th>
-                <h1><?php echo $company['companyName']; ?></h1>
+                <h2><?php echo $company['companyName']; ?></h2>
             </th>
             <th align="right">
-                <h1><?php echo $docCategorie_id; ?> Nr. <?php echo $order['multiOrder']; ?></h1>
+                <h3><?php echo $order_values['typeDoc']; ?> Nr. <?php echo $order['multiOrder']; ?></h3>
             </th>
         </tr>
         <tr>
@@ -114,7 +113,8 @@ include_once("$currDir/header_old.php");
         </tr>
         <tr>
             <td>
-                <h4>VAT: <?php echo $company['vat']; ?></h4>
+                VAT: <?php echo $company['vat']; ?><br>
+                CF: <?php echo $company['fiscalCode']; ?>
             </td>
             <td align="right">
             </td>
@@ -170,18 +170,24 @@ include_once("$currDir/header_old.php");
 		</thead>
 		
 		<tbody>
-			<?php foreach($items as $i => $item){ ?>
+			<?php foreach($items as $i => $item){ 
+                                $where_id = "AND productCode = '{$item['productCode']}'";
+                                $product = getDataTable('products', $where_id);
+                            ?>
 				<tr>
 					<td class="text-center"><?php echo ($i + 1); ?></td>
-					<td><?php echo $item['productCode']; ?></td>
+					<td><?php echo $item['productCode'] . " - " . $product['productName']; ?></td>
 					<td class="text-right"><?php echo $item['UnitPrice']; ?></td>
 					<td class="text-right"><?php echo $item['Quantity']; ?></td>
 					<td class="text-right"><?php echo $item['LineTotal']; ?></td>
 				</tr>
 			<?php } ?>
+                                <tr>
+                                    <td colspan="5"><hr></td>
+                                </tr>
 		</tbody>
-		
-		<tfoot>
+
+                <tfoot>
 			<tr>
 				<th colspan="4" class="text-right">Subtotale</th>
 				<th class="text-right">€<?php echo $order['orderTotal']; ?></th>
@@ -198,44 +204,15 @@ include_once("$currDir/header_old.php");
 	</table>
 
 <?php
+include("$currDir/REP_footer.php");
 $html_code = ob_get_contents();
 ob_end_clean();
-//echo $html_code;
+echo $html_code;
 
-$mpdf = new \Mpdf\Mpdf([
-	'margin_left' => 5,
-	'margin_right' => 5,
-	'margin_top' => 48,
-	'margin_bottom' => 25,
-	'margin_header' => 10,
-	'margin_footer' => 10
-]);
-$mpdf->SetProtection(array('print'));
-$mpdf->SetTitle("Piattaforma Digitale Management System - Order");
-$mpdf->SetAuthor("PDSM");
-$mpdf->SetWatermarkText("PDMS");
-$mpdf->showWatermarkText = true;
-$mpdf->watermark_font = 'DejaVuSansCondensed';
-$mpdf->watermarkTextAlpha = 0.1;
-$mpdf->SetDisplayMode('fullpage');
-$mpdf->WriteHTML($html_code);
-$f=$currDir.'/PDFfolder/';
-$mpdf->Output($f.$filename, 'F');
+$file = $currDir . '/PDFfolder/' . $filename;
 
-$file = $f . $filename;
+//makePdf($html_code, $file);
 
 sql("UPDATE `orders` SET `document` = '{$file}' WHERE id = {$order_id}",$eo);
 
-
-openpdf($file, $filename);
-
-function openpdf($file,$filename){
-    
-    header('Content-type: application/pdf');
-    header('Content-Disposition: inline; filename="' . $filename . '"');
-    header('Content-Transfer-Encoding: binary');
-    header('Content-Length: ' . filesize($file));
-    header('Accept-Ranges: bytes');
-    @readfile($file);
-    return;
-}
+//openpdf($file, $filename);

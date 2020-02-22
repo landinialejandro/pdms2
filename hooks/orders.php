@@ -159,27 +159,21 @@
 	function orders_dv($selectedID, $memberInfo, &$html, &$args){
             if (isset($_REQUEST['addNew_x'])){
                 if (isset($_REQUEST['ok']) || (isset($_REQUEST['FilterValue']) && isset($_REQUEST['FilterField']))){
-                    if (isset($_REQUEST['ok'])){
-                        $orderKind = getKindsData(makeSafe($_REQUEST['ok']));
-                        //    $ok_id = makeSafe($_REQUEST['ok']);
-                        //    $ok_text = sqlValue("select name from kinds where code = '{$ok_id}'");
-                    }
+                    
                     if (isset($_REQUEST['FilterValue'])){
                         $orderKind = getKindsData("", makeSafe($_REQUEST['FilterValue'][1]));
-                        // $ok_text = makeSafe($_REQUEST['FilterValue'][1]);
-                        // $ok_id = sqlValue("select code from kinds where name = '{$ok_text}'");
+                    }
+                    
+                    if (isset($_REQUEST['ok'])){
+                        $orderKind = getKindsData(makeSafe($_REQUEST['ok']));
                     }
                 }
 
                 if (isset($_REQUEST['mc']) && isset($_REQUEST['dk'])){
                     $mc_id = intval(makeSafe($_REQUEST['mc']));
                     $mc = getDataTable_Values('companies',"AND companies.id = {$mc_id}");
-                    // $mc_name = sqlValue("select companyName from companies where id = {$mc_id}");
-                    // $mc_code = sqlValue("select companyCode from companies where id = {$mc_id}");
                     $mc_text = $mc['companyCode'] . " - " . $mc['companyName'];
-                    // $dk_id = makeSafe($_REQUEST['dk']);
                     $documentKind = getKindsData(makeSafe($_REQUEST['dk']));
-                    // $dk_text = $dk_id . " - " . $dk['name'];
                 }
                 ob_start();
                 ?>
@@ -222,8 +216,8 @@
             }
             $where_id = "AND  firstCashNote.order = '{$data['id']}' order by id asc limit 1;";
             $fc = getDataTable_Values('firstCashNote', $where_id );
-            // $res = sql("select * from firstCashNote where firstCashNote.`order` = '{$data['id']}' order by id asc limit 1;",$eo);
-            // $fc = db_fetch_assoc($res);
+             $res = sql("select * from firstCashNote where firstCashNote.`order` = '{$data['id']}' order by id asc limit 1;",$eo);
+             $fc = db_fetch_assoc($res);
             $fc['order'] = $data['id'];
             $dk_name = getKindsData($data['kind']);
             $fc['causal'] = ( $dk_name ? $dk_name['name'] : $data['kind']);

@@ -35,15 +35,16 @@
                                             <div class="box-header with-border">
                                                 <h4 class="box-title">Order</h4>
                                             </div>
+                                            <!-- kind -->
                                             <div class="form-group">
                                                     <label for="kind" class="control-label col-lg-2" data-parent_link="view_parent_modal">Kind<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#kind-description"></i></label>
                                                     <div class="col-lg-10">
-                                                            <span class="help-block collapse" id="kind-description"><div class="alert alert-info">like input or outpu order</div></span>
+                                                            <span class="help-block collapse" id="kind-description"><div class="alert alert-info">like input or output order</div></span>
 
                                                             <div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(kind)%%></div>
                                                     </div>
                                             </div>
-
+                                            <!-- typeDoc -->
                                             <div class="form-group">
                                                     <label for="typeDoc" class="control-label col-lg-2" data-parent_link="view_parent_modal">Documento<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#typeDoc-description"></i></label>
                                                     <div class="col-lg-10">
@@ -52,25 +53,45 @@
                                                             <div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(typeDoc)%%></div>
                                                     </div>
                                             </div>
-
+                                            <!-- multiOrder -->
                                             <div class="form-group">
                                                     <label for="multiOrder" class="control-label col-lg-2">Numero<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
                                                     <div class="col-lg-10">
                                                             <input maxlength="" type="text" class="form-control" name="multiOrder" id="multiOrder" value="<%%VALUE(multiOrder)%%>" required>
                                                     </div>
                                             </div>
-
+                                            <!-- data -->
                                             <div class="form-group">
                                                     <label for="date" class="control-label col-lg-2">Data</label>
                                                     <div class="col-lg-10">
                                                             <%%COMBO(date)%%>
                                                     </div>
                                             </div>
+                                            <!-- divisa -->
+                                            <div class="form-group">
+                                                    <hr class="hidden-md hidden-lg">
+                                                    <label for="divisa" class="control-label col-lg-2">Divisa<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#divisa-description"></i></label>
+                                                    <div class="col-lg-10">
+                                                            <span class="help-block collapse" id="divisa-description"><div class="alert alert-info">2.1.1.2 <Divisa>codice (espresso secondo lo standard ISO 4217 alpha-3:2001) della valuta utilizzata per l'indicazione degli importi;<br>il codice deve essere compreso tra quelli consentiti dallo standard ISO 4217 alpha-3:201, ad esempio: [EUR], [USD], [GBP], [CZK], [...]</div></span>
+
+                                                            <%%COMBO(divisa)%%>
+                                                    </div>
+                                            </div>
+                                            <!-- causale -->
+                                            <div class="form-group">
+                                                    <hr class="hidden-md hidden-lg">
+                                                    <label for="causale" class="control-label col-lg-2">Causale<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#causale-description"></i></label>
+                                                    <div class="col-lg-10">
+                                                            <span class="help-block collapse" id="causale-description"><div class="alert alert-info">2.1.1.11 <Causale>descrizione della causale del documento;</div></span>
+
+                                                            <%%COMBO(causale)%%>
+                                                    </div>
+                                            </div>
 
                                         </div>
                                     </div>
                                     <!-- /Order group -->
-                                    <!-- mycompany group -->
+                                    <!-- myCompany group -->
                                     <div class="col-lg-6">
                                         <div class="box box-warning">
                                             <div class="box-header with-border">
@@ -113,6 +134,14 @@
                                                 </div>
                                                 <div id="customerCompanyCard" class=""></div>
                                             </div>
+                                            
+                                            <div class="form-group">
+                                                    <hr class="hidden-md hidden-lg">
+                                                    <div class="col-lg-offset-3 col-lg-9">
+                                                            <div class="checkbox"><label for="cashCredit"><input type="checkbox" name="cashCredit" id="cashCredit" value="1" <%%CHECKED(cashCredit)%%>> Credito o cassa</label>
+                                                            </div>
+                                                    </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- /customer group -->
@@ -126,42 +155,65 @@
                                                         <div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(shipVia)%%></div>
                                                 </div>
                                                 <div id="shipCompanyCard" class=""></div>
+                                                
                                                 <div class="form-group">
-                                                        <label for="shippedDate" class="control-label col-lg-2">Data</label>
+                                                        <label for="dateRequired" class="control-label col-lg-2">Data Ora Ritiro PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dateRequired-description"></i></label>
                                                         <div class="col-lg-10">
-                                                                <%%COMBO(shippedDate)%%>
+                                                                <span class="help-block collapse" id="dateRequired-description"><div class="alert alert-info">2.1.9.9 <DataOraRitiro>data e ora del ritiro della merce (secondo il formato ISO 8601:2004);<br>formato ISO 8601:2004, con la precisione seguente: YYYY-MM-DDTHH:MM:SS</div></span>
+                                                                <%%COMBO(dateRequired)%%>
                                                         </div>
                                                 </div>
+                                                
+                                                <div class="form-group">
+                                                        <label for="dateShipped" class="control-label col-lg-2">Data di spedizione <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dateShipped-description"></i></label>
+                                                        <div class="col-lg-10">
+                                                                <span class="help-block collapse" id="dateShipped-description"><div class="alert alert-info">2.1.9.10 <DataInizioTrasporto>date data di inizio del trasporto (secondo il formato ISO 8601:2004); <br>formato ISO 8601:2004, con la precisione seguente: YYYY-MM-DDTHH</div></span>
+                                                                <%%COMBO(dateShipped)%%>
+                                                        </div>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                        <hr class="hidden-md hidden-lg">
+                                                        <label for="Freight" class="control-label col-lg-2">Nolo</label>
+                                                        <div class="col-lg-10">
+                                                                <input maxlength="13" type="text" class="form-control" name="Freight" id="Freight" value="<%%VALUE(Freight)%%>">
+                                                        </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                        <hr class="hidden-md hidden-lg">
+                                                        <label for="pallets" class="control-label col-lg-2">Pallets</label>
+                                                        <div class="col-lg-10">
+                                                                <input maxlength="255" type="text" class="form-control" name="pallets" id="pallets" value="<%%VALUE(pallets)%%>">
+                                                        </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                        <hr class="hidden-md hidden-lg">
+                                                        <label for="licencePlate" class="control-label col-lg-2">Targa Automezzo</label>
+                                                        <div class="col-lg-10">
+                                                                <input maxlength="255" type="text" class="form-control" name="licencePlate" id="licencePlate" value="<%%VALUE(licencePlate)%%>">
+                                                        </div>
+                                                </div>
+                                                
                                         </div>
                                     </div>
                                     <!-- /shipper group -->
                                 </div>
                                 <!-- /row2 -->
                                 
-				<div class="form-group">
+				
+
+                                <div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="Freight" class="control-label col-lg-3">Nolo</label>
+					<label for="importoSconto" class="control-label col-lg-3">Importo Sconto o Mag PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#importoSconto-description"></i></label>
 					<div class="col-lg-9">
-						<input maxlength="13" type="text" class="form-control" name="Freight" id="Freight" value="<%%VALUE(Freight)%%>">
+						<span class="help-block collapse" id="importoSconto-description"><div class="alert alert-info">2.1.1.8 <ScontoMaggiorazione>eventuale sconto o maggiorazione applicati sul totale documento (la molteplicit&#224; N del blocco consente di gestire la presenza di<br>pi&#249; sconti o pi&#249; maggiorazioni a 'cascata') </div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="importoSconto" id="importoSconto" value="<%%VALUE(importoSconto)%%>">
 					</div>
 				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="pallets" class="control-label col-lg-3">Pallets</label>
-					<div class="col-lg-9">
-						<input maxlength="255" type="text" class="form-control" name="pallets" id="pallets" value="<%%VALUE(pallets)%%>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="licencePlate" class="control-label col-lg-3">Targa Automezzo</label>
-					<div class="col-lg-9">
-						<input maxlength="255" type="text" class="form-control" name="licencePlate" id="licencePlate" value="<%%VALUE(licencePlate)%%>">
-					</div>
-				</div>
-
+                                
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
 					<label for="orderTotal" class="control-label col-lg-3">Totale ordine</label>
@@ -169,28 +221,14 @@
 						<input maxlength="13" type="text" class="form-control" name="orderTotal" id="orderTotal" value="<%%VALUE(orderTotal)%%>">
 					</div>
 				</div>
-
-				<div class="form-group">
+                                
+                                <div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<div class="col-lg-offset-3 col-lg-9">
-						<div class="checkbox"><label for="cashCredit"><input type="checkbox" name="cashCredit" id="cashCredit" value="1" <%%CHECKED(cashCredit)%%>> Credito o cassa</label>
-						</div>
-					</div>
-				</div>
-
-                                <div class="form-group" hidden="">
-					<hr class="hidden-md hidden-lg">
-					<label for="trust" class="control-label col-lg-3">Fido Cliente</label>
+					<label for="RIT_importoRitenuta" class="control-label col-lg-3">RIT importo <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_importoRitenuta-description"></i></label>
 					<div class="col-lg-9">
-						<input maxlength="" type="text" class="form-control" name="trust" id="trust" value="<%%VALUE(trust)%%>">
-					</div>
-				</div>
+						<span class="help-block collapse" id="RIT_importoRitenuta-description"><div class="alert alert-info">2.1.1.5.2 <ImportoRitenuta>importo della ritenuta</div></span>
 
-                                <div class="form-group" hidden="">
-					<hr class="hidden-md hidden-lg">
-					<label for="overdraft" class="control-label col-lg-3">Scoperto Cliente</label>
-					<div class="col-lg-9">
-						<input maxlength="" type="text" class="form-control" name="overdraft" id="overdraft" value="<%%VALUE(overdraft)%%>">
+						<input maxlength="40" type="text" class="form-control" name="RIT_importoRitenuta" id="RIT_importoRitenuta" value="<%%VALUE(RIT_importoRitenuta)%%>">
 					</div>
 				</div>
 
@@ -215,7 +253,7 @@
 					<label for="consigneeHour" class="control-label col-lg-3">Ora di consegna</label>
 					<div class="col-lg-9">
 						<div class="input-group date datetimepicker"><input maxlength="" type="text" class="form-control" name="consigneeHour" id="consigneeHour" value="<%%VALUE(consigneeHour)%%>"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div>
-					</div>
+					</div> 
 				</div>
 
 				<div class="form-group">
@@ -245,14 +283,15 @@
 					<%%INSERT_BUTTON%%>
 				</div>
                                 <p></p>
-                                <div class="btn-group-vertical" style="width: 100%;">
+                                <div class="btn-group-vertical print_order" style="width: 100%;">
                                     <button type="button" class="btn btn-default" onclick="print_order()">
                                     <i class="glyphicon glyphicon-print"></i> Print Order</button>
                                 </div>
                                 <p></p>
-                                <div class="btn-group-vertical" style="width: 100%;">
-                                    <a target="_blank" rel="noopener noreferrer" type="button" class="btn btn-danger" href="sdi.php?id=<%%VALUE(id)%%>">
-                                    <i class="glyphicon glyphicon-print"></i> Print Fatura</a>
+                                <div class="btn-group-vertical sdi_group" style="width: 100%;" hidden>
+                                    <a target="_blank" type="button" class="btn btn-danger" href="sdi.php?id=<%%VALUE(id)%%>">
+                                        <i class="glyphicon glyphicon-print"></i> Print Fatura
+                                    </a>
                                 </div>
 			</div>
 		</div>

@@ -47,23 +47,23 @@ ordersDetails_delete1Tip=["",spacer+"This option allows each member of the group
 ordersDetails_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Dettaglio Ordini vendita' table."];
 ordersDetails_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Dettaglio Ordini vendita' table."];
 
-// _resumeOrders table
-_resumeOrders_addTip=["",spacer+"This option allows all members of the group to add records to the 'Resume Orders' table. A member who adds a record to the table becomes the 'owner' of that record."];
+// _ordersSummary table
+_ordersSummary_addTip=["",spacer+"This option allows all members of the group to add records to the 'order summary' table. A member who adds a record to the table becomes the 'owner' of that record."];
 
-_resumeOrders_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Resume Orders' table."];
-_resumeOrders_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Resume Orders' table."];
-_resumeOrders_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Resume Orders' table."];
-_resumeOrders_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Resume Orders' table."];
+_ordersSummary_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'order summary' table."];
+_ordersSummary_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'order summary' table."];
+_ordersSummary_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'order summary' table."];
+_ordersSummary_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'order summary' table."];
 
-_resumeOrders_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Resume Orders' table."];
-_resumeOrders_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Resume Orders' table."];
-_resumeOrders_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Resume Orders' table."];
-_resumeOrders_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Resume Orders' table, regardless of their owner."];
+_ordersSummary_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'order summary' table."];
+_ordersSummary_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'order summary' table."];
+_ordersSummary_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'order summary' table."];
+_ordersSummary_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'order summary' table, regardless of their owner."];
 
-_resumeOrders_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Resume Orders' table."];
-_resumeOrders_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Resume Orders' table."];
-_resumeOrders_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Resume Orders' table."];
-_resumeOrders_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Resume Orders' table."];
+_ordersSummary_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'order summary' table."];
+_ordersSummary_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'order summary' table."];
+_ordersSummary_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'order summary' table."];
+_ordersSummary_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'order summary' table."];
 
 // products table
 products_addTip=["",spacer+"This option allows all members of the group to add records to the 'Articoli Magazzino' table. A member who adds a record to the table becomes the 'owner' of that record."];
@@ -101,24 +101,6 @@ firstCashNote_delete1Tip=["",spacer+"This option allows each member of the group
 firstCashNote_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Prima Nota' table."];
 firstCashNote_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Prima Nota' table."];
 
-// vatRegister table
-vatRegister_addTip=["",spacer+"This option allows all members of the group to add records to the 'Registro Corrispettivi' table. A member who adds a record to the table becomes the 'owner' of that record."];
-
-vatRegister_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Registro Corrispettivi' table."];
-vatRegister_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Registro Corrispettivi' table."];
-vatRegister_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Registro Corrispettivi' table."];
-vatRegister_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Registro Corrispettivi' table."];
-
-vatRegister_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Registro Corrispettivi' table."];
-vatRegister_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Registro Corrispettivi' table."];
-vatRegister_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Registro Corrispettivi' table."];
-vatRegister_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Registro Corrispettivi' table, regardless of their owner."];
-
-vatRegister_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Registro Corrispettivi' table."];
-vatRegister_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Registro Corrispettivi' table."];
-vatRegister_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Registro Corrispettivi' table."];
-vatRegister_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Registro Corrispettivi' table."];
-
 // companies table
 companies_addTip=["",spacer+"This option allows all members of the group to add records to the 'Aziende' table. A member who adds a record to the table becomes the 'owner' of that record."];
 
@@ -136,6 +118,24 @@ companies_delete0Tip=["",spacer+"This option prohibits all members of the group 
 companies_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Aziende' table."];
 companies_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Aziende' table."];
 companies_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Aziende' table."];
+
+// vatRegister table
+vatRegister_addTip=["",spacer+"This option allows all members of the group to add records to the 'Registro Corrispettivi' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+vatRegister_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Registro Corrispettivi' table."];
+vatRegister_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Registro Corrispettivi' table."];
+vatRegister_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Registro Corrispettivi' table."];
+vatRegister_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Registro Corrispettivi' table."];
+
+vatRegister_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Registro Corrispettivi' table."];
+vatRegister_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Registro Corrispettivi' table."];
+vatRegister_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Registro Corrispettivi' table."];
+vatRegister_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Registro Corrispettivi' table, regardless of their owner."];
+
+vatRegister_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Registro Corrispettivi' table."];
+vatRegister_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Registro Corrispettivi' table."];
+vatRegister_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Registro Corrispettivi' table."];
+vatRegister_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Registro Corrispettivi' table."];
 
 // contacts table
 contacts_addTip=["",spacer+"This option allows all members of the group to add records to the 'Contacts' table. A member who adds a record to the table becomes the 'owner' of that record."];
@@ -388,78 +388,6 @@ attachments_delete0Tip=["",spacer+"This option prohibits all members of the grou
 attachments_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Attaches' table."];
 attachments_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Attaches' table."];
 attachments_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Attaches' table."];
-
-// codiceDestinatario table
-codiceDestinatario_addTip=["",spacer+"This option allows all members of the group to add records to the 'Codice Destinatario' table. A member who adds a record to the table becomes the 'owner' of that record."];
-
-codiceDestinatario_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Codice Destinatario' table."];
-codiceDestinatario_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Codice Destinatario' table."];
-codiceDestinatario_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Codice Destinatario' table."];
-codiceDestinatario_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Codice Destinatario' table."];
-
-codiceDestinatario_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Codice Destinatario' table."];
-codiceDestinatario_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Codice Destinatario' table."];
-codiceDestinatario_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Codice Destinatario' table."];
-codiceDestinatario_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Codice Destinatario' table, regardless of their owner."];
-
-codiceDestinatario_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Codice Destinatario' table."];
-codiceDestinatario_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Codice Destinatario' table."];
-codiceDestinatario_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Codice Destinatario' table."];
-codiceDestinatario_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Codice Destinatario' table."];
-
-// regimeFiscale table
-regimeFiscale_addTip=["",spacer+"This option allows all members of the group to add records to the 'RegimeFiscale' table. A member who adds a record to the table becomes the 'owner' of that record."];
-
-regimeFiscale_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'RegimeFiscale' table."];
-regimeFiscale_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'RegimeFiscale' table."];
-regimeFiscale_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'RegimeFiscale' table."];
-regimeFiscale_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'RegimeFiscale' table."];
-
-regimeFiscale_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'RegimeFiscale' table."];
-regimeFiscale_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'RegimeFiscale' table."];
-regimeFiscale_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'RegimeFiscale' table."];
-regimeFiscale_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'RegimeFiscale' table, regardless of their owner."];
-
-regimeFiscale_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'RegimeFiscale' table."];
-regimeFiscale_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'RegimeFiscale' table."];
-regimeFiscale_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'RegimeFiscale' table."];
-regimeFiscale_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'RegimeFiscale' table."];
-
-// tipoCassa table
-tipoCassa_addTip=["",spacer+"This option allows all members of the group to add records to the 'TipoCassa' table. A member who adds a record to the table becomes the 'owner' of that record."];
-
-tipoCassa_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'TipoCassa' table."];
-tipoCassa_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'TipoCassa' table."];
-tipoCassa_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'TipoCassa' table."];
-tipoCassa_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'TipoCassa' table."];
-
-tipoCassa_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'TipoCassa' table."];
-tipoCassa_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'TipoCassa' table."];
-tipoCassa_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'TipoCassa' table."];
-tipoCassa_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'TipoCassa' table, regardless of their owner."];
-
-tipoCassa_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'TipoCassa' table."];
-tipoCassa_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'TipoCassa' table."];
-tipoCassa_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'TipoCassa' table."];
-tipoCassa_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'TipoCassa' table."];
-
-// modalitaPagamento table
-modalitaPagamento_addTip=["",spacer+"This option allows all members of the group to add records to the 'ModalitaPagamento' table. A member who adds a record to the table becomes the 'owner' of that record."];
-
-modalitaPagamento_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'ModalitaPagamento' table."];
-modalitaPagamento_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'ModalitaPagamento' table."];
-modalitaPagamento_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'ModalitaPagamento' table."];
-modalitaPagamento_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'ModalitaPagamento' table."];
-
-modalitaPagamento_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'ModalitaPagamento' table."];
-modalitaPagamento_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'ModalitaPagamento' table."];
-modalitaPagamento_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'ModalitaPagamento' table."];
-modalitaPagamento_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'ModalitaPagamento' table, regardless of their owner."];
-
-modalitaPagamento_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'ModalitaPagamento' table."];
-modalitaPagamento_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'ModalitaPagamento' table."];
-modalitaPagamento_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'ModalitaPagamento' table."];
-modalitaPagamento_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'ModalitaPagamento' table."];
 
 /*
 	Style syntax:

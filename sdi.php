@@ -30,126 +30,71 @@ if (!is_null($order['document'])){
     exit(error_message('The invoice file exist, you can\'t make a new xml file after print invoice.', false));
 }
 
+
 if($order_values['kind'] !== 'OUT'){
-    exit(error_message('<h1>order not valid</h1>' . $order['kind'], false));
+    exit(error_message('<h1>order not valid</h1><h2>' . $order['kind'] . '</h2>', false));
+}
+
+if($order_values['typeDoc'] !== 'TD01'){
+    exit(error_message('<h1>Document type not valid</h1><h2>' . $order['typeDoc'] . '</h2>', false));
 }
 
 /* retrieve multycompany info <CedentePrestatore> */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        $where_id ="AND companies.id={$order_values['company']}";//change this to set select where
-        $company = getDataTable('companies',$where_id);
-        $company_values = getDataTable_Values('companies', $where_id);
-            //error control
-            if(!$company['vat']){
-                exit(error_message('<h1>vat not valid in company data</h1>', false));
-            }
-            if(!$company['FormatoTrasmissione']){
-                exit(error_message('<h1>Formato Trasmissione not valid in company data</h1>', false));
-            }
-            if(!$company['regimeFiscale']){
-                exit(error_message('<h1>regime fiscale not valid in company data</h1>', false));
-            }
-            if(!$company['RiferimentoAmministrazione']){
-                exit(error_message('<h1>Riferimento Amministrazione not valid in company data</h1>', false));
-            }
+        retCompanyData($company,$company_values,$order_values['company']);
+        
+        retCompanyAddress($address, $address_values, $order_values['company']);
 
-        //default multiCompany address or firstaddress found
-        $where_id = "AND addresses.company = {$order_values['company']} ORDER BY addresses.default, addresses.id DESC LIMIT 1;";
-        $address = getDataTable("addresses", $where_id);
-            //error control
-            if (!$address['country']){
-                exit(error_message('<h1>country not valid in company address</h1>', false));
-            }
-            if (!$address['address']){
-                exit(error_message('<h1>address not valid in company address</h1>', false));
-            }
-            if (!$address['houseNumber']){
-                exit(error_message('<h1>numero civico not valid in company address</h1>', false));
-            }
-            if (!$address['postalCode']){
-                exit(error_message('<h1>postal Code not valid in company address</h1>', false));
-            }
-            if (!$address['district']){
-                exit(error_message('<h1>district Code not valid in company address</h1>', false));
-            }
-            if (!$address['town']){
-                exit(error_message('<h1>town not valid in company address</h1>', false));
-            }
-
-        //default work multiCompany mail 
-        $where_id ="AND mails.company = {$company['id']} AND mails.kind = 'WORK'";//change this to set select where
-        $mail = getDataTable('mails',$where_id);
+        retCountryData($countryCompany, $country_valuesCompany, $address_values['country']);
         
-        
-        //default work multiCompany phone 
-        $where_id ="AND phones.company = {$company['id']} AND phones.kind = 'WORK'";//change this to set select where
-        $phone = getDataTable('phones',$where_id);
-        
-        //default work multiCompany phone 
-        $where_id ="AND phones.company = {$company['id']} AND phones.kind = 'FAX'";//change this to set select where
-        $fax = getDataTable('phones',$where_id);
+        retMailPhonelFax_Company($mail, $phone, $fax, $company['id']);
 
         //default contact in multiCompany or first contact found
-        $defualtContactId = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$order_values['company']} ORDER BY contacts_companies.default DESC LIMIT 1"));
-            if (!$defualtContactId){
-                exit(error_message('<h1>Contact company not setting</h1>', false));
-            }
-            $where_id = "AND contacts.id = {$defualtContactId}";
-            $contact = getDataTable("contacts", $where_id);
+        if ($company['personaFisica'] === 'Si'){
             
-            //and address contact
-            $where_id="AND addresses.contact = {$defualtContactId} ORDER BY addresses.default, addresses.id DESC LIMIT 1;";
-            $addressContact = getDataTable("addresses", $where_id);
+            $defualtContactId = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$order_values['company']} ORDER BY contacts_companies.default DESC LIMIT 1"));
+                if (!$defualtContactId){
+                    exit(error_message('<h1>Contact company not setting</h1>', false));
+                }
+                $where_id = "AND contacts.id = {$defualtContactId}";
+                $contact = getDataTable("contacts", $where_id);
 
-            if (!$addressContact) {
-                exit(error_message('<h1>Adrress contact not valid</h1>', false));
-            }
-            
-            //and defaul mail contact
-            $where_id="AND mails.contact = {$defualtContactId} ORDER BY mails.id DESC LIMIT 1;";
-            $mailContact = getDataTable("mails", $where_id);
-            
-            //and default phone contact
-            $where_id="AND phones.contact = {$defualtContactId} ORDER BY phones.id DESC LIMIT 1;";
-            $mailContact = getDataTable("phones", $where_id);
-            
-            //and default FAX phone contact
-            $where_id="AND phones.contact = {$defualtContactId} AND phones.kind = 'FAX' ORDER BY phones.id DESC LIMIT 1;";
-            $mailContact = getDataTable("phones", $where_id);
+                //and address contact
+                $where_id="AND addresses.contact = {$defualtContactId} ORDER BY addresses.default, addresses.id DESC LIMIT 1;";
+                $addressContact = getDataTable("addresses", $where_id);
+
+                if (!$addressContact) {
+                    exit(error_message('<h1>Adrress contact not valid</h1>', false));
+                }
+                retMailPhonelFax_Contact($mailContact, $phoneContact, $faxContact, $defualtContactId);
+        }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* retrieve customer info */
 ///////////////////////////
 if ($order_values['customer']){
-    $where_id="AND companies.id = {$order_values['customer']}";
-    $customer = getDataTable('companies',$where_id);
-    $customer_values = getDataTable_Values("companies", $where_id);
+    retCompanyData($customer,$customer_values,$order_values['customer'],false);
     
     //Client address
-    $where_id ="AND addresses.company = {$customer['id']} ORDER BY addresses.default DESC LIMIT 1;";//change this to set select where
-    $addressCustomer = getDataTable('addresses',$where_id);
-    if (!$addressCustomer){
-        exit(error_message("<h1>The customer's address is not valid</h1>", false));
-    }
-
+    retCompanyAddress($addressCustomer, $addressCustomer_values, $customer['id']);
+    
+    retCountryData($countryCustomer, $country_valuesCustomer, $addressCustomer_values['country']);
+            
     //default PEC Company mail 
     $where_id ="AND mails.company = {$customer['id']} AND mails.kind = 'PEC'";//change this to set select where
     $PECmail = getDataTable('mails',$where_id);
     
     //shiping client address
-    $where_id ="AND addresses.company = {$customer['id']} AND addresses.ship = 1;";//change this to set select where
-    $addressCustomerShip = getDataTable('addresses',$where_id);
-    if (!$addressCustomerShip){
-        exit(error_message("<h1>The customer's shipping address is not valid</h1>", false));
-    }
+    retCompanyAddress($addressCustomerShip, $addressCustomerShip_values, $customer['id']);
+
     //default contact in multiCompany or first contact found
         $defualtContactId_customer = intval(sqlValue("SELECT contacts_companies.contact FROM contacts_companies WHERE contacts_companies.company = {$order_values['customer']} ORDER BY contacts_companies.default DESC LIMIT 1"));
-            if (!$defualtContactId_customer){
-                exit(error_message('<h1>Contact company not setting</h1>', false));
+            if ($defualtContactId_customer){
+//                exit(error_message('<h1>Contact company not setting</h1>', false));
+                $where_id = "AND contacts.id = {$defualtContactId_customer}";
+                $contactCustomer = getDataTable("contacts", $where_id);
             }
-            $where_id = "AND contacts.id = {$defualtContactId_customer}";
-            $contactCustomer = getDataTable("contacts", $where_id);
             
     ///////////////////////////
 }else{
@@ -158,14 +103,15 @@ if ($order_values['customer']){
 
 // shipper via
 if ($order_values['shipVia']){
-    $where_id="AND companies.id = {$order_values['shipVia']}";
-    $shipper = getDataTable('companies',$where_id);
-    ///////////////////////////shipper address
-    $where_id ="AND addresses.company = {$shipper['id']} AND addresses.default = 1";//change this to set select where
-    $addressShipper = getDataTable('addresses',$where_id);
-}else{
-    exit(error_message('<h1>order Shipper not valid</h1>', false));
+    retCompanyData($shipper,$shipper_values,$order_values['shipVia'],false);
+    
+    //shipper address
+    retCompanyAddress($addressCustomerShip, $addressCustomerShip_values, $shipper['id']);
+    
 }
+//else{
+//    exit(error_message('<h1>order Shipper not valid</h1>', false));
+//}
 
 
 $invoice=<<<XML
@@ -177,10 +123,8 @@ xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.
     <FatturaElettronicaHeader>
     </FatturaElettronicaHeader>
     <FatturaElettronicaBody>
-        <!-- 2.1 -->
         <DatiGenerali>
         </DatiGenerali>
-        <!-- 2.2 -->
         <DatiBeniServizi>
         </DatiBeniServizi>
     </FatturaElettronicaBody>
@@ -198,13 +142,13 @@ $header = $xml_invoice->FatturaElettronicaHeader;
         //1.1.1
         $IdTrasmittente = $DatiTrasmissione->addChild("IdTrasmittente");
             //1.1.1.1 obligatory
-            $IdTrasmittente->addChild("IdPaese",$address['country']);
+            $IdTrasmittente->addChild("IdPaese",$countryCompany['code']);
             //1.1.1.2 obligatory
             $IdTrasmittente->addChild("IdCodice",$company['vat']);
         //1.1.2 obligatory
-        $DatiTrasmissione->addChild("ProgressivoInvio",$order['multiOrder']);
+        $DatiTrasmissione->addChild("ProgressivoInvio",sprintf("%'.05d", $order['multiOrder']));
         //1.1.3 obligatory assume valore fisso pari a “FPA12”, se la fattura è destinata ad una pubblica amministrazione, oppure “FPR12”, se la fattura è destinata ad un soggetto privato.
-        $DatiTrasmissione->addChild("FormatoTrasmissione",$company['FormatoTrasmissione']);
+        $DatiTrasmissione->addChild("FormatoTrasmissione",$company_values['FormatoTrasmissione']);
         /*  1.1.4 obligatory
             Utilità: è indispensabile al Sistema di Interscambio per individuare gli
             elementi necessari per recapitare correttamente il file al destinatario.
@@ -255,7 +199,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.2.1.1
             $IdFiscaleIVA = $CP_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.2.1.1.1 obligatory
-                $IdFiscaleIVA->addChild("IdPaese",$address['country']);
+                $IdFiscaleIVA->addChild("IdPaese",$countryCompany['code']);
                 //1.2.1.1.2 obligatory
                 $IdFiscaleIVA->addChild("IdCodice",$company['vat']);
             //1.2.1.2 recomend    
@@ -295,7 +239,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.2.2.5  
             $CP_Sede->addChild("Provincia",$address['district']);
             //1.2.2.6  
-            $CP_Sede->addChild("Nazione",$address['country']);
+            $CP_Sede->addChild("Nazione",$countryCompany['code']);
         //1.2.3 StabileOrganizzazione
             /*  not enabled yet
              *  solo se
@@ -303,7 +247,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
                 dispone di una stabile organizzazione attraverso la quale svolge la propria
                 attività (cessioni di beni o prestazioni di servizi oggetto di fatturazione)
                 */
-        $CP_StabileOrganizzazione =$xml_invoice->FatturaElettronicaHeader->addchild("CedentePrestatore")->addChild("StabileOrganizzazione");
+        $CP_StabileOrganizzazione = $CedentePrestatore->addChild("StabileOrganizzazione");
              //1.2.3.1  
             $CP_StabileOrganizzazione->addChild("Indirizzo",$address['address']);
             //1.2.3.2  
@@ -315,24 +259,24 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.2.3.5  
             $CP_StabileOrganizzazione->addChild("Provincia",$address['district']);
             //1.2.3.6  
-            $CP_StabileOrganizzazione->addChild("Nazione",$address['country']);
+            $CP_StabileOrganizzazione->addChild("Nazione",$countryCompany['code']);
         //1.2.4 IscrizioneREA
         /*solo se
          *  il cedente/prestatore è una società iscritta nel registro delle imprese e come
             tale ha l’obbligo di indicare in tutti i documenti anche i dati relativi all’iscrizione
             (art. 2250 codice civile)
          */
-        $CP_IscrizioneREA = $CedentePrestatore->addChild("IscrizioneREA");
-            //1.2.4.1
-            $CP_IscrizioneREA->addChild("Ufficio",$company['REA_Ufficio']);
-            //1.2.4.2
-            $CP_IscrizioneREA->addChild("NumeroREA",$company['REA_NumeroREA']);
-            //1.2.4.3
-            $CP_IscrizioneREA->addChild("CapitaleSociale",$company['REA_CapitaleSociale']);
-            //1.2.4.4
-            $CP_IscrizioneREA->addChild("SocioUnico",$company['REA_SocioUnico']);
-            //1.2.4.5
-            $CP_IscrizioneREA->addChild("StatoLiquidazione",$company['REA_StatoLiquidazione']);
+//        $CP_IscrizioneREA = $CedentePrestatore->addChild("IscrizioneREA");
+//            //1.2.4.1
+//            $CP_IscrizioneREA->addChild("Ufficio",$company['REA_Ufficio']);
+//            //1.2.4.2
+//            $CP_IscrizioneREA->addChild("NumeroREA",$company['REA_NumeroREA']);
+//            //1.2.4.3
+//            $CP_IscrizioneREA->addChild("CapitaleSociale",$company['REA_CapitaleSociale']);
+//            //1.2.4.4
+//            $CP_IscrizioneREA->addChild("SocioUnico",$company['REA_SocioUnico']);
+//            //1.2.4.5
+//            $CP_IscrizioneREA->addChild("StatoLiquidazione",$company['REA_StatoLiquidazione']);
         //1.2.5
         if($phone['phoneNumber'] || $fax['phoneNumber'] || $mail['mail']){
             $CP_Contatti =  $CedentePrestatore->addChild("Contatti");
@@ -356,7 +300,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.3.1.1
             $DatiAnagrafici_IdFiscaleIVA = $RP_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.3.1.1.1
-                $DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$address['country']);
+                $DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$countryCompany['code']);
                 //1.3.1.1.2
                 $DatiAnagrafici_IdFiscaleIVA->addChild("IdCodice",$company['vat']);
             //1.3.1.2
@@ -374,7 +318,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.1.1
             $CC_DatiAnagrafici_IdFiscaleIVA = $CC_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.4.1.1.1
-                $CC_DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$addressCustomer['country']);
+                $CC_DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$country_valuesCustomer['code']);
                 //1.4.1.1.2
                 $CC_DatiAnagrafici_IdFiscaleIVA->addChild("IdCodice",$customer['vat']);
             //1.4.1.2
@@ -404,7 +348,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.2.5
             $CC_Sede->addChild("Provincia",$addressCustomer['district']);
             //1.4.2.6
-            $CC_Sede->addChild("Nazione",$addressCustomer['country']);
+            $CC_Sede->addChild("Nazione",$country_valuesCustomer['code']);
         //1.4.3 StabileOrganizzazione
         /*
          * il cessionario/committente è un soggetto che non risiede in Italia ma che, in
@@ -423,7 +367,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.2.5
             $CC_StabileOrganizzazione->addChild("Provincia",$addressCustomer['district']);
             //1.4.2.6
-            $CC_StabileOrganizzazione->addChild("Nazione",$addressCustomer['country']);
+            $CC_StabileOrganizzazione->addChild("Nazione",$country_valuesCustomer['code']);
         //1.4.4 RappresentanteFiscale
         /*  
          * il cessionario/committentee si configura come soggetto non residente che effettua
@@ -434,13 +378,13 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             //1.4.4.1
             $CC_RappresentanteFiscale_IdFiscaleIVA = $CC_RappresentanteFiscale->addChild("IdFiscaleIVA");
                 //1.4.4.1.1
-                $CC_RappresentanteFiscale_IdFiscaleIVA->addChild("IdPaese",$addressCustomer['country']);
+                $CC_RappresentanteFiscale_IdFiscaleIVA->addChild("IdPaese",$country_valuesCustomer['code']);
                 //1.4.4.1.2
                 $CC_RappresentanteFiscale_IdFiscaleIVA->addChild("IdCodice",$customer['vat']);
             //1.4.4.2
             $CC_RappresentanteFiscale->addChild("Denominazione",$customer['companyName']);
             //1.4.4.3
-            $CC_RappresentanteFiscale->addChild("Nome",$contactCustomer['name']);
+//            $CC_RappresentanteFiscale->addChild("Nome",$contactCustomer['name']);
             //1.4.4.4
         
     //1.5 TerzoIntermediarioOSoggettoEmittente
@@ -451,11 +395,11 @@ $header = $xml_invoice->FatturaElettronicaHeader;
             */
     $TerzoIntermediarioOSoggettoEmittente = $header->addChild("TerzoIntermediarioOSoggettoEmittente");
         //1.5.1
-        $TS_DatiAnagrafici = $CessionarioCommittente->addChild("DatiAnagrafici");
+        $TS_DatiAnagrafici = $TerzoIntermediarioOSoggettoEmittente->addChild("DatiAnagrafici");
             //1.5.1.1
             $TS_DatiAnagrafici_IdFiscaleIVA = $TS_DatiAnagrafici->addChild("IdFiscaleIVA");
                 //1.5.1.1.1
-                $TS_DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$addressCustomer['country']);
+                $TS_DatiAnagrafici_IdFiscaleIVA->addChild("IdPaese",$country_valuesCustomer['code']);
                 //1.5.1.1.2
                 $TS_DatiAnagrafici_IdFiscaleIVA->addChild("IdCodice",$customer['vat']);
             //1.5.1.2
@@ -473,7 +417,7 @@ $header = $xml_invoice->FatturaElettronicaHeader;
 //                //1.5.1.3.5
 //                $TS_DatiAnagrafici_Anagrafica->addChild("CodEORI",$contactCustomer['codEORI']);
     //1.6 SoggettoEmittente  indicare “CC” se la fattura è stata compilata da parte del cessionario/committente, “TZ” se è stata compilata da un soggetto terzo.
-    $header->addChild("SoggettoEmittente","CC");
+    $header->addChild("SoggettoEmittente","");
 //2
 $body = $xml_invoice->FatturaElettronicaBody;      
     //2.1 DatiGenerali
@@ -484,7 +428,9 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.1.1.2
             $DatiGeneraliDocumento->addChild("Divisa","EUR");
             //2.1.1.3
-            $DatiGeneraliDocumento->addChild("Data",$order['date']);
+            $originalDate = strtotime(str_replace('/', '-',$order['date']));
+            $newDate = date("Y-m-d",$originalDate);
+            $DatiGeneraliDocumento->addChild("Data",$newDate);
             //2.1.1.4
             $DatiGeneraliDocumento->addChild("Numero",$order['multiOrder']);
             //2.1.1.5
@@ -565,14 +511,28 @@ $body = $xml_invoice->FatturaElettronicaBody;
         $datiSAL = $body->DatiGenerali->addChild("DatiSAL");
             //2.1.7.1
             $datiSAL->addChild("RiferimentoFase","");
-        //2.1.8
-        $datiDDT = $body->DatiGenerali->addChild("DatiDDT");
-            //2.1.8.1
-            $datiDDT->addChild("NumeroDDT","");
-            //2.1.8.2
-            $datiDDT->addChild("DataDDT","");
-            //2.1.8.3
-            $datiDDT->addChild("RiferimentoNumeroLinea","");
+            
+         /* retrieve order items */
+        ///////////////////////////
+        $item_fields = get_sql_fields('ordersDetails');
+        $item_from = get_sql_from('ordersDetails');
+        $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
+
+        foreach($items as $i => $item){    
+            $ddtOrder = getDataTable('orders', "AND orders.id = {$item['id']}");
+            //2.1.8
+            if ($item['realted']){
+                
+            $datiDDT = $body->DatiGenerali->addChild("DatiDDT");
+                //2.1.8.1
+                $datiDDT->addChild("NumeroDDT",$ddtOrder['multiOrder']);
+                //2.1.8.2
+                $datiDDT->addChild("DataDDT",$ddtOrder['date']);
+                //2.1.8.3
+                $datiDDT->addChild("RiferimentoNumeroLinea",$i +1);
+            }
+        }    
+            
         //2.1.9
         $datiTrasporto = $body->DatiGenerali->addChild("DatiTrasporto");
             //2.1.9.1
@@ -650,15 +610,23 @@ $body = $xml_invoice->FatturaElettronicaBody;
     $item_fields = get_sql_fields('ordersDetails');
     $item_from = get_sql_from('ordersDetails');
     $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
+    
     foreach($items as $i => $item){
-        $productId = intval(sqlValue("select ordersDetails.productCode from ordersDetails where ordersDetails.id = {$item['id']} "));
-        if (!$productId){
-            echo '<div class="alert alert-danger alert-dismissible"><h1>product id not valid: '. $productId.'/'.$item['id'].'</h1></div>';
-        }
-        $where_id = "AND products.id = $productId";
-        $product = getDataTable("products", $where_id);
+        
+        $where_id = "AND ordersDetails.id = {$item['id']}";
+        $item_values = getDataTable_Values('ordersDetails', $where_id);
+        
+//        var_dump($item_values);
+        
+        $where_id = "AND products.id = {$item_values['productCode']}";
+        $product = getDataTable_Values("products", $where_id);
+        $productTax = getKindsData($product['tax'], "", false);
+        
+//        var_dump($product);
+        
         $categoryId = sqlValue("select products.CategoryID from products where products.id = {$product['id']}");
         $categoryData = getKindsData($categoryId );
+        
         //2.2.1
         $DettaglioLinee = $DatiBeniServizi->addChild("DettaglioLinee");
             //2.2.1.1
@@ -682,19 +650,24 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.2.1.8
             $DettaglioLinee->addChild("DataFinePeriodo","");
             //2.2.1.9
-            $DettaglioLinee->addChild("PrezzoUnitario",number_format($item['UnitPriceValue'] , 2));
+            $DettaglioLinee->addChild("PrezzoUnitario",number_format($item_values['UnitPrice'] , 2));
             //2.2.1.10
-            $ScontoMaggiorazione = $DettaglioLinee->addChild("ScontoMaggiorazione");//tree childs
-                //2.2.1.10.1
-                $ScontoMaggiorazione->addChild("Tipo",$item['Discount']? "SC" : "");
-                //2.2.1.10.2
-                $ScontoMaggiorazione->addChild("Percentuale",number_format($item['Discount'] , 2));
-                //2.2.1.10.3
-                $ScontoMaggiorazione->addChild("Importo",number_format($item['SubtotalValue']*$item['Discount']/100 , 2));
+            if ( $item['Discount']){
+                
+                $ScontoMaggiorazione = $DettaglioLinee->addChild("ScontoMaggiorazione");//tree childs
+                    //2.2.1.10.1
+                    $ScontoMaggiorazione->addChild("Tipo", $item['Discount'] ? "SC" : "");
+                    //2.2.1.10.2
+                    $discount = number_format($item_values['Discount'] , 2);
+                    $ScontoMaggiorazione->addChild("Percentuale",$discount ? $discount : "");
+                    //2.2.1.10.3
+                    $discount_importo = number_format($item_values['Subtotal']*$item['Discount']/100 , 2);
+                    $ScontoMaggiorazione->addChild("Importo",$discount_importo ? $discount_importo : "" );
+            }
             //2.2.1.11
-            $DettaglioLinee->addChild("PrezzoTotale",number_format($item['SubtotalValue'] , 2));
+            $DettaglioLinee->addChild("PrezzoTotale",number_format($item_values['LineTotal'] , 2));
             //2.2.1.12
-            $DettaglioLinee->addChild("AliquotaIVA",number_format($item['taxesValue'] , 2));
+            $DettaglioLinee->addChild("AliquotaIVA",number_format($productTax['value'] , 2));
             //2.2.1.13
             $DettaglioLinee->addChild("Ritenuta","");
             //2.2.1.14
@@ -704,37 +677,52 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.2.1.16
             $AltriDatiGestionali = $DettaglioLinee->addChild("AltriDatiGestionali");//four childs
                 //2.2.1.16.1
-                $ScontoMaggiorazione->addChild("TipoDato","");
+                $AltriDatiGestionali->addChild("TipoDato","");
                 //2.2.1.16.2
-                $ScontoMaggiorazione->addChild("RiferimentoTesto","");
+                $AltriDatiGestionali->addChild("RiferimentoTesto","");
                 //2.2.1.16.3
-                $ScontoMaggiorazione->addChild("RiferimentoNumero","");
+                $AltriDatiGestionali->addChild("RiferimentoNumero","");
                 //2.2.1.16.4
-                $ScontoMaggiorazione->addChild("RiferimentoData","");
+                $AltriDatiGestionali->addChild("RiferimentoData","");
             
-        $inponibiliTotale = $inponibiliTotale + $item['SubtotalValue'];
-        $taxesTotales = $taxesTotales + $item['taxesValue'];
+        $inponibiliTotale +=  $item_values['Subtotal'];
+        $taxesTotales +=  ($productTax['value']/100) * $item_values['Subtotal'];
     }
     ///////////////////////////
         //2.2.2
-        $DatiRiepilogo = $DatiBeniServizi->addChild("DatiRiepilogo");
-            //2.2.2.1
-            $DatiRiepilogo->addChild("AliquotaIVA","4.00");
-            //2.2.2.2
-            $DatiRiepilogo->addChild("Natura","");
-            //2.2.2.3
-            $DatiRiepilogo->addChild("SpeseAccessorie","");
-            //2.2.2.4
-            $DatiRiepilogo->addChild("Arrotondamento","");
-            //2.2.2.5
-            $DatiRiepilogo->addChild("ImponibileImporto",number_format($inponibiliTotale , 2));
-            //2.2.2.6
-            $DatiRiepilogo->addChild("Imposta",number_format($taxesTotales , 2));
-            //2.2.2.7
-            $DatiRiepilogo->addChild("EsigibilitaIVA","D");
-            //2.2.2.8
-            $DatiRiepilogo->addChild("RiferimentoNormativo","");
+            /* retrieve order items */
+            ///////////////////////////
+            $item_fields = get_sql_fields('ordersDetails');
+            $item_from = get_sql_from('ordersDetails');
+            $items = sql("select {$item_fields} from {$item_from} and ordersDetails.order={$order_id}", $eo);
 
+            foreach($items as $i => $item){   
+                $DatiRiepilogo = $DatiBeniServizi->addChild("DatiRiepilogo");
+
+                        $where_id = "AND ordersDetails.id = {$item['id']}";
+                        $item_values = getDataTable_Values('ordersDetails', $where_id);
+
+                        $where_id = "AND products.id = {$item_values['productCode']}";
+                        $product = getDataTable_Values("products", $where_id);
+                        $productTax = getKindsData($product['tax'], "", false);
+
+                        //2.2.2.1
+                        $DatiRiepilogo->addChild("AliquotaIVA",number_format($productTax['value'] , 2));
+                        //2.2.2.2
+                        $DatiRiepilogo->addChild("Natura",$productTax['value'] ? "" : "N4");
+                        //2.2.2.3
+                        $DatiRiepilogo->addChild("SpeseAccessorie","");
+                        //2.2.2.4
+                        $DatiRiepilogo->addChild("Arrotondamento","");
+                        //2.2.2.5
+                        $DatiRiepilogo->addChild("ImponibileImporto",number_format($item_values['Subtotal'] , 2));
+                        //2.2.2.6
+                        $DatiRiepilogo->addChild("Imposta",number_format($taxesTotales , 2));
+                        //2.2.2.7
+                        $DatiRiepilogo->addChild("EsigibilitaIVA","D");
+                        //2.2.2.8
+                        $DatiRiepilogo->addChild("RiferimentoNormativo","");
+            }
     //2.3
     $datiVeicoli = $body->DatiGenerali->addChild("DatiVeicoli");
         //2.3.1
@@ -744,13 +732,13 @@ $body = $xml_invoice->FatturaElettronicaBody;
     //2.4
     $datiPagamento = $body->DatiGenerali->addChild("DatiPagamento");
         //2.4.1
-        $datiPagamento->addChild("CondizioniPagamento","");
+        $datiPagamento->addChild("CondizioniPagamento","TP01");
         //2.4.2
         $DettaglioPagamento = $datiPagamento->addChild("DettaglioPagamento");
             //2.4.2.1
             $DettaglioPagamento->addChild("Beneficiario","");
             //2.4.2.2
-            $DettaglioPagamento->addChild("ModalitaPagamento","");
+            $DettaglioPagamento->addChild("ModalitaPagamento","MP02");
             //2.4.2.3
             $DettaglioPagamento->addChild("DataRiferimentoTerminiPagamento","");
             //2.4.2.4
@@ -758,7 +746,7 @@ $body = $xml_invoice->FatturaElettronicaBody;
             //2.4.2.5
             $DettaglioPagamento->addChild("DataScadenzaPagamento","");
             //2.4.2.6
-            $DettaglioPagamento->addChild("ImportoPagamento","");
+            $DettaglioPagamento->addChild("ImportoPagamento", number_format($inponibiliTotale+$taxesTotales,2));
             //2.4.2.7
             $DettaglioPagamento->addChild("CodUfficioPostale","");
             //2.4.2.8
@@ -830,3 +818,4 @@ if($xml_file){
 }else{
     exit(error_message('XML file generation error.', false));
 }
+

@@ -8,7 +8,7 @@
 
 		/* data for selected record, or defaults if none is selected */
 		var data = {
-			idCompany: <?php echo json_encode(array('id' => $rdata['idCompany'], 'value' => $rdata['idCompany'], 'text' => $jdata['idCompany'])); ?>,
+			company: <?php echo json_encode(array('id' => $rdata['company'], 'value' => $rdata['company'], 'text' => $jdata['company'])); ?>,
 			companyName: <?php echo json_encode($jdata['companyName']); ?>
 		};
 
@@ -17,21 +17,21 @@
 		AppGini.cache[tn] = AppGini.cache[tn] || AppGini.ajaxCache();
 		var cache = AppGini.cache[tn];
 
-		/* saved value for idCompany */
+		/* saved value for company */
 		cache.addCheck(function(u, d){
 			if(u != 'ajax_combo.php') return false;
-			if(d.t == tn && d.f == 'idCompany' && d.id == data.idCompany.id)
-				return { results: [ data.idCompany ], more: false, elapsed: 0.01 };
+			if(d.t == tn && d.f == 'company' && d.id == data.company.id)
+				return { results: [ data.company ], more: false, elapsed: 0.01 };
 			return false;
 		});
 
-		/* saved value for idCompany autofills */
+		/* saved value for company autofills */
 		cache.addCheck(function(u, d){
 			if(u != tn + '_autofill.php') return false;
 
 			for(var rnd in d) if(rnd.match(/^rnd/)) break;
 
-			if(d.mfk == 'idCompany' && d.id == data.idCompany.id){
+			if(d.mfk == 'company' && d.id == data.company.id){
 				$j('#companyName' + d[rnd]).html(data.companyName);
 				return true;
 			}

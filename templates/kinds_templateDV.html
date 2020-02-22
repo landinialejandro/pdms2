@@ -9,11 +9,11 @@
 		<div class="col-xs-12">
 			<input type="hidden" id="orders_hclink" value="orders_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="ordersDetails_hclink" value="ordersDetails_view.php?filterer_section=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="_resumeOrders_hclink" value="_resumeOrders_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
+			<input type="hidden" id="_ordersSummary_hclink" value="_ordersSummary_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="products_hclink" value="products_view.php?filterer_tax=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="firstCashNote_hclink" value="firstCashNote_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="companies_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>" id="companies_link"><i class="glyphicon glyphicon-list-alt"></i> Companies</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="companies_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>" id="xs_companies_link"><i class="glyphicon glyphicon-list-alt"></i> Companies</a>
+			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="companies_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>" id="companies_link"><i class="glyphicon glyphicon-list-alt"></i> Aziende</a>
+			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="companies_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>" id="xs_companies_link"><i class="glyphicon glyphicon-list-alt"></i> Aziende</a>
 			<input type="hidden" id="companies_hclink" value="companies_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="contacts_hclink" value="contacts_view.php?filterer_kind=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="attributes_hclink" value="attributes_view.php?filterer_attribute=<%%URLVALUE(code)%%>&<%%EMBEDDED%%>">
@@ -32,8 +32,10 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="entity" class="control-label col-lg-3">Entity<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="entity" class="control-label col-lg-3">Entity<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#entity-description"></i></label>
 					<div class="col-lg-9">
+						<span class="help-block collapse" id="entity-description"><div class="alert alert-info">Entities class select</div></span>
+
 						<%%COMBO(entity)%%>
 					</div>
 				</div>

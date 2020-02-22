@@ -14,12 +14,13 @@ include("$cardDir/../lib.php");
 
 $where_id = intval($_REQUEST['id']);
 
+$table_name = 'companies';
+
 if (!$where_id) {
     exit(error_message(sprintf($Translation['invalid id'],$table_name),'', false));
 }
 
 /* retrive from table_name info */
-$table_name = 'companies';
 /* grant access to all users who have access to the $table_name */
 $table_from = get_sql_from($table_name);
 if (!$table_from) {

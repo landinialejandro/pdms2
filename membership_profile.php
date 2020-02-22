@@ -209,6 +209,9 @@
 		</div>
 
 		<div class="col-md-6">
+                <?php /* Inserted by Membership Profile Image on 2018-06-10 06:46:44 */ ?>
+		<?php echo file_get_contents('hooks/mpi_template.html');?>
+		<?php /* End of Membership Profile Image code */ ?>
 
 		<?php /* Inserted by Membership Profile Image */ ?>
 		<?php echo file_get_contents('hooks/mpi_template.html');?>

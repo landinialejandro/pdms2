@@ -108,9 +108,9 @@
 					'group' => $tg[5],
 					'homepageShowCount' => 1
 				),
-				'_resumeOrders' => array(
-					'Caption' => 'Resume Orders',
-					'Description' => '',
+				'_ordersSummary' => array(
+					'Caption' => 'order summary',
+					'Description' => 'raggruppamento degli ordini di trasporto chiusi senza fatturazione.',
 					'tableIcon' => 'table.gif',
 					'group' => $tg[0],
 					'homepageShowCount' => 0
@@ -129,18 +129,18 @@
 					'group' => $tg[2],
 					'homepageShowCount' => 1
 				),
-				'vatRegister' => array(
-					'Caption' => 'Registro Corrispettivi',
-					'Description' => '',
-					'tableIcon' => 'resources/table_icons/book_spelling.png',
-					'group' => $tg[2],
-					'homepageShowCount' => 1
-				),
 				'companies' => array(
 					'Caption' => 'Aziende',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/factory.png',
 					'group' => $tg[3],
+					'homepageShowCount' => 1
+				),
+				'vatRegister' => array(
+					'Caption' => 'Registro Corrispettivi',
+					'Description' => '',
+					'tableIcon' => 'resources/table_icons/book_spelling.png',
+					'group' => $tg[5],
 					'homepageShowCount' => 1
 				),
 				'contacts' => array(
@@ -240,34 +240,6 @@
 					'tableIcon' => 'resources/table_icons/attach.png',
 					'group' => $tg[5],
 					'homepageShowCount' => 0
-				),
-				'codiceDestinatario' => array(
-					'Caption' => 'Codice Destinatario',
-					'Description' => 'codice dell\'ufficio dell&#8217;amministrazione dello stato destinatario della fattura, definito dall\'amministrazione di appartenenza come riportato nella rubrica &#8220;Indice PA&#8221;.',
-					'tableIcon' => 'table.gif',
-					'group' => $tg[3],
-					'homepageShowCount' => 1
-				),
-				'regimeFiscale' => array(
-					'Caption' => 'RegimeFiscale',
-					'Description' => '',
-					'tableIcon' => 'table.gif',
-					'group' => $tg[3],
-					'homepageShowCount' => 1
-				),
-				'tipoCassa' => array(
-					'Caption' => 'TipoCassa',
-					'Description' => '',
-					'tableIcon' => 'table.gif',
-					'group' => $tg[3],
-					'homepageShowCount' => 1
-				),
-				'modalitaPagamento' => array(
-					'Caption' => 'ModalitaPagamento',
-					'Description' => '',
-					'tableIcon' => 'table.gif',
-					'group' => $tg[0],
-					'homepageShowCount' => 0
 				)
 		);
 
@@ -286,11 +258,11 @@
 			$arrTables = array(   
 				'orders' => 'Ordini',
 				'ordersDetails' => 'Dettaglio Ordini vendita',
-				'_resumeOrders' => 'Resume Orders',
+				'_ordersSummary' => 'order summary',
 				'products' => 'Articoli Magazzino',
 				'firstCashNote' => 'Prima Nota',
-				'vatRegister' => 'Registro Corrispettivi',
 				'companies' => 'Aziende',
+				'vatRegister' => 'Registro Corrispettivi',
 				'contacts' => 'Contacts',
 				'creditDocument' => 'Nota Credito',
 				'electronicInvoice' => 'ElectronicInvoice',
@@ -304,11 +276,7 @@
 				'phones' => 'Phones',
 				'mails' => 'Mails',
 				'contacts_companies' => 'Contacts companies',
-				'attachments' => 'Attaches',
-				'codiceDestinatario' => 'Codice Destinatario',
-				'regimeFiscale' => 'RegimeFiscale',
-				'tipoCassa' => 'TipoCassa',
-				'modalitaPagamento' => 'ModalitaPagamento'
+				'attachments' => 'Attaches'
 			);
 
 			return $arrTables;
@@ -1186,7 +1154,7 @@
 		$host = (isset($s['HTTP_HOST']) ? $s['HTTP_HOST'] : $s['SERVER_NAME'] . $port);
 
 		$fp = normalize_path(dirname(__FILE__));
-		$dr = normalize_path($s['DOCUMENT_ROOT']);
+		$dr = normalize_path(realpath($s['DOCUMENT_ROOT']));
 
 		$uri = str_replace($dr, '', $fp);
 		// remove '/admin' postfix
@@ -1654,7 +1622,7 @@
 	 */
 	function insert($tn, $set_array, &$error = '') {
 		$set = prepare_sql_set($set_array);
-		if(!count($set)) return false;
+//		if(!count($set)) return false;
 
 		$eo = array('silentErrors' => true);
 		$res = sql("INSERT INTO `{$tn}` SET {$set}", $eo);

@@ -8,7 +8,7 @@
 	<div class="row vspacer-md">
 		<div class="col-xs-12">
 			<input type="hidden" id="ordersDetails_hclink" value="ordersDetails_view.php?filterer_order=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="_resumeOrders_hclink" value="_resumeOrders_view.php?filterer_related=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+			<input type="hidden" id="_ordersSummary_hclink" value="_ordersSummary_view.php?filterer_related=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="firstCashNote_hclink" value="firstCashNote_view.php?filterer_order=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<div class="clearfix"></div>
 		</div>
@@ -22,7 +22,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Kind<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#kind-description"></i></label>
+					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Tipo ordine<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#kind-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="kind-description"><div class="alert alert-info">like input or outpu order</div></span>
 
@@ -32,7 +32,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="company" class="control-label col-lg-3" data-parent_link="view_parent_modal">ID Azienda<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="company" class="control-label col-lg-3" data-parent_link="view_parent_modal">Azienda<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(company)%%><%%PLINK(company)%%><%%ADDNEW(companies)%%></div>
 					</div>
@@ -50,9 +50,31 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="multiOrder" class="control-label col-lg-3">Numero<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="multiOrder" class="control-label col-lg-3">Numero<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#multiOrder-description"></i></label>
 					<div class="col-lg-9">
+						<span class="help-block collapse" id="multiOrder-description"><div class="alert alert-info">2.1.1.4 Numero progressivo del documento</div></span>
+
 						<input maxlength="" type="text" class="form-control" name="multiOrder" id="multiOrder" value="<%%VALUE(multiOrder)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="divisa" class="control-label col-lg-3">Divisa<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#divisa-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="divisa-description"><div class="alert alert-info">2.1.1.2 <Divisa>codice (espresso secondo lo standard ISO 4217 alpha-3:2001) della valuta utilizzata per l'indicazione degli importi;<br>il codice deve essere compreso tra quelli consentiti dallo standard ISO 4217 alpha-3:201, ad esempio: [EUR], [USD], [GBP], [CZK], [...]</div></span>
+
+						<%%COMBO(divisa)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="causale" class="control-label col-lg-3">Causale<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#causale-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="causale-description"><div class="alert alert-info">2.1.1.11 <Causale>descrizione della causale del documento;</div></span>
+
+						<%%COMBO(causale)%%>
 					</div>
 				</div>
 
@@ -74,17 +96,31 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="date" class="control-label col-lg-3">Data Ordine</label>
+					<label for="date" class="control-label col-lg-3">Data Ordine <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#date-description"></i></label>
 					<div class="col-lg-9">
-						<%%COMBO(date)%%>
+						<span class="help-block collapse" id="date-description"><div class="alert alert-info">2.1.1.3 <Data>data del documento (secondo il formato ISO 8601:2004);<br>formato ISO 8601:2004, con la precisioneseguente: YYYY-MM-DD <br>2.1.8.2 <DataDDT>data del documento di trasporto (secondo il formato ISO 8601:2004) </div></span>
+
+						<div class="form-control-static" id="date"><%%COMBOTEXT(date)%%></div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="shippedDate" class="control-label col-lg-3">Data di spedizione</label>
+					<label for="dateRequired" class="control-label col-lg-3">Data Ora Ritiro PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dateRequired-description"></i></label>
 					<div class="col-lg-9">
-						<%%COMBO(shippedDate)%%>
+						<span class="help-block collapse" id="dateRequired-description"><div class="alert alert-info">2.1.9.9 <DataOraRitiro>data e ora del ritiro della merce (secondo il formato ISO 8601:2004);<br>formato ISO 8601:2004, con la precisione seguente: YYYY-MM-DDTHH:MM:SS</div></span>
+
+						<%%COMBO(dateRequired)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="dateShipped" class="control-label col-lg-3">Data di spedizione <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dateShipped-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="dateShipped-description"><div class="alert alert-info">2.1.9.10 <DataInizioTrasporto>date data di inizio del trasporto (secondo il formato ISO 8601:2004); <br>formato ISO 8601:2004, con la precisione seguente: YYYY-MM-DDTHH</div></span>
+
+						<%%COMBO(dateShipped)%%>
 					</div>
 				</div>
 
@@ -114,17 +150,41 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="licencePlate" class="control-label col-lg-3">Targa Automezzo</label>
+					<label for="licencePlate" class="control-label col-lg-3">Targa Automezzo <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#licencePlate-description"></i></label>
 					<div class="col-lg-9">
+						<span class="help-block collapse" id="licencePlate-description"><div class="alert alert-info">2.1.9.2 <MezzoTrasporto>mezzo utilizzato per il trasporto;</div></span>
+
 						<input maxlength="255" type="text" class="form-control" name="licencePlate" id="licencePlate" value="<%%VALUE(licencePlate)%%>">
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="orderTotal" class="control-label col-lg-3">Totale ordine</label>
+					<label for="importoSconto" class="control-label col-lg-3">Importo Sconto o Mag PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#importoSconto-description"></i></label>
 					<div class="col-lg-9">
-						<input maxlength="13" type="text" class="form-control" name="orderTotal" id="orderTotal" value="<%%VALUE(orderTotal)%%>">
+						<span class="help-block collapse" id="importoSconto-description"><div class="alert alert-info">2.1.1.8 <ScontoMaggiorazione>eventuale sconto o maggiorazione applicati sul totale documento (la molteplicit&#224; N del blocco consente di gestire la presenza di<br>pi&#249; sconti o pi&#249; maggiorazioni a 'cascata') </div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="importoSconto" id="importoSconto" value="<%%VALUE(importoSconto)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="orderTotal" class="control-label col-lg-3">Importo Totale doc<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#orderTotal-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="orderTotal-description"><div class="alert alert-info">2.1.1.9 <ImportoTotaleDocumento>importo totale del documento al netto dell'eventuale sconto e comprensivo di imposta a debito del cessionario / committente;<br>formato numerico; i decimali vanno separati<br>dall'intero con il carattere '.' (punto) </div></span>
+
+						<input maxlength="13" type="text" class="form-control" name="orderTotal" id="orderTotal" value="<%%VALUE(orderTotal)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="RIT_importoRitenuta" class="control-label col-lg-3">RIT importo <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#RIT_importoRitenuta-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="RIT_importoRitenuta-description"><div class="alert alert-info">2.1.1.5.2 <ImportoRitenuta>importo della ritenuta</div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="RIT_importoRitenuta" id="RIT_importoRitenuta" value="<%%VALUE(RIT_importoRitenuta)%%>">
 					</div>
 				</div>
 
@@ -178,6 +238,16 @@
 					</div>
 				</div>
 
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="document" class="control-label col-lg-3">Document <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#document-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="document-description"><div class="alert alert-info">link to pdf document</div></span>
+
+						<input maxlength="255" type="text" class="form-control" name="document" id="document" value="<%%VALUE(document)%%>">
+					</div>
+				</div>
+
 			</fieldset>
 		</div>
 
@@ -199,7 +269,6 @@
 		</div>
 	</div>
 
-	<input type="hidden" name="employee" value="<%%VALUE(employee)%%>">
 
 	<!-- child records -->
 	<hr>

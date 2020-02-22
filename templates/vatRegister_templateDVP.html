@@ -23,11 +23,11 @@
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
 			<label class="col-xs-3 control-label">ID Azienda</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><span id="idCompany<%%RND1%%>"><%%COMBOTEXT(idCompany)%%></span></div>
+				<div class="form-control-static"><span id="company<%%RND1%%>"><%%COMBOTEXT(company)%%></span></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Esercizio commerciale</label>
+			<label class="col-xs-3 control-label">Nome Societ&#224;</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><span id="companyName<%%RND1%%>"></span></div>
 			</div>
@@ -54,6 +54,42 @@
 			<label class="col-xs-3 control-label">Importo</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%VALUE(amount)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Ufficio Cedente PA</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(ufficio_Ced_PA)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Numero Iscr. REA PA</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(numeroREA_Ced_PA)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Capitale Sociale Ced. PA</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(capitaleSociale_Ced_PA)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Socio Unico Ced. PA</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(socioUnico_Ced_PA)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Stato Liquidazione</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(statoLiquidazione_Ced_PA)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Default</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><input type="checkbox" name="default" id="default" value="1" <%%CHECKED(default)%%> readonly></div>
 			</div>
 		</div>
 	</fieldset>

@@ -71,9 +71,9 @@
 			/* is the current table filter-first? */
 			$tChkFF = array_search($tn, array());
 			/* hide current table in homepage? */
-			$tChkHL = array_search($tn, array('ordersDetails','creditDocument','codiceDestinatario','regimeFiscale','tipoCassa','modalitaPagamento'));
+			$tChkHL = array_search($tn, array('ordersDetails','creditDocument'));
 			/* allow homepage 'add new' for current table? */
-			$tChkAHAN = array_search($tn, array('orders','products','firstCashNote','vatRegister','companies','contacts','creditDocument','town','contacts_companies'));
+			$tChkAHAN = array_search($tn, array('orders','products','firstCashNote','companies','vatRegister','contacts','creditDocument','town','contacts_companies'));
 
 			/* homepageShowCount for current table? */
 			$count_badge = '';

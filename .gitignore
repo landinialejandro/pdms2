@@ -4,7 +4,6 @@ images/*.json
 images/*.jpg
 .vscode/
 PDFfolder/*.pdf
-vendor/
 plugins/
 nbproject/
 xmlFiles/*.xml

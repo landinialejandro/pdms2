@@ -270,20 +270,26 @@ function fix_table_responsive_width(){
 function orders_validateData(){
 	$j('.has-error').removeClass('has-error');
 	/* Field kind can't be empty */
-	if($j('#kind').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Kind", close: function(){ /* */ $j('[name=kind]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	if($j('#kind').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Tipo ordine", close: function(){ /* */ $j('[name=kind]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	/* Field company can't be empty */
-	if($j('#company').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> ID Azienda", close: function(){ /* */ $j('[name=company]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	if($j('#company').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Azienda", close: function(){ /* */ $j('[name=company]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	/* Field typeDoc can't be empty */
 	if($j('#typeDoc').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Documento", close: function(){ /* */ $j('[name=typeDoc]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	/* Field multiOrder can't be empty */
 	if($j('#multiOrder').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Numero", close: function(){ /* */ $j('[name=multiOrder]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	/* Field divisa can't be empty */
+	if($j('#divisa').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Divisa", close: function(){ /* */ $j('[name=divisa]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	/* Field causale can't be empty */
+	if($j('#causale').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Causale", close: function(){ /* */ $j('[name=causale]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	/* Field orderTotal can't be empty */
+	if($j('#orderTotal').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Importo Totale doc", close: function(){ /* */ $j('[name=orderTotal]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	return true;
 }
 function ordersDetails_validateData(){
 	$j('.has-error').removeClass('has-error');
 	return true;
 }
-function _resumeOrders_validateData(){
+function _ordersSummary_validateData(){
 	$j('.has-error').removeClass('has-error');
 	return true;
 }
@@ -297,10 +303,6 @@ function firstCashNote_validateData(){
 	if($j('#kind').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Kind", close: function(){ /* */ $j('[name=kind]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	return true;
 }
-function vatRegister_validateData(){
-	$j('.has-error').removeClass('has-error');
-	return true;
-}
 function companies_validateData(){
 	$j('.has-error').removeClass('has-error');
 	/* Field kind can't be empty */
@@ -311,12 +313,12 @@ function companies_validateData(){
 	if($j('#vat').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Vat", close: function(){ /* */ $j('[name=vat]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	/* Field FormatoTrasmissione can't be empty */
 	if($j('#FormatoTrasmissione').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Destinatario", close: function(){ /* */ $j('[name=FormatoTrasmissione]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	/* Field REA_SocioUnico can't be empty */
-	if(!$j('[name=REA_SocioUnico]:checked').length){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> REA SocioUnico", close: function(){ /* */ $j('[name=REA_SocioUnico]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	/* Field REA_StatoLiquidazione can't be empty */
-	if(!$j('[name=REA_StatoLiquidazione]:checked').length){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> StatoLiquidazione", close: function(){ /* */ $j('[name=REA_StatoLiquidazione]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	/* Field RIT_tipoRitenuta can't be empty */
 	if(!$j('[name=RIT_tipoRitenuta]:checked').length){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> RIT tipo Ritenuta", close: function(){ /* */ $j('[name=RIT_tipoRitenuta]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	return true;
+}
+function vatRegister_validateData(){
+	$j('.has-error').removeClass('has-error');
 	return true;
 }
 function contacts_validateData(){
@@ -337,6 +339,10 @@ function countries_validateData(){
 }
 function town_validateData(){
 	$j('.has-error').removeClass('has-error');
+	/* Field district can't be empty */
+	if($j('#district').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Provincia", close: function(){ /* */ $j('[name=district]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	/* Field shipCode can't be empty */
+	if($j('#shipCode').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> CAP", close: function(){ /* */ $j('[name=shipCode]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	return true;
 }
 function GPSTrackingSystem_validateData(){
@@ -364,17 +370,13 @@ function attributes_validateData(){
 function addresses_validateData(){
 	$j('.has-error').removeClass('has-error');
 	/* Field address can't be empty */
-	if($j('#address').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Address", close: function(){ /* */ $j('[name=address]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	if($j('#address').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Indirizzo Cedente PA", close: function(){ /* */ $j('[name=address]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	/* Field houseNumber can't be empty */
-	if($j('#houseNumber').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> HouseNumber", close: function(){ /* */ $j('[name=houseNumber]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	if($j('#houseNumber').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Numero Civico Ced. PA", close: function(){ /* */ $j('[name=houseNumber]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	/* Field country can't be empty */
-	if($j('#country').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Country Code", close: function(){ /* */ $j('[name=country]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	if($j('#country').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Nazione Ced. PA", close: function(){ /* */ $j('[name=country]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	/* Field town can't be empty */
-	if($j('#town').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Town", close: function(){ /* */ $j('[name=town]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	/* Field postalCode can't be empty */
-	if($j('#postalCode').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> PostalCode", close: function(){ /* */ $j('[name=postalCode]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	/* Field district can't be empty */
-	if($j('#district').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> District", close: function(){ /* */ $j('[name=district]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
+	if($j('#town').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Comune Cedente PA", close: function(){ /* */ $j('[name=town]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	return true;
 }
 function phones_validateData(){
@@ -391,30 +393,6 @@ function contacts_companies_validateData(){
 }
 function attachments_validateData(){
 	$j('.has-error').removeClass('has-error');
-	return true;
-}
-function codiceDestinatario_validateData(){
-	$j('.has-error').removeClass('has-error');
-	/* Field code can't be empty */
-	if($j('#code').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Code", close: function(){ /* */ $j('[name=code]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	return true;
-}
-function regimeFiscale_validateData(){
-	$j('.has-error').removeClass('has-error');
-	/* Field code can't be empty */
-	if($j('#code').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Code", close: function(){ /* */ $j('[name=code]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	return true;
-}
-function tipoCassa_validateData(){
-	$j('.has-error').removeClass('has-error');
-	/* Field code can't be empty */
-	if($j('#code').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Code", close: function(){ /* */ $j('[name=code]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	return true;
-}
-function modalitaPagamento_validateData(){
-	$j('.has-error').removeClass('has-error');
-	/* Field code can't be empty */
-	if($j('#code').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Code", close: function(){ /* */ $j('[name=code]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	return true;
 }
 

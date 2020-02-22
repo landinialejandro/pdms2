@@ -27,7 +27,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Kind</label>
+					<label for="kind" class="control-label col-lg-3" data-parent_link="view_parent_modal">Tipo</label>
 					<div class="col-lg-9">
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(kind)%%><%%PLINK(kind)%%><%%ADDNEW(kinds)%%></div>
 					</div>
@@ -35,56 +35,60 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="address" class="control-label col-lg-3">Address<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="address" class="control-label col-lg-3">Indirizzo Cedente PA<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#address-description"></i></label>
 					<div class="col-lg-9">
+						<span class="help-block collapse" id="address-description"><div class="alert alert-info">1.2.2.1 <Indirizzo>indirizzo di resa (nome della via, piazza etc.)</div></span>
+
 						<input maxlength="255" type="text" class="form-control" name="address" id="address" value="<%%VALUE(address)%%>" required>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="houseNumber" class="control-label col-lg-3">HouseNumber<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="houseNumber" class="control-label col-lg-3">Numero Civico Ced. PA<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#houseNumber-description"></i></label>
 					<div class="col-lg-9">
+						<span class="help-block collapse" id="houseNumber-description"><div class="alert alert-info">1.2.2.2 <NumeroCivico> numero civico riferito all'indirizzo di resa (non indicare se gi&#224; presente nel campo Indirizzo) </div></span>
+
 						<input maxlength="255" type="text" class="form-control" name="houseNumber" id="houseNumber" value="<%%VALUE(houseNumber)%%>" required>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="country" class="control-label col-lg-3" data-parent_link="view_parent_modal">Country Code<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="country" class="control-label col-lg-3" data-parent_link="view_parent_modal">Nazione Ced. PA<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#country-description"></i></label>
 					<div class="col-lg-9">
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(country)%%><%%PLINK(country)%%><%%ADDNEW(countries)%%><span id="countryLoading"></span></div>
+						<span class="help-block collapse" id="country-description"><div class="alert alert-info">1.2.3.6 <Nazione> codice della nazione espresso secondo lo standard ISO 3166-1 alpha-2 code [IT], [ES], [DK],[&#8230;] </div></span>
+
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(country)%%><%%PLINK(country)%%><%%ADDNEW(countries)%%></div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="country_name" class="control-label col-lg-3">Country Name</label>
+					<label for="town" class="control-label col-lg-3" data-parent_link="view_parent_modal">Comune Cedente PA<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#town-description"></i></label>
 					<div class="col-lg-9">
-						<div class="form-control-static" id="country_name"></div>
-					</div>
-				</div>
+						<span class="help-block collapse" id="town-description"><div class="alert alert-info">1.2.2.4 <Comune> comune relativo alla sede del cedente / prestatore </div></span>
 
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="town" class="control-label col-lg-3" data-parent_link="view_parent_modal">Town<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
-					<div class="col-lg-9">
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(town)%%><%%PLINK(town)%%><%%ADDNEW(town)%%><span id="townLoading"></span></div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="postalCode" class="control-label col-lg-3">PostalCode<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="postalCode" class="control-label col-lg-3">Codice postale Ced. PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#postalCode-description"></i></label>
 					<div class="col-lg-9">
-						<div class="form-control-static" id="postalCode"></div>
+						<span class="help-block collapse" id="postalCode-description"><div class="alert alert-info">1.2.2.3 <CAP>Codice Avviamento Postale dell'indirizzo di resa</div></span>
+
+						<input maxlength="5" type="text" class="form-control" name="postalCode" id="postalCode" value="<%%VALUE(postalCode)%%>">
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="district" class="control-label col-lg-3">District<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="district" class="control-label col-lg-3">Provincia Ced. PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#district-description"></i></label>
 					<div class="col-lg-9">
+						<span class="help-block collapse" id="district-description"><div class="alert alert-info">1.2.2.5 <Provincia>sigla della provincia di appartenenza del comune indicato nel campo 2.1.9.12.4 </div></span>
+
 						<div class="form-control-static" id="district"></div>
 					</div>
 				</div>

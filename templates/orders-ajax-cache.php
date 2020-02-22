@@ -13,7 +13,6 @@
 			typeDoc: <?php echo json_encode(array('id' => $rdata['typeDoc'], 'value' => $rdata['typeDoc'], 'text' => $jdata['typeDoc'])); ?>,
 			customer: <?php echo json_encode(array('id' => $rdata['customer'], 'value' => $rdata['customer'], 'text' => $jdata['customer'])); ?>,
 			supplier: <?php echo json_encode(array('id' => $rdata['supplier'], 'value' => $rdata['supplier'], 'text' => $jdata['supplier'])); ?>,
-			employee: <?php echo json_encode(array('id' => $rdata['employee'], 'value' => $rdata['employee'], 'text' => $jdata['employee'])); ?>,
 			shipVia: <?php echo json_encode(array('id' => $rdata['shipVia'], 'value' => $rdata['shipVia'], 'text' => $jdata['shipVia'])); ?>
 		};
 
@@ -59,14 +58,6 @@
 			if(u != 'ajax_combo.php') return false;
 			if(d.t == tn && d.f == 'supplier' && d.id == data.supplier.id)
 				return { results: [ data.supplier ], more: false, elapsed: 0.01 };
-			return false;
-		});
-
-		/* saved value for employee */
-		cache.addCheck(function(u, d){
-			if(u != 'ajax_combo.php') return false;
-			if(d.t == tn && d.f == 'employee' && d.id == data.employee.id)
-				return { results: [ data.employee ], more: false, elapsed: 0.01 };
 			return false;
 		});
 

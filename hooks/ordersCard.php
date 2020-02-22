@@ -38,7 +38,7 @@ $orderCompany = intval(sqlValue("select company from orders where id = {$where_i
 /* retrieve company attributes*/
 $table_fields = get_sql_fields("attributes");
 $table_from = get_sql_from("attributes");
-$attributes = sql("SELECT {$table_fields} FROM {$table_from} AND `attributes`.`companies` = {$orderCompany}",$eo);
+$attributes = sql("SELECT {$table_fields} FROM {$table_from} AND `attributes`.`company` = {$orderCompany}",$eo);
 
 
 $table_fields = get_sql_fields('addresses');

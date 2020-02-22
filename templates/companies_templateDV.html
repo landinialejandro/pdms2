@@ -8,9 +8,9 @@
 	<div class="row vspacer-md">
 		<div class="col-xs-12">
 			<input type="hidden" id="orders_hclink" value="orders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="_resumeOrders_hclink" value="_resumeOrders_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+			<input type="hidden" id="_ordersSummary_hclink" value="_ordersSummary_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="firstCashNote_hclink" value="firstCashNote_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<input type="hidden" id="vatRegister_hclink" value="vatRegister_view.php?filterer_idCompany=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+			<input type="hidden" id="vatRegister_hclink" value="vatRegister_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="attributes_hclink" value="attributes_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="addresses_hclink" value="addresses_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<input type="hidden" id="phones_hclink" value="phones_view.php?filterer_company=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
@@ -90,7 +90,40 @@
 						<%%HTMLAREA(notes)%%>
 					</div>
 				</div>
-
+                            
+                                <div class="form-group default-address" hidden="">
+					<hr class="hidden-md hidden-lg">
+					<label for="addresses" class="control-label col-lg-3">Indirizzo</label>
+					<div class="col-lg-9">
+						<a href ="#" id="address" selectedid="<%%VALUE(id)%%>" class="btn btn-default">add a address</a>
+					</div>
+				</div>
+                            
+                                <div class="form-group default-phone" hidden="">
+					<hr class="hidden-md hidden-lg">
+					<label for="phones" class="control-label col-lg-3">Telefono</label>
+					<div class="col-lg-9">
+						<a href ="#" id="phone" selectedid="<%%VALUE(id)%%>" class="btn btn-default">add a phone</a>
+					</div>
+				</div>
+                            
+                                <div class="form-group default-mail" hidden="">
+					<hr class="hidden-md hidden-lg">
+					<label for="mails" class="control-label col-lg-3">e-mail</label>
+					<div class="col-lg-9">
+						<a href ="#" id="mail" selectedid="<%%VALUE(id)%%>" class="btn btn-default">add an e-mail</a>
+					</div>
+				</div>
+                            
+                                <div class="form-group default-register" hidden="">
+					<hr class="hidden-md hidden-lg">
+					<label for="vatRegister" class="control-label col-lg-3">Registro Corrispettivi</label>
+					<div class="col-lg-9">
+						<a href ="#" id="register" selectedid="<%%VALUE(id)%%>" class="btn btn-default">add Registro Corrispettivi</a>
+					</div>
+				</div>
+                            
+                            
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
 					<label for="codiceDestinatario" class="control-label col-lg-3">Codice Destinatario <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#codiceDestinatario-description"></i></label>
@@ -149,58 +182,6 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="REA_Ufficio" class="control-label col-lg-3">REA Ufficio <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_Ufficio-description"></i></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="REA_Ufficio-description"><div class="alert alert-info">Utilit&#224;: &#232; un dato previsto dalla normativa (art. 2250 codice civile) in<br>materia di obblighi di pubblicit&#224; delle societ&#224;.<br>Criteri di valorizzazione: il campo deve contenere la sigla della provincia<br>dell&#8217;ufficio del registro delle imprese presso il quale &#232; iscritto e registrato<br>il cedente/prestatore.</div></span>
-
-						<input maxlength="2" type="text" class="form-control" name="REA_Ufficio" id="REA_Ufficio" value="<%%VALUE(REA_Ufficio)%%>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="REA_NumeroREA" class="control-label col-lg-3">Numero REA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_NumeroREA-description"></i></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="REA_NumeroREA-description"><div class="alert alert-info">Utilit&#224;: &#232; un dato previsto dalla normativa (art. 2250 codice civile) in<br>materia di obblighi di pubblicit&#224; delle societ&#224;.<br>Criteri di valorizzazione: il campo deve contenere il numero con il quale<br>il cedente/prestatore risulta registrato presso il registro delle imprese.</div></span>
-
-						<input maxlength="20" type="text" class="form-control" name="REA_NumeroREA" id="REA_NumeroREA" value="<%%VALUE(REA_NumeroREA)%%>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="REA_CapitaleSociale" class="control-label col-lg-3">Capitale Sociale <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_CapitaleSociale-description"></i></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="REA_CapitaleSociale-description"><div class="alert alert-info">Utilit&#224;: &#232; un dato previsto dalla normativa (art. 2250 codice civile) in<br>materia di obblighi di pubblicit&#224; delle societ&#224;.<br>Criteri di valorizzazione: il campo deve contenere l&#8217;importo del capitale<br>sociale effettivamente versato come risultante dall&#8217;ultimo bilancio; &#232;<br>previsto un valore numerico composto da un intero e da due decimali; i<br>decimali, separati dall&#8217;intero con il carattere punto (&#8220;.&#8221;), vanno sempre<br>indicati anche se pari a zero (es.: 28000000.00).
-</div></span>
-
-						<input maxlength="40" type="text" class="form-control" name="REA_CapitaleSociale" id="REA_CapitaleSociale" value="<%%VALUE(REA_CapitaleSociale)%%>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="REA_SocioUnico" class="control-label col-lg-3">REA SocioUnico<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_SocioUnico-description"></i></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="REA_SocioUnico-description"><div class="alert alert-info">Utilit&#224;: &#232; un dato previsto dalla normativa (art. 2250 codice civile) in<br>materia di obblighi di pubblicit&#224; delle societ&#224;.<br>Criteri di valorizzazione: il campo deve contenere il valore &#8220;SU&#8221;, nel caso<br>di socio unico, oppure &#8220;SM&#8221; nel caso di societ&#224; pluripersonale.
-</div></span>
-
-						<%%COMBO(REA_SocioUnico)%%>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="REA_StatoLiquidazione" class="control-label col-lg-3">StatoLiquidazione<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#REA_StatoLiquidazione-description"></i></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="REA_StatoLiquidazione-description"><div class="alert alert-info">Utilit&#224;: &#232; un dato previsto dalla normativa (art. 2250 codice civile) in<br>materia di obblighi di pubblicit&#224; delle societ&#224;.<br>Criteri di valorizzazione: il campo deve contenere il valore &#8220;LS&#8221;, nel caso<br>di societ&#224; in stato di liquidazione, oppure &#8220;LN&#8221; nel caso di societ&#224; non in<br>liquidazione.</div></span>
-
-						<%%COMBO(REA_StatoLiquidazione)%%>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
 					<div class="col-lg-offset-3 col-lg-9">
 						<div class="checkbox"><label for="RIT_soggettoRitenuta"><input type="checkbox" name="RIT_soggettoRitenuta" id="RIT_soggettoRitenuta" value="1" <%%CHECKED(RIT_soggettoRitenuta)%%>> RIT soggetto Ritenuta</label>
 						</div>
@@ -237,6 +218,92 @@
 </div></span>
 
 						<input maxlength="40" type="text" class="form-control" name="RIT_CausalePagamento" id="RIT_CausalePagamento" value="<%%VALUE(RIT_CausalePagamento)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="IBAN" class="control-label col-lg-3">IBAN PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#IBAN-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="IBAN-description"><div class="alert alert-info">2.4.2.13 <IBAN>International Bank Account Number (coordinata bancaria internazionale che consente di identificare, in maniera standard, il conto<br>corrente del beneficiario )</div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="IBAN" id="IBAN" value="<%%VALUE(IBAN)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="ABI" class="control-label col-lg-3">ABI PA <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#ABI-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="ABI-description"><div class="alert alert-info">2.4.2.14 <ABI>codice ABI </div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="ABI" id="ABI" value="<%%VALUE(ABI)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="CAB" class="control-label col-lg-3">CAB <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#CAB-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="CAB-description"><div class="alert alert-info">2.4.2.15 <CAB>codice CAB</div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="CAB" id="CAB" value="<%%VALUE(CAB)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="BIC" class="control-label col-lg-3">BIC <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#BIC-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="BIC-description"><div class="alert alert-info">2.4.2.16 <BIC>Bank Identifier Code (codice che identifica la banca del beneficiario) </div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="BIC" id="BIC" value="<%%VALUE(BIC)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="autorizzSanitaria_SAM" class="control-label col-lg-3">Autorizzazione Sanitaria SAM <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#autorizzSanitaria_SAM-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="autorizzSanitaria_SAM-description"><div class="alert alert-info">Autorizzazione sanitaria rilasciata al cliente.</div></span>
+
+						<input maxlength="255" type="text" class="form-control" name="autorizzSanitaria_SAM" id="autorizzSanitaria_SAM" value="<%%VALUE(autorizzSanitaria_SAM)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="AutSanEmessa_SAM" class="control-label col-lg-3">AutSanEmessa SAM <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#AutSanEmessa_SAM-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="AutSanEmessa_SAM-description"><div class="alert alert-info">Ente erogante autorizzazione</div></span>
+
+						<input maxlength="255" type="text" class="form-control" name="AutSanEmessa_SAM" id="AutSanEmessa_SAM" value="<%%VALUE(AutSanEmessa_SAM)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="NrPresSan_SAM" class="control-label col-lg-3">NrPresSan SAM</label>
+					<div class="col-lg-9">
+						<input maxlength="255" type="text" class="form-control" name="NrPresSan_SAM" id="NrPresSan_SAM" value="<%%VALUE(NrPresSan_SAM)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="NrAutSan_SAM" class="control-label col-lg-3">NrAutSan SAM</label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="NrAutSan_SAM" id="NrAutSan_SAM" value="<%%VALUE(NrAutSan_SAM)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="dataAutSan_SAM" class="control-label col-lg-3">DataAutSan SAM <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dataAutSan_SAM-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="dataAutSan_SAM-description"><div class="alert alert-info">Data Rilascio Autorizzazione Sanitaria</div></span>
+
+						<%%COMBO(dataAutSan_SAM)%%>
 					</div>
 				</div>
 

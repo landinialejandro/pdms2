@@ -47,11 +47,11 @@
 			/* 'table_name' => ['table caption', 'homepage description', 'icon', 'table group name'] */   
 			'orders' => array('Ordini', 'Ordini fatti dai clienti, con i nuovi ordini elencati per primi.<br> La cronologia degli ordini puo essere specificata utilizzando <br>un filtro con numerose opzioni di scelta.', 'resources/table_icons/cart_remove.png', 'Documenti'),
 			'ordersDetails' => array('Dettaglio Ordini vendita', '', 'resources/table_icons/calendar_view_month.png', 'hiddens'),
-			'_resumeOrders' => array('Resume Orders', '', 'table.gif', 'Documenti'),
+			'_ordersSummary' => array('order summary', 'raggruppamento degli ordini di trasporto chiusi senza fatturazione.', 'table.gif', 'Documenti'),
 			'products' => array('Articoli Magazzino', 'Oltre all\'accesso ai dettagli dei prodotti, &#232; anche possibile accedere alla cronologia degli ordini di ogni<br> singolo prodotto da qui.', 'resources/table_icons/installer_box.png', 'Catalogo'),
 			'firstCashNote' => array('Prima Nota', '', 'resources/table_icons/data_sort.png', 'Prima Nota'),
-			'vatRegister' => array('Registro Corrispettivi', '', 'resources/table_icons/book_spelling.png', 'Prima Nota'),
 			'companies' => array('Aziende', '', 'resources/table_icons/factory.png', 'Anagrafiche'),
+			'vatRegister' => array('Registro Corrispettivi', '', 'resources/table_icons/book_spelling.png', 'hiddens'),
 			'contacts' => array('Contacts', '', 'resources/table_icons/client_account_template.png', 'Anagrafiche'),
 			'creditDocument' => array('Nota Credito', '', 'resources/table_icons/card_credit.png', 'Anagrafiche'),
 			'electronicInvoice' => array('ElectronicInvoice', '', 'resources/table_icons/document_editing.png', 'Anagrafiche'),
@@ -65,11 +65,7 @@
 			'phones' => array('Phones', '', 'resources/table_icons/phone.png', 'hiddens'),
 			'mails' => array('Mails', '', 'resources/table_icons/email.png', 'hiddens'),
 			'contacts_companies' => array('Contacts companies', 'relate contacts with companies', 'resources/table_icons/brick_link.png', 'hiddens'),
-			'attachments' => array('Attaches', '', 'resources/table_icons/attach.png', 'hiddens'),
-			'codiceDestinatario' => array('Codice Destinatario', 'codice dell\'ufficio dell&#8217;amministrazione dello stato destinatario della fattura, definito dall\'amministrazione di appartenenza come riportato nella rubrica &#8220;Indice PA&#8221;.', 'table.gif', 'Anagrafiche'),
-			'regimeFiscale' => array('RegimeFiscale', '', 'table.gif', 'Anagrafiche'),
-			'tipoCassa' => array('TipoCassa', '', 'table.gif', 'Anagrafiche'),
-			'modalitaPagamento' => array('ModalitaPagamento', '', 'table.gif', 'Documenti')
+			'attachments' => array('Attaches', '', 'resources/table_icons/attach.png', 'hiddens')
 		);
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 
@@ -156,13 +152,13 @@
 
 	function get_sql_fields($table_name){
 		$sql_fields = array(   
-			'orders' => "`orders`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `orders`.`progressiveNr` as 'progressiveNr', `orders`.`trasmissionFor` as 'trasmissionFor', `orders`.`consigneeID` as 'consigneeID', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'typeDoc', `orders`.`multiOrder` as 'multiOrder', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'customer', IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') as 'supplier', IF(    CHAR_LENGTH(`contacts1`.`name`), CONCAT_WS('',   `contacts1`.`name`), '') as 'employee', if(`orders`.`date`,date_format(`orders`.`date`,'%d/%m/%Y'),'') as 'date', if(`orders`.`requiredDate`,date_format(`orders`.`requiredDate`,'%d/%m/%Y'),'') as 'requiredDate', if(`orders`.`shippedDate`,date_format(`orders`.`shippedDate`,'%d/%m/%Y'),'') as 'shippedDate', IF(    CHAR_LENGTH(`companies4`.`companyName`), CONCAT_WS('',   `companies4`.`companyName`), '') as 'shipVia', `orders`.`Freight` as 'Freight', `orders`.`pallets` as 'pallets', `orders`.`licencePlate` as 'licencePlate', `orders`.`orderTotal` as 'orderTotal', `orders`.`cashCredit` as 'cashCredit', `orders`.`trust` as 'trust', `orders`.`overdraft` as 'overdraft', `orders`.`commisionFee` as 'commisionFee', `orders`.`commisionRate` as 'commisionRate', if(`orders`.`consigneeHour`,date_format(`orders`.`consigneeHour`,'%d/%m/%Y %h:%i %p'),'') as 'consigneeHour', `orders`.`consigneePlace` as 'consigneePlace', `orders`.`related` as 'related', `orders`.`document` as 'document'",
-			'ordersDetails' => "`ordersDetails`.`id` as 'id', IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') as 'order', if(`ordersDetails`.`manufactureDate`,date_format(`ordersDetails`.`manufactureDate`,'%d/%m/%Y'),'') as 'manufactureDate', if(`ordersDetails`.`sellDate`,date_format(`ordersDetails`.`sellDate`,'%d/%m/%Y'),'') as 'sellDate', if(`ordersDetails`.`expiryDate`,date_format(`ordersDetails`.`expiryDate`,'%d/%m/%Y'),'') as 'expiryDate', `ordersDetails`.`daysToExpiry` as 'daysToExpiry', IF(    CHAR_LENGTH(`products1`.`codebar`), CONCAT_WS('',   `products1`.`codebar`), '') as 'codebar', IF(    CHAR_LENGTH(`products1`.`UM`), CONCAT_WS('',   `products1`.`UM`), '') as 'UM', IF(    CHAR_LENGTH(`products1`.`productCode`), CONCAT_WS('',   `products1`.`productCode`), '') as 'productCode', IF(    CHAR_LENGTH(`products1`.`productCode`) || CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`productCode`, '-', `products1`.`id`), '') as 'batch', `ordersDetails`.`packages` as 'packages', `ordersDetails`.`noSell` as 'noSell', `ordersDetails`.`Quantity` as 'Quantity', `ordersDetails`.`QuantityReal` as 'QuantityReal', CONCAT('&euro;', FORMAT(`ordersDetails`.`UnitPrice`, 2)) as 'UnitPrice', CONCAT('&euro;', FORMAT(`ordersDetails`.`Subtotal`, 2)) as 'Subtotal', CONCAT('&euro;', FORMAT(`ordersDetails`.`taxes`, 2)) as 'taxes', `ordersDetails`.`Discount` as 'Discount', CONCAT('&euro;', FORMAT(`ordersDetails`.`LineTotal`, 2)) as 'LineTotal', IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') as 'section', IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') as 'transaction_type', `ordersDetails`.`skBatches` as 'skBatches', `ordersDetails`.`averagePrice` as 'averagePrice', `ordersDetails`.`averageWeight` as 'averageWeight', `ordersDetails`.`commission` as 'commission', `ordersDetails`.`return` as 'return', `ordersDetails`.`supplierCode` as 'supplierCode'",
-			'_resumeOrders' => "IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'typedoc', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'customer', `_resumeOrders`.`TOT` as 'TOT', `_resumeOrders`.`MONTH` as 'MONTH', `_resumeOrders`.`YEAR` as 'YEAR', `_resumeOrders`.`DOCs` as 'DOCs', IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') as 'related', `_resumeOrders`.`id` as 'id'",
+			'orders' => "`orders`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'typeDoc', `orders`.`multiOrder` as 'multiOrder', `orders`.`divisa` as 'divisa', `orders`.`causale` as 'causale', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'customer', IF(    CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyName`), '') as 'supplier', `orders`.`employee` as 'employee', if(`orders`.`date`,date_format(`orders`.`date`,'%d/%m/%Y'),'') as 'date', if(`orders`.`dateRequired`,date_format(`orders`.`dateRequired`,'%d/%m/%Y'),'') as 'dateRequired', if(`orders`.`dateShipped`,date_format(`orders`.`dateShipped`,'%d/%m/%Y'),'') as 'dateShipped', IF(    CHAR_LENGTH(`companies4`.`companyName`), CONCAT_WS('',   `companies4`.`companyName`), '') as 'shipVia', `orders`.`Freight` as 'Freight', `orders`.`pallets` as 'pallets', `orders`.`licencePlate` as 'licencePlate', `orders`.`importoSconto` as 'importoSconto', `orders`.`orderTotal` as 'orderTotal', `orders`.`RIT_importoRitenuta` as 'RIT_importoRitenuta', `orders`.`cashCredit` as 'cashCredit', `orders`.`trust` as 'trust', `orders`.`overdraft` as 'overdraft', `orders`.`commisionFee` as 'commisionFee', `orders`.`commisionRate` as 'commisionRate', if(`orders`.`consigneeHour`,date_format(`orders`.`consigneeHour`,'%d/%m/%Y %h:%i %p'),'') as 'consigneeHour', `orders`.`consigneePlace` as 'consigneePlace', `orders`.`related` as 'related', `orders`.`document` as 'document'",
+			'ordersDetails' => "`ordersDetails`.`id` as 'id', IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') as 'order', if(`ordersDetails`.`manufactureDate`,date_format(`ordersDetails`.`manufactureDate`,'%d/%m/%Y'),'') as 'manufactureDate', if(`ordersDetails`.`sellDate`,date_format(`ordersDetails`.`sellDate`,'%d/%m/%Y'),'') as 'sellDate', if(`ordersDetails`.`expiryDate`,date_format(`ordersDetails`.`expiryDate`,'%d/%m/%Y'),'') as 'expiryDate', `ordersDetails`.`daysToExpiry` as 'daysToExpiry', IF(    CHAR_LENGTH(`products1`.`codebar`), CONCAT_WS('',   `products1`.`codebar`), '') as 'codebar', IF(    CHAR_LENGTH(`products1`.`UM`), CONCAT_WS('',   `products1`.`UM`), '') as 'UM', IF(    CHAR_LENGTH(`products1`.`productCode`), CONCAT_WS('',   `products1`.`productCode`), '') as 'productCode', IF(    CHAR_LENGTH(`products1`.`productCode`) || CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`productCode`, '-', `products1`.`id`), '') as 'batch', `ordersDetails`.`packages` as 'packages', `ordersDetails`.`noSell` as 'noSell', `ordersDetails`.`Quantity` as 'Quantity', `ordersDetails`.`QuantityReal` as 'QuantityReal', CONCAT('&euro;', FORMAT(`ordersDetails`.`UnitPrice`, 2)) as 'UnitPrice', CONCAT('&euro;', FORMAT(`ordersDetails`.`Subtotal`, 2)) as 'Subtotal', CONCAT('&euro;', FORMAT(`ordersDetails`.`taxes`, 2)) as 'taxes', `ordersDetails`.`Discount` as 'Discount', CONCAT('&euro;', FORMAT(`ordersDetails`.`LineTotal`, 2)) as 'LineTotal', IF(    CHAR_LENGTH(`kinds1`.`code`), CONCAT_WS('',   `kinds1`.`code`), '') as 'section', IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') as 'transaction_type', `ordersDetails`.`skBatches` as 'skBatches', `ordersDetails`.`averagePrice` as 'averagePrice', `ordersDetails`.`averageWeight` as 'averageWeight', `ordersDetails`.`commission` as 'commission', `ordersDetails`.`return` as 'return', `ordersDetails`.`supplierCode` as 'supplierCode', `ordersDetails`.`related` as 'related'",
+			'_ordersSummary' => "IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'typedoc', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'customer', `_ordersSummary`.`TOT` as 'TOT', `_ordersSummary`.`MONTH` as 'MONTH', `_ordersSummary`.`YEAR` as 'YEAR', `_ordersSummary`.`DOCs` as 'DOCs', IF(    CHAR_LENGTH(`orders1`.`id`), CONCAT_WS('',   `orders1`.`id`), '') as 'related', `_ordersSummary`.`id` as 'id'",
 			'products' => "`products`.`id` as 'id', `products`.`codebar` as 'codebar', `products`.`productCode` as 'productCode', `products`.`productName` as 'productName', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'tax', `products`.`increment` as 'increment', IF(    CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`name`), '') as 'CategoryID', `products`.`UM` as 'UM', `products`.`tare` as 'tare', `products`.`QuantityPerUnit` as 'QuantityPerUnit', CONCAT('&euro;', FORMAT(`products`.`UnitPrice`, 2)) as 'UnitPrice', CONCAT('&euro;', FORMAT(`products`.`sellPrice`, 2)) as 'sellPrice', `products`.`UnitsInStock` as 'UnitsInStock', `products`.`UnitsOnOrder` as 'UnitsOnOrder', `products`.`ReorderLevel` as 'ReorderLevel', `products`.`balance` as 'balance', `products`.`Discontinued` as 'Discontinued', if(`products`.`manufactured_date`,date_format(`products`.`manufactured_date`,'%d/%m/%Y'),'') as 'manufactured_date', if(`products`.`expiry_date`,date_format(`products`.`expiry_date`,'%d/%m/%Y'),'') as 'expiry_date', `products`.`note` as 'note', if(`products`.`update_date`,date_format(`products`.`update_date`,'%d/%m/%Y %h:%i %p'),'') as 'update_date'",
 			'firstCashNote' => "`firstCashNote`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', IF(    CHAR_LENGTH(`orders1`.`multiOrder`) || CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `orders1`.`multiOrder`, ' - ', `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'order', if(`firstCashNote`.`operationDate`,date_format(`firstCashNote`.`operationDate`,'%d/%m/%Y'),'') as 'operationDate', IF(    CHAR_LENGTH(`companies2`.`companyCode`) || CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyCode`, ' - ', `companies2`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`companies3`.`companyCode`) || CHAR_LENGTH(`companies3`.`companyName`), CONCAT_WS('',   `companies3`.`companyCode`, ' - ', `companies3`.`companyName`), '') as 'customer', `firstCashNote`.`documentNumber` as 'documentNumber', `firstCashNote`.`causal` as 'causal', `firstCashNote`.`revenue` as 'revenue', `firstCashNote`.`outputs` as 'outputs', `firstCashNote`.`balance` as 'balance', IF(    CHAR_LENGTH(`companies4`.`companyName`), CONCAT_WS('',   `companies4`.`companyName`), '') as 'idBank', IF(    CHAR_LENGTH(`companies2`.`companyName`), CONCAT_WS('',   `companies2`.`companyName`), '') as 'bank', `firstCashNote`.`note` as 'note', if(`firstCashNote`.`paymentDeadLine`,date_format(`firstCashNote`.`paymentDeadLine`,'%d/%m/%Y'),'') as 'paymentDeadLine', `firstCashNote`.`payed` as 'payed'",
-			'vatRegister' => "`vatRegister`.`id` as 'id', IF(    CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyCode`), '') as 'idCompany', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'companyName', `vatRegister`.`tax` as 'tax', `vatRegister`.`month` as 'month', `vatRegister`.`year` as 'year', `vatRegister`.`amount` as 'amount'",
-			'companies' => "`companies`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `companies`.`companyCode` as 'companyCode', `companies`.`companyName` as 'companyName', `companies`.`personaFisica` as 'personaFisica', `companies`.`fiscalCode` as 'fiscalCode', `companies`.`vat` as 'vat', `companies`.`notes` as 'notes', `companies`.`codiceDestinatario` as 'codiceDestinatario', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'regimeFiscale', IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') as 'tipoCassa', IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') as 'modalitaPagamento', `companies`.`RiferimentoAmministrazione` as 'RiferimentoAmministrazione', IF(    CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`name`), '') as 'FormatoTrasmissione', `companies`.`REA_Ufficio` as 'REA_Ufficio', `companies`.`REA_NumeroREA` as 'REA_NumeroREA', `companies`.`REA_CapitaleSociale` as 'REA_CapitaleSociale', `companies`.`REA_SocioUnico` as 'REA_SocioUnico', `companies`.`REA_StatoLiquidazione` as 'REA_StatoLiquidazione', `companies`.`RIT_soggettoRitenuta` as 'RIT_soggettoRitenuta', `companies`.`RIT_tipoRitenuta` as 'RIT_tipoRitenuta', `companies`.`RIT_AliquotaRitenuta` as 'RIT_AliquotaRitenuta', `companies`.`RIT_CausalePagamento` as 'RIT_CausalePagamento'",
+			'companies' => "`companies`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `companies`.`companyCode` as 'companyCode', `companies`.`companyName` as 'companyName', `companies`.`personaFisica` as 'personaFisica', `companies`.`fiscalCode` as 'fiscalCode', `companies`.`vat` as 'vat', `companies`.`notes` as 'notes', `companies`.`codiceDestinatario` as 'codiceDestinatario', IF(    CHAR_LENGTH(`kinds2`.`code`) || CHAR_LENGTH(`kinds2`.`name`), CONCAT_WS('',   `kinds2`.`code`, ' - ', `kinds2`.`name`), '') as 'regimeFiscale', IF(    CHAR_LENGTH(`kinds3`.`code`) || CHAR_LENGTH(`kinds3`.`name`), CONCAT_WS('',   `kinds3`.`code`, ' - ', `kinds3`.`name`), '') as 'tipoCassa', IF(    CHAR_LENGTH(`kinds4`.`code`) || CHAR_LENGTH(`kinds4`.`name`), CONCAT_WS('',   `kinds4`.`code`, ' - ', `kinds4`.`name`), '') as 'modalitaPagamento', `companies`.`RiferimentoAmministrazione` as 'RiferimentoAmministrazione', IF(    CHAR_LENGTH(`kinds5`.`name`), CONCAT_WS('',   `kinds5`.`name`), '') as 'FormatoTrasmissione', `companies`.`RIT_soggettoRitenuta` as 'RIT_soggettoRitenuta', `companies`.`RIT_tipoRitenuta` as 'RIT_tipoRitenuta', `companies`.`RIT_AliquotaRitenuta` as 'RIT_AliquotaRitenuta', `companies`.`RIT_CausalePagamento` as 'RIT_CausalePagamento', `companies`.`IBAN` as 'IBAN', `companies`.`ABI` as 'ABI', `companies`.`CAB` as 'CAB', `companies`.`BIC` as 'BIC', `companies`.`autorizzSanitaria_SAM` as 'autorizzSanitaria_SAM', `companies`.`AutSanEmessa_SAM` as 'AutSanEmessa_SAM', `companies`.`NrPresSan_SAM` as 'NrPresSan_SAM', `companies`.`NrAutSan_SAM` as 'NrAutSan_SAM', if(`companies`.`dataAutSan_SAM`,date_format(`companies`.`dataAutSan_SAM`,'%d/%m/%Y'),'') as 'dataAutSan_SAM'",
+			'vatRegister' => "`vatRegister`.`id` as 'id', IF(    CHAR_LENGTH(`companies1`.`companyCode`) || CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyCode`, ' - ', `companies1`.`companyName`), '') as 'company', IF(    CHAR_LENGTH(`companies1`.`companyName`), CONCAT_WS('',   `companies1`.`companyName`), '') as 'companyName', `vatRegister`.`tax` as 'tax', `vatRegister`.`month` as 'month', `vatRegister`.`year` as 'year', `vatRegister`.`amount` as 'amount', `vatRegister`.`ufficio_Ced_PA` as 'ufficio_Ced_PA', `vatRegister`.`numeroREA_Ced_PA` as 'numeroREA_Ced_PA', `vatRegister`.`capitaleSociale_Ced_PA` as 'capitaleSociale_Ced_PA', `vatRegister`.`socioUnico_Ced_PA` as 'socioUnico_Ced_PA', `vatRegister`.`statoLiquidazione_Ced_PA` as 'statoLiquidazione_Ced_PA', `vatRegister`.`default` as 'default'",
 			'contacts' => "`contacts`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `contacts`.`titleCourtesy` as 'titleCourtesy', `contacts`.`name` as 'name', `contacts`.`lastName` as 'lastName', `contacts`.`notes` as 'notes', `contacts`.`title` as 'title', if(`contacts`.`birthDate`,date_format(`contacts`.`birthDate`,'%d/%m/%Y'),'') as 'birthDate', `contacts`.`CodEORI` as 'CodEORI'",
 			'creditDocument' => "`creditDocument`.`id` as 'id', `creditDocument`.`incomingTypeDoc` as 'incomingTypeDoc', `creditDocument`.`customerID` as 'customerID', `creditDocument`.`nrDoc` as 'nrDoc', if(`creditDocument`.`dateIncomingNote`,date_format(`creditDocument`.`dateIncomingNote`,'%d/%m/%Y'),'') as 'dateIncomingNote', `creditDocument`.`customerFirm` as 'customerFirm', `creditDocument`.`customerAddress` as 'customerAddress', `creditDocument`.`customerPostCode` as 'customerPostCode', `creditDocument`.`customerTown` as 'customerTown'",
 			'electronicInvoice' => "`electronicInvoice`.`id` as 'id', `electronicInvoice`.`topic` as 'topic', `electronicInvoice`.`currency` as 'currency', `electronicInvoice`.`trasmissionFormat` as 'trasmissionFormat', `electronicInvoice`.`country` as 'country'",
@@ -172,15 +168,11 @@
 			'kinds' => "`kinds`.`entity` as 'entity', `kinds`.`code` as 'code', `kinds`.`name` as 'name', `kinds`.`value` as 'value', `kinds`.`descriptions` as 'descriptions'",
 			'Logs' => "`Logs`.`id` as 'id', `Logs`.`ip` as 'ip', `Logs`.`ts` as 'ts', `Logs`.`details` as 'details'",
 			'attributes' => "`attributes`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'attribute', `attributes`.`value` as 'value', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', IF(    CHAR_LENGTH(`products1`.`id`), CONCAT_WS('',   `products1`.`id`), '') as 'product'",
-			'addresses' => "`addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`code`), CONCAT_WS('',   `countries1`.`code`), '') as 'country', IF(    CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`country`), '') as 'country_name', IF(    CHAR_LENGTH(`town1`.`town`), CONCAT_WS('',   `town1`.`town`), '') as 'town', IF(    CHAR_LENGTH(`town1`.`shipCode`), CONCAT_WS('',   `town1`.`shipCode`), '') as 'postalCode', IF(    CHAR_LENGTH(`town1`.`district`), CONCAT_WS('',   `town1`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', `addresses`.`default` as 'default', `addresses`.`ship` as 'ship'",
-			'phones' => "`phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `phones`.`phoneNumber` as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company'",
-			'mails' => "`mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `mails`.`mail` as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company'",
+			'addresses' => "`addresses`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `addresses`.`address` as 'address', `addresses`.`houseNumber` as 'houseNumber', IF(    CHAR_LENGTH(`countries1`.`code`) || CHAR_LENGTH(`countries1`.`country`), CONCAT_WS('',   `countries1`.`code`, ' - ', `countries1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`town1`.`town`) || CHAR_LENGTH(`town1`.`district`), CONCAT_WS('',   `town1`.`town`, ' - ', `town1`.`district`), '') as 'town', `addresses`.`postalCode` as 'postalCode', IF(    CHAR_LENGTH(`town1`.`district`), CONCAT_WS('',   `town1`.`district`), '') as 'district', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `addresses`.`map` as 'map', `addresses`.`default` as 'default', `addresses`.`ship` as 'ship'",
+			'phones' => "`phones`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `phones`.`phoneNumber` as 'phoneNumber', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `phones`.`default` as 'default'",
+			'mails' => "`mails`.`id` as 'id', IF(    CHAR_LENGTH(`kinds1`.`name`), CONCAT_WS('',   `kinds1`.`name`), '') as 'kind', `mails`.`mail` as 'mail', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `mails`.`default` as 'default'",
 			'contacts_companies' => "`contacts_companies`.`id` as 'id', IF(    CHAR_LENGTH(`contacts1`.`name`) || CHAR_LENGTH(`contacts1`.`lastName`), CONCAT_WS('',   `contacts1`.`name`, ' ', `contacts1`.`lastName`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`companyName`) || CHAR_LENGTH(`companies1`.`companyCode`), CONCAT_WS('',   `companies1`.`companyName`, ' - ', `companies1`.`companyCode`), '') as 'company', `contacts_companies`.`default` as 'default'",
-			'attachments' => "`attachments`.`id` as 'id', `attachments`.`name` as 'name', `attachments`.`file` as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `attachments`.`thumbUse` as 'thumbUse'",
-			'codiceDestinatario' => "`codiceDestinatario`.`code` as 'code', `codiceDestinatario`.`text` as 'text'",
-			'regimeFiscale' => "`regimeFiscale`.`code` as 'code', `regimeFiscale`.`text` as 'text'",
-			'tipoCassa' => "`tipoCassa`.`code` as 'code', `tipoCassa`.`text` as 'text'",
-			'modalitaPagamento' => "`modalitaPagamento`.`code` as 'code', `modalitaPagamento`.`text` as 'text'"
+			'attachments' => "`attachments`.`id` as 'id', `attachments`.`name` as 'name', `attachments`.`file` as 'file', IF(    CHAR_LENGTH(`contacts1`.`id`), CONCAT_WS('',   `contacts1`.`id`), '') as 'contact', IF(    CHAR_LENGTH(`companies1`.`id`), CONCAT_WS('',   `companies1`.`id`), '') as 'company', `attachments`.`thumbUse` as 'thumbUse'"
 		);
 
 		if(isset($sql_fields[$table_name])){
@@ -194,13 +186,13 @@
 
 	function get_sql_from($table_name, $skip_permissions = false, $skip_joins = false) {
 		$sql_from = array(   
-			'orders' => "`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`supplier` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`orders`.`employee` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`orders`.`shipVia` ",
+			'orders' => "`orders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`orders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders`.`typeDoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`orders`.`customer` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`orders`.`supplier` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`orders`.`shipVia` ",
 			'ordersDetails' => "`ordersDetails` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`ordersDetails`.`order` LEFT JOIN `products` as products1 ON `products1`.`id`=`ordersDetails`.`productCode` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`ordersDetails`.`section` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`orders1`.`kind` ",
-			'_resumeOrders' => "`_resumeOrders` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`_resumeOrders`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`_resumeOrders`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`_resumeOrders`.`typedoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`_resumeOrders`.`customer` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`_resumeOrders`.`related` ",
+			'_ordersSummary' => "`_ordersSummary` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`_ordersSummary`.`kind` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`_ordersSummary`.`company` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`_ordersSummary`.`typedoc` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`_ordersSummary`.`customer` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`_ordersSummary`.`related` ",
 			'products' => "`products` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`products`.`tax` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`products`.`CategoryID` ",
 			'firstCashNote' => "`firstCashNote` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`firstCashNote`.`kind` LEFT JOIN `orders` as orders1 ON `orders1`.`id`=`firstCashNote`.`order` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`orders1`.`company` LEFT JOIN `companies` as companies2 ON `companies2`.`id`=`firstCashNote`.`company` LEFT JOIN `companies` as companies3 ON `companies3`.`id`=`firstCashNote`.`customer` LEFT JOIN `companies` as companies4 ON `companies4`.`id`=`firstCashNote`.`idBank` ",
-			'vatRegister' => "`vatRegister` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`vatRegister`.`idCompany` ",
 			'companies' => "`companies` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`companies`.`kind` LEFT JOIN `kinds` as kinds2 ON `kinds2`.`code`=`companies`.`regimeFiscale` LEFT JOIN `kinds` as kinds3 ON `kinds3`.`code`=`companies`.`tipoCassa` LEFT JOIN `kinds` as kinds4 ON `kinds4`.`code`=`companies`.`modalitaPagamento` LEFT JOIN `kinds` as kinds5 ON `kinds5`.`code`=`companies`.`FormatoTrasmissione` ",
+			'vatRegister' => "`vatRegister` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`vatRegister`.`company` ",
 			'contacts' => "`contacts` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`contacts`.`kind` ",
 			'creditDocument' => "`creditDocument` ",
 			'electronicInvoice' => "`electronicInvoice` ",
@@ -214,21 +206,17 @@
 			'phones' => "`phones` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`phones`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`phones`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`phones`.`company` ",
 			'mails' => "`mails` LEFT JOIN `kinds` as kinds1 ON `kinds1`.`code`=`mails`.`kind` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`mails`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`mails`.`company` ",
 			'contacts_companies' => "`contacts_companies` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`contacts_companies`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`contacts_companies`.`company` ",
-			'attachments' => "`attachments` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attachments`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attachments`.`company` ",
-			'codiceDestinatario' => "`codiceDestinatario` ",
-			'regimeFiscale' => "`regimeFiscale` ",
-			'tipoCassa' => "`tipoCassa` ",
-			'modalitaPagamento' => "`modalitaPagamento` "
+			'attachments' => "`attachments` LEFT JOIN `contacts` as contacts1 ON `contacts1`.`id`=`attachments`.`contact` LEFT JOIN `companies` as companies1 ON `companies1`.`id`=`attachments`.`company` "
 		);
 
 		$pkey = array(   
 			'orders' => 'id',
 			'ordersDetails' => 'id',
-			'_resumeOrders' => 'id',
+			'_ordersSummary' => 'id',
 			'products' => 'id',
 			'firstCashNote' => 'id',
-			'vatRegister' => 'id',
 			'companies' => 'id',
+			'vatRegister' => 'id',
 			'contacts' => 'id',
 			'creditDocument' => 'id',
 			'electronicInvoice' => 'id',
@@ -242,11 +230,7 @@
 			'phones' => 'id',
 			'mails' => 'id',
 			'contacts_companies' => 'id',
-			'attachments' => 'id',
-			'codiceDestinatario' => 'code',
-			'regimeFiscale' => 'code',
-			'tipoCassa' => 'code',
-			'modalitaPagamento' => 'code'
+			'attachments' => 'id'
 		);
 
 		if(!isset($sql_from[$table_name])) return false;
@@ -298,23 +282,24 @@
 			'orders' => array(
 				'id' => '',
 				'kind' => '',
-				'progressiveNr' => '',
-				'trasmissionFor' => 'SDI10',
-				'consigneeID' => '',
 				'company' => '',
 				'typeDoc' => '',
 				'multiOrder' => '',
+				'divisa' => 'EUR',
+				'causale' => 'VENDITA',
 				'customer' => '',
 				'supplier' => '',
 				'employee' => '',
-				'date' => '1',
-				'requiredDate' => '',
-				'shippedDate' => '',
+				'date' => '',
+				'dateRequired' => '',
+				'dateShipped' => '',
 				'shipVia' => '',
 				'Freight' => '',
 				'pallets' => '',
 				'licencePlate' => '',
-				'orderTotal' => '',
+				'importoSconto' => '',
+				'orderTotal' => '0',
+				'RIT_importoRitenuta' => '',
 				'cashCredit' => '1',
 				'trust' => '',
 				'overdraft' => '',
@@ -352,9 +337,10 @@
 				'averageWeight' => '',
 				'commission' => '15.00',
 				'return' => '1',
-				'supplierCode' => ''
+				'supplierCode' => '',
+				'related' => ''
 			),
-			'_resumeOrders' => array(
+			'_ordersSummary' => array(
 				'kind' => '',
 				'company' => '',
 				'typedoc' => '',
@@ -407,15 +393,6 @@
 				'paymentDeadLine' => '',
 				'payed' => '0'
 			),
-			'vatRegister' => array(
-				'id' => '',
-				'idCompany' => '',
-				'companyName' => '',
-				'tax' => '4%',
-				'month' => '',
-				'year' => '2018',
-				'amount' => ''
-			),
 			'companies' => array(
 				'id' => '',
 				'kind' => '',
@@ -425,21 +402,40 @@
 				'fiscalCode' => '',
 				'vat' => '',
 				'notes' => '',
-				'codiceDestinatario' => '',
-				'regimeFiscale' => '',
+				'codiceDestinatario' => '0000000',
+				'regimeFiscale' => 'RF01',
 				'tipoCassa' => '',
 				'modalitaPagamento' => '',
 				'RiferimentoAmministrazione' => '',
 				'FormatoTrasmissione' => 'FPR12',
-				'REA_Ufficio' => '',
-				'REA_NumeroREA' => '',
-				'REA_CapitaleSociale' => '',
-				'REA_SocioUnico' => 'SU',
-				'REA_StatoLiquidazione' => 'LN',
 				'RIT_soggettoRitenuta' => '0',
 				'RIT_tipoRitenuta' => 'RT02',
 				'RIT_AliquotaRitenuta' => '',
-				'RIT_CausalePagamento' => ''
+				'RIT_CausalePagamento' => '',
+				'IBAN' => '',
+				'ABI' => '',
+				'CAB' => '',
+				'BIC' => '',
+				'autorizzSanitaria_SAM' => '',
+				'AutSanEmessa_SAM' => '',
+				'NrPresSan_SAM' => '',
+				'NrAutSan_SAM' => '',
+				'dataAutSan_SAM' => ''
+			),
+			'vatRegister' => array(
+				'id' => '',
+				'company' => '',
+				'companyName' => '',
+				'tax' => '4%',
+				'month' => '',
+				'year' => '2018',
+				'amount' => '',
+				'ufficio_Ced_PA' => '',
+				'numeroREA_Ced_PA' => '',
+				'capitaleSociale_Ced_PA' => '',
+				'socioUnico_Ced_PA' => 'SM',
+				'statoLiquidazione_Ced_PA' => 'LN',
+				'default' => '0'
 			),
 			'contacts' => array(
 				'id' => '',
@@ -520,7 +516,6 @@
 				'address' => '',
 				'houseNumber' => '',
 				'country' => '',
-				'country_name' => '',
 				'town' => '',
 				'postalCode' => '',
 				'district' => '',
@@ -535,14 +530,16 @@
 				'kind' => '',
 				'phoneNumber' => '',
 				'contact' => '',
-				'company' => ''
+				'company' => '',
+				'default' => '0'
 			),
 			'mails' => array(
 				'id' => '',
 				'kind' => '',
 				'mail' => '',
 				'contact' => '',
-				'company' => ''
+				'company' => '',
+				'default' => '0'
 			),
 			'contacts_companies' => array(
 				'id' => '',
@@ -557,22 +554,6 @@
 				'contact' => '',
 				'company' => '',
 				'thumbUse' => '0'
-			),
-			'codiceDestinatario' => array(
-				'code' => '',
-				'text' => ''
-			),
-			'regimeFiscale' => array(
-				'code' => '',
-				'text' => ''
-			),
-			'tipoCassa' => array(
-				'code' => '',
-				'text' => ''
-			),
-			'modalitaPagamento' => array(
-				'code' => '',
-				'text' => ''
 			)
 		);
 
@@ -1302,7 +1283,7 @@
 		if(is_array($arrTables)){
 			foreach($arrTables as $tn => $tc){
 				/* ---- list of tables where hide link in nav menu is set ---- */
-				$tChkHL = array_search($tn, array('creditDocument','codiceDestinatario','regimeFiscale','tipoCassa','modalitaPagamento'));
+				$tChkHL = array_search($tn, array('creditDocument'));
 
 				/* ---- list of tables where filter first is set ---- */
 				$tChkFF = array_search($tn, array());

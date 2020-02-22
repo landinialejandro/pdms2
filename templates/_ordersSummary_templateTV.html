@@ -1,0 +1,21 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the _ordersSummary_init() hook (in hooks/_ordersSummary.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="_ordersSummary-kind-<%%VALUE(id)%%>" class="_ordersSummary-kind"><%%VALUE(kind)%%></td>
+		<td id="_ordersSummary-company-<%%VALUE(id)%%>" class="_ordersSummary-company"><%%VALUE(company)%%></td>
+		<td id="_ordersSummary-typedoc-<%%VALUE(id)%%>" class="_ordersSummary-typedoc"><%%VALUE(typedoc)%%></td>
+		<td id="_ordersSummary-customer-<%%VALUE(id)%%>" class="_ordersSummary-customer"><%%VALUE(customer)%%></td>
+		<td id="_ordersSummary-TOT-<%%VALUE(id)%%>" class="_ordersSummary-TOT"><%%VALUE(TOT)%%></td>
+		<td id="_ordersSummary-MONTH-<%%VALUE(id)%%>" class="_ordersSummary-MONTH"><%%VALUE(MONTH)%%></td>
+		<td id="_ordersSummary-YEAR-<%%VALUE(id)%%>" class="_ordersSummary-YEAR"><%%VALUE(YEAR)%%></td>
+		<td id="_ordersSummary-DOCs-<%%VALUE(id)%%>" class="_ordersSummary-DOCs"><%%VALUE(DOCs)%%></td>
+		<td id="_ordersSummary-related-<%%VALUE(id)%%>" class="_ordersSummary-related"><%%VALUE(related)%%></td>
+                <td id="_resume-print-<%%VALUE(id)%%>" class="_resume-print">
+                    <div class="">
+                        <a class="btn btn-warning btn-print-and-close" myid="<%%VALUE(id)%%>">Print & close</a>
+                    </div>
+                </td>
