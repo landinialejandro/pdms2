@@ -11,7 +11,10 @@
 //
 
 $j(function(){
+    
     $j('#multiOrder').attr('readonly','true');
+
+
     if(!is_add_new()){
         setTimeout(function(){
             refreshCards();

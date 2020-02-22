@@ -68,7 +68,25 @@
 				break;
 
 			case 'detailview':
-				$footer='';
+                $footer='';
+                    $mi = getMemberInfo();
+                        if(!$mi['admin']){
+                            ob_start();
+                                ?>
+                                    <!-- insert HTML code-->
+                                    <script>
+                                    $j(function(){
+                                        setTimeout(function(){
+                                            $j("#dvprint").remove();
+                                        },100);
+                                    })
+                                    </script>
+                                <?php
+                            $html_code = ob_get_contents();
+                            ob_end_clean();
+                            echo  $html_code;
+                        }
+
 				break;
 
 			case 'tableview+detailview':

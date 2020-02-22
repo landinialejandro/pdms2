@@ -13,3 +13,6 @@ http://timeago.yarp.com/
 -->
 <script src="<?php echo PREPEND_PATH; ?>hooks/js/timeAgo.js"></script>
 
+<script src="<?php echo PREPEND_PATH; ?>LTE/plugins/jquery-jeditable/jquery.jeditable.js"></script>
+<script src="<?php echo PREPEND_PATH; ?>LTE/tvedit/tv.edit.js"></script>
+
